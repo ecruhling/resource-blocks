@@ -2,21 +2,21 @@ jQuery(document).ready(function ($) {
 
 	$('.wp-block-resource-blocks-hero-carousel').each(function () {
 
-		var $gallery = $(this);
+		var $carousel = $(this);
 		var slideCount = null;
 
-		$gallery.on('init', function (event, slick) {
+		$carousel.on('init', function (event, slick) {
 			slideCount = slick.slideCount;
 			setSlideCount();
 			setCurrentSlideNumber(slick.currentSlide);
 		});
 
-		$gallery.slick({
-			fade: ($gallery.data('effect') === 'fade'),
-			autoplay: $gallery.data('autoplay'),
-			speed: $gallery.data('speed'),
+		$carousel.slick({
+			fade: ($carousel.data('effect') === 'fade'),
+			autoplay: $carousel.data('autoplay'),
+			speed: $carousel.data('speed'),
 			adaptiveHeight: true,
-			appendArrows: false,
+			appendArrows: $carousel.data('arrows'),
 			pauseOnFocus: false,
 			cssEase: 'linear',
 			lazyLoad: 'anticipated',
@@ -24,7 +24,7 @@ jQuery(document).ready(function ($) {
 			nextArrow: '.exhibit-navigation .next, .slick-slide img, .slick-slide div'
 		});
 
-		$gallery.on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+		$carousel.on('beforeChange', function (event, slick, currentSlide, nextSlide) {
 			setCurrentSlideNumber(nextSlide);
 		});
 

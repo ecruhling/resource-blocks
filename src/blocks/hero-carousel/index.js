@@ -87,6 +87,10 @@ const blockAttributes = {
 		type: 'boolean',
 		default: true,
 	},
+	arrows: {
+		type: 'boolean',
+		default: false,
+	},
 	speed: {
 		type: 'string',
 		default: '300',
@@ -214,9 +218,9 @@ export const settings = {
 	edit,
 
 	save( { attributes } ) {
-		const { images, imageCrop, autoplay, speed, effect, linkTo } = attributes;
+		const { images, imageCrop, autoplay, arrows, speed, effect, linkTo } = attributes;
 		return (
-			<ul className={ `${ imageCrop ? 'is-cropped' : '' }` } data-autoplay={ autoplay } data-speed={ speed } data-effect={ effect }>
+			<ul className={ `${ imageCrop ? 'is-cropped' : '' }` } data-autoplay={ autoplay } data-speed={ speed } data-effect={ effect } data-arrows={ arrows }>
 				{ images.map( ( image ) => {
 					let href;
 

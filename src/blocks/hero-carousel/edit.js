@@ -8,7 +8,7 @@ const {filter, pick, get} = lodash;
  */
 const {Component, Fragment} = wp.element;
 
-const {__, sprintf } = wp.i18n;
+const {__, sprintf} = wp.i18n;
 
 const {
 	IconButton,
@@ -40,7 +40,7 @@ import './editor.scss';
 
 const effectOptions = [
 	{value: 'fade', label: __('Fade', 'hero-carousel')},
-	{value: 'scroll', label: __('Scroll', 'hero-carousel')},
+	{value: 'scroll', label: __('Slide', 'hero-carousel')},
 ];
 
 const linkOptions = [
@@ -48,6 +48,7 @@ const linkOptions = [
 	{value: 'media', label: __('Media File')},
 	{value: 'none', label: __('None')},
 ];
+
 const ALLOWED_MEDIA_TYPES = ['image'];
 
 export const pickRelevantMediaFiles = (image) => {
@@ -68,6 +69,7 @@ class SliderEdit extends Component {
 		this.setSpeed = this.setSpeed.bind(this);
 		this.setEffect = this.setEffect.bind(this);
 		this.toggleAutoplay = this.toggleAutoplay.bind(this);
+		this.toggleArrows = this.toggleArrows.bind(this);
 		this.toggleImageCrop = this.toggleImageCrop.bind(this);
 		this.onRemoveImage = this.onRemoveImage.bind(this);
 		this.setImageAttributes = this.setImageAttributes.bind(this);
@@ -142,6 +144,10 @@ class SliderEdit extends Component {
 		this.setAttributes({autoplay: !this.props.attributes.autoplay});
 	}
 
+	toggleArrows() {
+		this.setAttributes({arrows: !this.props.attributes.arrows});
+	}
+
 	toggleImageCrop() {
 		this.setAttributes({imageCrop: !this.props.attributes.imageCrop});
 	}
@@ -201,7 +207,7 @@ class SliderEdit extends Component {
 
 	render() {
 		const {attributes, isSelected, className, noticeOperations, noticeUI} = this.props;
-		const {images, imageCrop, autoplay, speed, effect, linkTo} = attributes;
+		const {images, imageCrop, autoplay, arrows, speed, effect, linkTo} = attributes;
 
 		const dropZone = (
 			<DropZone
@@ -241,7 +247,7 @@ class SliderEdit extends Component {
 						icon="format-gallery"
 						className={className}
 						labels={{
-							title: __('Slider', 'gutenberg-slider'),
+							title: __('Slider', 'hero-carousel'),
 							instructions: __('Drag images, upload new ones or select files from your library.', 'hero-carousel'),
 						}}
 						onSelect={this.onSelectImages}
@@ -255,13 +261,13 @@ class SliderEdit extends Component {
 			);
 		}
 
-		console.log(JSON.stringify(images));
+		// console.log(JSON.stringify(images));
 
 		return (
 			<Fragment>
 				{controls}
 				<InspectorControls>
-					<PanelBody title={__('Slider Settings', 'hero-carousel')}>
+					<PanelBody title={__('Carousel Settings')}>
 						<ToggleControl
 							label={__('Crop Images')}
 							checked={!!imageCrop}
@@ -269,12 +275,17 @@ class SliderEdit extends Component {
 							help={this.getImageCropHelp}
 						/>
 						<ToggleControl
-							label={__('Autoplay', 'hero-carousel')}
+							label={__('Autoplay')}
 							checked={!!autoplay}
 							onChange={this.toggleAutoplay}
 						/>
+						<ToggleControl
+							label={__('Prev / Next Arrows')}
+							checked={!!arrows}
+							onChange={this.toggleArrows}
+						/>
 						<TextControl
-							label={__('Speed', 'hero-carousel')}
+							label={__('Speed')}
 							type='number'
 							min='100'
 							max='500'
@@ -282,7 +293,7 @@ class SliderEdit extends Component {
 							onChange={this.setSpeed}
 						/>
 						<SelectControl
-							label={__('Effect', 'hero-carousel')}
+							label={__('Effect')}
 							value={effect}
 							onChange={this.setEffect}
 							options={effectOptions}
