@@ -10,10 +10,7 @@ const {filter, every, map, some} = lodash;
 /**
  * WordPress dependencies
  */
-const {
-	__,
-	setLocaleData,
-} = wp.i18n;
+const { __ } = wp.i18n; // Import __() from wp.i18n
 
 const {
 	createBlock,

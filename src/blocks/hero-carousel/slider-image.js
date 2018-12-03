@@ -8,13 +8,11 @@ import classnames from 'classnames';
  */
 const {Component, Fragment} = wp.element;
 const {IconButton, Spinner} = wp.components;
-const {__, setLocaleData} = wp.i18n;
+const { __ } = wp.i18n; // Import __() from wp.i18n
 const {BACKSPACE, DELETE} = wp.keycodes;
 const {withSelect} = wp.data;
 const {RichText} = wp.editor;
 const {isBlobURL} = wp.blob;
-
-setLocaleData(window.gutenberg_slider.localeData, 'gutenberg-slider');
 
 class SliderImage extends Component {
 	constructor() {

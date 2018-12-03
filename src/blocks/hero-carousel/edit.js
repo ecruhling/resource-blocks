@@ -8,7 +8,7 @@ const {filter, pick, get} = lodash;
  */
 const {Component, Fragment} = wp.element;
 
-const {__, sprintf, setLocaleData} = wp.i18n;
+const {__, sprintf } = wp.i18n;
 
 const {
 	IconButton,
@@ -37,8 +37,6 @@ const {
 import SliderImage from './slider-image';
 
 import './editor.scss';
-
-setLocaleData(window.gutenberg_slider.localeData, 'hero-carousel');
 
 const effectOptions = [
 	{value: 'fade', label: __('Fade', 'hero-carousel')},

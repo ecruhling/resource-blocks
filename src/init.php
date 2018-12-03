@@ -28,20 +28,28 @@ function enqueue_block_assets()
 		filemtime(plugin_dir_path(__DIR__) . 'dist/blocks.style.build.css')
 	);
 
-	// Enqueue frontend only JS
-	if( !is_admin() ) {
+	if ( !is_admin() ) {
+		wp_enqueue_style(
+			'slick',
+			plugins_url( 'vendor/slick.css', __DIR__ ),
+			[],
+			filemtime( plugin_dir_path( __DIR__ ) . 'vendor/slick.css' )
+		);
+	}
+
+	if (!is_admin()) {
 		wp_register_script(
 			'slick',
-			plugins_url( 'vendor/slick.min.js', __DIR__ ),
-			array(),
-			filemtime( plugin_dir_path( __DIR__ ) . 'vendor/slick.min.js' ),
+			plugins_url('vendor/slick.min.js', __DIR__),
+			[],
+			filemtime(plugin_dir_path(__DIR__) . 'vendor/slick.min.js'),
 			true
 		);
 
 		wp_enqueue_script(
 			'resource-blocks-frontend-js',
 			plugins_url('dist/blocks.frontend.js', __DIR__),
-			array( 'jquery', 'slick' ),
+			['jquery', 'slick'],
 			filemtime(plugin_dir_path(__DIR__) . 'dist/blocks.frontend.js')
 		);
 	}
@@ -87,7 +95,7 @@ add_action('enqueue_block_editor_assets', __NAMESPACE__ . '\\enqueue_block_edito
  */
 function add_block_categories($categories, $post)
 {
-	// Otherwise update list of categories.
+
 	return array_merge(
 		$categories,
 		array(
