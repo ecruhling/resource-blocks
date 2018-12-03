@@ -30,12 +30,22 @@ function enqueue_block_assets()
 
 	// Enqueue frontend only JS
 	if( !is_admin() ) {
+		wp_register_script(
+			'slick',
+			plugins_url( 'vendor/slick.min.js', __DIR__ ),
+			array(),
+			filemtime( plugin_dir_path( __DIR__ ) . 'vendor/slick.min.js' ),
+			true
+		);
+
 		wp_enqueue_script(
-			'resource-blocks-editor-js',
+			'resource-blocks-frontend-js',
 			plugins_url('dist/blocks.frontend.js', __DIR__),
+			array( 'jquery', 'slick' ),
 			filemtime(plugin_dir_path(__DIR__) . 'dist/blocks.frontend.js')
 		);
 	}
+
 }
 
 add_action('enqueue_block_assets', __NAMESPACE__ . '\\enqueue_block_assets');
