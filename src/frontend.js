@@ -8,10 +8,9 @@ jQuery(document).ready(function ($) {
 		const $carousel = $(this);
 
 		$carousel.slick({
-			accessibility: true,
 			adaptiveHeight: false,
 			autoplay: $carousel.data('autoplay'),
-			autoplaySpeed: 3000,
+			autoplaySpeed: $carousel.data('autoplayspeed'),
 			arrows: $carousel.data('arrows'),
 			centerMode: false,
 			cssEase: 'ease',

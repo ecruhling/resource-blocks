@@ -60,6 +60,7 @@ class SliderEdit extends Component {
 		this.onSelectImage = this.onSelectImage.bind(this);
 		this.onSelectImages = this.onSelectImages.bind(this);
 		this.setSpeed = this.setSpeed.bind(this);
+		this.setAutoplaySpeed = this.setAutoplaySpeed.bind(this);
 		this.setEffect = this.setEffect.bind(this);
 		this.toggleAutoplay = this.toggleAutoplay.bind(this);
 		this.toggleArrows = this.toggleArrows.bind(this);
@@ -123,6 +124,10 @@ class SliderEdit extends Component {
 
 	setSpeed(value) {
 		this.setAttributes({speed: value});
+	}
+
+	setAutoplaySpeed(value) {
+		this.setAttributes({autoplaySpeed: value});
 	}
 
 	setEffect(value) {
@@ -196,7 +201,7 @@ class SliderEdit extends Component {
 
 	render() {
 		const {attributes, isSelected, className, noticeOperations, noticeUI} = this.props;
-		const {images, imageCrop, autoplay, arrows, speed, effect} = attributes;
+		const {images, imageCrop, autoplay, autoplaySpeed, arrows, speed, effect} = attributes;
 
 		const dropZone = (
 			<DropZone
@@ -267,6 +272,15 @@ class SliderEdit extends Component {
 							label={__('Autoplay')}
 							checked={!!autoplay}
 							onChange={this.toggleAutoplay}
+						/>
+						<TextControl
+							label={__('Autoplay Speed')}
+							type='number'
+							min='0'
+							max='10000'
+							value={autoplaySpeed}
+							onChange={this.setAutoplaySpeed}
+							help='Autoplay Speed in milliseconds'
 						/>
 						<ToggleControl
 							label={__('Prev / Next Arrows')}
