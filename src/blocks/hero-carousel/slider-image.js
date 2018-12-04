@@ -86,18 +86,9 @@ class SliderImage extends Component {
 	}
 
 	render() {
-		const {url, alt, id, linkTo, link, isSelected, caption, onRemove, setAttributes, 'aria-label': ariaLabel} = this.props;
+		const {url, alt, id, link, isSelected, caption, onRemove, setAttributes, 'aria-label': ariaLabel} = this.props;
 
 		let href;
-
-		switch (linkTo) {
-			case 'media':
-				href = url;
-				break;
-			case 'attachment':
-				href = link;
-				break;
-		}
 
 		const img = (
 			// Disable reason: Image itself is not meant to be interactive, but should

@@ -10,7 +10,7 @@ const {filter, every, map, some} = lodash;
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n; // Import __() from wp.i18n
+const {__} = wp.i18n; // Import __() from wp.i18n
 
 const {
 	createBlock,
@@ -99,10 +99,6 @@ const blockAttributes = {
 		type: 'string',
 		default: 'fade',
 	},
-	linkTo: {
-		type: 'string',
-		default: 'none',
-	},
 };
 
 export const name = 'resource-blocks/hero-carousel';
@@ -126,7 +122,7 @@ export const settings = {
 		<path d="m14.34 12.62-1.34-1.01 1.22-1.6-1.22-1.56 1.33-1.03 2.01 2.57z"/>
 	</svg>,
 	category: 'resource-blocks',
-	keywords: [ __( 'images' ), __( 'photos' ) ],
+	keywords: [__('images'), __('photos')],
 	attributes: blockAttributes,
 
 	transforms: {
@@ -134,16 +130,16 @@ export const settings = {
 			{
 				type: 'block',
 				isMultiBlock: true,
-				blocks: [ 'core/image' ],
-				transform: ( attributes ) => {
-					const validImages = filter( attributes, ( { id, url } ) => id && url );
-					if ( validImages.length > 0 ) {
-						return createBlock( 'resource-blocks/hero-carousel', {
-							images: validImages.map( ( { id, url, alt, caption } ) => ( { id, url, alt, caption } ) ),
-							ids: validImages.map( ( { id } ) => id ),
-						} );
+				blocks: ['core/image'],
+				transform: (attributes) => {
+					const validImages = filter(attributes, ({id, url}) => id && url);
+					if (validImages.length > 0) {
+						return createBlock('resource-blocks/hero-carousel', {
+							images: validImages.map(({id, url, alt, caption}) => ({id, url, alt, caption})),
+							ids: validImages.map(({id}) => id),
+						});
 					}
-					return createBlock( 'resource-blocks/hero-carousel' );
+					return createBlock('resource-blocks/hero-carousel');
 				},
 			},
 			{
@@ -152,22 +148,16 @@ export const settings = {
 				attributes: {
 					images: {
 						type: 'array',
-						shortcode: ( { named: { ids } } ) => {
-							return parseShortcodeIds( ids ).map( ( id ) => ( {
+						shortcode: ({named: {ids}}) => {
+							return parseShortcodeIds(ids).map((id) => ({
 								id,
-							} ) );
+							}));
 						},
 					},
 					ids: {
 						type: 'array',
-						shortcode: ( { named: { ids } } ) => {
-							return parseShortcodeIds( ids );
-						},
-					},
-					linkTo: {
-						type: 'string',
-						shortcode: ( { named: { link = 'attachment' } } ) => {
-							return link === 'file' ? 'media' : link;
+						shortcode: ({named: {ids}}) => {
+							return parseShortcodeIds(ids);
 						},
 					},
 				},
@@ -175,28 +165,28 @@ export const settings = {
 			{
 				// When created by drag and dropping multiple files on an insertion point
 				type: 'files',
-				isMatch( files ) {
-					return files.length !== 1 && every( files, ( file ) => file.type.indexOf( 'image/' ) === 0 );
+				isMatch(files) {
+					return files.length !== 1 && every(files, (file) => file.type.indexOf('image/') === 0);
 				},
-				transform( files, onChange ) {
-					const block = createBlock( 'resource-blocks/hero-carousel', {
-						images: files.map( ( file ) => pickRelevantMediaFiles( {
-							url: createBlobURL( file ),
-						} ) ),
-					} );
-					mediaUpload( {
+				transform(files, onChange) {
+					const block = createBlock('resource-blocks/hero-carousel', {
+						images: files.map((file) => pickRelevantMediaFiles({
+							url: createBlobURL(file),
+						})),
+					});
+					mediaUpload({
 						filesList: files,
-						onFileChange: ( images ) => {
+						onFileChange: (images) => {
 							const imagesAttr = images.map(
 								pickRelevantMediaFiles
 							);
-							onChange( block.clientId, {
-								ids: map( imagesAttr, 'id' ),
+							onChange(block.clientId, {
+								ids: map(imagesAttr, 'id'),
 								images: imagesAttr,
-							} );
+							});
 						},
-						allowedTypes: [ 'image' ],
-					} );
+						allowedTypes: ['image'],
+					});
 					return block;
 				},
 			},
@@ -204,12 +194,17 @@ export const settings = {
 		to: [
 			{
 				type: 'block',
-				blocks: [ 'core/image' ],
-				transform: ( { images } ) => {
-					if ( images.length > 0 ) {
-						return images.map( ( { id, url, alt, caption } ) => createBlock( 'core/image', { id, url, alt, caption } ) );
+				blocks: ['core/image'],
+				transform: ({images}) => {
+					if (images.length > 0) {
+						return images.map(({id, url, alt, caption}) => createBlock('core/image', {
+							id,
+							url,
+							alt,
+							caption
+						}));
 					}
-					return createBlock( 'core/image' );
+					return createBlock('core/image');
 				},
 			},
 		],
@@ -217,38 +212,29 @@ export const settings = {
 
 	edit,
 
-	save( { attributes } ) {
-		const { images, imageCrop, autoplay, arrows, speed, effect, linkTo } = attributes;
+	save({attributes}) {
+		const {images, imageCrop, autoplay, arrows, speed, effect} = attributes;
 		return (
-			<ul className={ `${ imageCrop ? 'is-cropped' : '' }` } data-autoplay={ autoplay } data-speed={ speed } data-effect={ effect } data-arrows={ arrows }>
-				{ images.map( ( image ) => {
+			<ul className={`${imageCrop ? 'is-cropped' : ''}`} data-autoplay={autoplay} data-speed={speed}
+				data-effect={effect} data-arrows={arrows}>
+				{images.map((image) => {
 					let href;
 
-					switch ( linkTo ) {
-						case 'media':
-							href = image.url;
-							break;
-						case 'attachment':
-							href = image.link;
-							break;
-					}
-
-					const img = <img src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } className={ image.id ? `wp-image-${ image.id }` : null } />;
+					const img = <img src={image.url} alt={image.alt} data-id={image.id} data-link={image.link}
+									 className={image.id ? `wp-image-${image.id}` : null}/>;
 
 					return (
-						<li key={ image.id || image.url } className="blocks-gallery-item">
-							<figure>
-								{ href ? <a href={ href }>{ img }</a> : img }
-								{ image.caption && image.caption.length > 0 && (
-									<RichText.Content tagName="figcaption" value={ image.caption } />
-								) }
-							</figure>
+						<li key={image.id || image.url} className="blocks-carousel-slide">
+							{href ? <a href={href}>{img}</a> : img}
+							{image.caption && image.caption.length > 0 && (
+								<RichText.Content tagName="figcaption" value={image.caption}/>
+							)}
 						</li>
 					);
-				} ) }
+				})}
 			</ul>
 		);
 	},
 };
 
-registerBlockType( name, settings );
+registerBlockType(name, settings);

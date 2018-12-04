@@ -20,32 +20,32 @@ jQuery(document).ready(function ($) {
 		// }, 'refresh')
 		// 	.addClass('show');
 
-		$carousel.slick({
-			accessibility: true,
-			adaptiveHeight: false,
-			autoplay: $carousel.data('autoplay'),
-			autoplaySpeed: 3000,
-			arrows: $carousel.data('arrows'),
-			centerMode: false,
-			cssEase: 'ease',
-			dots: false,
-			fade: ($carousel.data('effect') === 'fade'),
-			lazyLoad: 'ondemand',
-			pauseOnHover: false,
-			speed: $carousel.data('speed'),
-		});
+		// $carousel.slick({
+		// 	accessibility: true,
+		// 	adaptiveHeight: false,
+		// 	autoplay: $carousel.data('autoplay'),
+		// 	autoplaySpeed: 3000,
+		// 	arrows: $carousel.data('arrows'),
+		// 	centerMode: false,
+		// 	cssEase: 'ease',
+		// 	dots: false,
+		// 	fade: ($carousel.data('effect') === 'fade'),
+		// 	lazyLoad: 'ondemand',
+		// 	pauseOnHover: false,
+		// 	speed: $carousel.data('speed'),
+		// });
 
 		$carousel.on('beforeChange', function (event, slick, currentSlide, nextSlide) {
 			setCurrentSlideNumber(nextSlide);
 		});
 
 		function setSlideCount() {
-			var $el = $('.exhibit-navigation .counter').find('.total');
+			const $el = $('.exhibit-navigation .counter').find('.total');
 			$el.text(slideCount);
 		}
 
 		function setCurrentSlideNumber(currentSlide) {
-			var $el = $('.exhibit-navigation .counter').find('.current');
+			const $el = $('.exhibit-navigation .counter').find('.current');
 			$el.text(currentSlide + 1);
 		}
 

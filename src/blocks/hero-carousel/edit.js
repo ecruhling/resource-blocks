@@ -43,12 +43,6 @@ const effectOptions = [
 	{value: 'scroll', label: __('Slide', 'hero-carousel')},
 ];
 
-const linkOptions = [
-	{value: 'attachment', label: __('Attachment Page')},
-	{value: 'media', label: __('Media File')},
-	{value: 'none', label: __('None')},
-];
-
 const ALLOWED_MEDIA_TYPES = ['image'];
 
 export const pickRelevantMediaFiles = (image) => {
@@ -65,7 +59,6 @@ class SliderEdit extends Component {
 
 		this.onSelectImage = this.onSelectImage.bind(this);
 		this.onSelectImages = this.onSelectImages.bind(this);
-		this.setLinkTo = this.setLinkTo.bind(this);
 		this.setSpeed = this.setSpeed.bind(this);
 		this.setEffect = this.setEffect.bind(this);
 		this.toggleAutoplay = this.toggleAutoplay.bind(this);
@@ -126,10 +119,6 @@ class SliderEdit extends Component {
 		this.props.setAttributes({
 			images: images.map((image) => pickRelevantMediaFiles(image)),
 		});
-	}
-
-	setLinkTo(value) {
-		this.setAttributes({linkTo: value});
 	}
 
 	setSpeed(value) {
@@ -207,7 +196,7 @@ class SliderEdit extends Component {
 
 	render() {
 		const {attributes, isSelected, className, noticeOperations, noticeUI} = this.props;
-		const {images, imageCrop, autoplay, arrows, speed, effect, linkTo} = attributes;
+		const {images, imageCrop, autoplay, arrows, speed, effect} = attributes;
 
 		const dropZone = (
 			<DropZone
@@ -297,12 +286,6 @@ class SliderEdit extends Component {
 							value={effect}
 							onChange={this.setEffect}
 							options={effectOptions}
-						/>
-						<SelectControl
-							label={__('Link To')}
-							value={linkTo}
-							onChange={this.setLinkTo}
-							options={linkOptions}
 						/>
 					</PanelBody>
 				</InspectorControls>
