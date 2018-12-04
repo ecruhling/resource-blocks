@@ -218,14 +218,15 @@ export const settings = {
 			<ul className={`${imageCrop ? 'is-cropped' : ''}`} data-autoplay={autoplay} data-speed={speed}
 				data-effect={effect} data-arrows={arrows}>
 				{images.map((image) => {
-					let href;
 
 					const img = <img src={image.url} alt={image.alt} data-id={image.id} data-link={image.link}
-									 className={image.id ? `wp-image-${image.id}` : null}/>;
+									 className={image.id ? `wp-image-${image.id} img-fluid d-none` : null}/>;
 
 					return (
 						<li key={image.id || image.url} className="blocks-carousel-slide">
-							{href ? <a href={href}>{img}</a> : img}
+							<div className="carousel-image bg-image responsive-background-image">
+								{img}
+							</div>
 							{image.caption && image.caption.length > 0 && (
 								<RichText.Content tagName="figcaption" value={image.caption}/>
 							)}
