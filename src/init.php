@@ -35,9 +35,7 @@ function enqueue_block_assets()
 			[],
 			filemtime( plugin_dir_path( __DIR__ ) . 'vendor/slick.css' )
 		);
-	}
 
-	if (!is_admin()) {
 		wp_register_script(
 			'slick',
 			plugins_url('vendor/slick.min.js', __DIR__),
