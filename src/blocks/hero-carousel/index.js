@@ -36,7 +36,7 @@ const {
  * Internal dependencies
  */
 
-import {default as edit, pickRelevantMediaFiles} from './edit';
+import {default as edit, pickRelevantMediaFiles} from './edit'; // import edit.js to use as 'edit' method
 
 import './style.scss';
 
@@ -119,7 +119,7 @@ const parseShortcodeIds = (ids) => {
 
 export const settings = {
 	title: __('Hero Carousel', 'hero-carousel'),
-	description: __('A block to display a full-width hero with an image background.', 'slick-carousel--hero'),
+	description: __('A block to display a full-width hero using image backgrounds.', 'slick-carousel--hero'),
 	icon: <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
 		<path d="m20 17.13h-20v-14.26h20zm-18.32-1.68h16.63v-10.9h-16.63z"/>
 		<path d="m5.87 12.62-2.01-2.63 2.01-2.57 1.33 1.03-1.21 1.56 1.22 1.6z"/>

@@ -8,7 +8,7 @@ import classnames from 'classnames';
  */
 const {Component, Fragment} = wp.element;
 const {IconButton, Spinner} = wp.components;
-const { __ } = wp.i18n; // Import __() from wp.i18n
+const { __ } = wp.i18n;
 const {BACKSPACE, DELETE} = wp.keycodes;
 const {withSelect} = wp.data;
 const {RichText} = wp.editor;

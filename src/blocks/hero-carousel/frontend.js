@@ -2,8 +2,8 @@ jQuery(document).ready(function ($) {
 
 	$('.wp-block-resource-blocks-hero-carousel').each(function () {
 
-		var $carousel = $(this);
-		var slideCount = null;
+		const $carousel = $(this);
+		let slideCount = null;
 
 		$carousel.on('init', function (event, slick) {
 			slideCount = slick.slideCount;
@@ -11,17 +11,28 @@ jQuery(document).ready(function ($) {
 			setCurrentSlideNumber(slick.currentSlide);
 		});
 
+		// $('.carousel').slick({
+		// 	slide: '.carousel-slide',
+		// 	arrows: false,
+		// 	dots: false,
+		// 	autoplay: true,
+		// 	pauseOnHover: false,
+		// }, 'refresh')
+		// 	.addClass('show');
+
 		$carousel.slick({
-			fade: ($carousel.data('effect') === 'fade'),
+			accessibility: true,
+			adaptiveHeight: false,
 			autoplay: $carousel.data('autoplay'),
+			autoplaySpeed: 3000,
+			arrows: $carousel.data('arrows'),
+			centerMode: false,
+			cssEase: 'ease',
+			dots: false,
+			fade: ($carousel.data('effect') === 'fade'),
+			lazyLoad: 'ondemand',
+			pauseOnHover: false,
 			speed: $carousel.data('speed'),
-			adaptiveHeight: true,
-			appendArrows: $carousel.data('arrows'),
-			pauseOnFocus: false,
-			cssEase: 'linear',
-			lazyLoad: 'anticipated',
-			prevArrow: '.exhibit-navigation .prev',
-			nextArrow: '.exhibit-navigation .next, .slick-slide img, .slick-slide div'
 		});
 
 		$carousel.on('beforeChange', function (event, slick, currentSlide, nextSlide) {

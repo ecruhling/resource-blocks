@@ -285,7 +285,7 @@ class SliderEdit extends Component {
 							onChange={this.toggleArrows}
 						/>
 						<TextControl
-							label={__('Speed')}
+							label={__('Transition Speed')}
 							type='number'
 							min='100'
 							max='500'
@@ -293,7 +293,7 @@ class SliderEdit extends Component {
 							onChange={this.setSpeed}
 						/>
 						<SelectControl
-							label={__('Effect')}
+							label={__('Transition Effect')}
 							value={effect}
 							onChange={this.setEffect}
 							options={effectOptions}
