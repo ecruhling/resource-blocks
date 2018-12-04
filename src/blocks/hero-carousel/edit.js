@@ -56,7 +56,6 @@ class SliderEdit extends Component {
 		super(...arguments);
 
 		this.getAvailableSizes = this.getAvailableSizes.bind(this);
-
 		this.onSelectImage = this.onSelectImage.bind(this);
 		this.onSelectImages = this.onSelectImages.bind(this);
 		this.setSpeed = this.setSpeed.bind(this);

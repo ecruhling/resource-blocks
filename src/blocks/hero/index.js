@@ -1,5 +1,5 @@
 /**
- * BLOCK: Hero Carousel
+ * BLOCK: Hero
  */
 
 /**
@@ -10,7 +10,7 @@ const {filter, every, map, some} = lodash;
 /**
  * WordPress dependencies
  */
-const {__} = wp.i18n; // Import __() from wp.i18n
+const {__} = wp.i18n;
 
 const {
 	createBlock,
@@ -19,93 +19,32 @@ const {
 
 const {
 	RichText,
-	mediaUpload,
+	BlockControls,
+	AlignmentToolbar,
 } = wp.editor;
-
-const {
-	createBlobURL,
-} = wp.blob;
-
-const {
-	G,
-	Path,
-	SVG,
-} = wp.components;
 
 /**
  * Internal dependencies
  */
 
-import {default as edit, pickRelevantMediaFiles} from './edit'; // import edit.js to use as 'edit' method
-
 import './style.scss';
 
 const blockAttributes = {
-	images: {
-		type: 'array',
-		default: [],
-		source: 'query',
-		selector: 'ul.wp-block-resource-blocks-hero-carousel .blocks-gallery-item',
-		query: {
-			url: {
-				source: 'attribute',
-				selector: 'img',
-				attribute: 'src',
-			},
-			link: {
-				source: 'attribute',
-				selector: 'img',
-				attribute: 'data-link',
-			},
-			alt: {
-				source: 'attribute',
-				selector: 'img',
-				attribute: 'alt',
-				default: '',
-			},
-			id: {
-				source: 'attribute',
-				selector: 'img',
-				attribute: 'data-id',
-			},
-			caption: {
-				type: 'string',
-				source: 'html',
-				selector: 'figcaption',
-			},
-		},
-	},
-	ids: {
-		type: 'array',
-		default: [],
-	},
-	imageCrop: {
-		type: 'boolean',
-		default: true,
-	},
-	autoplay: {
-		type: 'boolean',
-		default: true,
-	},
-	autoplaySpeed: {
-		type: 'string',
-		default: '3000',
-	},
-	arrows: {
-		type: 'boolean',
-		default: false,
-	},
-	speed: {
-		type: 'string',
-		default: '300',
-	},
-	effect: {
-		type: 'string',
-		default: 'fade',
-	},
+	heading: {source: "children", selector: ".hero-heading"},
+	text: {source: "children", selector: ".hero-text"},
+	alignment: {type: "string"},
+	position: {type: "string", default: "left"},
+	width: {type: "number", default: 500},
+	headingColor: {type: "string"},
+	textColor: {type: "string"},
+	buttonColor: {type: "string", default: "#ffffff"},
+	showButton: {type: "bool", default: !0},
+	buttonBackgroundColor: {type: "string", default: "#bc0d0d"},
+	buttonText: {type: "string", default: "Click Here"},
+	buttonURL: {type: "string", default: ""},
 };
 
-export const name = 'resource-blocks/hero-carousel';
+export const name = 'resource-blocks/hero';
 
 const parseShortcodeIds = (ids) => {
 	if (!ids) {
@@ -118,12 +57,13 @@ const parseShortcodeIds = (ids) => {
 };
 
 export const settings = {
-	title: __('Hero Carousel'),
-	description: __('A block to display a full-width hero using image backgrounds.'),
-	icon: <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-		<path d="m20 17.13h-20v-14.26h20zm-18.32-1.68h16.63v-10.9h-16.63z"/>
-		<path d="m5.87 12.62-2.01-2.63 2.01-2.57 1.33 1.03-1.21 1.56 1.22 1.6z"/>
-		<path d="m14.34 12.62-1.34-1.01 1.22-1.6-1.22-1.56 1.33-1.03 2.01 2.57z"/>
+	title: __('Hero'),
+	description: __('A block to display a full-width hero with overlayed text or buttons.'),
+	icon: <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+		<path d="M0,0h24v24H0V0z" fill="none"/>
+		<path
+			d="M21,4H3C1.9,4,1,4.9,1,6v12c0,1.1,0.9,2,2,2h18c1.1,0,2-0.9,2-2V6C23,4.9,22.1,4,21,4z M21,18H3V6h18V18z"/>
+		<polygon points="14.5 11 11 15.51 8.5 12.5 5 17 19 17"/>
 	</svg>,
 	category: 'resource-blocks',
 	keywords: [__('images'), __('photos')],
@@ -214,12 +154,15 @@ export const settings = {
 		],
 	},
 
-	edit,
+	edit({attributes}) {
+
+	},
 
 	save({attributes}) {
 		const {images, imageCrop, autoplay, autoplaySpeed, arrows, speed, effect} = attributes;
 		return (
-			<ul className={`${imageCrop ? 'is-cropped' : ''}`} data-autoplay={autoplay} data-autoplayspeed={autoplaySpeed} data-speed={speed}
+			<ul className={`${imageCrop ? 'is-cropped' : ''}`} data-autoplay={autoplay}
+				data-autoplayspeed={autoplaySpeed} data-speed={speed}
 				data-effect={effect} data-arrows={arrows}>
 				{images.map((image) => {
 
