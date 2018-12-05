@@ -55,9 +55,9 @@ export const settings = {
 		<polygon points="14.5 11 11 15.51 8.5 12.5 5 17 19 17"/>
 	</svg>,
 	category: 'resource-blocks',
-	keywords: [__('images'), __('photos')],
+	keywords: [__('images'), __('hero')],
 	attributes: blockAttributes,
-	edit({attributes, className, focus, setAttributes}) {
+	edit({attributes, className, focus, setAttributes,}) {
 		const {alignment, width, heading} = attributes;
 		const style = {textAlign: alignment, maxWidth: `${width}px`};
 
@@ -74,8 +74,11 @@ export const settings = {
 				</BlockControls>
 				<div className={className}>
 					<div className={`inner`} style={style}>
-						<RichText>
-							{heading}
+						<RichText tagName="h2"
+								  className="heading"
+								  value={heading}
+								  onChange={heading => setAttributes({heading})}
+								  placeholder="Heading">
 						</RichText>
 					</div>
 				</div>
@@ -89,11 +92,9 @@ export const settings = {
 		return (
 			<div className={className}>
 				<div className={`inner`} style={style}>
-					<RichText>
-						<h2 className={`hero__heading`}>
-							{heading}
-						</h2>
-					</RichText>
+					<h2 className={`hero__heading`}>
+						{heading}
+					</h2>
 				</div>
 			</div>
 		);
