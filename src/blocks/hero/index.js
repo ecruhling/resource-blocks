@@ -3,19 +3,18 @@
  */
 
 /**
- * External dependencies
- */
-const {filter, every, map, some} = lodash;
-
-/**
  * WordPress dependencies
  */
 const {__} = wp.i18n;
 
 const {
-	createBlock,
 	registerBlockType,
 } = wp.blocks;
+
+const {
+	Fragment,
+	createElement
+} = wp.element;
 
 const {
 	RichText,
@@ -30,8 +29,8 @@ const {
 import './style.scss';
 
 const blockAttributes = {
-	heading: {source: "children", selector: ".hero-heading"},
-	text: {source: "children", selector: ".hero-text"},
+	heading: {source: "children", selector: ".hero__heading"},
+	text: {source: "children", selector: ".hero__text"},
 	alignment: {type: "string"},
 	position: {type: "string", default: "left"},
 	width: {type: "number", default: 500},
@@ -41,20 +40,10 @@ const blockAttributes = {
 	showButton: {type: "bool", default: !0},
 	buttonBackgroundColor: {type: "string", default: "#bc0d0d"},
 	buttonText: {type: "string", default: "Click Here"},
-	buttonURL: {type: "string", default: ""},
+	buttonURL: {type: "string", default: ""}
 };
 
 export const name = 'resource-blocks/hero';
-
-const parseShortcodeIds = (ids) => {
-	if (!ids) {
-		return [];
-	}
-
-	return ids.split(',').map((id) => (
-		parseInt(id, 10)
-	));
-};
 
 export const settings = {
 	title: __('Hero'),
@@ -68,119 +57,45 @@ export const settings = {
 	category: 'resource-blocks',
 	keywords: [__('images'), __('photos')],
 	attributes: blockAttributes,
+	edit({attributes, className, focus, setAttributes}) {
+		const {alignment, width, heading} = attributes;
+		const style = {textAlign: alignment, maxWidth: `${width}px`};
 
-	transforms: {
-		from: [
-			{
-				type: 'block',
-				isMultiBlock: true,
-				blocks: ['core/image'],
-				transform: (attributes) => {
-					const validImages = filter(attributes, ({id, url}) => id && url);
-					if (validImages.length > 0) {
-						return createBlock(name, {
-							images: validImages.map(({id, url, alt, caption}) => ({id, url, alt, caption})),
-							ids: validImages.map(({id}) => id),
-						});
-					}
-					return createBlock(name);
-				},
-			},
-			{
-				type: 'shortcode',
-				tag: 'gallery',
-				attributes: {
-					images: {
-						type: 'array',
-						shortcode: ({named: {ids}}) => {
-							return parseShortcodeIds(ids).map((id) => ({
-								id,
-							}));
-						},
-					},
-					ids: {
-						type: 'array',
-						shortcode: ({named: {ids}}) => {
-							return parseShortcodeIds(ids);
-						},
-					},
-				},
-			},
-			{
-				// When created by drag and dropping multiple files on an insertion point
-				type: 'files',
-				isMatch(files) {
-					return files.length !== 1 && every(files, (file) => file.type.indexOf('image/') === 0);
-				},
-				transform(files, onChange) {
-					const block = createBlock('resource-blocks/hero-carousel', {
-						images: files.map((file) => pickRelevantMediaFiles({
-							url: createBlobURL(file),
-						})),
-					});
-					mediaUpload({
-						filesList: files,
-						onFileChange: (images) => {
-							const imagesAttr = images.map(
-								pickRelevantMediaFiles
-							);
-							onChange(block.clientId, {
-								ids: map(imagesAttr, 'id'),
-								images: imagesAttr,
-							});
-						},
-						allowedTypes: ['image'],
-					});
-					return block;
-				},
-			},
-		],
-		to: [
-			{
-				type: 'block',
-				blocks: ['core/image'],
-				transform: ({images}) => {
-					if (images.length > 0) {
-						return images.map(({id, url, alt, caption}) => createBlock('core/image', {
-							id,
-							url,
-							alt,
-							caption
-						}));
-					}
-					return createBlock('core/image');
-				},
-			},
-		],
-	},
+		function onChangeAlignment(updatedAlignment) {
+			setAttributes({alignment: updatedAlignment});
+		}
 
-	edit({attributes}) {
-
-	},
-
-	save({attributes}) {
-		const {images, imageCrop, autoplay, autoplaySpeed, arrows, speed, effect} = attributes;
 		return (
-			<ul className={`${imageCrop ? 'is-cropped' : ''}`} data-autoplay={autoplay}
-				data-autoplayspeed={autoplaySpeed} data-speed={speed}
-				data-effect={effect} data-arrows={arrows}>
-				{images.map((image) => {
+			<Fragment>
+				<BlockControls>
+					<AlignmentToolbar value={alignment}
+									  onChange={onChangeAlignment}>
+					</AlignmentToolbar>
+				</BlockControls>
+				<div className={className}>
+					<div className={`inner`} style={style}>
+						<RichText>
+							{heading}
+						</RichText>
+					</div>
+				</div>
+			</Fragment>
+		);
+	},
+	save({attributes, className}) {
+		const {alignment, width, heading} = attributes;
+		const style = {textAlign: alignment, maxWidth: `${width}px`};
 
-					const img = <img src={image.url} alt={image.alt} data-id={image.id} data-link={image.link}
-									 className={image.id ? `wp-image-${image.id} img-fluid d-none` : null}/>;
-
-					return (
-						<li key={image.id || image.url} className="blocks-carousel-slide">
-							<div className="carousel-image bg-image responsive-background-image">
-								{img}
-							</div>
-							{image.caption && image.caption.length > 0 && (
-								<RichText.Content tagName="figcaption" value={image.caption}/>
-							)}
-						</li>
-					);
-				})}
-			</ul>
+		return (
+			<div className={className}>
+				<div className={`inner`} style={style}>
+					<RichText>
+						<h2 className={`hero__heading`}>
+							{heading}
+						</h2>
+					</RichText>
+				</div>
+			</div>
 		);
 	},
 };
