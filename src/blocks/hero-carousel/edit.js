@@ -15,7 +15,6 @@ const {
 	DropZone,
 	FormFileUpload,
 	PanelBody,
-	RangeControl,
 	TextControl,
 	SelectControl,
 	ToggleControl,
@@ -63,6 +62,7 @@ class SliderEdit extends Component {
 		this.setEffect = this.setEffect.bind(this);
 		this.toggleAutoplay = this.toggleAutoplay.bind(this);
 		this.toggleArrows = this.toggleArrows.bind(this);
+		this.toggleDots = this.toggleDots.bind(this);
 		this.toggleImageCrop = this.toggleImageCrop.bind(this);
 		this.onRemoveImage = this.onRemoveImage.bind(this);
 		this.setImageAttributes = this.setImageAttributes.bind(this);
@@ -141,6 +141,10 @@ class SliderEdit extends Component {
 		this.setAttributes({arrows: !this.props.attributes.arrows});
 	}
 
+	toggleDots() {
+		this.setAttributes({dots: !this.props.attributes.dots});
+	}
+
 	toggleImageCrop() {
 		this.setAttributes({imageCrop: !this.props.attributes.imageCrop});
 	}
@@ -200,7 +204,7 @@ class SliderEdit extends Component {
 
 	render() {
 		const {attributes, isSelected, className, noticeOperations, noticeUI} = this.props;
-		const {images, imageCrop, autoplay, autoplaySpeed, arrows, speed, effect} = attributes;
+		const {images, imageCrop, autoplay, autoplaySpeed, arrows, dots, speed, effect} = attributes;
 
 		const dropZone = (
 			<DropZone
@@ -254,7 +258,7 @@ class SliderEdit extends Component {
 			);
 		}
 
-		// console.log(JSON.stringify(images));
+// console.log(JSON.stringify(images));
 
 		return (
 			<Fragment>
@@ -285,6 +289,11 @@ class SliderEdit extends Component {
 							label={__('Prev / Next Arrows')}
 							checked={!!arrows}
 							onChange={this.toggleArrows}
+						/>
+						<ToggleControl
+							label={__('Navigation Dots')}
+							checked={!!dots}
+							onChange={this.toggleDots}
 						/>
 						<TextControl
 							label={__('Transition Speed')}

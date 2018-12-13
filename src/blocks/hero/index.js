@@ -13,7 +13,6 @@ const {
 
 const {
 	Fragment,
-	createElement
 } = wp.element;
 
 const {
@@ -29,25 +28,58 @@ const {
 import './style.scss';
 
 const blockAttributes = {
-	heading: {source: "children", selector: ".hero__heading"},
-	text: {source: "children", selector: ".hero__text"},
-	alignment: {type: "string"},
-	position: {type: "string", default: "left"},
-	width: {type: "number", default: 500},
-	headingColor: {type: "string"},
-	textColor: {type: "string"},
-	buttonColor: {type: "string", default: "#ffffff"},
-	showButton: {type: "bool", default: !0},
-	buttonBackgroundColor: {type: "string", default: "#bc0d0d"},
-	buttonText: {type: "string", default: "Click Here"},
-	buttonURL: {type: "string", default: ""}
+	hero_heading: {
+		source: "children",
+		selector: ".hero-heading",
+	},
+	hero_text: {
+		source: "children",
+		selector: ".hero-text",
+	},
+	alignment: {
+		type: "string",
+	},
+	position: {
+		type: "string",
+		default: "left",
+	},
+	width: {
+		type: "number",
+		default: 500,
+	},
+	headingColor: {
+		type: "string",
+	},
+	textColor: {
+		type: "string",
+	},
+	buttonColor: {
+		type: "string",
+		default: "#ffffff",
+	},
+	showButton: {
+		type: "bool",
+		default: !0,
+	},
+	buttonBackgroundColor: {
+		type: "string",
+		default: "#bc0d0d",
+	},
+	buttonText: {
+		type: "string",
+		default: "Click Here",
+	},
+	buttonURL: {
+		type: "string",
+		default: "",
+	}
 };
 
 export const name = 'resource-blocks/hero';
 
 export const settings = {
 	title: __('Hero'),
-	description: __('A block to display a full-width hero with overlayed text or buttons.'),
+	description: __('A block to display a full-width hero with overlaid text or buttons.'),
 	icon: <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 		<path d="M0,0h24v24H0V0z" fill="none"/>
 		<path
@@ -58,7 +90,7 @@ export const settings = {
 	keywords: [__('images'), __('hero')],
 	attributes: blockAttributes,
 	edit({attributes, className, focus, setAttributes,}) {
-		const {alignment, width, heading} = attributes;
+		const {alignment, width, hero_heading} = attributes;
 		const style = {textAlign: alignment, maxWidth: `${width}px`};
 
 		function onChangeAlignment(updatedAlignment) {
@@ -75,10 +107,10 @@ export const settings = {
 				<div className={className}>
 					<div className={`inner`} style={style}>
 						<RichText tagName="h2"
-								  className="heading"
-								  value={heading}
-								  onChange={heading => setAttributes({heading})}
-								  placeholder="Heading">
+								  className="hero-heading"
+								  value={hero_heading}
+								  onChange={hero_heading => setAttributes({hero_heading})}
+								  placeholder="Hero Heading">
 						</RichText>
 					</div>
 				</div>
@@ -86,14 +118,14 @@ export const settings = {
 		);
 	},
 	save({attributes, className}) {
-		const {alignment, width, heading} = attributes;
+		const {alignment, width, hero_heading} = attributes;
 		const style = {textAlign: alignment, maxWidth: `${width}px`};
 
 		return (
 			<div className={className}>
 				<div className={`inner`} style={style}>
-					<h2 className={`hero__heading`}>
-						{heading}
+					<h2 className={`hero-heading`}>
+						{hero_heading}
 					</h2>
 				</div>
 			</div>

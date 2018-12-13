@@ -5,12 +5,12 @@
 /**
  * External dependencies
  */
-const {filter, every, map, some} = lodash;
+const {filter, every, map} = lodash;
 
 /**
  * WordPress dependencies
  */
-const {__} = wp.i18n; // Import __() from wp.i18n
+const {__} = wp.i18n;
 
 const {
 	createBlock,
@@ -26,17 +26,12 @@ const {
 	createBlobURL,
 } = wp.blob;
 
-const {
-	G,
-	Path,
-	SVG,
-} = wp.components;
-
 /**
  * Internal dependencies
  */
 
-import {default as edit, pickRelevantMediaFiles} from './edit'; // import edit.js to use as 'edit' method
+// import edit.js to use as 'edit' function
+import {default as edit, pickRelevantMediaFiles} from './edit';
 
 import './style.scss';
 
@@ -45,7 +40,7 @@ const blockAttributes = {
 		type: 'array',
 		default: [],
 		source: 'query',
-		selector: 'ul.wp-block-resource-blocks-hero-carousel .blocks-gallery-item',
+		selector: 'ul.wp-block-resource-blocks-hero-carousel .hero-carousel-item',
 		query: {
 			url: {
 				source: 'attribute',
@@ -93,7 +88,11 @@ const blockAttributes = {
 	},
 	arrows: {
 		type: 'boolean',
-		default: false,
+		default: true,
+	},
+	dots: {
+		type: 'boolean',
+		default: true,
 	},
 	speed: {
 		type: 'string',
@@ -217,10 +216,10 @@ export const settings = {
 	edit,
 
 	save({attributes}) {
-		const {images, imageCrop, autoplay, autoplaySpeed, arrows, speed, effect} = attributes;
+		const {images, imageCrop, autoplay, autoplaySpeed, arrows, dots, speed, effect} = attributes;
 		return (
 			<ul className={`${imageCrop ? 'is-cropped' : ''}`} data-autoplay={autoplay} data-autoplayspeed={autoplaySpeed} data-speed={speed}
-				data-effect={effect} data-arrows={arrows}>
+				data-effect={effect} data-arrows={arrows} data-dots={dots}>
 				{images.map((image) => {
 
 					const img = <img src={image.url} alt={image.alt} data-id={image.id} data-link={image.link}
