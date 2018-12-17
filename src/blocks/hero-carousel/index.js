@@ -40,7 +40,7 @@ const blockAttributes = {
 		type: 'array',
 		default: [],
 		source: 'query',
-		selector: 'ul.wp-block-resource-blocks-hero-carousel .hero-carousel-item',
+		selector: 'ul.wp-block-resource-blocks-hero-carousel .blocks-carousel-slide',
 		query: {
 			url: {
 				source: 'attribute',
@@ -223,7 +223,7 @@ export const settings = {
 				{images.map((image) => {
 
 					const img = <img src={image.url} alt={image.alt} data-id={image.id} data-link={image.link}
-									 className={image.id ? `wp-image-${image.id} img-fluid d-none` : null}/>;
+									 className={image.id ? `wp-image-${image.id} img-fluid d-none hero-carousel-item` : null}/>;
 
 					return (
 						<li key={image.id || image.url} className="blocks-carousel-slide">
