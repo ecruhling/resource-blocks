@@ -5,21 +5,32 @@
 /**
  * WordPress dependencies
  */
-const {__} = wp.i18n;
-const {RichText, MediaUpload, PlainText} = wp.editor;
-const {registerBlockType} = wp.blocks;
-const {Button} = wp.components;
+const { __ } = wp.i18n
+
+const {
+	RichText,
+	MediaUpload,
+	PlainText,
+} = wp.editor
+
+const {
+	registerBlockType,
+} = wp.blocks
+
+const {
+	Button,
+} = wp.components
 
 /**
  * Internal dependencies
  */
-import './style.scss';
-import './editor.scss';
+import './style.scss'
+import './editor.scss'
 
 /**
  * Block Name
  */
-export const name = 'resource-blocks/card';
+export const name = 'resource-blocks/card'
 
 /**
  * Block Attributes
@@ -42,7 +53,7 @@ const blockAttributes = {
 		attribute: 'src',
 		selector: '.card__image'
 	}
-};
+}
 
 /**
  * Block Settings
@@ -57,7 +68,7 @@ export const settings = {
 	</svg>,
 	category: 'resource-blocks',
 	attributes: blockAttributes,
-	edit({attributes, className, setAttributes}) {
+	edit ({ attributes, className, setAttributes }) {
 
 		const getImageButton = (openEvent) => {
 			if (attributes.imageUrl) {
@@ -67,7 +78,7 @@ export const settings = {
 						onClick={openEvent}
 						className="image"
 					/>
-				);
+				)
 			} else {
 				return (
 					<div className="button-container">
@@ -78,39 +89,41 @@ export const settings = {
 							Pick an image
 						</Button>
 					</div>
-				);
+				)
 			}
-		};
+		}
 
 		return (
 			<div className="container">
 				<MediaUpload
 					onSelect={media => {
-						setAttributes({imageAlt: media.alt, imageUrl: media.url});
+						setAttributes({ imageAlt: media.alt, imageUrl: media.url })
 					}}
 					type="image"
 					value={attributes.imageID}
-					render={({open}) => getImageButton(open)}
+					render={({ open }) => getImageButton(open)}
 				/>
 				<PlainText
-					onChange={content => setAttributes({title: content})}
+					onChange={content => setAttributes({ title: content })}
 					value={attributes.title}
 					placeholder="Your card title"
 					className="heading"
 				/>
 				<RichText
-					onChange={content => setAttributes({body: content})}
+					onChange={content => setAttributes({ body: content })}
 					value={attributes.body}
 					multiline="p"
 					placeholder="Your card text"
 				/>
 			</div>
-		);
+		)
 	},
-	save({attributes}) {
+	save ({ attributes }) {
 
 		const cardImage = (src, alt) => {
-			if (!src) return null;
+			if (!src) {
+				return null
+			}
 			if (alt) {
 				return (
 					<img
@@ -118,7 +131,7 @@ export const settings = {
 						src={src}
 						alt={alt}
 					/>
-				);
+				)
 			}
 
 			// No alt set, so let's hide it from screen readers
@@ -129,8 +142,8 @@ export const settings = {
 					alt=""
 					aria-hidden="true"
 				/>
-			);
-		};
+			)
+		}
 
 		return (
 			<div className="card">
@@ -142,11 +155,11 @@ export const settings = {
 					</div>
 				</div>
 			</div>
-		);
+		)
 	}
-};
+}
 
 /**
  * Register Block
  */
-registerBlockType(name, settings);
+registerBlockType(name, settings)

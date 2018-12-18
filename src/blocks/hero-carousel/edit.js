@@ -1,14 +1,28 @@
 /**
  * External Dependencies
  */
-const {filter, pick, get} = lodash;
+const { filter, pick, get } = lodash
 
 /**
  * WordPress dependencies
  */
-const {Component, Fragment} = wp.element;
+const {
+	__,
+	sprintf,
+} = wp.i18n
 
-const {__, sprintf} = wp.i18n;
+const {
+	BlockControls,
+	MediaUpload,
+	MediaPlaceholder,
+	InspectorControls,
+	mediaUpload,
+} = wp.editor
+
+const {
+	Component,
+	Fragment,
+} = wp.element
 
 const {
 	IconButton,
@@ -20,144 +34,147 @@ const {
 	ToggleControl,
 	Toolbar,
 	withNotices,
-} = wp.components;
-
-const {
-	BlockControls,
-	MediaUpload,
-	MediaPlaceholder,
-	InspectorControls,
-	mediaUpload,
-} = wp.editor;
+} = wp.components
 
 /**
  * Internal dependencies
  */
-import SliderImage from './slider-image';
+import SliderImage from './slider-image'
+import './editor.scss'
 
-import './editor.scss';
-
+/**
+ * Carousel Effect Options
+ */
 const effectOptions = [
-	{value: 'fade', label: __('Fade', 'hero-carousel')},
-	{value: 'scroll', label: __('Slide', 'hero-carousel')},
-];
+	{ value: 'fade', label: __('Fade', 'hero-carousel') },
+	{ value: 'scroll', label: __('Slide', 'hero-carousel') },
+]
 
-const ALLOWED_MEDIA_TYPES = ['image'];
+/**
+ * Allowed Media Types
+ */
+const ALLOWED_MEDIA_TYPES = ['image']
 
+/**
+ * Media Files Picker
+ */
 export const pickRelevantMediaFiles = (image) => {
-	const imageProps = pick(image, ['alt', 'id', 'link', 'caption']);
-	imageProps.url = get(image, ['sizes', 'large', 'url']) || get(image, ['media_details', 'sizes', 'large', 'source_url']) || image.url;
-	return imageProps;
-};
+	const imageProps = pick(image, ['alt', 'id', 'link', 'caption'])
+	imageProps.url = get(image, ['sizes', 'large', 'url']) || get(image, ['media_details', 'sizes', 'large', 'source_url']) || image.url
+	return imageProps
+}
 
+/**
+ * SliderEdit
+ */
 class SliderEdit extends Component {
-	constructor() {
-		super(...arguments);
+	constructor () {
+		super(...arguments)
 
-		this.getAvailableSizes = this.getAvailableSizes.bind(this);
-		this.onSelectImage = this.onSelectImage.bind(this);
-		this.onSelectImages = this.onSelectImages.bind(this);
-		this.setSpeed = this.setSpeed.bind(this);
-		this.setAutoplaySpeed = this.setAutoplaySpeed.bind(this);
-		this.setEffect = this.setEffect.bind(this);
-		this.toggleAutoplay = this.toggleAutoplay.bind(this);
-		this.toggleArrows = this.toggleArrows.bind(this);
-		this.toggleDots = this.toggleDots.bind(this);
-		this.toggleImageCrop = this.toggleImageCrop.bind(this);
-		this.onRemoveImage = this.onRemoveImage.bind(this);
-		this.setImageAttributes = this.setImageAttributes.bind(this);
-		this.addFiles = this.addFiles.bind(this);
-		this.uploadFromFiles = this.uploadFromFiles.bind(this);
-		this.setAttributes = this.setAttributes.bind(this);
+		this.getAvailableSizes = this.getAvailableSizes.bind(this)
+		this.onSelectImage = this.onSelectImage.bind(this)
+		this.onSelectImages = this.onSelectImages.bind(this)
+		this.setSpeed = this.setSpeed.bind(this)
+		this.setAutoplaySpeed = this.setAutoplaySpeed.bind(this)
+		this.setEffect = this.setEffect.bind(this)
+		this.toggleAutoplay = this.toggleAutoplay.bind(this)
+		this.toggleArrows = this.toggleArrows.bind(this)
+		this.toggleDots = this.toggleDots.bind(this)
+		this.toggleImageCrop = this.toggleImageCrop.bind(this)
+		this.onRemoveImage = this.onRemoveImage.bind(this)
+		this.setImageAttributes = this.setImageAttributes.bind(this)
+		this.addFiles = this.addFiles.bind(this)
+		this.uploadFromFiles = this.uploadFromFiles.bind(this)
+		this.setAttributes = this.setAttributes.bind(this)
 
 		this.state = {
 			selectedImage: null,
-		};
+		}
 	}
 
-	getAvailableSizes() {
-		return get(this.props.image, ['media_details', 'sizes'], {});
+	getAvailableSizes () {
+		return get(this.props.image, ['media_details', 'sizes'], {})
 	}
 
-	setAttributes(attributes) {
+	setAttributes (attributes) {
 		if (attributes.ids) {
-			throw new Error('The "ids" attribute should not be changed directly. It is managed automatically when "images" attribute changes');
+			throw new Error('The "ids" attribute should not be changed directly. It is managed automatically when "images" attribute changes')
 		}
 
 		if (attributes.images) {
 			attributes = {
 				...attributes,
 				ids: map(attributes.images, 'id'),
-			};
+			}
 		}
 
-		this.props.setAttributes(attributes);
+		this.props.setAttributes(attributes)
 	}
 
-	onSelectImage(index) {
+	onSelectImage (index) {
 		return () => {
 			if (this.state.selectedImage !== index) {
 				this.setState({
 					selectedImage: index,
-				});
+				})
 			}
-		};
+		}
 	}
 
-	onRemoveImage(index) {
+	onRemoveImage (index) {
 		return () => {
-			const images = filter(this.props.attributes.images, (img, i) => index !== i);
-			this.setState({selectedImage: null});
+			const images = filter(this.props.attributes.images, (img, i) => index !== i)
+			this.setState({ selectedImage: null })
 			this.setAttributes({
 				images,
-			});
-		};
+			})
+		}
 	}
 
-	onSelectImages(images) {
+	onSelectImages (images) {
 		// console.log(JSON.stringify(images));
 		this.props.setAttributes({
 			images: images.map((image) => pickRelevantMediaFiles(image)),
-		});
+		})
 	}
 
-	setSpeed(value) {
-		this.setAttributes({speed: value});
+	setSpeed (value) {
+		this.setAttributes({ speed: value })
 	}
 
-	setAutoplaySpeed(value) {
-		this.setAttributes({autoplaySpeed: value});
+	setAutoplaySpeed (value) {
+		this.setAttributes({ autoplaySpeed: value })
 	}
 
-	setEffect(value) {
-		this.setAttributes({effect: value});
+	setEffect (value) {
+		this.setAttributes({ effect: value })
 	}
 
-	toggleAutoplay() {
-		this.setAttributes({autoplay: !this.props.attributes.autoplay});
+	toggleAutoplay () {
+		this.setAttributes({ autoplay: !this.props.attributes.autoplay })
 	}
 
-	toggleArrows() {
-		this.setAttributes({arrows: !this.props.attributes.arrows});
+	toggleArrows () {
+		this.setAttributes({ arrows: !this.props.attributes.arrows })
 	}
 
-	toggleDots() {
-		this.setAttributes({dots: !this.props.attributes.dots});
+	toggleDots () {
+		this.setAttributes({ dots: !this.props.attributes.dots })
 	}
 
-	toggleImageCrop() {
-		this.setAttributes({imageCrop: !this.props.attributes.imageCrop});
+	toggleImageCrop () {
+		this.setAttributes({ imageCrop: !this.props.attributes.imageCrop })
 	}
 
-	getImageCropHelp(checked) {
-		return checked ? __('Thumbnails are cropped to align.') : __('Thumbnails are not cropped.');
+	getImageCropHelp (checked) {
+		return checked ? __('Thumbnails are cropped to align.') : __('Thumbnails are not cropped.')
 	}
 
-	setImageAttributes(index, attributes) {
-		const {attributes: {images}} = this.props;
-		const {setAttributes} = this;
+	setImageAttributes (index, attributes) {
+		const { attributes: { images } } = this.props
+		const { setAttributes } = this
 		if (!images[index]) {
-			return;
+			return
 		}
 		setAttributes({
 			images: [
@@ -168,47 +185,47 @@ class SliderEdit extends Component {
 				},
 				...images.slice(index + 1),
 			],
-		});
+		})
 	}
 
-	uploadFromFiles(event) {
-		this.addFiles(event.target.files);
+	uploadFromFiles (event) {
+		this.addFiles(event.target.files)
 	}
 
-	addFiles(files) {
-		const currentImages = this.props.attributes.images || [];
-		const {noticeOperations} = this.props;
-		const {setAttributes} = this;
+	addFiles (files) {
+		const currentImages = this.props.attributes.images || []
+		const { noticeOperations } = this.props
+		const { setAttributes } = this
 		mediaUpload({
 			allowedTypes: ALLOWED_MEDIA_TYPES,
 			filesList: files,
 			onFileChange: (images) => {
-				const imagesNormalized = images.map((image) => pickRelevantMediaFiles(image));
+				const imagesNormalized = images.map((image) => pickRelevantMediaFiles(image))
 				setAttributes({
 					images: currentImages.concat(imagesNormalized),
-				});
+				})
 			},
 			onError: noticeOperations.createErrorNotice,
-		});
+		})
 	}
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate (prevProps) {
 		// Deselect images when deselecting the block
 		if (!this.props.isSelected && prevProps.isSelected) {
 			this.setState({
 				selectedImage: null,
 				captionSelected: false,
-			});
+			})
 		}
 	}
 
-	render() {
-		const {attributes, isSelected, className, noticeOperations, noticeUI} = this.props;
-		const {images, imageCrop, autoplay, autoplaySpeed, arrows, dots, speed, effect} = attributes;
+	render () {
+		const { attributes, isSelected, className, noticeOperations, noticeUI } = this.props
+		const { images, imageCrop, autoplay, autoplaySpeed, arrows, dots, speed, effect } = attributes
 
 		const dropZone = (
 			<DropZone onFilesDrop={this.addFiles}/>
-		);
+		)
 
 		const controls = (
 			<BlockControls>
@@ -220,7 +237,7 @@ class SliderEdit extends Component {
 							multiple
 							gallery
 							value={images.map((img) => img.id)}
-							render={({open}) => (
+							render={({ open }) => (
 								<IconButton
 									className="components-toolbar__control"
 									label={__('Edit Carousel', 'hero-carousel')}
@@ -232,7 +249,7 @@ class SliderEdit extends Component {
 					</Toolbar>
 				)}
 			</BlockControls>
-		);
+		)
 
 		if (images.length === 0) {
 			return (
@@ -253,7 +270,7 @@ class SliderEdit extends Component {
 						onError={noticeOperations.createErrorNotice}
 					/>
 				</Fragment>
-			);
+			)
 		}
 
 // console.log(JSON.stringify(images));
@@ -314,7 +331,7 @@ class SliderEdit extends Component {
 					{dropZone}
 					{images.map((img, index) => {
 						/* translators: %1$d is the order number of the image, %2$d is the total number of images. */
-						const ariaLabel = __(sprintf('image %1$d of %2$d in slider', (index + 1), images.length));
+						const ariaLabel = __(sprintf('image %1$d of %2$d in slider', (index + 1), images.length))
 
 						return (
 							<li className="blocks-gallery-item" key={img.id || img.url}>
@@ -330,7 +347,7 @@ class SliderEdit extends Component {
 									aria-label={ariaLabel}
 								/>
 							</li>
-						);
+						)
 					})}
 					{isSelected &&
 					<li className="blocks-gallery-item has-add-item-button">
@@ -348,8 +365,8 @@ class SliderEdit extends Component {
 					}
 				</ul>
 			</Fragment>
-		);
+		)
 	}
 }
 
-export default withNotices(SliderEdit);
+export default withNotices(SliderEdit)

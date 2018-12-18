@@ -5,36 +5,41 @@
 /**
  * External dependencies
  */
-const {filter, every, map} = lodash;
+const { filter, every, map } = lodash
 
 /**
  * WordPress dependencies
  */
-const {__} = wp.i18n;
-
-const {
-	createBlock,
-	registerBlockType,
-} = wp.blocks;
+const { __ } = wp.i18n
 
 const {
 	RichText,
 	mediaUpload,
-} = wp.editor;
+} = wp.editor
+
+const {
+	createBlock,
+	registerBlockType,
+} = wp.blocks
 
 const {
 	createBlobURL,
-} = wp.blob;
+} = wp.blob
 
 /**
  * Internal dependencies
  */
+import { default as edit, pickRelevantMediaFiles } from './edit'
+import './style.scss'
 
-// import edit.js to use as 'edit' function
-import {default as edit, pickRelevantMediaFiles} from './edit';
+/**
+ * Block Name
+ */
+export const name = 'resource-blocks/hero-carousel'
 
-import './style.scss';
-
+/**
+ * Block Attributes
+ */
 const blockAttributes = {
 	images: {
 		type: 'array',
@@ -102,20 +107,11 @@ const blockAttributes = {
 		type: 'string',
 		default: 'fade',
 	},
-};
+}
 
-export const name = 'resource-blocks/hero-carousel';
-
-const parseShortcodeIds = (ids) => {
-	if (!ids) {
-		return [];
-	}
-
-	return ids.split(',').map((id) => (
-		parseInt(id, 10)
-	));
-};
-
+/**
+ * Block Settings
+ */
 export const settings = {
 	title: __('Hero Carousel'),
 	description: __('A block to display a full-width hero using image backgrounds.'),
@@ -135,14 +131,14 @@ export const settings = {
 				isMultiBlock: true,
 				blocks: ['core/image'],
 				transform: (attributes) => {
-					const validImages = filter(attributes, ({id, url}) => id && url);
+					const validImages = filter(attributes, ({ id, url }) => id && url)
 					if (validImages.length > 0) {
 						return createBlock(name, {
-							images: validImages.map(({id, url, alt, caption}) => ({id, url, alt, caption})),
-							ids: validImages.map(({id}) => id),
-						});
+							images: validImages.map(({ id, url, alt, caption }) => ({ id, url, alt, caption })),
+							ids: validImages.map(({ id }) => id),
+						})
 					}
-					return createBlock(name);
+					return createBlock(name)
 				},
 			},
 			{
@@ -151,16 +147,16 @@ export const settings = {
 				attributes: {
 					images: {
 						type: 'array',
-						shortcode: ({named: {ids}}) => {
+						shortcode: ({ named: { ids } }) => {
 							return parseShortcodeIds(ids).map((id) => ({
 								id,
-							}));
+							}))
 						},
 					},
 					ids: {
 						type: 'array',
-						shortcode: ({named: {ids}}) => {
-							return parseShortcodeIds(ids);
+						shortcode: ({ named: { ids } }) => {
+							return parseShortcodeIds(ids)
 						},
 					},
 				},
@@ -168,29 +164,29 @@ export const settings = {
 			{
 				// When created by drag and dropping multiple files on an insertion point
 				type: 'files',
-				isMatch(files) {
-					return files.length !== 1 && every(files, (file) => file.type.indexOf('image/') === 0);
+				isMatch (files) {
+					return files.length !== 1 && every(files, (file) => file.type.indexOf('image/') === 0)
 				},
-				transform(files, onChange) {
+				transform (files, onChange) {
 					const block = createBlock('resource-blocks/hero-carousel', {
 						images: files.map((file) => pickRelevantMediaFiles({
 							url: createBlobURL(file),
 						})),
-					});
+					})
 					mediaUpload({
 						filesList: files,
 						onFileChange: (images) => {
 							const imagesAttr = images.map(
 								pickRelevantMediaFiles
-							);
+							)
 							onChange(block.clientId, {
 								ids: map(imagesAttr, 'id'),
 								images: imagesAttr,
-							});
+							})
 						},
 						allowedTypes: ['image'],
-					});
-					return block;
+					})
+					return block
 				},
 			},
 		],
@@ -198,16 +194,16 @@ export const settings = {
 			{
 				type: 'block',
 				blocks: ['core/image'],
-				transform: ({images}) => {
+				transform: ({ images }) => {
 					if (images.length > 0) {
-						return images.map(({id, url, alt, caption}) => createBlock('core/image', {
+						return images.map(({ id, url, alt, caption }) => createBlock('core/image', {
 							id,
 							url,
 							alt,
 							caption
-						}));
+						}))
 					}
-					return createBlock('core/image');
+					return createBlock('core/image')
 				},
 			},
 		],
@@ -215,15 +211,16 @@ export const settings = {
 
 	edit,
 
-	save({attributes}) {
-		const {images, imageCrop, autoplay, autoplaySpeed, arrows, dots, speed, effect} = attributes;
+	save ({ attributes }) {
+		const { images, imageCrop, autoplay, autoplaySpeed, arrows, dots, speed, effect } = attributes
 		return (
-			<ul className={`${imageCrop ? 'is-cropped' : ''}`} data-autoplay={autoplay} data-autoplayspeed={autoplaySpeed} data-speed={speed}
-				data-effect={effect} data-arrows={arrows} data-dots={dots}>
+			<ul className={`${imageCrop ? 'is-cropped' : ''}`} data-autoplay={autoplay} data-autoplayspeed={autoplaySpeed}
+					data-speed={speed}
+					data-effect={effect} data-arrows={arrows} data-dots={dots}>
 				{images.map((image) => {
 
 					const img = <img src={image.url} alt={image.alt} data-id={image.id} data-link={image.link}
-									 className={image.id ? `wp-image-${image.id} img-fluid d-none hero-carousel-item` : null}/>;
+													 className={image.id ? `wp-image-${image.id} img-fluid d-none hero-carousel-item` : null}/>
 
 					return (
 						<li key={image.id || image.url} className="blocks-carousel-slide">
@@ -234,11 +231,24 @@ export const settings = {
 								<RichText.Content tagName="figcaption" value={image.caption}/>
 							)}
 						</li>
-					);
+					)
 				})}
 			</ul>
-		);
+		)
 	},
-};
+}
 
-registerBlockType(name, settings);
+/**
+ * Parse Shortcode ID function
+ */
+const parseShortcodeIds = (ids) => {
+	if (!ids) {
+		return []
+	}
+
+	return ids.split(',').map((id) => (
+		parseInt(id, 10)
+	))
+}
+
+registerBlockType(name, settings)

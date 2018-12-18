@@ -5,7 +5,13 @@
 /**
  * WordPress dependencies
  */
-const {__} = wp.i18n;
+const { __ } = wp.i18n
+
+const {
+	RichText,
+	BlockControls,
+	AlignmentToolbar,
+} = wp.editor;
 
 const {
 	registerBlockType,
@@ -15,18 +21,19 @@ const {
 	Fragment,
 } = wp.element;
 
-const {
-	RichText,
-	BlockControls,
-	AlignmentToolbar,
-} = wp.editor;
-
 /**
  * Internal dependencies
  */
-
 import './style.scss';
 
+/**
+ * Block Name
+ */
+export const name = 'resource-blocks/hero';
+
+/**
+ * Block Attributes
+ */
 const blockAttributes = {
 	hero_heading: {
 		source: "children",
@@ -75,8 +82,9 @@ const blockAttributes = {
 	}
 };
 
-export const name = 'resource-blocks/hero';
-
+/**
+ * Block Settings
+ */
 export const settings = {
 	title: __('Hero'),
 	description: __('A block to display a full-width hero with overlaid text or buttons.'),
