@@ -4,3 +4,4 @@
 
 import './blocks/hero';
 import './blocks/hero-carousel';
+import './blocks/card';

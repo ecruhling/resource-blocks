@@ -115,7 +115,7 @@ class SliderEdit extends Component {
 	}
 
 	onSelectImages(images) {
-		console.log(JSON.stringify(images));
+		// console.log(JSON.stringify(images));
 		this.props.setAttributes({
 			images: images.map((image) => pickRelevantMediaFiles(image)),
 		});
@@ -207,9 +207,7 @@ class SliderEdit extends Component {
 		const {images, imageCrop, autoplay, autoplaySpeed, arrows, dots, speed, effect} = attributes;
 
 		const dropZone = (
-			<DropZone
-				onFilesDrop={this.addFiles}
-			/>
+			<DropZone onFilesDrop={this.addFiles}/>
 		);
 
 		const controls = (

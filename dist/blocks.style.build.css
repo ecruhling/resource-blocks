@@ -174,3 +174,14 @@
   .wp-block-resource-blocks-hero-carousel.aligncenter .blocks-gallery-item figure {
     -ms-flex-pack: center;
         justify-content: center; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
