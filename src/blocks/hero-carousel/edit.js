@@ -225,7 +225,7 @@ class SliderEdit extends Component {
 							render={({open}) => (
 								<IconButton
 									className="components-toolbar__control"
-									label={__('Edit Slider', 'hero-carousel')}
+									label={__('Edit Carousel', 'hero-carousel')}
 									icon="edit"
 									onClick={open}
 								/>
@@ -244,7 +244,7 @@ class SliderEdit extends Component {
 						icon="format-gallery"
 						className={className}
 						labels={{
-							title: __('Slider', 'hero-carousel'),
+							title: __('Carousel', 'hero-carousel'),
 							instructions: __('Drag images, upload new ones or select files from your library.', 'hero-carousel'),
 						}}
 						onSelect={this.onSelectImages}

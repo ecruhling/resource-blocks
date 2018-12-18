@@ -86,7 +86,7 @@ class SliderImage extends Component {
 	}
 
 	render() {
-		const {url, alt, id, link, isSelected, caption, onRemove, setAttributes, 'aria-label': ariaLabel} = this.props;
+		const {url, alt, id, isSelected, caption, onRemove, setAttributes, 'aria-label': ariaLabel} = this.props;
 
 		let href;
 
