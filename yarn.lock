@@ -1255,10 +1255,10 @@ cgb-dev-utils@^1.5.0:
     cross-spawn "5.1.0"
     update-notifier "^2.3.0"
 
-cgb-scripts@1.13.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/cgb-scripts/-/cgb-scripts-1.13.0.tgz#d9dd1c5b3e7ef2bdd6cb15a26c0badab454d0788"
-  integrity sha512-9YDJhIOdJzWdQcaDF9z6EnbLUBezlNAupgUOUjiTHMhwAR0otgveU5OLY+yVku8DSeHj4iAQpipug0OiS1sYrg==
+cgb-scripts@1.14.0:
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/cgb-scripts/-/cgb-scripts-1.14.0.tgz#4d52ebc254884a43fa2aead3940df4162288c8f5"
+  integrity sha512-uI2vg8Y2b4hZ+fM3Hgk0Dhqu2LkDHB5x00i6ixtB8MP4qns2vTbQb8KQ67QniR9tDtT0POspSdA/JH/aMBk/DQ==
   dependencies:
     autoprefixer "^7.2.4"
     babel-core "^6.25.0"
