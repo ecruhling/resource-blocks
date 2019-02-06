@@ -10,8 +10,12 @@ const { __ } = wp.i18n
 const {
 	RichText,
 	MediaUpload,
-	PlainText,
+	BlockControls,
 } = wp.editor
+
+const {
+	Component,
+} = wp.element
 
 const {
 	registerBlockType,
@@ -38,21 +42,64 @@ export const name = 'resource-blocks/card'
 const blockAttributes = {
 	title: {
 		source: 'text',
-		selector: '.card__title'
+		selector: '.hero-title'
 	},
 	body: {
 		type: 'array',
 		source: 'children',
-		selector: '.card__body'
+		selector: '.hero-body'
 	},
 	imageAlt: {
 		attribute: 'alt',
-		selector: '.card__image'
+		selector: '.hero-image'
 	},
 	imageUrl: {
 		attribute: 'src',
-		selector: '.card__image'
+		selector: '.hero-image'
 	}
+}
+
+/**
+ * RichText Edit
+ */
+export default class RichTextEdit extends Component {
+
+	//standard constructor for a component
+	constructor () {
+		super(...arguments)
+
+		//make sure we bind `this` to the current component within our callbacks
+		this.setupEditor = this.setupEditor.bind(this)
+		this.onChangeContent = this.onChangeContent.bind(this)
+		this.state = {
+			//we don't need our component to manage a state in this instance
+		}
+	}
+
+	//same as before, except `this` actually references this component
+	setupEditor (editor) {
+		this.editor = editor
+	}
+
+	//no change here again, except the binding of `this`
+	onChangeContent (newContent) {
+		this.props.setAttributes({ content: newContent })
+	}
+
+	//slightly different pattern of syntax here, we're returning a function
+	onClickShortcodeButton () {
+		return () => {
+
+			//the content we want to insert
+			const myContent = '[myshortcode][/myshortcode]'
+
+			if (this.editor) {
+				//execCommand is a TinyMCE function
+				this.editor.execCommand('mceInsertContent', false, myContent)
+			}
+		}
+	}
+
 }
 
 /**
@@ -60,7 +107,7 @@ const blockAttributes = {
  */
 export const settings = {
 	title: __('Card'),
-	description: __('A card block'),
+	description: __('A hero with text overlay block'),
 	icon: <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
 		<path d="m20 19.23h-20v-18.46h20zm-18.32-2.18h16.63v-14.1h-16.63z"/>
 		<path
@@ -94,7 +141,7 @@ export const settings = {
 		}
 
 		return (
-			<div className="wp-block-resource-blocks-card container">
+		<div className="wp-block-resource-blocks-card container">
 				<MediaUpload
 					onSelect={media => {
 						setAttributes({ imageAlt: media.alt, imageUrl: media.url })
@@ -103,17 +150,27 @@ export const settings = {
 					value={attributes.imageID}
 					render={({ open }) => getImageButton(open)}
 				/>
-				<PlainText
+				<BlockControls
+					controls={[
+						{
+							icon: 'edit',
+							title: __('Insert Shortcode'),
+							onClick: this.onClickShortcodeButton,
+						},
+					]}
+				/>
+				<RichText
 					onChange={content => setAttributes({ title: content })}
 					value={attributes.title}
-					placeholder="Your card title"
-					className="heading"
+					placeholder="Hero title"
+					className="hero-heading"
 				/>
 				<RichText
 					onChange={content => setAttributes({ body: content })}
 					value={attributes.body}
 					multiline="p"
-					placeholder="Your card text"
+					placeholder="Hero text"
+					className="hero-text"
 				/>
 			</div>
 		)
@@ -127,7 +184,7 @@ export const settings = {
 			if (alt) {
 				return (
 					<img
-						className="card__image"
+						className="hero-image"
 						src={src}
 						alt={alt}
 					/>
@@ -137,7 +194,7 @@ export const settings = {
 			// No alt set, so let's hide it from screen readers
 			return (
 				<img
-					className="card__image"
+					className="hero-image"
 					src={src}
 					alt=""
 					aria-hidden="true"
@@ -146,11 +203,11 @@ export const settings = {
 		}
 
 		return (
-			<div className="card">
+			<div className="hero">
 				{cardImage(attributes.imageUrl, attributes.imageAlt)}
-				<div className="card__content">
-					<h3 className="card__title">{attributes.title}</h3>
-					<div className="card__body">
+				<div className="hero-content">
+					<h3 className="hero-title">{attributes.title}</h3>
+					<div className="hero-body">
 						{attributes.body}
 					</div>
 				</div>

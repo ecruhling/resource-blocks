@@ -185,3 +185,10 @@
  *
  * CSS for both Frontend+Backend.
  */
+.wp-block-resource-blocks-card {
+  position: relative; }
+  .wp-block-resource-blocks-card .hero-content {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0; }
