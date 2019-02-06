@@ -86,7 +86,7 @@ export const settings = {
 							onClick={openEvent}
 							className="button button-large"
 						>
-							Pick an image
+							Select Image
 						</Button>
 					</div>
 				)
@@ -94,7 +94,7 @@ export const settings = {
 		}
 
 		return (
-			<div className="container">
+			<div className="wp-block-resource-blocks-card container">
 				<MediaUpload
 					onSelect={media => {
 						setAttributes({ imageAlt: media.alt, imageUrl: media.url })

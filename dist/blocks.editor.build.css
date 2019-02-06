@@ -202,4 +202,7 @@ ul.wp-block-gallery li {
  * which makes it higher in priority.
  */
 /* style */
+.wp-block-resource-blocks-card .button-container {
+  text-align: center; }
+
 /* editor */
