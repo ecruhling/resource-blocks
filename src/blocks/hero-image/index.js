@@ -13,8 +13,14 @@ const { __ } = wp.i18n
 const {
 	RichText,
 	InspectorControls,
-	ColorPalette,
+	MediaUpload,
+	PanelColorSettings,
 } = wp.editor
+
+const {
+	PanelBody,
+	Button,
+} = wp.components
 
 const {
 	registerBlockType,
@@ -47,8 +53,12 @@ const blockAttributes = {
 	},
 	overlayColor: {
 		type: 'string',
-		default: 'orange'
+		default: null
 	},
+	backgroundImage: {
+		type: 'string',
+		default: '',
+	}
 }
 
 /**
@@ -56,7 +66,7 @@ const blockAttributes = {
  */
 export const settings = {
 	title: __('Hero Image'),
-	description: __('A block to display a full-width hero image with overlaid text or buttons.'),
+	description: __('Full-width hero image with overlaid text.'),
 	icon: <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 		<path d="M0,0h24v24H0V0z" fill="none"/>
 		<path
@@ -67,9 +77,9 @@ export const settings = {
 	keywords: [__('images'), __('hero')],
 	attributes: blockAttributes,
 
-	edit ({ setAttributes, attributes, className, focus }) {
+	edit ({ setAttributes, attributes, className }) {
 
-		const { fontColor, overlayColor } = attributes
+		const { fontColor, overlayColor, backgroundImage } = attributes
 
 		function onTextChange (changes) {
 			setAttributes({
@@ -89,40 +99,58 @@ export const settings = {
 			})
 		}
 
+		function onImageSelect (imageObject) {
+			setAttributes({
+				backgroundImage: imageObject.sizes.full.url
+			})
+		}
+
 		return ([
 			<InspectorControls>
-				<div>
-					<strong>Select a font color:</strong>
-					<ColorPalette
-						value={fontColor}
-						onChange={onTextColorChange}
+				<PanelColorSettings title={__('Color Settings')}
+														colorSettings={[
+															{
+																value: overlayColor,
+																onChange: onOverlayColorChange,
+																label: __('Overlay Color'),
+															},
+															{
+																value: fontColor,
+																onChange: onTextColorChange,
+																label: __('Text Color'),
+															},
+														]}>
+				</PanelColorSettings>
+				<PanelBody title={ __( 'Background Image' ) }>
+					<MediaUpload
+						onSelect={onImageSelect}
+						type="image"
+						value={backgroundImage}
+						render={({ open }) => (
+							<Button onClick={open}
+							className="editor-post-featured-image__toggle">
+								Change / Upload Background Image
+							</Button>
+						)}
 					/>
-				</div>
-				<div>
-					<strong>Select an overlay color:</strong>
-					<ColorPalette
-						value={overlayColor}
-						onChange={onOverlayColorChange}
-					/>
-				</div>
+				</PanelBody>
 			</InspectorControls>,
 			<div
 				className={className}
 				style={{
-					backgroundImage: `url('http://placehold.it/1440x700')`,
+					backgroundImage: `url(${backgroundImage})`,
 					backgroundSize: 'cover',
 					backgroundPosition: 'center'
 				}}>
 				<div className="overlay"
 						 style={{ background: overlayColor }}
-				></div>
-				{/* Adding an overlay element */}
+				>&nbsp;</div>
 				<RichText
 					tagName="h2"
-					className="content" // adding a class we can target
+					className="content"
 					value={attributes.textString}
 					onChange={onTextChange}
-					placeholder="Enter your text here!"
+					placeholder="Enter text"
 					style={{ color: fontColor }}
 				/>
 			</div>
@@ -131,19 +159,19 @@ export const settings = {
 
 	save ({ attributes, className }) {
 
-		const { fontColor, overlayColor } = attributes
+		const { fontColor, overlayColor, backgroundImage } = attributes
 
 		return (
 			<div
 				className={className}
 				style={{
-					backgroundImage: `url('http://placehold.it/1440x700')`,
+					backgroundImage: `url(${backgroundImage})`,
 					backgroundSize: 'cover',
 					backgroundPosition: 'center'
 				}}>
 				<div className="overlay"
 						 style={{ background: overlayColor }}
-				></div>
+				>&nbsp;</div>
 				<h2 className="content" style={{ color: fontColor }}>{attributes.textString}</h2>
 			</div>
 		)

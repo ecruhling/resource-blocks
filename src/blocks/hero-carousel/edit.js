@@ -132,7 +132,6 @@ class SliderEdit extends Component {
 	}
 
 	onSelectImages (images) {
-		// console.log(JSON.stringify(images));
 		this.props.setAttributes({
 			images: images.map((image) => pickRelevantMediaFiles(image)),
 		})
@@ -273,8 +272,6 @@ class SliderEdit extends Component {
 			)
 		}
 
-// console.log(JSON.stringify(images));
-
 		return (
 			<Fragment>
 				{controls}
@@ -330,7 +327,7 @@ class SliderEdit extends Component {
 				<ul className={`${className} ${imageCrop ? 'is-cropped' : ''}`}>
 					{dropZone}
 					{images.map((img, index) => {
-						/* translators: %1$d is the order number of the image, %2$d is the total number of images. */
+
 						const ariaLabel = __(sprintf('image %1$d of %2$d in slider', (index + 1), images.length))
 
 						return (
