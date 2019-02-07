@@ -116,7 +116,8 @@ export const settings = {
 	title: __('Hero Carousel'),
 	description: __('Full-width image carousel using background images.'),
 	icon: <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-		<path d="m20 17.13h-20v-14.26h20zm-18.32-1.68h16.63v-10.9h-16.63z"/>
+		<path d="m0 0h20v20h-20z" fill="none"/>
+		<path d="m20 18h-20v-16h20zm-18-2h16v-12h-16z"/>
 		<path d="m5.87 12.62-2.01-2.63 2.01-2.57 1.33 1.03-1.21 1.56 1.22 1.6z"/>
 		<path d="m14.34 12.62-1.34-1.01 1.22-1.6-1.22-1.56 1.33-1.03 2.01 2.57z"/>
 	</svg>,

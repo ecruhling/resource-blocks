@@ -67,11 +67,10 @@ const blockAttributes = {
 export const settings = {
 	title: __('Hero Image'),
 	description: __('Full-width hero image with overlaid text.'),
-	icon: <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-		<path d="M0,0h24v24H0V0z" fill="none"/>
-		<path
-			d="M21,4H3C1.9,4,1,4.9,1,6v12c0,1.1,0.9,2,2,2h18c1.1,0,2-0.9,2-2V6C23,4.9,22.1,4,21,4z M21,18H3V6h18V18z"/>
-		<polygon points="14.5 11 11 15.51 8.5 12.5 5 17 19 17"/>
+	icon: <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+		<path d="m0 0h20v20h-20z" fill="none"/>
+		<path d="m12.62 8.52-3.67 4.73-2.62-3.16-3.66 4.72h14.66z"/>
+		<path d="m20 18h-20v-16h20zm-18-2h16v-12h-16z"/>
 	</svg>,
 	category: 'resource-blocks',
 	keywords: [__('images'), __('hero')],
@@ -121,14 +120,14 @@ export const settings = {
 															},
 														]}>
 				</PanelColorSettings>
-				<PanelBody title={ __( 'Background Image' ) }>
+				<PanelBody title={__('Background Image')}>
 					<MediaUpload
 						onSelect={onImageSelect}
 						type="image"
 						value={backgroundImage}
 						render={({ open }) => (
 							<Button onClick={open}
-							className="editor-post-featured-image__toggle">
+											className="editor-post-featured-image__toggle">
 								Change / Upload Background Image
 							</Button>
 						)}
