@@ -11,7 +11,6 @@ const {IconButton, Spinner} = wp.components;
 const { __ } = wp.i18n;
 const {BACKSPACE, DELETE} = wp.keycodes;
 const {withSelect} = wp.data;
-const {RichText} = wp.editor;
 const {isBlobURL} = wp.blob;
 
 class SliderImage extends Component {
@@ -19,7 +18,6 @@ class SliderImage extends Component {
 		super(...arguments);
 
 		this.onImageClick = this.onImageClick.bind(this);
-		this.onSelectCaption = this.onSelectCaption.bind(this);
 		this.onKeyDown = this.onKeyDown.bind(this);
 		this.bindContainer = this.bindContainer.bind(this);
 
@@ -30,18 +28,6 @@ class SliderImage extends Component {
 
 	bindContainer(ref) {
 		this.container = ref;
-	}
-
-	onSelectCaption() {
-		if (!this.state.captionSelected) {
-			this.setState({
-				captionSelected: true,
-			});
-		}
-
-		if (!this.props.isSelected) {
-			this.props.onSelect();
-		}
 	}
 
 	onImageClick() {
@@ -76,13 +62,6 @@ class SliderImage extends Component {
 			});
 		}
 
-		// unselect the caption so when the user selects other image and comeback
-		// the caption is not immediately selected
-		if (this.state.captionSelected && !isSelected && prevProps.isSelected) {
-			this.setState({
-				captionSelected: false,
-			});
-		}
 	}
 
 	render() {
@@ -129,17 +108,6 @@ class SliderImage extends Component {
 				</div>
 				}
 				{href ? <a href={href}>{img}</a> : img}
-				{(!RichText.isEmpty(caption) || isSelected) ? (
-					<RichText
-						tagName="figcaption"
-						placeholder={__('Write caption…')}
-						value={caption}
-						isSelected={this.state.captionSelected}
-						onChange={(newCaption) => setAttributes({caption: newCaption})}
-						unstableOnFocus={this.onSelectCaption}
-						inlineToolbar
-					/>
-				) : null}
 			</figure>
 		);
 		/* eslint-enable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/onclick-has-role, jsx-a11y/click-events-have-key-events */

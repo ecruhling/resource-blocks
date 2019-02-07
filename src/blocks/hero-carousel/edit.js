@@ -59,7 +59,7 @@ const ALLOWED_MEDIA_TYPES = ['image']
  * Media Files Picker
  */
 export const pickRelevantMediaFiles = (image) => {
-	const imageProps = pick(image, ['alt', 'id', 'link', 'caption'])
+	const imageProps = pick(image, ['alt', 'id', 'link'])
 	imageProps.url = get(image, ['sizes', 'large', 'url']) || get(image, ['media_details', 'sizes', 'large', 'source_url']) || image.url
 	return imageProps
 }
@@ -213,7 +213,6 @@ class SliderEdit extends Component {
 		if (!this.props.isSelected && prevProps.isSelected) {
 			this.setState({
 				selectedImage: null,
-				captionSelected: false,
 			})
 		}
 	}
@@ -340,7 +339,6 @@ class SliderEdit extends Component {
 									onRemove={this.onRemoveImage(index)}
 									onSelect={this.onSelectImage(index)}
 									setAttributes={(attrs) => this.setImageAttributes(index, attrs)}
-									caption={img.caption}
 									aria-label={ariaLabel}
 								/>
 							</li>

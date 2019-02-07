@@ -8,16 +8,16 @@ jQuery(document).ready(function ($) {
 		const $carousel = $(this);
 
 		$carousel.slick({
-			lazyLoad: 'ondemand',
-			cssEase: 'ease',
 			adaptiveHeight: false,
-			centerMode: false,
-			pauseOnHover: false,
+			arrows: $carousel.data('arrows'),
 			autoplay: $carousel.data('autoplay'),
 			autoplaySpeed: $carousel.data('autoplayspeed'),
-			arrows: $carousel.data('arrows'),
+			centerMode: false,
+			cssEase: 'ease',
 			dots: $carousel.data('dots'),
 			fade: ($carousel.data('effect') === 'fade'),
+			lazyLoad: 'ondemand',
+			pauseOnHover: false,
 			speed: $carousel.data('speed'),
 		});
 

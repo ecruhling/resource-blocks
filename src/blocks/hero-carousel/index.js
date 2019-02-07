@@ -13,7 +13,6 @@ const { filter, every, map } = lodash
 const { __ } = wp.i18n
 
 const {
-	RichText,
 	mediaUpload,
 } = wp.editor
 
@@ -67,11 +66,6 @@ const blockAttributes = {
 				source: 'attribute',
 				selector: 'img',
 				attribute: 'data-id',
-			},
-			caption: {
-				type: 'string',
-				source: 'html',
-				selector: 'figcaption',
 			},
 		},
 	},
@@ -135,7 +129,7 @@ export const settings = {
 					const validImages = filter(attributes, ({ id, url }) => id && url)
 					if (validImages.length > 0) {
 						return createBlock(name, {
-							images: validImages.map(({ id, url, alt, caption }) => ({ id, url, alt, caption })),
+							images: validImages.map(({ id, url, alt }) => ({ id, url, alt })),
 							ids: validImages.map(({ id }) => id),
 						})
 					}
@@ -197,11 +191,10 @@ export const settings = {
 				blocks: ['core/image'],
 				transform: ({ images }) => {
 					if (images.length > 0) {
-						return images.map(({ id, url, alt, caption }) => createBlock('core/image', {
+						return images.map(({ id, url, alt }) => createBlock('core/image', {
 							id,
 							url,
 							alt,
-							caption
 						}))
 					}
 					return createBlock('core/image')
@@ -214,10 +207,16 @@ export const settings = {
 
 	save ({ attributes }) {
 		const { images, imageCrop, autoplay, autoplaySpeed, arrows, dots, speed, effect } = attributes
+
 		return (
-			<ul className={`${imageCrop ? 'is-cropped' : ''}`} data-autoplay={autoplay} data-autoplayspeed={autoplaySpeed}
+			<ul className={`${imageCrop ? 'is-cropped' : ''}`}
+					data-autoplay={autoplay}
+					data-autoplayspeed={autoplaySpeed}
 					data-speed={speed}
-					data-effect={effect} data-arrows={arrows} data-dots={dots}>
+					data-effect={effect}
+					data-arrows={arrows}
+					data-dots={dots}>
+
 				{images.map((image) => {
 
 					const img = <img src={image.url} alt={image.alt} data-id={image.id} data-link={image.link}
@@ -228,9 +227,6 @@ export const settings = {
 							<div className="carousel-image bg-image responsive-background-image">
 								{img}
 							</div>
-							{image.caption && image.caption.length > 0 && (
-								<RichText.Content tagName="figcaption" value={image.caption}/>
-							)}
 						</li>
 					)
 				})}
