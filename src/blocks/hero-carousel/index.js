@@ -73,10 +73,6 @@ const blockAttributes = {
 		type: 'array',
 		default: [],
 	},
-	imageCrop: {
-		type: 'boolean',
-		default: true,
-	},
 	autoplay: {
 		type: 'boolean',
 		default: true,
@@ -205,10 +201,10 @@ export const settings = {
 	edit,
 
 	save ({ attributes }) {
-		const { images, imageCrop, autoplay, autoplaySpeed, arrows, dots, speed, effect } = attributes
+		const { images, autoplay, autoplaySpeed, arrows, dots, speed, effect } = attributes
 
 		return (
-			<ul className={`${imageCrop ? 'is-cropped' : ''}`}
+			<ul className={``}
 					data-autoplay={autoplay}
 					data-autoplayspeed={autoplaySpeed}
 					data-speed={speed}

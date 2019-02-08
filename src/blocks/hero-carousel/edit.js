@@ -80,7 +80,6 @@ class SliderEdit extends Component {
 		this.toggleAutoplay = this.toggleAutoplay.bind(this)
 		this.toggleArrows = this.toggleArrows.bind(this)
 		this.toggleDots = this.toggleDots.bind(this)
-		this.toggleImageCrop = this.toggleImageCrop.bind(this)
 		this.onRemoveImage = this.onRemoveImage.bind(this)
 		this.setImageAttributes = this.setImageAttributes.bind(this)
 		this.addFiles = this.addFiles.bind(this)
@@ -161,14 +160,6 @@ class SliderEdit extends Component {
 		this.setAttributes({ dots: !this.props.attributes.dots })
 	}
 
-	toggleImageCrop () {
-		this.setAttributes({ imageCrop: !this.props.attributes.imageCrop })
-	}
-
-	getImageCropHelp (checked) {
-		return checked ? __('Thumbnails are cropped to align.') : __('Thumbnails are not cropped.')
-	}
-
 	setImageAttributes (index, attributes) {
 		const { attributes: { images } } = this.props
 		const { setAttributes } = this
@@ -219,7 +210,7 @@ class SliderEdit extends Component {
 
 	render () {
 		const { attributes, isSelected, className, noticeOperations, noticeUI } = this.props
-		const { images, imageCrop, autoplay, autoplaySpeed, arrows, dots, speed, effect } = attributes
+		const { images, autoplay, autoplaySpeed, arrows, dots, speed, effect } = attributes
 
 		const dropZone = (
 			<DropZone onFilesDrop={this.addFiles}/>
@@ -277,12 +268,6 @@ class SliderEdit extends Component {
 				<InspectorControls>
 					<PanelBody title={__('Carousel Settings')}>
 						<ToggleControl
-							label={__('Crop Images')}
-							checked={!!imageCrop}
-							onChange={this.toggleImageCrop}
-							help={this.getImageCropHelp}
-						/>
-						<ToggleControl
 							label={__('Autoplay')}
 							checked={!!autoplay}
 							onChange={this.toggleAutoplay}
@@ -323,7 +308,7 @@ class SliderEdit extends Component {
 					</PanelBody>
 				</InspectorControls>
 				{noticeUI}
-				<ul className={`${className} ${imageCrop ? 'is-cropped' : ''}`}>
+				<ul className={`${className}`}>
 					{dropZone}
 					{images.map((img, index) => {
 

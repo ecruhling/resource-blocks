@@ -28,7 +28,7 @@ function enqueue_block_assets()
 		filemtime(plugin_dir_path(__DIR__) . 'dist/blocks.style.build.css')
 	);
 
-	if ( !is_admin() ) {
+	if ( !is_admin() ) { // front-end only
 		wp_enqueue_style(
 			'slick',
 			plugins_url( 'vendor/slick.css', __DIR__ ),
