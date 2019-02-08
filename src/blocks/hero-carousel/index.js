@@ -229,7 +229,7 @@ export const settings = {
 
 					return (
 						<li key={image.id || image.url} className="blocks-carousel-slide">
-							<div className="carousel-image bg-image responsive-background-image">
+							<div className="carousel-image bg-image srcset-background-image">
 								{img}
 							</div>
 						</li>

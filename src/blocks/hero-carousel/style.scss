@@ -1,8 +1,26 @@
 /**
- * #.# Styles
+ * Hero Carousel Styles
  *
  * CSS for both Frontend+Backend.
  */
+
+.bg-image {
+  min-height: 350px;
+  position: relative;
+
+  &::before { // fix for IE & Firefox aspect ratio CSS padding
+	content: "";
+	display: block;
+	height: 0;
+	padding-bottom: 50%;
+  }
+}
+
+.srcset-background-image { // cannot optimize properties because background-image is written inline
+  background-position: 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 
 .wp-block-resource-blocks-hero-carousel {
   display: flex;
@@ -62,24 +80,6 @@
 
 	  img {
 		display: inline;
-	  }
-	}
-  }
-
-  // Cropped
-  &.is-cropped .blocks-gallery-image,
-  &.is-cropped .blocks-gallery-item {
-	a,
-	img {
-	  // IE11 doesn't support object-fit, so just make sure images aren't skewed.
-	  // The following rules are for all browsers.
-	  width: 100%;
-
-	  // IE11 doesn't read rules inside this query. They are applied only to modern browsers.
-	  @supports (position: sticky) {
-		height: 100%;
-		flex: 1;
-		object-fit: cover;
 	  }
 	}
   }

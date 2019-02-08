@@ -311,7 +311,7 @@ class SliderEdit extends Component {
 							label={__('Center Mode')}
 							checked={!!centerMode}
 							onChange={this.toggleCenterMode}
-							help='Enables centered view with partial Prev / Next slides'
+							help='Enables centered view with partial Prev / Next slides - Use with odd numbered slidesToShow counts'
 						/>
 						<TextControl
 							label={__('Transition Speed')}

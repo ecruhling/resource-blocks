@@ -46,7 +46,7 @@ function enqueue_block_assets()
 
 		wp_enqueue_script(
 			'resource-blocks-frontend-js',
-			plugins_url('dist/blocks.frontend.js', __DIR__),
+			plugins_url('dist/blocks.frontend.build.js', __DIR__),
 			['jquery', 'slick'],
 			filemtime(plugin_dir_path(__DIR__) . 'dist/blocks.frontend.js')
 		);

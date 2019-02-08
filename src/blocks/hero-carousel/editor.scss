@@ -1,5 +1,5 @@
 /**
- * #.# Editor Styles
+ * Hero Carousel Editor Styles
  *
  * CSS for just Backend enqueued after style.scss
  * which makes it higher in priority.
@@ -67,24 +67,6 @@
 
 	  img {
 		display: inline;
-	  }
-	}
-  }
-
-  // Cropped
-  &.is-cropped .blocks-gallery-image,
-  &.is-cropped .blocks-gallery-item {
-	a,
-	img {
-	  // IE11 doesn't support object-fit, so just make sure images aren't skewed.
-	  // The following rules are for all browsers.
-	  width: 100%;
-
-	  // IE11 doesn't read rules inside this query. They are applied only to modern browsers.
-	  @supports (position: sticky) {
-		height: 100%;
-		flex: 1;
-		object-fit: cover;
 	  }
 	}
   }

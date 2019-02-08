@@ -30,10 +30,24 @@
  * that are used across the project.
 */
 /**
- * #.# Styles
+ * Hero Carousel Styles
  *
  * CSS for both Frontend+Backend.
  */
+.bg-image {
+  min-height: 350px;
+  position: relative; }
+  .bg-image::before {
+    content: "";
+    display: block;
+    height: 0;
+    padding-bottom: 50%; }
+
+.srcset-background-image {
+  background-position: 50%;
+  background-size: cover;
+  background-repeat: no-repeat; }
+
 .wp-block-resource-blocks-hero-carousel {
   display: -ms-flexbox;
   display: flex;
@@ -96,21 +110,6 @@
       .wp-block-resource-blocks-hero-carousel .blocks-gallery-image figcaption img,
       .wp-block-resource-blocks-hero-carousel .blocks-gallery-item figcaption img {
         display: inline; }
-  .wp-block-resource-blocks-hero-carousel.is-cropped .blocks-gallery-image a,
-  .wp-block-resource-blocks-hero-carousel.is-cropped .blocks-gallery-image img,
-  .wp-block-resource-blocks-hero-carousel.is-cropped .blocks-gallery-item a,
-  .wp-block-resource-blocks-hero-carousel.is-cropped .blocks-gallery-item img {
-    width: 100%; }
-    @supports ((position: -webkit-sticky) or (position: sticky)) {
-      .wp-block-resource-blocks-hero-carousel.is-cropped .blocks-gallery-image a,
-      .wp-block-resource-blocks-hero-carousel.is-cropped .blocks-gallery-image img,
-      .wp-block-resource-blocks-hero-carousel.is-cropped .blocks-gallery-item a,
-      .wp-block-resource-blocks-hero-carousel.is-cropped .blocks-gallery-item img {
-        height: 100%;
-        -ms-flex: 1;
-            flex: 1;
-        -o-object-fit: cover;
-           object-fit: cover; } }
   .wp-block-resource-blocks-hero-carousel .blocks-gallery-image,
   .wp-block-resource-blocks-hero-carousel .blocks-gallery-item {
     width: calc(100% / 2 - 8px); }
