@@ -73,6 +73,10 @@ const blockAttributes = {
 		type: 'array',
 		default: [],
 	},
+	adaptiveHeight: {
+		type: 'boolean',
+		default: false,
+	},
 	autoplay: {
 		type: 'boolean',
 		default: true,
@@ -201,10 +205,11 @@ export const settings = {
 	edit,
 
 	save ({ attributes }) {
-		const { images, autoplay, autoplaySpeed, arrows, dots, speed, effect } = attributes
+		const { images, adaptiveHeight, autoplay, autoplaySpeed, arrows, dots, speed, effect } = attributes
 
 		return (
 			<ul className={``}
+					data-adaptiveheight={adaptiveHeight}
 					data-autoplay={autoplay}
 					data-autoplayspeed={autoplaySpeed}
 					data-speed={speed}

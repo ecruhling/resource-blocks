@@ -77,6 +77,7 @@ class SliderEdit extends Component {
 		this.setSpeed = this.setSpeed.bind(this)
 		this.setAutoplaySpeed = this.setAutoplaySpeed.bind(this)
 		this.setEffect = this.setEffect.bind(this)
+		this.toggleAdaptiveHeight = this.toggleAdaptiveHeight.bind(this)
 		this.toggleAutoplay = this.toggleAutoplay.bind(this)
 		this.toggleArrows = this.toggleArrows.bind(this)
 		this.toggleDots = this.toggleDots.bind(this)
@@ -148,6 +149,10 @@ class SliderEdit extends Component {
 		this.setAttributes({ effect: value })
 	}
 
+	toggleAdaptiveHeight () {
+		this.setAttributes({ adaptiveHeight: !this.props.attributes.adaptiveHeight })
+	}
+
 	toggleAutoplay () {
 		this.setAttributes({ autoplay: !this.props.attributes.autoplay })
 	}
@@ -210,7 +215,7 @@ class SliderEdit extends Component {
 
 	render () {
 		const { attributes, isSelected, className, noticeOperations, noticeUI } = this.props
-		const { images, autoplay, autoplaySpeed, arrows, dots, speed, effect } = attributes
+		const { images, adaptiveHeight, autoplay, autoplaySpeed, arrows, dots, speed, effect } = attributes
 
 		const dropZone = (
 			<DropZone onFilesDrop={this.addFiles}/>
@@ -267,6 +272,12 @@ class SliderEdit extends Component {
 				{controls}
 				<InspectorControls>
 					<PanelBody title={__('Carousel Settings')}>
+						<ToggleControl
+							label={__('Adaptive Height')}
+							checked={!!adaptiveHeight}
+							onChange={this.toggleAdaptiveHeight}
+							help={__('Enables adaptive height for single slide horizontal carousels.')}
+						/>
 						<ToggleControl
 							label={__('Autoplay')}
 							checked={!!autoplay}

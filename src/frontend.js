@@ -8,7 +8,7 @@ jQuery(document).ready(function ($) {
 		const $carousel = $(this);
 
 		$carousel.slick({
-			adaptiveHeight: false,
+			adaptiveHeight: $carousel.data('adaptiveheight'),
 			arrows: $carousel.data('arrows'),
 			autoplay: $carousel.data('autoplay'),
 			autoplaySpeed: $carousel.data('autoplayspeed'),
