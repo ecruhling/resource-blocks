@@ -118,7 +118,6 @@ export const settings = {
 	category: 'resource-blocks',
 	keywords: [__('images'), __('photos')],
 	attributes: blockAttributes,
-
 	transforms: {
 		from: [
 			{
