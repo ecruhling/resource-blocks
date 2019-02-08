@@ -3,11 +3,6 @@
  */
 
 /**
- * External dependencies
- */
-const { filter, every, map } = lodash
-
-/**
  * WordPress dependencies
  */
 const { __ } = wp.i18n
@@ -212,7 +207,7 @@ export const settings = {
 		const { images, adaptiveHeight, autoplay, autoplaySpeed, arrows, centerMode, dots, speed, effect } = attributes
 
 		return (
-			<ul className={``}
+			<ul className='hero-carousel'
 					data-adaptiveheight={adaptiveHeight}
 					data-autoplay={autoplay}
 					data-autoplayspeed={autoplaySpeed}
@@ -225,7 +220,7 @@ export const settings = {
 				{images.map((image) => {
 
 					const img = <img src={image.url} alt={image.alt} data-id={image.id} data-link={image.link}
-													 className={image.id ? `wp-image-${image.id} img-fluid d-none hero-carousel-item` : null}/>
+													 style={{ display: 'none' }} className={image.id ? `wp-image-${image.id} img-fluid d-none hero-carousel-item` : null}/>
 
 					return (
 						<li key={image.id || image.url} className="blocks-carousel-slide">
@@ -238,19 +233,6 @@ export const settings = {
 			</ul>
 		)
 	},
-}
-
-/**
- * Parse Shortcode ID function
- */
-const parseShortcodeIds = (ids) => {
-	if (!ids) {
-		return []
-	}
-
-	return ids.split(',').map((id) => (
-		parseInt(id, 10)
-	))
 }
 
 registerBlockType(name, settings)
