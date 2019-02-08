@@ -89,6 +89,10 @@ const blockAttributes = {
 		type: 'boolean',
 		default: true,
 	},
+	centerMode: {
+		type: 'boolean',
+		default: false,
+	},
 	dots: {
 		type: 'boolean',
 		default: true,
@@ -205,7 +209,7 @@ export const settings = {
 	edit,
 
 	save ({ attributes }) {
-		const { images, adaptiveHeight, autoplay, autoplaySpeed, arrows, dots, speed, effect } = attributes
+		const { images, adaptiveHeight, autoplay, autoplaySpeed, arrows, centerMode, dots, speed, effect } = attributes
 
 		return (
 			<ul className={``}
@@ -215,6 +219,7 @@ export const settings = {
 					data-speed={speed}
 					data-effect={effect}
 					data-arrows={arrows}
+					data-centermode={centerMode}
 					data-dots={dots}>
 
 				{images.map((image) => {

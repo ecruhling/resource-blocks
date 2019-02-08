@@ -80,6 +80,7 @@ class SliderEdit extends Component {
 		this.toggleAdaptiveHeight = this.toggleAdaptiveHeight.bind(this)
 		this.toggleAutoplay = this.toggleAutoplay.bind(this)
 		this.toggleArrows = this.toggleArrows.bind(this)
+		this.toggleCenterMode = this.toggleCenterMode.bind(this)
 		this.toggleDots = this.toggleDots.bind(this)
 		this.onRemoveImage = this.onRemoveImage.bind(this)
 		this.setImageAttributes = this.setImageAttributes.bind(this)
@@ -161,6 +162,10 @@ class SliderEdit extends Component {
 		this.setAttributes({ arrows: !this.props.attributes.arrows })
 	}
 
+	toggleCenterMode () {
+		this.setAttributes({ centerMode: !this.props.attributes.centerMode })
+	}
+
 	toggleDots () {
 		this.setAttributes({ dots: !this.props.attributes.dots })
 	}
@@ -215,7 +220,7 @@ class SliderEdit extends Component {
 
 	render () {
 		const { attributes, isSelected, className, noticeOperations, noticeUI } = this.props
-		const { images, adaptiveHeight, autoplay, autoplaySpeed, arrows, dots, speed, effect } = attributes
+		const { images, adaptiveHeight, autoplay, autoplaySpeed, arrows, centerMode, dots, speed, effect } = attributes
 
 		const dropZone = (
 			<DropZone onFilesDrop={this.addFiles}/>
@@ -276,7 +281,7 @@ class SliderEdit extends Component {
 							label={__('Adaptive Height')}
 							checked={!!adaptiveHeight}
 							onChange={this.toggleAdaptiveHeight}
-							help={__('Enables adaptive height for single slide horizontal carousels.')}
+							help={__('Enables adaptive height for single slide horizontal carousels')}
 						/>
 						<ToggleControl
 							label={__('Autoplay')}
@@ -302,6 +307,12 @@ class SliderEdit extends Component {
 							checked={!!dots}
 							onChange={this.toggleDots}
 						/>
+						<ToggleControl
+							label={__('Center Mode')}
+							checked={!!centerMode}
+							onChange={this.toggleCenterMode}
+							help='Enables centered view with partial Prev / Next slides'
+						/>
 						<TextControl
 							label={__('Transition Speed')}
 							type='number'
@@ -323,7 +334,7 @@ class SliderEdit extends Component {
 					{dropZone}
 					{images.map((img, index) => {
 
-						const ariaLabel = __(sprintf('image %1$d of %2$d in slider', (index + 1), images.length))
+						const ariaLabel = __(sprintf('image %1$d of %2$d in carousel', (index + 1), images.length))
 
 						return (
 							<li className="blocks-gallery-item" key={img.id || img.url}>
