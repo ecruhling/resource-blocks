@@ -5,20 +5,6 @@
  * that are used across the project.
 */
 /**
- * #.# Editor Styles
- *
- * CSS for just Backend enqueued after style.scss
- * which makes it higher in priority.
- */
-/* style */
-/* editor */
-/**
- * #.# Common SCSS
- *
- * Can include things like variables and mixins
- * that are used across the project.
-*/
-/**
  * Hero Carousel Editor Styles
  *
  * CSS for just Backend enqueued after style.scss
@@ -188,19 +174,3 @@ ul.wp-block-gallery li {
   -webkit-transform: translate(-50%, -50%);
       -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%); }
-/**
- * #.# Common SCSS
- *
- * Can include things like variables and mixins
- * that are used across the project.
-*/
-/**
- * #.# Editor Styles
- *
- * CSS for just Backend enqueued after style.scss
- * which makes it higher in priority.
- */
-/* style */
-/* editor */
-.wp-block-resource-blocks-card .button-container {
-  text-align: center; }
