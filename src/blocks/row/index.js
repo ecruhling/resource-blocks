@@ -51,7 +51,7 @@ const ALLOWED_BLOCKS = ['resource-blocks/column']
  * @return {Object[]} Columns layout configuration.
  */
 const getColumnsTemplate = memoize((columns) => {
-	return times(columns, () => ['resource-blocks/column'])
+	return times(columns, () => ['resource-blocks/column', { className: 'column' }])
 })
 
 /**
@@ -70,7 +70,7 @@ export const name = 'resource-blocks/row'
 const blockAttributes = {
 	columns: {
 		type: 'number',
-		default: 2,
+		default: 1,
 	},
 }
 
@@ -86,6 +86,7 @@ export const settings = {
 	</svg>,
 	category: 'resource-blocks',
 	attributes: blockAttributes,
+	supports: { align: ['wide', 'full'] },
 	edit ({ attributes, setAttributes, className }) {
 
 		const { columns } = attributes
