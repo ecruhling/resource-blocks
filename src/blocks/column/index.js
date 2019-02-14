@@ -1,9 +1,21 @@
+import classnames from 'classnames'
+
 /**
  * WordPress dependencies
  */
 const { __ } = wp.i18n
 
 const {
+	PanelBody,
+	TextControl,
+} = wp.components
+
+const {
+	Fragment,
+} = wp.element
+
+const {
+	InspectorControls,
 	InnerBlocks,
 } = wp.editor
 
@@ -17,6 +29,16 @@ const {
 export const name = 'resource-blocks/column'
 
 /**
+ * Block Attributes
+ */
+const blockAttributes = {
+	columns: {
+		type: 'number',
+		default: 1,
+	},
+}
+
+/**
  * Block Settings
  */
 export const settings = {
@@ -28,18 +50,43 @@ export const settings = {
 	</svg>,
 	description: __('Single Bootstrap column block.'),
 	category: 'resource-blocks',
+	attributes: blockAttributes,
 	supports: {
 		inserter: false,
 		reusable: false,
 		html: false,
 	},
 
-	edit () {
-		return <InnerBlocks templateLock={false}/>
+	edit ({ attributes, setAttributes, className }) {
+
+		const { columns } = attributes
+		const classes = classnames(className, `class-in-column-block`)
+
+		return (
+			<Fragment>
+				<InspectorControls>
+					<PanelBody title={__('Column Settings')}>
+						<TextControl
+							label="xs-class"
+							value={ className }
+							onChange={ ( className ) => setState( { className } ) }
+						/>
+					</PanelBody>
+				</InspectorControls>
+				<div className={classes}>
+					<InnerBlocks templateLock={false}/>
+				</div>
+			</Fragment>
+		)
 	},
 
-	save () {
-		return <div className={'class-in-column-block'}><InnerBlocks.Content/></div>
+	save ({ attributes }) {
+
+		const { columns } = attributes
+
+		return <div className={columns}>
+			<InnerBlocks.Content/>
+		</div>
 	},
 }
 
