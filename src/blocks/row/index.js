@@ -58,6 +58,7 @@ const getColumnsTemplate = memoize((columns) => {
  * Internal dependencies
  */
 import './style.scss'
+import './editor.scss'
 
 /**
  * Block Name
@@ -90,7 +91,7 @@ export const settings = {
 	edit ({ attributes, setAttributes, className }) {
 
 		const { columns } = attributes
-		const classes = classnames(className, `col-${columns}`)
+		const classes = classnames(className, `row`)
 
 		return (
 			<Fragment>
@@ -109,7 +110,7 @@ export const settings = {
 						/>
 					</PanelBody>
 				</InspectorControls>
-				<div className={className}>
+				<div className={classes}>
 					<InnerBlocks
 						template={getColumnsTemplate(columns)}
 						templateLock="all"

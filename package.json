@@ -12,6 +12,7 @@
     "cgb-scripts": "1.14.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.11",
-    "memize": "^1.0.5"
+    "memize": "^1.0.5",
+    "sass-svg-uri": "^1.0.0"
   }
 }
