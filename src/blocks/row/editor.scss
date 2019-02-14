@@ -14,7 +14,7 @@
 	> .editor-block-list__layout { // the row that actually contains the columns - include make-row mixin to create the .row class
 	  @include make-row();
 
-	  background: svg-uri("<svg height='6' viewBox='0 0 20 6' width='20' xmlns='http://www.w3.org/2000/svg'><path d='m19 0v2.5h-18v-2.5h-1v2.5 1 2.5h1v-2.5h18v2.5h1v-2.5-1-2.5z' fill='#EEEEEE'/></svg>") no-repeat 50% / contain;
+	  background: svg-uri("<svg height='6' viewBox='0 0 20 6' width='20' xmlns='http://www.w3.org/2000/svg'><path d='m19 0v2.5h-18v-2.5h-1v2.5 1 2.5h1v-2.5h18v2.5h1v-2.5-1-2.5z' fill='#EEEEEE'/></svg>") no-repeat 50% / 100%;
 
 	  > .wp-block { // select the .wp-block directly inside the new .row to create the .column class
 		@include make-col-ready();
@@ -25,6 +25,13 @@
 		> .editor-block-list__block-edit { // override the default negative margins on the child of the .columns
 		  margin-left: 0;
 		  margin-right: 0;
+
+		  &::before { // also have to override the ::before pseudo-element - it draws a line around the actual column block
+			right: 0;
+			left: 0;
+			top: 0;
+			bottom: 0;
+		  }
 		}
 	  }
 	}

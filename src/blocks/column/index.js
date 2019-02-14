@@ -39,7 +39,7 @@ export const settings = {
 	},
 
 	save () {
-		return <div className={'col'}><InnerBlocks.Content/></div>
+		return <div className={'class-in-column-block'}><InnerBlocks.Content/></div>
 	},
 }
 

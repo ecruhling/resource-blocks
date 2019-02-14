@@ -2826,7 +2826,7 @@ html {
         flex-wrap: wrap;
     margin-right: -15px;
     margin-left: -15px;
-    background: url("data:image/svg+xml;charset=utf8,%3Csvg height='6' viewBox='0 0 20 6' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m19 0v2.5h-18v-2.5h-1v2.5 1 2.5h1v-2.5h18v2.5h1v-2.5-1-2.5z' fill='%23EEEEEE'/%3E%3C/svg%3E") no-repeat 50%/contain; }
+    background: url("data:image/svg+xml;charset=utf8,%3Csvg height='6' viewBox='0 0 20 6' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m19 0v2.5h-18v-2.5h-1v2.5 1 2.5h1v-2.5h18v2.5h1v-2.5-1-2.5z' fill='%23EEEEEE'/%3E%3C/svg%3E") no-repeat 50%/100%; }
     .wp-block-resource-blocks-row.row > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
       position: relative;
       width: 100%;
@@ -2839,6 +2839,11 @@ html {
       .wp-block-resource-blocks-row.row > .editor-inner-blocks > .editor-block-list__layout > .wp-block > .editor-block-list__block-edit {
         margin-left: 0;
         margin-right: 0; }
+        .wp-block-resource-blocks-row.row > .editor-inner-blocks > .editor-block-list__layout > .wp-block > .editor-block-list__block-edit::before {
+          right: 0;
+          left: 0;
+          top: 0;
+          bottom: 0; }
 /**
  * #.# Common SCSS
  *

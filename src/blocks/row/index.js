@@ -100,6 +100,7 @@ export const settings = {
 						<RangeControl
 							label={__('Columns')}
 							value={columns}
+							help={__('Set total number of columns, set column width on column block')}
 							onChange={(nextColumns) => {
 								setAttributes({
 									columns: nextColumns,
@@ -119,9 +120,7 @@ export const settings = {
 			</Fragment>
 		)
 	},
-	save ({ attributes }) {
-
-		const { columns } = attributes
+	save () {
 
 		return (
 			<div className='row'>
