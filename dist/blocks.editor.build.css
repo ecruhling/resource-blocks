@@ -2832,9 +2832,6 @@ html {
       width: 100%;
       padding-right: 15px;
       padding-left: 15px;
-      -ms-flex: 0 0 33.33333%;
-          flex: 0 0 33.33333%;
-      max-width: 33.33333%;
       background: url("data:image/svg+xml;charset=utf8,%3Csvg height='20' viewBox='0 0 6 20' width='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m6 19h-2.5v-18h2.5v-1h-2.5-1-2.5v1h2.5v18h-2.5v1h2.5 1 2.5z' fill='%23DDDDDD'/%3E%3C/svg%3E") no-repeat 50%/contain; }
       .wp-block-resource-blocks-row.row > .editor-inner-blocks > .editor-block-list__layout > .wp-block > .editor-block-list__block-edit {
         margin-left: 0;

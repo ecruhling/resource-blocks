@@ -59,6 +59,33 @@ const blockAttributes = {
 }
 
 /**
+ * Block Filter
+ */
+
+const { createHigherOrderComponent } = wp.compose
+
+const withCustomClassName = createHigherOrderComponent((BlockListBlock) => {
+	return (props) => {
+		if (props.attributes.xsColumnWidth) {
+			return <BlockListBlock {...props} className={'col-xs-' + props.attributes.xsColumnWidth}/>
+		} else if (props.attributes.smColumnWidth) {
+			return <BlockListBlock {...props} className={'col-sm-' + props.attributes.smColumnWidth}/>
+		} else if (props.attributes.mdColumnWidth) {
+			return <BlockListBlock {...props} className={'col-md-' + props.attributes.mdColumnWidth}/>
+		} else if (props.attributes.lgColumnWidth) {
+			return <BlockListBlock {...props} className={'col-lg-' + props.attributes.lgColumnWidth}/>
+		} else if (props.attributes.xlColumnWidth) {
+			return <BlockListBlock {...props} className={'col-xl-' + props.attributes.xlColumnWidth}/>
+		} else {
+			return <BlockListBlock {...props} />
+		}
+
+	}
+}, 'withClientIdClassName')
+
+wp.hooks.addFilter('editor.BlockListBlock', 'my-plugin/with-client-id-class-name', withCustomClassName)
+
+/**
  * Block Settings
  */
 export const settings = {
@@ -80,15 +107,7 @@ export const settings = {
 	edit ({ attributes, setAttributes, className }) {
 
 		const { xsColumnWidth, smColumnWidth, mdColumnWidth, lgColumnWidth, xlColumnWidth } = attributes
-		const classes = classnames(
-			className,
-			`col-xs-` + xsColumnWidth,
-			`col-sm-` + smColumnWidth,
-			`col-md-` + mdColumnWidth,
-			`col-lg-` + lgColumnWidth,
-			`col-xl-` + xlColumnWidth,
-			`class-in-column-block`
-		)
+		const classes = classnames(className)
 
 		return (
 			<Fragment>
