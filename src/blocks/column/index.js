@@ -7,7 +7,7 @@ const { __ } = wp.i18n
 
 const {
 	PanelBody,
-	TextControl,
+	RangeControl,
 } = wp.components
 
 const {
@@ -36,6 +36,26 @@ const blockAttributes = {
 		type: 'number',
 		default: 1,
 	},
+	xsColumnWidth: {
+		type: 'number',
+		default: null,
+	},
+	smColumnWidth: {
+		type: 'number',
+		default: null,
+	},
+	mdColumnWidth: {
+		type: 'number',
+		default: null,
+	},
+	lgColumnWidth: {
+		type: 'number',
+		default: null,
+	},
+	xlColumnWidth: {
+		type: 'number',
+		default: null,
+	},
 }
 
 /**
@@ -59,17 +79,75 @@ export const settings = {
 
 	edit ({ attributes, setAttributes, className }) {
 
-		const { columns } = attributes
-		const classes = classnames(className, `class-in-column-block`)
+		const { xsColumnWidth, smColumnWidth, mdColumnWidth, lgColumnWidth, xlColumnWidth } = attributes
+		const classes = classnames(
+			className,
+			`col-xs-` + xsColumnWidth,
+			`col-sm-` + smColumnWidth,
+			`col-md-` + mdColumnWidth,
+			`col-lg-` + lgColumnWidth,
+			`col-xl-` + xlColumnWidth,
+			`class-in-column-block`
+		)
 
 		return (
 			<Fragment>
 				<InspectorControls>
 					<PanelBody title={__('Column Settings')}>
-						<TextControl
-							label="xs-class"
-							value={ className }
-							onChange={ ( className ) => setState( { className } ) }
+						<RangeControl
+							label="xs column width (< 576px)"
+							value={xsColumnWidth}
+							onChange={(nextWidth) => {
+								setAttributes({
+									xsColumnWidth: nextWidth,
+								})
+							}}
+							min={1}
+							max={12}
+						/>
+						<RangeControl
+							label="sm column width (576px - 768px)"
+							value={smColumnWidth}
+							onChange={(nextWidth) => {
+								setAttributes({
+									smColumnWidth: nextWidth,
+								})
+							}}
+							min={1}
+							max={12}
+						/>
+						<RangeControl
+							label="md column width (768px - 992px)"
+							value={mdColumnWidth}
+							onChange={(nextWidth) => {
+								setAttributes({
+									mdColumnWidth: nextWidth,
+								})
+							}}
+							min={1}
+							max={12}
+						/>
+						<RangeControl
+							label="lg column width (992px - 1200px)"
+							value={lgColumnWidth}
+							onChange={(nextWidth) => {
+								setAttributes({
+									lgColumnWidth: nextWidth,
+								})
+							}}
+							min={1}
+							max={12}
+						/>
+						<RangeControl
+							label="xl column width (> 1200px)"
+							value={xlColumnWidth}
+							onChange={(nextWidth) => {
+								setAttributes({
+									xlColumnWidth: nextWidth,
+								})
+							}}
+							min={1}
+							max={12}
 						/>
 					</PanelBody>
 				</InspectorControls>
@@ -80,11 +158,19 @@ export const settings = {
 		)
 	},
 
-	save ({ attributes }) {
+	save ({ attributes, className }) {
 
-		const { columns } = attributes
+		const { xsColumnWidth, smColumnWidth, mdColumnWidth, lgColumnWidth, xlColumnWidth } = attributes
+		const classes = classnames(
+			className,
+			`col-xs-` + xsColumnWidth,
+			`col-sm-` + smColumnWidth,
+			`col-md-` + mdColumnWidth,
+			`col-lg-` + lgColumnWidth,
+			`col-xl-` + xlColumnWidth,
+		)
 
-		return <div className={columns}>
+		return <div className={classes}>
 			<InnerBlocks.Content/>
 		</div>
 	},

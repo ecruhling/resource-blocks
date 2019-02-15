@@ -51,7 +51,7 @@ const ALLOWED_BLOCKS = ['resource-blocks/column']
  * @return {Object[]} Columns layout configuration.
  */
 const getColumnsTemplate = memoize((columns) => {
-	return times(columns, () => ['resource-blocks/column', { className: 'column' }])
+	return times(columns, () => ['resource-blocks/column'])
 })
 
 /**
