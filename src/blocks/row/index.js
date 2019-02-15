@@ -36,7 +36,6 @@ const {
  * Allowed blocks constant is passed to InnerBlocks precisely as specified here.
  * The contents of the array should never change.
  * The array should contain the name of each block that is allowed.
- * In columns block, the only block we allow is 'core/column'.
  *
  * @constant
  * @type {string[]}
@@ -115,7 +114,8 @@ export const settings = {
 					<InnerBlocks
 						template={getColumnsTemplate(columns)}
 						templateLock="all"
-						allowedBlocks={ALLOWED_BLOCKS}/>
+						allowedBlocks={ALLOWED_BLOCKS}
+						templateInsertUpdatesSelection={false}/>
 				</div>
 			</Fragment>
 		)
