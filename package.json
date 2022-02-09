@@ -1,18 +1,19 @@
 {
-  "name": "resource-blocks",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "start": "cgb-scripts start",
-    "build": "cgb-scripts build",
-    "eject": "cgb-scripts eject"
-  },
-  "dependencies": {
-    "bootstrap": "^4.3.1",
-    "cgb-scripts": "1.14.0",
-    "classnames": "^2.2.6",
-    "lodash": "^4.17.11",
-    "memize": "^1.0.5",
-    "sass-svg-uri": "^1.0.0"
-  }
+	"name": "resource-blocks",
+	"version": "0.1.0",
+	"author": "Resource",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^20.0.2"
+	}
 }
