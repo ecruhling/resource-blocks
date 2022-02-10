@@ -40,7 +40,7 @@ function resource_block_category( array $block_categories ): array {
 	$resource_category = array(
 		'slug'  => 'resource-blocks',
 		'title' => __( 'Resource Blocks', 'resource-blocks' ),
-		'icon'  => 'wordpress',
+		'icon'  => null, // icon is set in index.js of each block.
 	);
 
 	// move new category to beginning of block list.
