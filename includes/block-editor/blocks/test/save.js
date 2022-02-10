@@ -27,7 +27,7 @@ export default function save() {
 		<p { ...useBlockProps.save() }>
 			{ __(
 				'Test – hello from the saved content!',
-				'test'
+				'resource-blocks'
 			) }
 		</p>
 	);

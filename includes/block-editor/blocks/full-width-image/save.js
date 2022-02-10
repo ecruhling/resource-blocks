@@ -26,8 +26,8 @@ export default function save() {
 	return (
 		<p { ...useBlockProps.save() }>
 			{ __(
-				'Image – hello from the saved content!',
-				'image'
+				'Full-width image – hello from the saved content!',
+				'resource-blocks'
 			) }
 		</p>
 	);
