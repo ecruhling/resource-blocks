@@ -113,6 +113,7 @@ const {
  */
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(name, { ...settings,
+  icon: _icons_icons__WEBPACK_IMPORTED_MODULE_1__["default"].resource,
 
   /**
    * @see ./edit.js

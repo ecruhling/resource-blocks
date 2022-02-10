@@ -18,8 +18,8 @@
 function resource_blocks_init() {
 
 	$blocks = array(
+		'full-width-image/',
 		'test/',
-		'image/',
 	);
 
 	foreach ( $blocks as $block ) {

@@ -38,6 +38,7 @@ const {name, ...settings} = json;
  */
 registerBlockType(name, {
 	...settings,
+	icon: icons.resource,
 	/**
 	 * @see ./edit.js
 	 */

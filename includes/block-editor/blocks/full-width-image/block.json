@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "resource-blocks/full-width-image",
+  "version": "1.0.0",
+  "title": "Full-width Image",
+  "category": "resource-blocks",
+  "textdomain": "resource-blocks",
+  "editorScript": "file:../../../../build/full-width-image.js",
+  "editorStyle": "file:../../../../build/full-width-image.css",
+  "style": "file:../../../../build/style-full-width-image.css"
+}
