@@ -1,34 +1,73 @@
 /**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import classnames from 'classnames';
+import { isEmpty } from 'lodash';
 
 /**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
+ * WordPress dependencies
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { RichText, useBlockProps } from '@wordpress/block-editor';
 
-/**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
- *
- * @return {WPElement} Element to render.
- */
-export default function save() {
-	return (
-		<p { ...useBlockProps.save() }>
-			{ __(
-				'Full-width image – hello from the saved content!',
-				'resource-blocks'
+export default function save( { attributes } ) {
+	const {
+		url,
+		alt,
+		caption,
+		align,
+		href,
+		rel,
+		linkClass,
+		width,
+		height,
+		id,
+		linkTarget,
+		sizeSlug,
+		title,
+	} = attributes;
+
+	const newRel = isEmpty( rel ) ? undefined : rel;
+
+	const classes = classnames( {
+		[ `align${ align }` ]: align,
+		[ `size-${ sizeSlug }` ]: sizeSlug,
+		'is-resized': width || height,
+	} );
+
+	const image = (
+		<img
+			src={ url }
+			alt={ alt }
+			className={ id ? `wp-image-${ id }` : null }
+			width={ width }
+			height={ height }
+			title={ title }
+		/>
+	);
+
+	const figure = (
+		<>
+			{ href ? (
+				<a
+					className={ linkClass }
+					href={ href }
+					target={ linkTarget }
+					rel={ newRel }
+				>
+					{ image }
+				</a>
+			) : (
+				image
 			) }
-		</p>
+			{ ! RichText.isEmpty( caption ) && (
+				<RichText.Content tagName="figcaption" value={ caption } />
+			) }
+		</>
+	);
+
+	return (
+		<figure { ...useBlockProps.save( { className: classes } ) }>
+			{ figure }
+		</figure>
 	);
 }
