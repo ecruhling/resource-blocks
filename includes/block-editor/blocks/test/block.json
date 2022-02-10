@@ -1,12 +1,12 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
-	"name": "resource-blocks/test",
-	"version": "0.1.0",
-	"title": "Test",
-	"category": "widgets",
-	"textdomain": "resource-blocks",
-	"editorScript": "file:../../../../build/test.js",
-	"editorStyle": "file:../../../../build/test.css",
-	"style": "file:../../../../build/test.css"
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "resource-blocks/test",
+  "version": "0.1.0",
+  "title": "Test",
+  "category": "resource-blocks",
+  "textdomain": "resource-blocks",
+  "editorScript": "file:../../../../build/test.js",
+  "editorStyle": "file:../../../../build/test.css",
+  "style": "file:../../../../build/test.css"
 }

@@ -4,7 +4,7 @@
   "name": "resource-blocks/image",
   "version": "0.1.0",
   "title": "Image",
-  "category": "widgets",
+  "category": "resource-blocks",
   "textdomain": "resource-blocks",
   "editorScript": "file:../../../../build/image.js",
   "editorStyle": "file:../../../../build/image.css",
