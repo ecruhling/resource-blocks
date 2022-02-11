@@ -28,12 +28,6 @@
 	  "selector": "img",
 	  "attribute": "title"
 	},
-	"href": {
-	  "type": "string",
-	  "source": "attribute",
-	  "selector": "figure > a",
-	  "attribute": "href"
-	},
 	"id": {
 	  "type": "number"
 	},

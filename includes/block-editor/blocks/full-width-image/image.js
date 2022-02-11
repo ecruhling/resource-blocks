@@ -16,7 +16,7 @@ import {
 	TextControl,
 	ToolbarButton,
 } from '@wordpress/components';
-import { useViewportMatch, usePrevious } from '@wordpress/compose';
+import { useViewportMatch } from '@wordpress/compose';
 import { useSelect, useDispatch } from '@wordpress/data';
 import {
 	BlockControls,
@@ -25,15 +25,13 @@ import {
 	__experimentalImageURLInputUI as ImageURLInputUI,
 	MediaReplaceFlow,
 	store as blockEditorStore,
-	BlockAlignmentControl,
 	__experimentalImageEditor as ImageEditor,
 	__experimentalImageEditingProvider as ImageEditingProvider,
 } from '@wordpress/block-editor';
 import { useEffect, useMemo, useState, useRef } from '@wordpress/element';
-import { __, sprintf, isRTL } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { getFilename } from '@wordpress/url';
-import { switchToBlockType } from '@wordpress/blocks';
-import { overlayText, upload } from '@wordpress/icons';
+import { upload } from '@wordpress/icons';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 
@@ -54,7 +52,6 @@ export default function Image( {
 																	 url = '',
 																	 alt,
 																	 id,
-																	 href,
 																	 title,
 																	 width,
 																	 height,
@@ -67,7 +64,6 @@ export default function Image( {
 																 onSelectURL,
 																 onUploadError,
 																 containerRef,
-																 context,
 																 clientId,
 																 onImageLoadError,
 															 } ) {
@@ -245,13 +241,6 @@ export default function Image( {
 	const controls = (
 		<>
 			<BlockControls group="block">
-				{ ! multiImageSelection && ! isEditingImage && (
-					<ImageURLInputUI
-						url={ href || '' }
-						onChangeUrl={ onSetHref }
-						mediaUrl={ ( image && image.source_url ) || url }
-					/>
-				) }
 				{ externalBlob && (
 					<ToolbarButton
 						onClick={ uploadExternal }

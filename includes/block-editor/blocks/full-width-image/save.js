@@ -7,14 +7,13 @@ import { isEmpty } from 'lodash';
 /**
  * WordPress dependencies
  */
-import { RichText, useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
 
 export default function save( { attributes } ) {
 	const {
 		url,
 		alt,
 		align,
-		href,
 		rel,
 		width,
 		height,
@@ -44,16 +43,7 @@ export default function save( { attributes } ) {
 
 	const figure = (
 		<>
-			{ href ? (
-				<a
-					href={ href }
-					rel={ newRel }
-				>
-					{ image }
-				</a>
-			) : (
-				image
-			) }
+			{ image }
 		</>
 	);
 
