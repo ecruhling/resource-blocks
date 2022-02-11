@@ -18,6 +18,7 @@
 function resource_blocks_init() {
 
 	$blocks = array(
+		'container/',
 		'full-width-image/',
 		'test/',
 	);
