@@ -10,7 +10,6 @@ import { isBlobURL } from '@wordpress/blob';
 import {
 	ExternalLink,
 	PanelBody,
-	ResizableBox,
 	Spinner,
 	TextareaControl,
 	TextControl,
@@ -20,10 +19,8 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import {
 	BlockControls,
 	InspectorControls,
-	__experimentalImageSizeControl as ImageSizeControl,
 	MediaReplaceFlow,
 	store as blockEditorStore,
-	__experimentalImageEditor as ImageEditor,
 	__experimentalImageEditingProvider as ImageEditingProvider,
 } from '@wordpress/block-editor';
 import { useEffect, useMemo, useState, useRef } from '@wordpress/element';
@@ -42,7 +39,7 @@ import { isExternalImage, isMediaDestroyed } from './edit';
 /**
  * Module constants
  */
-import { MIN_SIZE, ALLOWED_MEDIA_TYPES } from './constants';
+import { ALLOWED_MEDIA_TYPES } from './constants';
 
 export default function Image( {
 																 temporaryURL,
@@ -53,7 +50,6 @@ export default function Image( {
 																	 title,
 																	 width,
 																	 height,
-																	 sizeSlug,
 																 },
 																 setAttributes,
 																 isSelected,
@@ -88,7 +84,6 @@ export default function Image( {
 	);
 	const {
 		imageSizes,
-		maxWidth,
 		mediaUpload,
 	} = useSelect(
 		( select ) => {
@@ -98,7 +93,6 @@ export default function Image( {
 
 			const settings = pick( getSettings(), [
 				'imageSizes',
-				'maxWidth',
 				'mediaUpload',
 			] );
 
@@ -170,25 +164,6 @@ export default function Image( {
 
 	function updateAlt( newAlt ) {
 		setAttributes( { alt: newAlt } );
-	}
-
-	function updateImage( newSizeSlug ) {
-		const newUrl = get( image, [
-			'media_details',
-			'sizes',
-			newSizeSlug,
-			'source_url',
-		] );
-		if ( ! newUrl ) {
-			return null;
-		}
-
-		setAttributes( {
-			url: newUrl,
-			width: undefined,
-			height: undefined,
-			sizeSlug: newSizeSlug,
-		} );
 	}
 
 	function uploadExternal() {
@@ -268,16 +243,6 @@ export default function Image( {
 							}
 						/>
 					) }
-					<ImageSizeControl
-						onChangeImage={ updateImage }
-						onChange={ ( value ) => setAttributes( value ) }
-						slug={ sizeSlug }
-						width={ width }
-						height={ height }
-						imageSizeOptions={ imageSizeOptions }
-						imageWidth={ naturalWidth }
-						imageHeight={ naturalHeight }
-					/>
 				</PanelBody>
 			</InspectorControls>
 			<InspectorControls __experimentalGroup="advanced">

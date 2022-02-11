@@ -492,8 +492,7 @@ function Image(_ref) {
       id,
       title,
       width,
-      height,
-      sizeSlug
+      height
     },
     setAttributes,
     isSelected,
@@ -525,13 +524,12 @@ function Image(_ref) {
   }, [id, isSelected]);
   const {
     imageSizes,
-    maxWidth,
     mediaUpload
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => {
     const {
       getSettings
     } = select(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.store);
-    const settings = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.pick)(getSettings(), ['imageSizes', 'maxWidth', 'mediaUpload']);
+    const settings = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.pick)(getSettings(), ['imageSizes', 'mediaUpload']);
     return { ...settings
     };
   }, [clientId]);
@@ -602,21 +600,6 @@ function Image(_ref) {
     });
   }
 
-  function updateImage(newSizeSlug) {
-    const newUrl = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.get)(image, ['media_details', 'sizes', newSizeSlug, 'source_url']);
-
-    if (!newUrl) {
-      return null;
-    }
-
-    setAttributes({
-      url: newUrl,
-      width: undefined,
-      height: undefined,
-      sizeSlug: newSizeSlug
-    });
-  }
-
   function uploadExternal() {
     mediaUpload({
       filesList: [externalBlob],
@@ -681,15 +664,6 @@ function Image(_ref) {
     help: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ExternalLink, {
       href: "https://www.w3.org/WAI/tutorials/images/decision-tree"
     }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Describe the purpose of the image')), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Leave empty if the image is purely decorative.'))
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.__experimentalImageSizeControl, {
-    onChangeImage: updateImage,
-    onChange: value => setAttributes(value),
-    slug: sizeSlug,
-    width: width,
-    height: height,
-    imageSizeOptions: imageSizeOptions,
-    imageWidth: naturalWidth,
-    imageHeight: naturalHeight
   }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.InspectorControls, {
     __experimentalGroup: "advanced"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
@@ -834,12 +808,6 @@ const {
       // translators: Caption accompanying an image of the Mont Blanc, which serves as an example for the Image block.
       caption: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Mont Blanc appears—still, snowy, and serene.')
     }
-  },
-
-  getEditWrapperProps(attributes) {
-    return {
-      'data-align': attributes.align
-    };
   },
 
   /**
@@ -1235,7 +1203,7 @@ module.exports = window["wp"]["url"];
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-image","version":"1.0.0","title":"Full-width Image","category":"resource-blocks","usesContext":["allowResize","imageCrop","fixedHeight"],"description":"Single full-width image.","keywords":["img","photo","picture"],"attributes":{"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"id":{"type":"number"},"width":{"type":"number"},"height":{"type":"number"},"sizeSlug":{"type":"string"}},"supports":{"anchor":false,"color":{"text":false,"background":false}},"textdomain":"resource-blocks","editorScript":"file:../../../../build/full-width-image.js","editorStyle":"file:../../../../build/full-width-image.css","style":"file:../../../../build/style-full-width-image.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-image","version":"1.0.0","title":"Full-width Image","category":"resource-blocks","usesContext":["fixedHeight"],"description":"A single full-width image.\\n2040px width\\n870px is an appropriate height, but is not enforced.","keywords":["img","photo","picture"],"attributes":{"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"id":{"type":"number"},"width":{"type":"number"},"height":{"type":"number"},"sizeSlug":{"type":"string","default":"full"}},"supports":{"anchor":false,"color":{"text":false,"background":false}},"textdomain":"resource-blocks","editorScript":"file:../../../../build/full-width-image.js","editorStyle":"file:../../../../build/full-width-image.css","style":"file:../../../../build/style-full-width-image.css"}');
 
 /***/ })
 

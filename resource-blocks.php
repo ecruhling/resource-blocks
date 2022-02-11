@@ -21,6 +21,7 @@ function resource_blocks_init() {
 		'container/',
 		'full-width-image/',
 		'two-column-images/',
+		'full-width-video/',
 		'test/',
 	);
 

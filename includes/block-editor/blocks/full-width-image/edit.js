@@ -2,7 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { get, has, omit, pick } from 'lodash';
+import { get, has, pick } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -11,8 +11,6 @@ import { getBlobByURL, isBlobURL, revokeBlobURL } from '@wordpress/blob';
 import { withNotices } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import {
-	BlockAlignmentControl,
-	BlockControls,
 	BlockIcon,
 	MediaPlaceholder,
 	useBlockProps,
@@ -33,10 +31,6 @@ import Image from './image';
  * Module constants
  */
 import {
-	LINK_DESTINATION_ATTACHMENT,
-	LINK_DESTINATION_CUSTOM,
-	LINK_DESTINATION_MEDIA,
-	LINK_DESTINATION_NONE,
 	ALLOWED_MEDIA_TYPES,
 } from './constants';
 

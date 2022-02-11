@@ -1,22 +1,9 @@
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 import { registerBlockType } from '@wordpress/blocks';
-
-// import SVG icons
-import icons from '../../../icons/icons'
-
-// self-invoking function creates custom icon for block-category
-( function () {
-	wp.blocks.updateCategory( 'resource-blocks', { icon: icons.resource } );
-} )();
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -43,15 +30,6 @@ const {name, ...settings} = json;
  */
 registerBlockType(name, {
 	...settings,
-	icon: icons.image_full_width,
-	example: {
-		attributes: {
-			sizeSlug: 'large',
-			url: 'https://s.w.org/images/core/5.3/MtBlanc1.jpg',
-			// translators: Caption accompanying an image of the Mont Blanc, which serves as an example for the Image block.
-			caption: __( 'Mont Blanc appears—still, snowy, and serene.' ),
-		},
-	},
 	/**
 	 * @see ./edit.js
 	 */

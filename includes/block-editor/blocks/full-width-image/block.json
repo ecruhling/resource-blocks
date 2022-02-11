@@ -5,8 +5,8 @@
   "version": "1.0.0",
   "title": "Full-width Image",
   "category": "resource-blocks",
-  "usesContext": [ "allowResize", "imageCrop", "fixedHeight" ],
-  "description": "Single full-width image.",
+  "usesContext": [ "fixedHeight" ],
+  "description": "A single full-width image.\n2040px width\n870px is an appropriate height, but is not enforced.",
   "keywords": [ "img", "photo", "picture" ],
   "attributes": {
 	"url": {
@@ -38,7 +38,8 @@
 	  "type": "number"
 	},
 	"sizeSlug": {
-	  "type": "string"
+	  "type": "string",
+	  "default": "full"
 	}
   },
   "supports": {
