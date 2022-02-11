@@ -13,7 +13,6 @@ export default function save( { attributes } ) {
 	const {
 		url,
 		alt,
-		caption,
 		align,
 		href,
 		rel,
@@ -58,9 +57,6 @@ export default function save( { attributes } ) {
 				</a>
 			) : (
 				image
-			) }
-			{ ! RichText.isEmpty( caption ) && (
-				<RichText.Content tagName="figcaption" value={ caption } />
 			) }
 		</>
 	);

@@ -182,7 +182,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const pickRelevantMediaFiles = (image, size) => {
-  const imageProps = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.pick)(image, ['alt', 'id', 'link', 'caption']);
+  const imageProps = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.pick)(image, ['alt', 'id', 'link']);
   imageProps.url = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.get)(image, ['sizes', size, 'url']) || (0,lodash__WEBPACK_IMPORTED_MODULE_2__.get)(image, ['media_details', 'sizes', size, 'source_url']) || image.url;
   return imageProps;
 };
@@ -271,7 +271,6 @@ function ImageEdit(_ref) {
   const {
     url = '',
     alt,
-    caption,
     align,
     id,
     width,
@@ -283,10 +282,6 @@ function ImageEdit(_ref) {
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     altRef.current = alt;
   }, [alt]);
-  const captionRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    captionRef.current = caption;
-  }, [caption]);
   const ref = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const {
     imageDefaultSize,
@@ -340,8 +335,7 @@ function ImageEdit(_ref) {
         url: undefined,
         alt: undefined,
         id: undefined,
-        title: undefined,
-        caption: undefined
+        title: undefined
       });
       return;
     }
@@ -352,13 +346,7 @@ function ImageEdit(_ref) {
     }
 
     setTemporaryURL();
-    let mediaAttributes = pickRelevantMediaFiles(media, imageDefaultSize); // If a caption text was meanwhile written by the user,
-    // make sure the text is not overwritten by empty captions.
-
-    if (captionRef.current && !(0,lodash__WEBPACK_IMPORTED_MODULE_2__.get)(mediaAttributes, ['caption'])) {
-      mediaAttributes = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.omit)(mediaAttributes, ['caption']);
-    }
-
+    let mediaAttributes = pickRelevantMediaFiles(media, imageDefaultSize);
     let additionalAttributes; // Reset the dimension attributes if changing to a different image.
 
     if (!media.id || media.id !== id) {
@@ -628,7 +616,6 @@ function Image(_ref) {
     attributes: {
       url = '',
       alt,
-      caption,
       align,
       id,
       href,
@@ -655,7 +642,6 @@ function Image(_ref) {
     onImageLoadError
   } = _ref;
   const imageRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  const captionRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const prevUrl = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_4__.usePrevious)(url);
   const {
     allowResize = true
@@ -741,16 +727,7 @@ function Image(_ref) {
 
     window.fetch(url).then(response => response.blob()).then(blob => setExternalBlob(blob)) // Do nothing, cannot upload.
     .catch(() => {});
-  }, [id, url, isSelected, externalBlob]); // Focus the caption after inserting an image from the placeholder. This is
-  // done to preserve the behaviour of focussing the first tabbable element
-  // when a block is mounted. Previously, the image block would remount when
-  // the placeholder is removed. Maybe this behaviour could be removed.
-
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    if (url && !prevUrl && isSelected) {
-      captionRef.current.focus();
-    }
-  }, [url, prevUrl]); // Get naturalWidth and naturalHeight from image ref, and fall back to loaded natural
+  }, [id, url, isSelected, externalBlob]); // Get naturalWidth and naturalHeight from image ref, and fall back to loaded natural
   // width and height. This resolves an issue in Safari where the loaded natural
   // witdth and height is otherwise lost when switching between alignments.
   // See: https://github.com/WordPress/gutenberg/pull/37210.
@@ -1083,18 +1060,7 @@ function Image(_ref) {
     onSaveImage: imageAttributes => setAttributes(imageAttributes),
     isEditing: isEditingImage,
     onFinishEditing: () => setIsEditingImage(false)
-  }, !temporaryURL && controls, img, (!_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.RichText.isEmpty(caption) || isSelected) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.RichText, {
-    ref: captionRef,
-    tagName: "figcaption",
-    "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Image caption text'),
-    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Add caption'),
-    value: caption,
-    onChange: value => setAttributes({
-      caption: value
-    }),
-    inlineToolbar: true,
-    __unstableOnSplitAtEnd: () => insertBlocksAfter((0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_9__.createBlock)('core/paragraph'))
-  }));
+  }, !temporaryURL && controls, img);
 }
 
 /***/ }),
@@ -1230,7 +1196,6 @@ function save(_ref) {
   const {
     url,
     alt,
-    caption,
     align,
     href,
     rel,
@@ -1261,10 +1226,7 @@ function save(_ref) {
     href: href,
     target: linkTarget,
     rel: newRel
-  }, image) : image, !_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.RichText.isEmpty(caption) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.RichText.Content, {
-    tagName: "figcaption",
-    value: caption
-  }));
+  }, image) : image);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps.save({
     className: classes
   }), figure);
@@ -1599,7 +1561,7 @@ module.exports = window["wp"]["url"];
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-image","version":"1.0.0","title":"Full-width Image","category":"resource-blocks","usesContext":["allowResize","imageCrop","fixedHeight"],"description":"Single full-width image.","keywords":["img","photo","picture"],"attributes":{"align":{"type":"string"},"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"caption":{"type":"string","source":"html","selector":"figcaption"},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"href":{"type":"string","source":"attribute","selector":"figure > a","attribute":"href"},"rel":{"type":"string","source":"attribute","selector":"figure > a","attribute":"rel"},"linkClass":{"type":"string","source":"attribute","selector":"figure > a","attribute":"class"},"id":{"type":"number"},"width":{"type":"number"},"height":{"type":"number"},"sizeSlug":{"type":"string"},"linkDestination":{"type":"string"},"linkTarget":{"type":"string","source":"attribute","selector":"figure > a","attribute":"target"}},"supports":{"anchor":false,"color":{"text":false,"background":false}},"textdomain":"resource-blocks","editorScript":"file:../../../../build/full-width-image.js","editorStyle":"file:../../../../build/full-width-image.css","style":"file:../../../../build/style-full-width-image.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-image","version":"1.0.0","title":"Full-width Image","category":"resource-blocks","usesContext":["allowResize","imageCrop","fixedHeight"],"description":"Single full-width image.","keywords":["img","photo","picture"],"attributes":{"align":{"type":"string"},"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"href":{"type":"string","source":"attribute","selector":"figure > a","attribute":"href"},"rel":{"type":"string","source":"attribute","selector":"figure > a","attribute":"rel"},"linkClass":{"type":"string","source":"attribute","selector":"figure > a","attribute":"class"},"id":{"type":"number"},"width":{"type":"number"},"height":{"type":"number"},"sizeSlug":{"type":"string"},"linkDestination":{"type":"string"},"linkTarget":{"type":"string","source":"attribute","selector":"figure > a","attribute":"target"}},"supports":{"anchor":false,"color":{"text":false,"background":false}},"textdomain":"resource-blocks","editorScript":"file:../../../../build/full-width-image.js","editorStyle":"file:../../../../build/full-width-image.css","style":"file:../../../../build/style-full-width-image.css"}');
 
 /***/ })
 

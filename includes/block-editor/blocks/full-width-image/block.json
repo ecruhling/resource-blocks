@@ -25,11 +25,6 @@
 	  "attribute": "alt",
 	  "default": ""
 	},
-	"caption": {
-	  "type": "string",
-	  "source": "html",
-	  "selector": "figcaption"
-	},
 	"title": {
 	  "type": "string",
 	  "source": "attribute",

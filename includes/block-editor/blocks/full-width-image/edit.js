@@ -41,7 +41,7 @@ import {
 } from './constants';
 
 export const pickRelevantMediaFiles = ( image, size ) => {
-	const imageProps = pick( image, [ 'alt', 'id', 'link', 'caption' ] );
+	const imageProps = pick( image, [ 'alt', 'id', 'link' ] );
 	imageProps.url =
 		get( image, [ 'sizes', size, 'url' ] ) ||
 		get( image, [ 'media_details', 'sizes', size, 'source_url' ] ) ||
@@ -131,7 +131,6 @@ export function ImageEdit( {
 	const {
 		url = '',
 		alt,
-		caption,
 		align,
 		id,
 		width,
@@ -144,11 +143,6 @@ export function ImageEdit( {
 	useEffect( () => {
 		altRef.current = alt;
 	}, [ alt ] );
-
-	const captionRef = useRef();
-	useEffect( () => {
-		captionRef.current = caption;
-	}, [ caption ] );
 
 	const ref = useRef();
 	const { imageDefaultSize, mediaUpload } = useSelect( ( select ) => {
@@ -195,7 +189,6 @@ export function ImageEdit( {
 				alt: undefined,
 				id: undefined,
 				title: undefined,
-				caption: undefined,
 			} );
 
 			return;
@@ -209,12 +202,6 @@ export function ImageEdit( {
 		setTemporaryURL();
 
 		let mediaAttributes = pickRelevantMediaFiles( media, imageDefaultSize );
-
-		// If a caption text was meanwhile written by the user,
-		// make sure the text is not overwritten by empty captions.
-		if ( captionRef.current && ! get( mediaAttributes, [ 'caption' ] ) ) {
-			mediaAttributes = omit( mediaAttributes, [ 'caption' ] );
-		}
 
 		let additionalAttributes;
 		// Reset the dimension attributes if changing to a different image.
