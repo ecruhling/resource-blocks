@@ -7,8 +7,17 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-.wp-block-resource-blocks-full-width-image {
-  padding: 0;
+div.wp-block-resource-blocks-full-width-image,
+figure.wp-block-resource-blocks-full-width-image {
+  margin: 0;
+  width: 100%;
+}
+div.wp-block-resource-blocks-full-width-image img,
+figure.wp-block-resource-blocks-full-width-image img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
 }
 
 /*# sourceMappingURL=style-full-width-image.css.map*/

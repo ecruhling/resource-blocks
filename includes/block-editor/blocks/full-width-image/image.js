@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { get, filter, map, pick, includes } from 'lodash';
+import { get, filter, map, pick } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -16,13 +16,11 @@ import {
 	TextControl,
 	ToolbarButton,
 } from '@wordpress/components';
-import { useViewportMatch } from '@wordpress/compose';
 import { useSelect, useDispatch } from '@wordpress/data';
 import {
 	BlockControls,
 	InspectorControls,
 	__experimentalImageSizeControl as ImageSizeControl,
-	__experimentalImageURLInputUI as ImageURLInputUI,
 	MediaReplaceFlow,
 	store as blockEditorStore,
 	__experimentalImageEditor as ImageEditor,
@@ -89,21 +87,16 @@ export default function Image( {
 		[ id, isSelected ]
 	);
 	const {
-		imageEditing,
 		imageSizes,
 		maxWidth,
 		mediaUpload,
 	} = useSelect(
 		( select ) => {
 			const {
-				getBlockRootClientId,
 				getSettings,
-				canInsertBlockType,
 			} = select( blockEditorStore );
 
-			const rootClientId = getBlockRootClientId( clientId );
 			const settings = pick( getSettings(), [
-				'imageEditing',
 				'imageSizes',
 				'maxWidth',
 				'mediaUpload',
@@ -115,12 +108,9 @@ export default function Image( {
 		},
 		[ clientId ]
 	);
-	const { replaceBlocks, toggleSelection } = useDispatch( blockEditorStore );
 	const { createErrorNotice, createSuccessNotice } = useDispatch(
 		noticesStore
 	);
-	const isLargeViewport = useViewportMatch( 'medium' );
-	const isWideAligned = includes( [ 'wide', 'full' ] );
 	const [
 		{ loadedNaturalWidth, loadedNaturalHeight },
 		setLoadedNaturalSize,
@@ -171,10 +161,6 @@ export default function Image( {
 		loadedNaturalHeight,
 		imageRef.current?.complete,
 	] );
-
-	function onSetHref( props ) {
-		setAttributes( props );
-	}
 
 	function onSetTitle( value ) {
 		// This is the HTML title attribute, separate from the media object
@@ -235,8 +221,6 @@ export default function Image( {
 			onImageLoadError();
 		}
 	}, [ isSelected ] );
-
-	const canEditImage = id && naturalWidth && naturalHeight && imageEditing;
 
 	const controls = (
 		<>
@@ -366,66 +350,7 @@ export default function Image( {
 			: naturalHeight;
 	}
 
-	if ( canEditImage && isEditingImage ) {
-		img = (
-			<ImageEditor
-				url={ url }
-				width={ width }
-				height={ height }
-				clientWidth={ clientWidth }
-				naturalHeight={ naturalHeight }
-				naturalWidth={ naturalWidth }
-			/>
-		);
-	} else if ( ! imageWidthWithinContainer ) {
-		img = <div style={ { width, height } }>{ img }</div>;
-	} else {
-		const currentWidth = width || imageWidthWithinContainer;
-		const currentHeight = height || imageHeightWithinContainer;
-
-		const ratio = naturalWidth / naturalHeight;
-		const minWidth =
-			naturalWidth < naturalHeight ? MIN_SIZE : MIN_SIZE * ratio;
-		const minHeight =
-			naturalHeight < naturalWidth ? MIN_SIZE : MIN_SIZE / ratio;
-
-		// With the current implementation of ResizableBox, an image needs an
-		// explicit pixel value for the max-width. In absence of being able to
-		// set the content-width, this max-width is currently dictated by the
-		// vanilla editor style. The following variable adds a buffer to this
-		// vanilla style, so 3rd party themes have some wiggleroom. This does,
-		// in most cases, allow you to scale the image beyond the width of the
-		// main column, though not infinitely.
-		// @todo It would be good to revisit this once a content-width variable
-		// becomes available.
-		const maxWidthBuffer = maxWidth * 2.5;
-
-		let showRightHandle = false;
-		let showLeftHandle = false;
-
-		img = (
-			<ResizableBox
-				size={ {
-					width: width ?? 'auto',
-					height: height ?? 'auto',
-				} }
-				showHandle={ isSelected }
-				minWidth={ minWidth }
-				maxWidth={ maxWidthBuffer }
-				minHeight={ minHeight }
-				maxHeight={ maxWidthBuffer / ratio }
-				lockAspectRatio
-				enable={ {
-					top: false,
-					right: false,
-					bottom: false,
-					left: false,
-				} }
-			>
-				{ img }
-			</ResizableBox>
-		);
-	}
+	img = <figure style={ { width, height } }>{ img }</figure>;
 
 	return (
 		<ImageEditingProvider

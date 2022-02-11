@@ -301,7 +301,7 @@ export function ImageEdit( {
 	} );
 
 	return (
-		<figure { ...blockProps }>
+		<div { ...blockProps }>
 			{ ( temporaryURL || url ) && (
 				<Image
 					temporaryURL={ temporaryURL }
@@ -333,7 +333,7 @@ export function ImageEdit( {
 				mediaPreview={ mediaPreview }
 				disableMediaButtons={ temporaryURL || url }
 			/>
-		</figure>
+		</div>
 	);
 }
 

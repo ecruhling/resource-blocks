@@ -1,0 +1,12 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "resource-blocks/two-column-images",
+	"version": "1.0.0",
+	"title": "Two Column Images",
+	"category": "resource-blocks",
+	"textdomain": "two-column-images",
+	"editorScript": "file:../../../../build/two-column-images.js",
+	"editorStyle": "file:../../../../build/two-column-images.css",
+	"style": "file:../../../../build/style-two-column-images.css"
+}

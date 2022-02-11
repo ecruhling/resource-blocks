@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { isEmpty } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -14,7 +13,6 @@ export default function save( { attributes } ) {
 		url,
 		alt,
 		align,
-		rel,
 		width,
 		height,
 		id,
@@ -22,12 +20,11 @@ export default function save( { attributes } ) {
 		title,
 	} = attributes;
 
-	const newRel = isEmpty( rel ) ? undefined : rel;
-
 	const classes = classnames( {
 		[ `align${ align }` ]: align,
 		[ `size-${ sizeSlug }` ]: sizeSlug,
 		'is-resized': width || height,
+		[ `col-12 px-sm-0` ]: 'col-12 px-sm-0',
 	} );
 
 	const image = (
@@ -42,14 +39,14 @@ export default function save( { attributes } ) {
 	);
 
 	const figure = (
-		<>
+		<figure>
 			{ image }
-		</>
+		</figure>
 	);
 
 	return (
-		<figure { ...useBlockProps.save( { className: classes } ) }>
+		<div { ...useBlockProps.save( { className: classes } ) }>
 			{ figure }
-		</figure>
+		</div>
 	);
 }
