@@ -16,11 +16,9 @@ export default function save( { attributes } ) {
 		align,
 		href,
 		rel,
-		linkClass,
 		width,
 		height,
 		id,
-		linkTarget,
 		sizeSlug,
 		title,
 	} = attributes;
@@ -48,9 +46,7 @@ export default function save( { attributes } ) {
 		<>
 			{ href ? (
 				<a
-					className={ linkClass }
 					href={ href }
-					target={ linkTarget }
 					rel={ newRel }
 				>
 					{ image }

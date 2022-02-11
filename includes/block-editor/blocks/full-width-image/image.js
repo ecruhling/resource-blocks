@@ -21,7 +21,6 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import {
 	BlockControls,
 	InspectorControls,
-	RichText,
 	__experimentalImageSizeControl as ImageSizeControl,
 	__experimentalImageURLInputUI as ImageURLInputUI,
 	MediaReplaceFlow,
@@ -33,8 +32,8 @@ import {
 import { useEffect, useMemo, useState, useRef } from '@wordpress/element';
 import { __, sprintf, isRTL } from '@wordpress/i18n';
 import { getFilename } from '@wordpress/url';
-import { createBlock, switchToBlockType } from '@wordpress/blocks';
-import { crop, overlayText, upload } from '@wordpress/icons';
+import { switchToBlockType } from '@wordpress/blocks';
+import { overlayText, upload } from '@wordpress/icons';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 
@@ -54,22 +53,15 @@ export default function Image( {
 																 attributes: {
 																	 url = '',
 																	 alt,
-																	 align,
 																	 id,
 																	 href,
-																	 rel,
-																	 linkClass,
-																	 linkDestination,
 																	 title,
 																	 width,
 																	 height,
-																	 linkTarget,
 																	 sizeSlug,
 																 },
 																 setAttributes,
 																 isSelected,
-																 insertBlocksAfter,
-																 onReplace,
 																 onCloseModal,
 																 onSelectImage,
 																 onSelectURL,
@@ -80,9 +72,6 @@ export default function Image( {
 																 onImageLoadError,
 															 } ) {
 	const imageRef = useRef();
-	const prevUrl = usePrevious( url );
-	const { allowResize = true } = context;
-	const { getBlock } = useSelect( blockEditorStore );
 
 	const { image, multiImageSelection } = useSelect(
 		( select ) => {
@@ -104,7 +93,6 @@ export default function Image( {
 		[ id, isSelected ]
 	);
 	const {
-		canInsertCover,
 		imageEditing,
 		imageSizes,
 		maxWidth,
@@ -127,10 +115,6 @@ export default function Image( {
 
 			return {
 				...settings,
-				canInsertCover: canInsertBlockType(
-					'core/cover',
-					rootClientId
-				),
 			};
 		},
 		[ clientId ]
@@ -140,15 +124,14 @@ export default function Image( {
 		noticesStore
 	);
 	const isLargeViewport = useViewportMatch( 'medium' );
-	const isWideAligned = includes( [ 'wide', 'full' ], align );
+	const isWideAligned = includes( [ 'wide', 'full' ] );
 	const [
 		{ loadedNaturalWidth, loadedNaturalHeight },
 		setLoadedNaturalSize,
 	] = useState( {} );
 	const [ isEditingImage, setIsEditingImage ] = useState( false );
 	const [ externalBlob, setExternalBlob ] = useState();
-	const clientWidth = useClientWidth( containerRef, [ align ] );
-	const isResizable = allowResize && ! ( isWideAligned && isLargeViewport );
+	const clientWidth = useClientWidth( containerRef, [] );
 	const imageSizeOptions = map(
 		filter( imageSizes, ( { slug } ) =>
 			get( image, [ 'media_details', 'sizes', slug, 'source_url' ] )
@@ -174,7 +157,7 @@ export default function Image( {
 
 	// Get naturalWidth and naturalHeight from image ref, and fall back to loaded natural
 	// width and height. This resolves an issue in Safari where the loaded natural
-	// witdth and height is otherwise lost when switching between alignments.
+	// width and height is otherwise lost when switching between alignments.
 	// See: https://github.com/WordPress/gutenberg/pull/37210.
 	const { naturalWidth, naturalHeight } = useMemo( () => {
 		return {
@@ -192,27 +175,6 @@ export default function Image( {
 		loadedNaturalHeight,
 		imageRef.current?.complete,
 	] );
-
-	function onResizeStart() {
-		toggleSelection( false );
-	}
-
-	function onResizeStop() {
-		toggleSelection( true );
-	}
-
-	function onImageError() {
-		// Check if there's an embed block that handles this URL, e.g., instagram URL.
-		// See: https://github.com/WordPress/gutenberg/pull/11472
-		// const embedBlock = createUpgradedEmbedBlock( { attributes: { url } } );
-		// const shouldReplace = undefined !== embedBlock;
-		//
-		// if ( shouldReplace ) {
-		// 	onReplace( embedBlock );
-		// }
-		//
-		// onImageLoadError( shouldReplace );
-	}
 
 	function onSetHref( props ) {
 		setAttributes( props );
@@ -269,16 +231,6 @@ export default function Image( {
 		} );
 	}
 
-	function updateAlignment( nextAlign ) {
-		const extraUpdatedAttributes = [ 'wide', 'full' ].includes( nextAlign )
-			? { width: undefined, height: undefined }
-			: {};
-		setAttributes( {
-			...extraUpdatedAttributes,
-			align: nextAlign,
-		} );
-	}
-
 	useEffect( () => {
 		if ( ! isSelected ) {
 			setIsEditingImage( false );
@@ -289,39 +241,15 @@ export default function Image( {
 	}, [ isSelected ] );
 
 	const canEditImage = id && naturalWidth && naturalHeight && imageEditing;
-	const allowCrop = ! multiImageSelection && canEditImage && ! isEditingImage;
-
-	function switchToCover() {
-		replaceBlocks(
-			clientId,
-			switchToBlockType( getBlock( clientId ), 'core/cover' )
-		);
-	}
 
 	const controls = (
 		<>
 			<BlockControls group="block">
-				<BlockAlignmentControl
-					value={ align }
-					onChange={ updateAlignment }
-				/>
 				{ ! multiImageSelection && ! isEditingImage && (
 					<ImageURLInputUI
 						url={ href || '' }
 						onChangeUrl={ onSetHref }
-						linkDestination={ linkDestination }
 						mediaUrl={ ( image && image.source_url ) || url }
-						mediaLink={ image && image.link }
-						linkTarget={ linkTarget }
-						linkClass={ linkClass }
-						rel={ rel }
-					/>
-				) }
-				{ allowCrop && (
-					<ToolbarButton
-						onClick={ () => setIsEditingImage( true ) }
-						icon={ crop }
-						label={ __( 'Crop' ) }
 					/>
 				) }
 				{ externalBlob && (
@@ -329,13 +257,6 @@ export default function Image( {
 						onClick={ uploadExternal }
 						icon={ upload }
 						label={ __( 'Upload external image' ) }
-					/>
-				) }
-				{ ! multiImageSelection && canInsertCover && (
-					<ToolbarButton
-						icon={ overlayText }
-						label={ __( 'Add text over image' ) }
-						onClick={ switchToCover }
 					/>
 				) }
 			</BlockControls>
@@ -381,7 +302,6 @@ export default function Image( {
 						width={ width }
 						height={ height }
 						imageSizeOptions={ imageSizeOptions }
-						isResizable={ isResizable }
 						imageWidth={ naturalWidth }
 						imageHeight={ naturalHeight }
 					/>
@@ -432,7 +352,6 @@ export default function Image( {
 			<img
 				src={ temporaryURL || url }
 				alt={ defaultedAlt }
-				onError={ () => onImageError() }
 				onLoad={ ( event ) => {
 					setLoadedNaturalSize( {
 						loadedNaturalWidth: event.target?.naturalWidth,
@@ -469,7 +388,7 @@ export default function Image( {
 				naturalWidth={ naturalWidth }
 			/>
 		);
-	} else if ( ! isResizable || ! imageWidthWithinContainer ) {
+	} else if ( ! imageWidthWithinContainer ) {
 		img = <div style={ { width, height } }>{ img }</div>;
 	} else {
 		const currentWidth = width || imageWidthWithinContainer;
@@ -495,32 +414,6 @@ export default function Image( {
 		let showRightHandle = false;
 		let showLeftHandle = false;
 
-		/* eslint-disable no-lonely-if */
-		// See https://github.com/WordPress/gutenberg/issues/7584.
-		if ( align === 'center' ) {
-			// When the image is centered, show both handles.
-			showRightHandle = true;
-			showLeftHandle = true;
-		} else if ( isRTL() ) {
-			// In RTL mode the image is on the right by default.
-			// Show the right handle and hide the left handle only when it is
-			// aligned left. Otherwise always show the left handle.
-			if ( align === 'left' ) {
-				showRightHandle = true;
-			} else {
-				showLeftHandle = true;
-			}
-		} else {
-			// Show the left handle and hide the right handle only when the
-			// image is aligned right. Otherwise always show the right handle.
-			if ( align === 'right' ) {
-				showLeftHandle = true;
-			} else {
-				showRightHandle = true;
-			}
-		}
-		/* eslint-enable no-lonely-if */
-
 		img = (
 			<ResizableBox
 				size={ {
@@ -535,17 +428,9 @@ export default function Image( {
 				lockAspectRatio
 				enable={ {
 					top: false,
-					right: showRightHandle,
-					bottom: true,
-					left: showLeftHandle,
-				} }
-				onResizeStart={ onResizeStart }
-				onResizeStop={ ( event, direction, elt, delta ) => {
-					onResizeStop();
-					setAttributes( {
-						width: parseInt( currentWidth + delta.width, 10 ),
-						height: parseInt( currentHeight + delta.height, 10 ),
-					} );
+					right: false,
+					bottom: false,
+					left: false,
 				} }
 			>
 				{ img }

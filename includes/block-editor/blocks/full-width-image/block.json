@@ -9,9 +9,6 @@
   "description": "Single full-width image.",
   "keywords": [ "img", "photo", "picture" ],
   "attributes": {
-	"align": {
-	  "type": "string"
-	},
 	"url": {
 	  "type": "string",
 	  "source": "attribute",
@@ -37,18 +34,6 @@
 	  "selector": "figure > a",
 	  "attribute": "href"
 	},
-	"rel": {
-	  "type": "string",
-	  "source": "attribute",
-	  "selector": "figure > a",
-	  "attribute": "rel"
-	},
-	"linkClass": {
-	  "type": "string",
-	  "source": "attribute",
-	  "selector": "figure > a",
-	  "attribute": "class"
-	},
 	"id": {
 	  "type": "number"
 	},
@@ -60,15 +45,6 @@
 	},
 	"sizeSlug": {
 	  "type": "string"
-	},
-	"linkDestination": {
-	  "type": "string"
-	},
-	"linkTarget": {
-	  "type": "string",
-	  "source": "attribute",
-	  "selector": "figure > a",
-	  "attribute": "target"
 	}
   },
   "supports": {

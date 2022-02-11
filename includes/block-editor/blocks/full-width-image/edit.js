@@ -41,7 +41,7 @@ import {
 } from './constants';
 
 export const pickRelevantMediaFiles = ( image, size ) => {
-	const imageProps = pick( image, [ 'alt', 'id', 'link' ] );
+	const imageProps = pick( image, [ 'alt', 'id' ] );
 	imageProps.url =
 		get( image, [ 'sizes', size, 'url' ] ) ||
 		get( image, [ 'media_details', 'sizes', size, 'source_url' ] ) ||
@@ -131,7 +131,6 @@ export function ImageEdit( {
 	const {
 		url = '',
 		alt,
-		align,
 		id,
 		width,
 		height,
@@ -221,49 +220,9 @@ export function ImageEdit( {
 			additionalAttributes = { url };
 		}
 
-		// Check if default link setting should be used.
-		let linkDestination = attributes.linkDestination;
-		if ( ! linkDestination ) {
-			// Use the WordPress option to determine the proper default.
-			// The constants used in Gutenberg do not match WP options so a little more complicated than ideal.
-			// TODO: fix this in a follow up PR, requires updating media-text and ui component.
-			switch (
-			wp?.media?.view?.settings?.defaultProps?.link ||
-			LINK_DESTINATION_NONE
-				) {
-				case 'file':
-				case LINK_DESTINATION_MEDIA:
-					linkDestination = LINK_DESTINATION_MEDIA;
-					break;
-				case 'post':
-				case LINK_DESTINATION_ATTACHMENT:
-					linkDestination = LINK_DESTINATION_ATTACHMENT;
-					break;
-				case LINK_DESTINATION_CUSTOM:
-					linkDestination = LINK_DESTINATION_CUSTOM;
-					break;
-				case LINK_DESTINATION_NONE:
-					linkDestination = LINK_DESTINATION_NONE;
-					break;
-			}
-		}
-
-		// Check if the image is linked to it's media.
-		let href;
-		switch ( linkDestination ) {
-			case LINK_DESTINATION_MEDIA:
-				href = media.url;
-				break;
-			case LINK_DESTINATION_ATTACHMENT:
-				href = media.link;
-				break;
-		}
-		mediaAttributes.href = href;
-
 		setAttributes( {
 			...mediaAttributes,
 			...additionalAttributes,
-			linkDestination,
 		} );
 	}
 
@@ -277,16 +236,6 @@ export function ImageEdit( {
 				sizeSlug: imageDefaultSize,
 			} );
 		}
-	}
-
-	function updateAlignment( nextAlign ) {
-		const extraUpdatedAttributes = [ 'wide', 'full' ].includes( nextAlign )
-			? { width: undefined, height: undefined }
-			: {};
-		setAttributes( {
-			...extraUpdatedAttributes,
-			align: nextAlign,
-		} );
 	}
 
 	let isTemp = isTemporaryImage( id, url );
@@ -370,14 +319,6 @@ export function ImageEdit( {
 					onCloseModal={ onCloseModal }
 					onImageLoadError={ onImageError }
 				/>
-			) }
-			{ ! url && (
-				<BlockControls group="block">
-					<BlockAlignmentControl
-						value={ align }
-						onChange={ updateAlignment }
-					/>
-				</BlockControls>
 			) }
 			<MediaPlaceholder
 				icon={ <BlockIcon icon={ icons.image_full_width } /> }
