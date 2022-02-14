@@ -54,3 +54,22 @@ function resource_block_category( array $block_categories ): array {
 }
 
 add_action( 'block_categories', 'resource_block_category', 10, 2 );
+
+/**
+ * Restrict Media Library by width.
+ *
+ * @param $response
+ * @param $attachment
+ * @param $meta
+ *
+ * @return false|mixed
+ */
+function restrict_media_library_by_width( $response, $attachment, $meta ) {
+	if ( isset( $response['width'] ) && isset( $response['height'] ) && $response['width'] >= 2040 ) {
+		return $response;
+	}
+
+	return false;
+}
+
+add_filter( 'wp_prepare_attachment_for_js', 'restrict_media_library_by_width', 10, 3 );
