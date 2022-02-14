@@ -40,6 +40,7 @@ const upload = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "MIN_SIZE": function() { return /* binding */ MIN_SIZE; },
+/* harmony export */   "MIN_WIDTH": function() { return /* binding */ MIN_WIDTH; },
 /* harmony export */   "LINK_DESTINATION_NONE": function() { return /* binding */ LINK_DESTINATION_NONE; },
 /* harmony export */   "LINK_DESTINATION_MEDIA": function() { return /* binding */ LINK_DESTINATION_MEDIA; },
 /* harmony export */   "LINK_DESTINATION_ATTACHMENT": function() { return /* binding */ LINK_DESTINATION_ATTACHMENT; },
@@ -49,6 +50,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "MEDIA_ID_NO_FEATURED_IMAGE_SET": function() { return /* binding */ MEDIA_ID_NO_FEATURED_IMAGE_SET; }
 /* harmony export */ });
 const MIN_SIZE = 20;
+const MIN_WIDTH = 2040;
 const LINK_DESTINATION_NONE = 'none';
 const LINK_DESTINATION_MEDIA = 'media';
 const LINK_DESTINATION_ATTACHMENT = 'attachment';
@@ -117,6 +119,7 @@ __webpack_require__.r(__webpack_exports__);
  * Internal dependencies
  */
 
+ // import { MyModal } from './optionsModal';
 
 /**
  * Module constants
@@ -279,8 +282,9 @@ function ImageEdit(_ref) {
       return;
     }
 
-    if (media.width !== 2040) {
-      wp.data.dispatch('core/notices').createNotice('error', 'Image must be 2040px wide! This image is ' + media.width + 'px wide!', {
+    if (media.width !== _constants__WEBPACK_IMPORTED_MODULE_10__.MIN_WIDTH) {
+      noticeOperations.removeAllNotices();
+      wp.data.dispatch('core/notices').createNotice('error', 'Image must be ' + _constants__WEBPACK_IMPORTED_MODULE_10__.MIN_WIDTH + 'px wide!', {
         id: 'resource-blocks-error',
         isDismissible: true
       });
