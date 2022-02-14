@@ -187,6 +187,19 @@ export function ImageEdit( {
 			return;
 		}
 
+		if ( media.width !== 2040 ) {
+			wp.data.dispatch( 'core/notices' ).createNotice(
+				'error',
+				'Image must be 2040px wide! This image is ' + media.width + 'px wide!',
+				{
+					id: 'resource-blocks-error',
+					isDismissible: true
+				}
+			);
+
+			return;
+		}
+
 		if ( isBlobURL( media.url ) ) {
 			setTemporaryURL( media.url );
 			return;

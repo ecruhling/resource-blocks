@@ -279,6 +279,14 @@ function ImageEdit(_ref) {
       return;
     }
 
+    if (media.width !== 2040) {
+      wp.data.dispatch('core/notices').createNotice('error', 'Image must be 2040px wide! This image is ' + media.width + 'px wide!', {
+        id: 'resource-blocks-error',
+        isDismissible: true
+      });
+      return;
+    }
+
     if ((0,_wordpress_blob__WEBPACK_IMPORTED_MODULE_3__.isBlobURL)(media.url)) {
       setTemporaryURL(media.url);
       return;
