@@ -119,7 +119,7 @@ __webpack_require__.r(__webpack_exports__);
  * Internal dependencies
  */
 
- // import { MyModal } from './optionsModal';
+
 
 /**
  * Module constants
@@ -284,6 +284,7 @@ function ImageEdit(_ref) {
 
     if (media.width !== _constants__WEBPACK_IMPORTED_MODULE_10__.MIN_WIDTH) {
       noticeOperations.removeAllNotices();
+      openModal();
       wp.data.dispatch('core/notices').createNotice('error', 'Image must be ' + _constants__WEBPACK_IMPORTED_MODULE_10__.MIN_WIDTH + 'px wide!', {
         id: 'resource-blocks-error',
         isDismissible: true
@@ -331,6 +332,16 @@ function ImageEdit(_ref) {
         sizeSlug: imageDefaultSize
       });
     }
+  }
+
+  const [modalIsOpen, setIsOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
   }
 
   let isTemp = isTemporaryImage(id, url); // Upload a temporary image on mount.
@@ -404,7 +415,13 @@ function ImageEdit(_ref) {
     clientId: clientId,
     onCloseModal: onCloseModal,
     onImageLoadError: onImageError
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.MediaPlaceholder, {
+  }), modalIsOpen && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Modal, {
+    isOpen: modalIsOpen,
+    onRequestClose: closeModal,
+    contentLabel: "Example Modal"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    onClick: closeModal
+  }, "close"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "I am a modal"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", null, "tab navigation"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", null, "stays"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", null, "inside"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", null, "the modal"))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.MediaPlaceholder, {
     icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.BlockIcon, {
       icon: _icons_icons__WEBPACK_IMPORTED_MODULE_8__["default"].image_full_width
     }),

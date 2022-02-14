@@ -11,10 +11,7 @@ import { getBlobByURL, isBlobURL, revokeBlobURL } from '@wordpress/blob'
 import { withNotices } from '@wordpress/components'
 import { useSelect } from '@wordpress/data'
 import {
-	BlockIcon,
-	MediaPlaceholder,
-	useBlockProps,
-	store as blockEditorStore,
+	BlockIcon, MediaPlaceholder, useBlockProps, store as blockEditorStore,
 } from '@wordpress/block-editor'
 import { useEffect, useRef, useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
@@ -26,22 +23,18 @@ import icons from '../../../icons/icons'
  * Internal dependencies
  */
 import Image from './image'
-// import { MyModal } from './optionsModal';
+import { Modal } from '@wordpress/components'
 
 /**
  * Module constants
  */
 import {
-	ALLOWED_MEDIA_TYPES,
-	MIN_WIDTH,
+	ALLOWED_MEDIA_TYPES, MIN_WIDTH,
 } from './constants'
 
 export const pickRelevantMediaFiles = (image, size) => {
 	const imageProps = pick(image, ['alt', 'id'])
-	imageProps.url =
-		get(image, ['sizes', size, 'url']) ||
-		get(image, ['media_details', 'sizes', size, 'source_url']) ||
-		image.url
+	imageProps.url = get(image, ['sizes', size, 'url']) || get(image, ['media_details', 'sizes', size, 'source_url']) || image.url
 	return imageProps
 }
 
@@ -77,10 +70,7 @@ export const isExternalImage = (id, url) => url && !id && !isBlobURL(url)
  * @return {boolean} Whether or not it has default image size.
  */
 function hasDefaultSize (image, defaultSize) {
-	return (
-		has(image, ['sizes', defaultSize, 'url']) ||
-		has(image, ['media_details', 'sizes', defaultSize, 'source_url'])
-	)
+	return (has(image, ['sizes', defaultSize, 'url']) || has(image, ['media_details', 'sizes', defaultSize, 'source_url']))
 }
 
 /**
@@ -125,12 +115,7 @@ export function ImageEdit ({
 														 clientId,
 													 }) {
 	const {
-		url = '',
-		alt,
-		id,
-		width,
-		height,
-		sizeSlug,
+		url = '', alt, id, width, height, sizeSlug,
 	} = attributes
 	const [temporaryURL, setTemporaryURL] = useState()
 
@@ -150,8 +135,7 @@ export function ImageEdit ({
 	function onCloseModal () {
 		if (isMediaDestroyed(attributes?.id)) {
 			setAttributes({
-				url: undefined,
-				id: undefined,
+				url: undefined, id: undefined,
 			})
 		}
 	}
@@ -166,8 +150,7 @@ export function ImageEdit ({
 		// clear the attributes and trigger the placeholder.
 		if (!isReplaced) {
 			setAttributes({
-				url: undefined,
-				id: undefined,
+				url: undefined, id: undefined,
 			})
 		}
 	}
@@ -180,10 +163,7 @@ export function ImageEdit ({
 	function onSelectImage (media) {
 		if (!media || !media.url) {
 			setAttributes({
-				url: undefined,
-				alt: undefined,
-				id: undefined,
-				title: undefined,
+				url: undefined, alt: undefined, id: undefined, title: undefined,
 			})
 
 			return
@@ -191,15 +171,11 @@ export function ImageEdit ({
 
 		if (media.width !== MIN_WIDTH) {
 			noticeOperations.removeAllNotices()
+			openModal();
 
-			wp.data.dispatch('core/notices').createNotice(
-				'error',
-				'Image must be ' + MIN_WIDTH + 'px wide!',
-				{
-					id: 'resource-blocks-error',
-					isDismissible: true,
-				}
-			)
+			wp.data.dispatch('core/notices').createNotice('error', 'Image must be ' + MIN_WIDTH + 'px wide!', {
+				id: 'resource-blocks-error', isDismissible: true,
+			})
 
 			return
 		}
@@ -217,13 +193,9 @@ export function ImageEdit ({
 		// Reset the dimension attributes if changing to a different image.
 		if (!media.id || media.id !== id) {
 			additionalAttributes = {
-				width: undefined,
-				height: undefined,
-				// Fallback to size "full" if there's no default image size.
+				width: undefined, height: undefined, // Fallback to size "full" if there's no default image size.
 				// It means the image is smaller, and the block will use a full-size URL.
-				sizeSlug: hasDefaultSize(media, imageDefaultSize)
-					? imageDefaultSize
-					: 'full',
+				sizeSlug: hasDefaultSize(media, imageDefaultSize) ? imageDefaultSize : 'full',
 			}
 		} else {
 			// Keep the same url when selecting the same file, so "Image Size"
@@ -232,21 +204,26 @@ export function ImageEdit ({
 		}
 
 		setAttributes({
-			...mediaAttributes,
-			...additionalAttributes,
+			...mediaAttributes, ...additionalAttributes,
 		})
 	}
 
 	function onSelectURL (newURL) {
 		if (newURL !== url) {
 			setAttributes({
-				url: newURL,
-				id: undefined,
-				width: undefined,
-				height: undefined,
-				sizeSlug: imageDefaultSize,
+				url: newURL, id: undefined, width: undefined, height: undefined, sizeSlug: imageDefaultSize,
 			})
 		}
+	}
+
+	const [modalIsOpen, setIsOpen] = useState(false)
+
+	function openModal () {
+		setIsOpen(true)
+	}
+
+	function closeModal () {
+		setIsOpen(false)
 	}
 
 	let isTemp = isTemporaryImage(id, url)
@@ -261,18 +238,13 @@ export function ImageEdit ({
 
 		if (file) {
 			mediaUpload({
-				filesList: [file],
-				onFileChange: ([img]) => {
+				filesList: [file], onFileChange: ([img]) => {
 					onSelectImage(img)
-				},
-				allowedTypes: ALLOWED_MEDIA_TYPES,
-				onError: (message) => {
+				}, allowedTypes: ALLOWED_MEDIA_TYPES, onError: (message) => {
 					isTemp = false
 					noticeOperations.createErrorNotice(message)
 					setAttributes({
-						src: undefined,
-						id: undefined,
-						url: undefined,
+						src: undefined, id: undefined, url: undefined,
 					})
 				},
 			})
@@ -291,30 +263,23 @@ export function ImageEdit ({
 
 	const isExternal = isExternalImage(id, url)
 	const src = isExternal ? url : undefined
-	const mediaPreview = !!url && (
-		<img
+	const mediaPreview = !!url && (<img
 			alt={__('Edit image')}
 			title={__('Edit image')}
 			className={'edit-image-preview'}
 			src={url}
-		/>
-	)
+		/>)
 
 	const classes = classnames(className, {
-		'is-transient': temporaryURL,
-		'is-resized': !!width || !!height,
-		[`size-${sizeSlug}`]: sizeSlug,
+		'is-transient': temporaryURL, 'is-resized': !!width || !!height, [`size-${sizeSlug}`]: sizeSlug,
 	})
 
 	const blockProps = useBlockProps({
-		ref,
-		className: classes,
+		ref, className: classes,
 	})
 
-	return (
-		<div {...blockProps}>
-			{(temporaryURL || url) && (
-				<Image
+	return (<div {...blockProps}>
+			{(temporaryURL || url) && (<Image
 					temporaryURL={temporaryURL}
 					attributes={attributes}
 					setAttributes={setAttributes}
@@ -329,8 +294,22 @@ export function ImageEdit ({
 					clientId={clientId}
 					onCloseModal={onCloseModal}
 					onImageLoadError={onImageError}
-				/>
-			)}
+				/>)}
+			{modalIsOpen && (<Modal
+				isOpen={modalIsOpen}
+				onRequestClose={closeModal}
+				contentLabel="Example Modal"
+			>
+				<button onClick={closeModal}>close</button>
+				<div>I am a modal</div>
+				<form>
+					<input/>
+					<button>tab navigation</button>
+					<button>stays</button>
+					<button>inside</button>
+					<button>the modal</button>
+				</form>
+			</Modal>)}
 			<MediaPlaceholder
 				icon={<BlockIcon icon={icons.image_full_width}/>}
 				onSelect={onSelectImage}
@@ -344,8 +323,7 @@ export function ImageEdit ({
 				mediaPreview={mediaPreview}
 				disableMediaButtons={temporaryURL || url}
 			/>
-		</div>
-	)
+		</div>)
 }
 
 export default withNotices(ImageEdit)
