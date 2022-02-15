@@ -40,12 +40,12 @@ const upload = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "MIN_SIZE": function() { return /* binding */ MIN_SIZE; },
-/* harmony export */   "MIN_WIDTH": function() { return /* binding */ MIN_WIDTH; },
+/* harmony export */   "WIDTH": function() { return /* binding */ WIDTH; },
 /* harmony export */   "ALLOWED_MEDIA_TYPES": function() { return /* binding */ ALLOWED_MEDIA_TYPES; },
 /* harmony export */   "MEDIA_ID_NO_FEATURED_IMAGE_SET": function() { return /* binding */ MEDIA_ID_NO_FEATURED_IMAGE_SET; }
 /* harmony export */ });
 const MIN_SIZE = 20;
-const MIN_WIDTH = 2040;
+const WIDTH = 2040;
 const ALLOWED_MEDIA_TYPES = ['image'];
 const MEDIA_ID_NO_FEATURED_IMAGE_SET = 0;
 
@@ -103,12 +103,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/* global wp */
 
 /**
  * Internal dependencies
  */
-
 
 
 /**
@@ -309,7 +307,7 @@ function ImageEdit(_ref) {
 
     let mediaCheck = (_media$width = media.width) !== null && _media$width !== void 0 ? _media$width : media.media_details.width;
 
-    if (mediaCheck !== _constants__WEBPACK_IMPORTED_MODULE_10__.MIN_WIDTH) {
+    if (mediaCheck !== _constants__WEBPACK_IMPORTED_MODULE_10__.WIDTH) {
       openModal();
       return;
     }
@@ -417,7 +415,7 @@ function ImageEdit(_ref) {
     onRequestClose: closeModal,
     contentLabel: "Error",
     title: "Error"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Image must be ", _constants__WEBPACK_IMPORTED_MODULE_10__.MIN_WIDTH, "px wide! Choose another image.")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.MediaPlaceholder, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Image must be ", _constants__WEBPACK_IMPORTED_MODULE_10__.WIDTH, "px wide! Choose another image.")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.MediaPlaceholder, {
     icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.BlockIcon, {
       icon: _icons_icons__WEBPACK_IMPORTED_MODULE_8__["default"].image_full_width
     }),
@@ -434,7 +432,7 @@ function ImageEdit(_ref) {
     mediaPreview: mediaPreview,
     labels: {
       title: 'Full-width Image',
-      instructions: 'Upload an image, or pick one from the media library. Image must be 2040px wide. 870px is an appropriate height, but it is not enforced.'
+      instructions: 'Upload an image, or pick one from the media library. Image must be ' + _constants__WEBPACK_IMPORTED_MODULE_10__.WIDTH + 'px wide. 870px is an appropriate height, but it is not enforced.'
     },
     disableMediaButtons: temporaryURL || url
   }));
@@ -1231,7 +1229,7 @@ module.exports = window["wp"]["url"];
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-image","version":"1.0.0","title":"Full-width Image","category":"resource-blocks","usesContext":["fixedHeight"],"description":"A single full-width image.\\n2040px width\\n870px is an appropriate height, but is not enforced.","keywords":["img","photo","picture"],"attributes":{"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"id":{"type":"number"},"width":{"type":"number"},"height":{"type":"number"},"sizeSlug":{"type":"string","default":"full"}},"supports":{"anchor":false,"color":{"text":false,"background":false}},"textdomain":"resource-blocks","editorScript":"file:../../../../build/full-width-image.js","editorStyle":"file:../../../../build/full-width-image.css","style":"file:../../../../build/style-full-width-image.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-image","version":"1.0.0","title":"Full-width Image","category":"resource-blocks","description":"A single full-width image. 2040px width.","keywords":["img","photo","picture"],"attributes":{"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"id":{"type":"number"},"width":{"type":"number"},"height":{"type":"number"},"sizeSlug":{"type":"string","default":"full"}},"supports":{"anchor":false,"color":{"text":false,"background":false}},"textdomain":"resource-blocks","editorScript":"file:../../../../build/full-width-image.js","editorStyle":"file:../../../../build/full-width-image.css","style":"file:../../../../build/style-full-width-image.css"}');
 
 /***/ })
 

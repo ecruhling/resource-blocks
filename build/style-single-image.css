@@ -8,9 +8,7 @@
  * Replace them with your own styles or remove the file completely.
  */
 .wp-block-resource-blocks-single-image {
-  background-color: #21759b;
-  color: #fff;
-  padding: 2px;
+  margin: 0 auto;
 }
 
 /*# sourceMappingURL=style-single-image.css.map*/

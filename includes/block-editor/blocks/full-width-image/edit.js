@@ -14,22 +14,20 @@ import {
 	BlockIcon, MediaPlaceholder, useBlockProps, store as blockEditorStore,
 } from '@wordpress/block-editor'
 import { useEffect, useRef, useState } from '@wordpress/element'
+import { Modal } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import icons from '../../../icons/icons'
-
-/* global wp */
 
 /**
  * Internal dependencies
  */
 import Image from './image'
-import { Modal } from '@wordpress/components'
 
 /**
  * Module constants
  */
 import {
-	ALLOWED_MEDIA_TYPES, MIN_WIDTH,
+	ALLOWED_MEDIA_TYPES, WIDTH,
 } from './constants'
 
 export const pickRelevantMediaFiles = (image, size) => {
@@ -199,10 +197,10 @@ export function ImageEdit ({
 		// Check for minimum width.
 		// Selecting a new image from the Media Library uses media.width,
 		// Uploading a new image uses media.media_details.width
-		let mediaCheck = media.width ?? media.media_details.width;
+		let mediaCheck = media.width ?? media.media_details.width
 
-		if ( mediaCheck !== MIN_WIDTH) {
-			openModal();
+		if (mediaCheck !== WIDTH) {
+			openModal()
 
 			return
 		}
@@ -268,11 +266,11 @@ export function ImageEdit ({
 	const isExternal = isExternalImage(id, url)
 	const src = isExternal ? url : undefined
 	const mediaPreview = !!url && (<img
-			alt={__('Edit image')}
-			title={__('Edit image')}
-			className={'edit-image-preview'}
-			src={url}
-		/>)
+		alt={__('Edit image')}
+		title={__('Edit image')}
+		className={'edit-image-preview'}
+		src={url}
+	/>)
 
 	const classes = classnames(className, {
 		'is-transient': temporaryURL, 'is-resized': !!width || !!height, [`size-${sizeSlug}`]: sizeSlug,
@@ -283,44 +281,47 @@ export function ImageEdit ({
 	})
 
 	return (<div {...blockProps}>
-			{(temporaryURL || url) && (<Image
-					temporaryURL={temporaryURL}
-					attributes={attributes}
-					setAttributes={setAttributes}
-					isSelected={isSelected}
-					insertBlocksAfter={insertBlocksAfter}
-					onReplace={onReplace}
-					onSelectImage={onSelectImage}
-					onSelectURL={onSelectURL}
-					onUploadError={onUploadError}
-					containerRef={ref}
-					context={context}
-					clientId={clientId}
-					onCloseModal={onCloseModal}
-					onImageLoadError={onImageError}
-				/>)}
-			{modalIsOpen && (<Modal
-				isOpen={modalIsOpen}
-				onRequestClose={closeModal}
-				contentLabel="Error"
-				title="Error"
-			>
-				<p>Image must be { MIN_WIDTH }px wide! Choose another image.</p>
-			</Modal>)}
-			<MediaPlaceholder
-				icon={<BlockIcon icon={icons.image_full_width}/>}
-				onSelect={onSelectImage}
-				notices={noticeUI}
-				onError={onUploadError}
-				onClose={onCloseModal}
-				accept="image/*"
-				allowedTypes={ALLOWED_MEDIA_TYPES}
-				value={{ id, src }}
-				mediaPreview={mediaPreview}
-				labels = { { title: 'Full-width Image', instructions: 'Upload an image, or pick one from the media library. Image must be 2040px wide. 870px is an appropriate height, but it is not enforced.' } }
-				disableMediaButtons={temporaryURL || url}
-			/>
-		</div>)
+		{(temporaryURL || url) && (<Image
+			temporaryURL={temporaryURL}
+			attributes={attributes}
+			setAttributes={setAttributes}
+			isSelected={isSelected}
+			insertBlocksAfter={insertBlocksAfter}
+			onReplace={onReplace}
+			onSelectImage={onSelectImage}
+			onSelectURL={onSelectURL}
+			onUploadError={onUploadError}
+			containerRef={ref}
+			context={context}
+			clientId={clientId}
+			onCloseModal={onCloseModal}
+			onImageLoadError={onImageError}
+		/>)}
+		{modalIsOpen && (<Modal
+			isOpen={modalIsOpen}
+			onRequestClose={closeModal}
+			contentLabel="Error"
+			title="Error"
+		>
+			<p>Image must be {WIDTH}px wide! Choose another image.</p>
+		</Modal>)}
+		<MediaPlaceholder
+			icon={<BlockIcon icon={icons.image_full_width}/>}
+			onSelect={onSelectImage}
+			notices={noticeUI}
+			onError={onUploadError}
+			onClose={onCloseModal}
+			accept="image/*"
+			allowedTypes={ALLOWED_MEDIA_TYPES}
+			value={{ id, src }}
+			mediaPreview={mediaPreview}
+			labels={{
+				title: 'Full-width Image',
+				instructions: 'Upload an image, or pick one from the media library. Image must be ' + WIDTH + 'px wide. 870px is an appropriate height, but it is not enforced.'
+			}}
+			disableMediaButtons={temporaryURL || url}
+		/>
+	</div>)
 }
 
 export default withNotices(ImageEdit)

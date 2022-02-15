@@ -4,6 +4,18 @@
  * Replace them with your own styles or remove the file completely.
  */
 
- .wp-block-resource-blocks-single-image {
-	border: 1px dotted #f00;
+.wp-block-resource-blocks-single-image {
+  width: 50%;
+
+  .components-placeholder__instructions {
+	display: block !important;
+  }
+
+  .components-placeholder__fieldset {
+	flex-direction: row !important;
+  }
+
+  .components-placeholder__fieldset .components-button {
+	margin-right: 12px !important;
+  }
 }

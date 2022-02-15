@@ -5,8 +5,7 @@
   "version": "1.0.0",
   "title": "Full-width Image",
   "category": "resource-blocks",
-  "usesContext": [ "fixedHeight" ],
-  "description": "A single full-width image.\n2040px width\n870px is an appropriate height, but is not enforced.",
+  "description": "A single full-width image. 2040px width.",
   "keywords": [ "img", "photo", "picture" ],
   "attributes": {
 	"url": {

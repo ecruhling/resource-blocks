@@ -6,14 +6,11 @@ import classnames from 'classnames'
 /**
  * WordPress dependencies
  */
-import { getBlobByURL, isBlobURL, revokeBlobURL } from '@wordpress/blob'
 import { withNotices } from '@wordpress/components'
 import {
 	BlockIcon, InnerBlocks, useBlockProps,
 } from '@wordpress/block-editor'
 import icons from '../../../icons/icons'
-
-/* global wp */
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -22,7 +19,6 @@ import icons from '../../../icons/icons'
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss'
-import { useRef } from '@wordpress/element'
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -32,17 +28,13 @@ import { useRef } from '@wordpress/element'
  * @return {WPElement} Element to render.
  */
 export function ColumnsEdit ({
-														 className,
-													 }) {
+															 className,
+														 }) {
 
-	const classes = classnames(className, {
-		'is-transient': '', 'is-resized': '', [`size-`]: '',
-	})
-
-	const ref = useRef()
+	const classes = classnames(className)
 
 	const blockProps = useBlockProps({
-		ref, className: classes,
+		className: classes,
 	})
 
 	// use just the single-image blocks as a template

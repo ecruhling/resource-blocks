@@ -1,4 +1,4 @@
 export const MIN_SIZE = 20;
-export const MIN_WIDTH = 2040;
+export const WIDTH = 990;
 export const ALLOWED_MEDIA_TYPES = [ 'image' ];
 export const MEDIA_ID_NO_FEATURED_IMAGE_SET = 0;
