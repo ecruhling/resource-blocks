@@ -41,21 +41,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "MIN_SIZE": function() { return /* binding */ MIN_SIZE; },
 /* harmony export */   "MIN_WIDTH": function() { return /* binding */ MIN_WIDTH; },
-/* harmony export */   "LINK_DESTINATION_NONE": function() { return /* binding */ LINK_DESTINATION_NONE; },
-/* harmony export */   "LINK_DESTINATION_MEDIA": function() { return /* binding */ LINK_DESTINATION_MEDIA; },
-/* harmony export */   "LINK_DESTINATION_ATTACHMENT": function() { return /* binding */ LINK_DESTINATION_ATTACHMENT; },
-/* harmony export */   "LINK_DESTINATION_CUSTOM": function() { return /* binding */ LINK_DESTINATION_CUSTOM; },
-/* harmony export */   "NEW_TAB_REL": function() { return /* binding */ NEW_TAB_REL; },
 /* harmony export */   "ALLOWED_MEDIA_TYPES": function() { return /* binding */ ALLOWED_MEDIA_TYPES; },
 /* harmony export */   "MEDIA_ID_NO_FEATURED_IMAGE_SET": function() { return /* binding */ MEDIA_ID_NO_FEATURED_IMAGE_SET; }
 /* harmony export */ });
 const MIN_SIZE = 20;
 const MIN_WIDTH = 2040;
-const LINK_DESTINATION_NONE = 'none';
-const LINK_DESTINATION_MEDIA = 'media';
-const LINK_DESTINATION_ATTACHMENT = 'attachment';
-const LINK_DESTINATION_CUSTOM = 'custom';
-const NEW_TAB_REL = ['noreferrer', 'noopener'];
 const ALLOWED_MEDIA_TYPES = ['image'];
 const MEDIA_ID_NO_FEATURED_IMAGE_SET = 0;
 
