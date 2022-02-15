@@ -5,47 +5,6 @@
   "version": "1.0.0",
   "title": "Two Column Images",
   "category": "resource-blocks",
-  "attributes": {
-	"url": {
-	  "type": "string",
-	  "source": "attribute",
-	  "selector": "img",
-	  "attribute": "src"
-	},
-	"alt": {
-	  "type": "string",
-	  "source": "attribute",
-	  "selector": "img",
-	  "attribute": "alt",
-	  "default": ""
-	},
-	"title": {
-	  "type": "string",
-	  "source": "attribute",
-	  "selector": "img",
-	  "attribute": "title"
-	},
-	"id": {
-	  "type": "number"
-	},
-	"width": {
-	  "type": "number"
-	},
-	"height": {
-	  "type": "number"
-	},
-	"sizeSlug": {
-	  "type": "string",
-	  "default": "full"
-	}
-  },
-  "supports": {
-	"anchor": false,
-	"color": {
-	  "text": false,
-	  "background": false
-	}
-  },
   "textdomain": "resource-blocks",
   "editorScript": "file:../../../../build/two-column-images.js",
   "editorStyle": "file:../../../../build/two-column-images.css",

@@ -235,7 +235,7 @@ module.exports = window["wp"]["i18n"];
   \**************************************************************/
 /***/ (function(module) {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/single-image","version":"1.0.0","title":"Single Image","category":"widgets","textdomain":"resource-blocks","editorScript":"file:../../../../build/single-image.js","editorStyle":"file:../../../../build/single-image.css","style":"file:../../../../build/style-single-image.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/single-image","version":"1.0.0","title":"Single Image","category":"resource-blocks","attributes":{"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"id":{"type":"number"},"width":{"type":"number"},"height":{"type":"number"},"sizeSlug":{"type":"string","default":"full"}},"supports":{"anchor":false,"color":{"text":false,"background":false}},"textdomain":"resource-blocks","parent":["resource-blocks/two-column-images"],"editorScript":"file:../../../../build/single-image.js","editorStyle":"file:../../../../build/single-image.css","style":"file:../../../../build/style-single-image.css"}');
 
 /***/ })
 

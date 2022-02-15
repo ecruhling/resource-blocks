@@ -8,9 +8,10 @@
  * Replace them with your own styles or remove the file completely.
  */
 .wp-block-resource-blocks-two-column-images {
-  background-color: #21759b;
-  color: #fff;
-  padding: 2px;
+  margin: 0;
+}
+.wp-block-resource-blocks-two-column-images p {
+  margin: 0;
 }
 
 /*# sourceMappingURL=style-two-column-images.css.map*/
