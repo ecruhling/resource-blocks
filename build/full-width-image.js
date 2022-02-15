@@ -213,7 +213,7 @@ function ImageEdit(_ref) {
     context,
     clientId
   } = _ref;
-  const {
+  let {
     url = '',
     alt,
     id,
@@ -270,24 +270,21 @@ function ImageEdit(_ref) {
     noticeOperations.removeAllNotices();
     noticeOperations.createErrorNotice(message);
   }
+  /**
+   * Image selected.
+   * @param media
+   */
+
 
   function onSelectImage(media) {
+    var _media$width;
+
     if (!media || !media.url) {
       setAttributes({
         url: undefined,
         alt: undefined,
         id: undefined,
         title: undefined
-      });
-      return;
-    }
-
-    if (media.width !== _constants__WEBPACK_IMPORTED_MODULE_10__.MIN_WIDTH) {
-      noticeOperations.removeAllNotices();
-      openModal();
-      wp.data.dispatch('core/notices').createNotice('error', 'Image must be ' + _constants__WEBPACK_IMPORTED_MODULE_10__.MIN_WIDTH + 'px wide!', {
-        id: 'resource-blocks-error',
-        isDismissible: true
       });
       return;
     }
@@ -315,6 +312,16 @@ function ImageEdit(_ref) {
       additionalAttributes = {
         url
       };
+    } // Check for minimum width.
+    // Selecting a new image from the Media Library uses media.width,
+    // Uploading a new image uses media.media_details.width
+
+
+    let mediaCheck = (_media$width = media.width) !== null && _media$width !== void 0 ? _media$width : media.media_details.width;
+
+    if (mediaCheck !== _constants__WEBPACK_IMPORTED_MODULE_10__.MIN_WIDTH) {
+      openModal();
+      return;
     }
 
     setAttributes({ ...mediaAttributes,
@@ -418,15 +425,13 @@ function ImageEdit(_ref) {
   }), modalIsOpen && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Modal, {
     isOpen: modalIsOpen,
     onRequestClose: closeModal,
-    contentLabel: "Example Modal"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    onClick: closeModal
-  }, "close"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "I am a modal"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", null, "tab navigation"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", null, "stays"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", null, "inside"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", null, "the modal"))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.MediaPlaceholder, {
+    contentLabel: "Error",
+    title: "Error"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Image must be ", _constants__WEBPACK_IMPORTED_MODULE_10__.MIN_WIDTH, "px wide! Choose another image.")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.MediaPlaceholder, {
     icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.BlockIcon, {
       icon: _icons_icons__WEBPACK_IMPORTED_MODULE_8__["default"].image_full_width
     }),
     onSelect: onSelectImage,
-    onSelectURL: onSelectURL,
     notices: noticeUI,
     onError: onUploadError,
     onClose: onCloseModal,
@@ -437,6 +442,10 @@ function ImageEdit(_ref) {
       src
     },
     mediaPreview: mediaPreview,
+    labels: {
+      title: 'Full-width Image',
+      instructions: 'Upload an image, or pick one from the media library. Image must be 2040px wide. 870px is an appropriate height, but it is not enforced.'
+    },
     disableMediaButtons: temporaryURL || url
   }));
 }

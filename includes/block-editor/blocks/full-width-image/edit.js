@@ -114,7 +114,7 @@ export function ImageEdit ({
 														 context,
 														 clientId,
 													 }) {
-	const {
+	let {
 		url = '', alt, id, width, height, sizeSlug,
 	} = attributes
 	const [temporaryURL, setTemporaryURL] = useState()
@@ -160,21 +160,14 @@ export function ImageEdit ({
 		noticeOperations.createErrorNotice(message)
 	}
 
+	/**
+	 * Image selected.
+	 * @param media
+	 */
 	function onSelectImage (media) {
 		if (!media || !media.url) {
 			setAttributes({
 				url: undefined, alt: undefined, id: undefined, title: undefined,
-			})
-
-			return
-		}
-
-		if (media.width !== MIN_WIDTH) {
-			noticeOperations.removeAllNotices()
-			openModal();
-
-			wp.data.dispatch('core/notices').createNotice('error', 'Image must be ' + MIN_WIDTH + 'px wide!', {
-				id: 'resource-blocks-error', isDismissible: true,
 			})
 
 			return
@@ -201,6 +194,17 @@ export function ImageEdit ({
 			// Keep the same url when selecting the same file, so "Image Size"
 			// option is not changed.
 			additionalAttributes = { url }
+		}
+
+		// Check for minimum width.
+		// Selecting a new image from the Media Library uses media.width,
+		// Uploading a new image uses media.media_details.width
+		let mediaCheck = media.width ?? media.media_details.width;
+
+		if ( mediaCheck !== MIN_WIDTH) {
+			openModal();
+
+			return
 		}
 
 		setAttributes({
@@ -298,22 +302,14 @@ export function ImageEdit ({
 			{modalIsOpen && (<Modal
 				isOpen={modalIsOpen}
 				onRequestClose={closeModal}
-				contentLabel="Example Modal"
+				contentLabel="Error"
+				title="Error"
 			>
-				<button onClick={closeModal}>close</button>
-				<div>I am a modal</div>
-				<form>
-					<input/>
-					<button>tab navigation</button>
-					<button>stays</button>
-					<button>inside</button>
-					<button>the modal</button>
-				</form>
+				<p>Image must be { MIN_WIDTH }px wide! Choose another image.</p>
 			</Modal>)}
 			<MediaPlaceholder
 				icon={<BlockIcon icon={icons.image_full_width}/>}
 				onSelect={onSelectImage}
-				onSelectURL={onSelectURL}
 				notices={noticeUI}
 				onError={onUploadError}
 				onClose={onCloseModal}
@@ -321,6 +317,7 @@ export function ImageEdit ({
 				allowedTypes={ALLOWED_MEDIA_TYPES}
 				value={{ id, src }}
 				mediaPreview={mediaPreview}
+				labels = { { title: 'Full-width Image', instructions: 'Upload an image, or pick one from the media library. Image must be 2040px wide. 870px is an appropriate height, but it is not enforced.' } }
 				disableMediaButtons={temporaryURL || url}
 			/>
 		</div>)
