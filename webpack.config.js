@@ -6,6 +6,5 @@ module.exports = {
 		'full-width-image': './includes/block-editor/blocks/full-width-image',
 		'two-column-images': './includes/block-editor/blocks/two-column-images',
 		'full-width-video': './includes/block-editor/blocks/full-width-video',
-		'test': './includes/block-editor/blocks/test',
 	},
 };

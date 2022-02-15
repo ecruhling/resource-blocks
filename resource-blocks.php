@@ -22,7 +22,6 @@ function resource_blocks_init() {
 		'full-width-image/',
 		'two-column-images/',
 		'full-width-video/',
-		'test/',
 	);
 
 	foreach ( $blocks as $block ) {
