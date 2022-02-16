@@ -53,3 +53,19 @@ function resource_block_category( array $block_categories ): array {
 }
 
 add_action( 'block_categories', 'resource_block_category', 10, 2 );
+
+/**
+ * Filter to remove all blocks other than Resource blocks.
+ *
+ * @return string[]
+ */
+function allow_only_resource_blocks(): array {
+	return array(
+		'resource-blocks/full-width-image',
+		'resource-blocks/full-width-video',
+		'resource-blocks/two-column-images',
+		'resource-blocks/single-image',
+	);
+}
+
+add_filter( 'allowed_block_types_all', 'allow_only_resource_blocks', 10, 2 );

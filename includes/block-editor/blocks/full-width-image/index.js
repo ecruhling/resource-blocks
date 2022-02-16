@@ -44,6 +44,7 @@ const { name, ...settings } = json
 registerBlockType(name, {
 	...settings,
 	icon: icons.image_full_width,
+	transforms: {},
 	/**
 	 * @see ./edit.js
 	 */
