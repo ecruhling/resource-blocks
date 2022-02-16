@@ -29,12 +29,19 @@ import { useBlockProps } from '@wordpress/block-editor'
 import { store as coreStore } from '@wordpress/core-data'
 import { View } from '@wordpress/primitives'
 
+/**
+ * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
+ * Those files can contain any CSS code that gets applied to the editor.
+ *
+ * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
+ */
+import './editor.scss'
+
 const EmbedEdit = (props) => {
 	const {
 		attributes: {
 			providerNameSlug,
 			previewable,
-			responsive,
 			url: attributesUrl,
 		},
 		attributes,
@@ -89,9 +96,6 @@ const EmbedEdit = (props) => {
 			return {
 				preview: validPreview ? embedPreview : undefined,
 				fetching: isRequestingEmbedPreview(attributesUrl),
-				themeSupportsResponsive: getThemeSupports()[
-					'responsive-embeds'
-					],
 				cannotEmbed: !validPreview || previewIsFallback,
 			}
 		},
@@ -109,8 +113,6 @@ const EmbedEdit = (props) => {
 				preview,
 				title,
 				className,
-				responsive,
-				allowResponsive
 			),
 		}
 	}
@@ -125,7 +127,6 @@ const EmbedEdit = (props) => {
 			className: getClassNames(
 				html,
 				className,
-				responsive && newAllowResponsive
 			),
 		})
 	}
@@ -228,10 +229,6 @@ const EmbedEdit = (props) => {
 		<>
 			<EmbedControls
 				showEditButton={preview && !cannotEmbed}
-				themeSupportsResponsive={themeSupportsResponsive}
-				blockSupportsResponsive={responsive}
-				allowResponsive={allowResponsive}
-				toggleResponsive={toggleResponsive}
 				switchBackToURLInput={() => setIsEditingURL(true)}
 			/>
 			<View {...blockProps}>

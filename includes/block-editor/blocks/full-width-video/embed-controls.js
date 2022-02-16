@@ -46,7 +46,7 @@ const EmbedControls = ({
 			<InspectorControls>
 				<PanelBody
 					title={__('Media settings')}
-					className="blocks-responsive"
+					className=""
 				>
 					<ToggleControl
 						label={__('Resize for smaller devices')}
