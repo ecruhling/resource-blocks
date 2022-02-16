@@ -218,7 +218,6 @@ const EmbedEdit = (props) => {
 	// that `getMergedAttributes` uses is memoized so that we're not
 	// calculating them on every render.
 	const {
-		caption,
 		type,
 		allowResponsive,
 		className: classFromPreview,
@@ -242,10 +241,6 @@ const EmbedEdit = (props) => {
 					className={className}
 					url={url}
 					type={type}
-					caption={caption}
-					onCaptionChange={(value) =>
-						setAttributes({ caption: value })
-					}
 					isSelected={isSelected}
 					icon={icon}
 					label={label}

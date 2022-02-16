@@ -57,13 +57,9 @@ class EmbedPreview extends Component {
 			previewable,
 			url,
 			type,
-			caption,
-			onCaptionChange,
-			isSelected,
 			className,
 			icon,
 			label,
-			insertBlocksAfter,
 		} = this.props
 		const { scripts } = preview
 		const { interactive } = this.state
@@ -136,18 +132,6 @@ class EmbedPreview extends Component {
 							)}
 						</p>
 					</Placeholder>
-				)}
-				{(!RichText.isEmpty(caption) || isSelected) && (
-					<RichText
-						tagName="figcaption"
-						placeholder={__('Add caption')}
-						value={caption}
-						onChange={onCaptionChange}
-						inlineToolbar
-						__unstableOnSplitAtEnd={() =>
-							insertBlocksAfter(createBlock('core/paragraph'))
-						}
-					/>
 				)}
 			</figure>
 		)
