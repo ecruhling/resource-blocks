@@ -831,7 +831,6 @@ const {
     attributes: {
       sizeSlug: 'large',
       url: 'https://s.w.org/images/core/5.3/MtBlanc1.jpg',
-      // translators: Caption accompanying an image of the Mont Blanc, which serves as an example for the Image block.
       caption: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Mont Blanc appears—still, snowy, and serene.')
     }
   },
