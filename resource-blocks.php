@@ -19,8 +19,8 @@ function resource_blocks_init() {
 
 	$blocks = array(
 		'full-width-image/',
-		'full-width-video/',
 		'two-column-images/',
+		'full-width-video/',
 		'single-image/',
 	);
 

@@ -3,7 +3,6 @@
  */
 import {
 	createUpgradedEmbedBlock,
-	getClassNames,
 	fallback,
 	getAttributesFromPreview,
 	getEmbedInfoByProvider,
@@ -66,7 +65,6 @@ const EmbedEdit = (props) => {
 	const {
 		preview,
 		fetching,
-		themeSupportsResponsive,
 		cannotEmbed,
 	} = useSelect(
 		(select) => {
@@ -74,7 +72,6 @@ const EmbedEdit = (props) => {
 				getEmbedPreview,
 				isPreviewEmbedFallback,
 				isRequestingEmbedPreview,
-				getThemeSupports,
 			} = select(coreStore)
 			if (!attributesUrl) {
 				return { fetching: false, cannotEmbed: false }
@@ -106,7 +103,7 @@ const EmbedEdit = (props) => {
 	 * @return {Object} Attributes derived from the preview, merged with the current attributes.
 	 */
 	const getMergedAttributes = () => {
-		const { allowResponsive, className } = attributes
+		const { className } = attributes
 		return {
 			...attributes,
 			...getAttributesFromPreview(
@@ -115,20 +112,6 @@ const EmbedEdit = (props) => {
 				className,
 			),
 		}
-	}
-
-	const toggleResponsive = () => {
-		const { allowResponsive, className } = attributes
-		const { html } = preview
-		const newAllowResponsive = !allowResponsive
-
-		setAttributes({
-			allowResponsive: newAllowResponsive,
-			className: getClassNames(
-				html,
-				className,
-			),
-		})
 	}
 
 	useEffect(() => {
@@ -220,7 +203,6 @@ const EmbedEdit = (props) => {
 	// calculating them on every render.
 	const {
 		type,
-		allowResponsive,
 		className: classFromPreview,
 	} = getMergedAttributes()
 	const className = classnames(classFromPreview, props.className)
