@@ -419,7 +419,7 @@ function ImageEdit(_ref) {
     title: "Error"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Image must be ", _constants__WEBPACK_IMPORTED_MODULE_10__.WIDTH, "px wide! Choose another image.")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.MediaPlaceholder, {
     icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.BlockIcon, {
-      icon: _icons_icons__WEBPACK_IMPORTED_MODULE_8__["default"].image_full_width
+      icon: _icons_icons__WEBPACK_IMPORTED_MODULE_8__["default"].single_image
     }),
     onSelect: onSelectImage,
     notices: noticeUI,
@@ -959,6 +959,28 @@ icons.resource = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElemen
   d: "m0 .03c1.21.03 2.75-.03 4.24-.03 2.03 0 4.41.39 4.41 2.91 0 1.38-1.16 2.85-3.27 2.94 1.53.16 2.34.88 2.84 2.46.75 2.31 1.18 3.03 2.72 2.97l.06.22c-.47.24-.99.35-1.52.33-1.6 0-2.4-1.35-2.88-3.13-.63-2.34-1.91-2.61-3.54-2.61v1.45c0 1.36.03 2.88.03 2.88 0 .54.21.66.88.75l.88.11v.35h-4.85v-.35l.74-.11c.46-.08.74-.21.74-.75 0 0 .01-.72.01-2.88v-3.57c0-1.25-.01-2.17-.01-2.74 0-.54-.28-.67-.74-.75l-.74-.11zm3.06 5.64h.87c2.23 0 3.09-1.08 3.09-2.71 0-2.05-1.6-2.4-3.07-2.4-.3-.01-.59.02-.88.06-.01 0-.01 5.05-.01 5.05z"
 })));
 icons.image_full_width = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  height: "20",
+  viewBox: "0 0 20 20",
+  width: "20",
+  xmlns: "http://www.w3.org/2000/svg"
+}, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  d: "m0 0h20v20h-20z",
+  fill: "none"
+}), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  d: "m18.12 16h-16.24c-1.04 0-1.88-.67-1.88-1.5v-9c0-.83.84-1.5 1.88-1.5h16.25c1.03 0 1.87.67 1.87 1.5v9c0 .83-.84 1.5-1.88 1.5zm-13.74-10.25c-1.21 0-2.19.78-2.19 1.75s.98 1.75 2.19 1.75 2.18-.78 2.18-1.75-.98-1.75-2.18-1.75zm-1.88 8.25h15v-3.5l-3.42-2.73c-.18-.15-.48-.15-.66 0l-5.3 4.23-2.17-1.73c-.18-.15-.48-.15-.66 0l-2.79 2.23z"
+}));
+icons.single_image = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  height: "20",
+  viewBox: "0 0 20 20",
+  width: "20",
+  xmlns: "http://www.w3.org/2000/svg"
+}, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  d: "m16.5 16h-13c-.83 0-1.5-.67-1.5-1.5v-9c0-.83.67-1.5 1.5-1.5h13c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5zm-11-10.25c-.97 0-1.75.78-1.75 1.75s.78 1.75 1.75 1.75 1.75-.78 1.75-1.75-.78-1.75-1.75-1.75zm-1.5 8.25h12v-3.5l-2.73-2.73c-.15-.15-.38-.15-.53 0l-4.24 4.23-1.73-1.73c-.15-.15-.38-.15-.53 0l-2.24 2.23z"
+}), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  d: "m0 0h20v20h-20z",
+  fill: "none"
+}));
+icons.two_column_images = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
   height: "20",
   viewBox: "0 0 20 20",
   width: "20",

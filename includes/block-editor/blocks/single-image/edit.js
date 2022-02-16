@@ -308,7 +308,7 @@ export function ImageEdit ({
 			<p>Image must be {WIDTH}px wide! Choose another image.</p>
 		</Modal>)}
 		<MediaPlaceholder
-			icon={<BlockIcon icon={icons.image_full_width}/>}
+			icon={<BlockIcon icon={icons.single_image}/>}
 			onSelect={onSelectImage}
 			notices={noticeUI}
 			onError={onUploadError}

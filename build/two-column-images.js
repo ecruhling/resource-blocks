@@ -229,6 +229,28 @@ icons.image_full_width = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.crea
 }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
   d: "m18.12 16h-16.24c-1.04 0-1.88-.67-1.88-1.5v-9c0-.83.84-1.5 1.88-1.5h16.25c1.03 0 1.87.67 1.87 1.5v9c0 .83-.84 1.5-1.88 1.5zm-13.74-10.25c-1.21 0-2.19.78-2.19 1.75s.98 1.75 2.19 1.75 2.18-.78 2.18-1.75-.98-1.75-2.18-1.75zm-1.88 8.25h15v-3.5l-3.42-2.73c-.18-.15-.48-.15-.66 0l-5.3 4.23-2.17-1.73c-.18-.15-.48-.15-.66 0l-2.79 2.23z"
 }));
+icons.single_image = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  height: "20",
+  viewBox: "0 0 20 20",
+  width: "20",
+  xmlns: "http://www.w3.org/2000/svg"
+}, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  d: "m16.5 16h-13c-.83 0-1.5-.67-1.5-1.5v-9c0-.83.67-1.5 1.5-1.5h13c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5zm-11-10.25c-.97 0-1.75.78-1.75 1.75s.78 1.75 1.75 1.75 1.75-.78 1.75-1.75-.78-1.75-1.75-1.75zm-1.5 8.25h12v-3.5l-2.73-2.73c-.15-.15-.38-.15-.53 0l-4.24 4.23-1.73-1.73c-.15-.15-.38-.15-.53 0l-2.24 2.23z"
+}), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  d: "m0 0h20v20h-20z",
+  fill: "none"
+}));
+icons.two_column_images = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  height: "20",
+  viewBox: "0 0 20 20",
+  width: "20",
+  xmlns: "http://www.w3.org/2000/svg"
+}, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  d: "m0 0h20v20h-20z",
+  fill: "none"
+}), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  d: "m18.12 16h-16.24c-1.04 0-1.88-.67-1.88-1.5v-9c0-.83.84-1.5 1.88-1.5h16.25c1.03 0 1.87.67 1.87 1.5v9c0 .83-.84 1.5-1.88 1.5zm-13.74-10.25c-1.21 0-2.19.78-2.19 1.75s.98 1.75 2.19 1.75 2.18-.78 2.18-1.75-.98-1.75-2.18-1.75zm-1.88 8.25h15v-3.5l-3.42-2.73c-.18-.15-.48-.15-.66 0l-5.3 4.23-2.17-1.73c-.18-.15-.48-.15-.66 0l-2.79 2.23z"
+}));
 /* harmony default export */ __webpack_exports__["default"] = (icons);
 
 /***/ }),
