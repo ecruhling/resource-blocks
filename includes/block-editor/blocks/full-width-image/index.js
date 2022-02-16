@@ -1,22 +1,22 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n'
 
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockType } from '@wordpress/blocks'
 
 // import SVG icons
 import icons from '../../../icons/icons'
 
 // self-invoking function creates custom icon for block-category
-( function () {
-	wp.blocks.updateCategory( 'resource-blocks', { icon: icons.resource } );
-} )();
+(function () {
+	wp.blocks.updateCategory('resource-blocks', { icon: icons.resource })
+})()
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -25,16 +25,16 @@ import icons from '../../../icons/icons'
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './style.scss';
+import './style.scss'
 
 /**
  * Internal dependencies
  */
-import json from './block.json';
-import edit from './edit';
-import save from './save';
+import json from './block.json'
+import edit from './edit'
+import save from './save'
 
-const {name, ...settings} = json;
+const { name, ...settings } = json
 
 /**
  * Every block starts by registering a new block type definition.
@@ -44,13 +44,6 @@ const {name, ...settings} = json;
 registerBlockType(name, {
 	...settings,
 	icon: icons.image_full_width,
-	example: {
-		attributes: {
-			sizeSlug: 'large',
-			url: 'https://s.w.org/images/core/5.3/MtBlanc1.jpg',
-			caption: __( 'Mont Blanc appears—still, snowy, and serene.' ),
-		},
-	},
 	/**
 	 * @see ./edit.js
 	 */
@@ -60,4 +53,4 @@ registerBlockType(name, {
 	 * @see ./save.js
 	 */
 	save,
-});
+})
