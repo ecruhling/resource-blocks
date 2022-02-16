@@ -778,6 +778,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./block.json */ "./includes/block-editor/blocks/single-image/block.json");
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit */ "./includes/block-editor/blocks/single-image/edit.js");
 /* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./save */ "./includes/block-editor/blocks/single-image/save.js");
+/* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../icons/icons */ "./includes/icons/icons.js");
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
@@ -800,6 +801,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const {
   name,
   ...settings
@@ -811,6 +813,7 @@ const {
  */
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(name, { ...settings,
+  icon: _icons_icons__WEBPACK_IMPORTED_MODULE_5__["default"].single_image,
 
   /**
    * @see ./edit.js
