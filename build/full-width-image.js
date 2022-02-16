@@ -827,6 +827,11 @@ const {
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)(name, { ...settings,
   icon: _icons_icons__WEBPACK_IMPORTED_MODULE_2__["default"].image_full_width,
+  example: {
+    attributes: {
+      cover: 'https://example.com/image.jpg'
+    }
+  },
 
   /**
    * @see ./edit.js

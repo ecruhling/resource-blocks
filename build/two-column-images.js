@@ -127,6 +127,11 @@ const {
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)(name, { ...settings,
   icon: _icons_icons__WEBPACK_IMPORTED_MODULE_6__["default"].two_column_images,
+  example: {
+    attributes: {
+      cover: 'https://example.com/image.jpg'
+    }
+  },
 
   /**
    * @see ./edit.js
