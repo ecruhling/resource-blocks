@@ -48,6 +48,11 @@
 	  "background": false
 	}
   },
+  "example": {
+	"attributes": {
+	  "cover": "https://example.com/image.jpg"
+	}
+  },
   "textdomain": "resource-blocks",
   "editorScript": "file:../../../../build/full-width-image.js",
   "editorStyle": "file:../../../../build/full-width-image.css",

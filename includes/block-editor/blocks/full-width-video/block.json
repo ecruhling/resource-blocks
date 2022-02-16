@@ -30,6 +30,11 @@
 	  "default": true
 	}
   },
+  "example": {
+	"attributes": {
+	  "cover": "https://example.com/image.jpg"
+	}
+  },
   "editorScript": "file:../../../../build/full-width-video.js",
   "editorStyle": "file:../../../../build/full-width-video.css",
   "style": "file:../../../../build/style-full-width-video.css"

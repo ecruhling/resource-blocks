@@ -37,11 +37,6 @@ const { name, ...settings } = json
 registerBlockType(name, {
 	...settings,
 	icon: icons.two_column_images,
-	example: {
-		attributes: {
-			cover: 'https://example.com/image.jpg',
-		},
-	},
 	/**
 	 * @see ./edit.js
 	 */

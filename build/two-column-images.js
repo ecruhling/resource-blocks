@@ -127,11 +127,6 @@ const {
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)(name, { ...settings,
   icon: _icons_icons__WEBPACK_IMPORTED_MODULE_6__["default"].two_column_images,
-  example: {
-    attributes: {
-      cover: 'https://example.com/image.jpg'
-    }
-  },
 
   /**
    * @see ./edit.js
@@ -421,7 +416,7 @@ module.exports = window["wp"]["i18n"];
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/two-column-images","version":"1.0.0","title":"Two Column Images","category":"resource-blocks","description":"Two columns holding 990px wide images.","keywords":["img","photo","picture","column"],"textdomain":"resource-blocks","editorScript":"file:../../../../build/two-column-images.js","editorStyle":"file:../../../../build/two-column-images.css","style":"file:../../../../build/style-two-column-images.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/two-column-images","version":"1.0.0","title":"Two Column Images","category":"resource-blocks","description":"Two columns holding 990px wide images.","keywords":["img","photo","picture","column"],"example":{"attributes":{"cover":"https://example.com/image.jpg"}},"textdomain":"resource-blocks","editorScript":"file:../../../../build/two-column-images.js","editorStyle":"file:../../../../build/two-column-images.css","style":"file:../../../../build/style-two-column-images.css"}');
 
 /***/ })
 

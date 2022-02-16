@@ -13,9 +13,8 @@ import classnames from 'classnames/dedupe'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import { Placeholder, SandBox } from '@wordpress/components'
-import { RichText, BlockIcon } from '@wordpress/block-editor'
+import { BlockIcon } from '@wordpress/block-editor'
 import { Component } from '@wordpress/element'
-import { createBlock } from '@wordpress/blocks'
 
 /**
  * Internal dependencies
@@ -70,8 +69,7 @@ class EmbedPreview extends Component {
 			.splice(parsedHost.length - 2, parsedHost.length - 1)
 			.join('.')
 		const iframeTitle = sprintf(
-			// translators: %s: host providing embed content e.g: www.youtube.com
-			__('Embedded content from %s'),
+			__('Embedded content from Vimeo'),
 			parsedHostBaseUrl
 		)
 		const sandboxClassnames = classnames(
@@ -104,7 +102,6 @@ class EmbedPreview extends Component {
 					)}
 				</div>
 			)
-		/* eslint-enable jsx-a11y/no-static-element-interactions */
 
 		return (
 			<figure
@@ -124,9 +121,8 @@ class EmbedPreview extends Component {
 						</p>
 						<p className="components-placeholder__error">
 							{sprintf(
-								/* translators: %s: host providing embed content e.g: www.youtube.com */
 								__(
-									'Embedded content from %s can\'t be previewed in the editor.'
+									'Embedded content from Vimeo can\'t be previewed in the editor.'
 								),
 								parsedHostBaseUrl
 							)}

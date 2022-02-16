@@ -46,6 +46,11 @@
 	  "background": false
 	}
   },
+  "example": {
+	"attributes": {
+	  "cover": "https://example.com/image.jpg"
+	}
+  },
   "textdomain": "resource-blocks",
   "parent": [
 	"resource-blocks/two-column-images"

@@ -526,9 +526,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _wp_embed_preview__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./wp-embed-preview */ "./includes/block-editor/blocks/full-width-video/wp-embed-preview.js");
+/* harmony import */ var _wp_embed_preview__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./wp-embed-preview */ "./includes/block-editor/blocks/full-width-video/wp-embed-preview.js");
 
 
 /**
@@ -543,7 +541,6 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * WordPress dependencies
  */
-
 
 
 
@@ -607,15 +604,14 @@ class EmbedPreview extends _wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Compo
     const html = 'photo' === type ? (0,_util__WEBPACK_IMPORTED_MODULE_1__.getPhotoHtml)(preview) : preview.html;
     const parsedHost = new URL(url).host.split('.');
     const parsedHostBaseUrl = parsedHost.splice(parsedHost.length - 2, parsedHost.length - 1).join('.');
-    const iframeTitle = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.sprintf)( // translators: %s: host providing embed content e.g: www.youtube.com
-    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Embedded content from %s'), parsedHostBaseUrl);
+    const iframeTitle = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Embedded content from Vimeo'), parsedHostBaseUrl);
     const sandboxClassnames = classnames_dedupe__WEBPACK_IMPORTED_MODULE_2___default()(type, className, 'wp-block-embed__wrapper'); // Disabled because the overlay div doesn't actually have a role or functionality
     // as far as the user is concerned. We're just catching the first click so that
     // the block can be selected without interacting with the embed preview that the overlay covers.
 
     /* eslint-disable jsx-a11y/no-static-element-interactions */
 
-    const embedWrapper = 'wp-embed' === type ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wp_embed_preview__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    const embedWrapper = 'wp-embed' === type ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wp_embed_preview__WEBPACK_IMPORTED_MODULE_6__["default"], {
       html: html
     }) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "wp-block-embed__wrapper"
@@ -629,8 +625,6 @@ class EmbedPreview extends _wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Compo
       className: "block-library-embed__interactive-overlay",
       onMouseUp: this.hideOverlay
     }));
-    /* eslint-enable jsx-a11y/no-static-element-interactions */
-
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", {
       className: classnames_dedupe__WEBPACK_IMPORTED_MODULE_2___default()(className, 'wp-block-embed', {
         'is-type-video': 'video' === type
@@ -647,9 +641,7 @@ class EmbedPreview extends _wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Compo
       href: url
     }, url)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
       className: "components-placeholder__error"
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.sprintf)(
-    /* translators: %s: host providing embed content e.g: www.youtube.com */
-    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Embedded content from %s can\'t be previewed in the editor.'), parsedHostBaseUrl))));
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Embedded content from Vimeo can\'t be previewed in the editor.'), parsedHostBaseUrl))));
   }
 
 }
@@ -896,11 +888,6 @@ const {
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(name, { ...settings,
   icon: _icons_icons__WEBPACK_IMPORTED_MODULE_5__["default"].vimeo,
-  example: {
-    attributes: {
-      cover: 'https://example.com/image.jpg'
-    }
-  },
 
   /**
    * @see ./edit.js
@@ -2009,7 +1996,7 @@ function _extends() {
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-video","version":"1.0.0","title":"Full-width Video","category":"resource-blocks","description":"Full-width Vimeo video embed.","textdomain":"resource-blocks","attributes":{"url":{"type":"string"},"type":{"type":"string"},"providerNameSlug":{"type":"string"},"allowResponsive":{"type":"boolean","default":true},"responsive":{"type":"boolean","default":false},"previewable":{"type":"boolean","default":true}},"editorScript":"file:../../../../build/full-width-video.js","editorStyle":"file:../../../../build/full-width-video.css","style":"file:../../../../build/style-full-width-video.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-video","version":"1.0.0","title":"Full-width Video","category":"resource-blocks","description":"Full-width Vimeo video embed.","textdomain":"resource-blocks","attributes":{"url":{"type":"string"},"type":{"type":"string"},"providerNameSlug":{"type":"string"},"allowResponsive":{"type":"boolean","default":true},"responsive":{"type":"boolean","default":false},"previewable":{"type":"boolean","default":true}},"example":{"attributes":{"cover":"https://example.com/image.jpg"}},"editorScript":"file:../../../../build/full-width-video.js","editorStyle":"file:../../../../build/full-width-video.css","style":"file:../../../../build/style-full-width-video.css"}');
 
 /***/ })
 

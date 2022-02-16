@@ -32,11 +32,6 @@ const { name, ...settings } = json
 registerBlockType(name, {
 	...settings,
 	icon: icons.vimeo,
-	example: {
-		attributes: {
-			cover: 'https://example.com/image.jpg',
-		},
-	},
 	/**
 	 * @see ./edit.js
 	 */

@@ -44,11 +44,6 @@ const { name, ...settings } = json
 registerBlockType(name, {
 	...settings,
 	icon: icons.image_full_width,
-	example: {
-		attributes: {
-			cover: 'https://example.com/image.jpg',
-		},
-	},
 	/**
 	 * @see ./edit.js
 	 */
