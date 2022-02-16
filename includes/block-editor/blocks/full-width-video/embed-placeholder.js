@@ -21,7 +21,7 @@ const EmbedPlaceholder = ({
 			label={label}
 			className="wp-block-embed"
 			instructions={__(
-				'Paste a link to the content you want to display on your site.'
+				'URL to the Vimeo video.'
 			)}
 		>
 			<form onSubmit={onSubmit}>
@@ -30,22 +30,13 @@ const EmbedPlaceholder = ({
 					value={value || ''}
 					className="components-placeholder__input"
 					aria-label={label}
-					placeholder={__('Enter URL to embed here…')}
+					placeholder={__('Enter Vimeo URL to embed here…')}
 					onChange={onChange}
 				/>
 				<Button variant="primary" type="submit">
 					{_x('Embed', 'button label')}
 				</Button>
 			</form>
-			<div className="components-placeholder__learn-more">
-				<ExternalLink
-					href={__(
-						'https://wordpress.org/support/article/embeds/'
-					)}
-				>
-					{__('Learn more about embeds')}
-				</ExternalLink>
-			</div>
 			{cannotEmbed && (
 				<div className="components-placeholder__error">
 					<div className="components-placeholder__instructions">

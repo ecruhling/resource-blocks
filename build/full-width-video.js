@@ -278,10 +278,9 @@ const EmbedEdit = props => {
 
   if (fetching) {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_12__.View, blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_embed_loading__WEBPACK_IMPORTED_MODULE_4__["default"], null));
-  } // translators: %s: type of embed e.g: "YouTube", "Twitter", etc. "Embed" is used when no specific type exists
+  }
 
-
-  const label = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('%s URL'), title); // No preview, or we can't embed the current URL, or we've clicked the edit button.
+  const label = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Full-width Video'), title); // No preview, or we can't embed the current URL, or we've clicked the edit button.
 
   const showEmbedPlaceholder = !preview || cannotEmbed || isEditingURL;
 
@@ -483,7 +482,7 @@ const EmbedPlaceholder = _ref => {
     }),
     label: label,
     className: "wp-block-embed",
-    instructions: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Paste a link to the content you want to display on your site.')
+    instructions: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('URL to the Vimeo video.')
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
     onSubmit: onSubmit
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
@@ -491,16 +490,12 @@ const EmbedPlaceholder = _ref => {
     value: value || '',
     className: "components-placeholder__input",
     "aria-label": label,
-    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter URL to embed here…'),
+    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter Vimeo URL to embed here…'),
     onChange: onChange
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     variant: "primary",
     type: "submit"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__._x)('Embed', 'button label'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "components-placeholder__learn-more"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ExternalLink, {
-    href: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('https://wordpress.org/support/article/embeds/')
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Learn more about embeds'))), cannotEmbed && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__._x)('Embed', 'button label'))), cannotEmbed && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "components-placeholder__error"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "components-placeholder__instructions"
@@ -941,38 +936,51 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var classnames_dedupe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames/dedupe */ "./node_modules/classnames/dedupe.js");
+/* harmony import */ var classnames_dedupe__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames_dedupe__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 
 
 /**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
+ * External dependencies
  */
 
 /**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
+ * WordPress dependencies
  */
 
 
-/**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
- *
- * @return {WPElement} Element to render.
- */
+function save(_ref) {
+  let {
+    attributes
+  } = _ref;
+  const {
+    url,
+    caption,
+    type,
+    providerNameSlug
+  } = attributes;
 
-function save() {
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save(), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Full-width Video – hello from the saved content!', 'full-width-video'));
+  if (!url) {
+    return null;
+  }
+
+  const className = classnames_dedupe__WEBPACK_IMPORTED_MODULE_1___default()('wp-block-embed', {
+    [`is-type-${type}`]: type,
+    [`is-provider-${providerNameSlug}`]: providerNameSlug,
+    [`wp-block-embed-${providerNameSlug}`]: providerNameSlug
+  });
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save({
+    className
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "wp-block-embed__wrapper"
+  }, `\n${url}\n`
+  /* URL needs to be on its own line. */
+  ), !_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText.isEmpty(caption) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText.Content, {
+    tagName: "figcaption",
+    value: caption
+  }));
 }
 
 /***/ }),

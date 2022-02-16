@@ -1,34 +1,34 @@
 /**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import classnames from 'classnames/dedupe'
 
 /**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
+ * WordPress dependencies
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { RichText, useBlockProps } from '@wordpress/block-editor'
 
-/**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
- *
- * @return {WPElement} Element to render.
- */
-export default function save() {
+export default function save ({ attributes }) {
+	const { url, caption, type, providerNameSlug } = attributes
+
+	if (!url) {
+		return null
+	}
+
+	const className = classnames('wp-block-embed', {
+		[`is-type-${type}`]: type,
+		[`is-provider-${providerNameSlug}`]: providerNameSlug,
+		[`wp-block-embed-${providerNameSlug}`]: providerNameSlug,
+	})
+
 	return (
-		<p { ...useBlockProps.save() }>
-			{ __(
-				'Full-width Video – hello from the saved content!',
-				'full-width-video'
-			) }
-		</p>
-	);
+		<figure {...useBlockProps.save({ className })}>
+			<div className="wp-block-embed__wrapper">
+				{`\n${url}\n` /* URL needs to be on its own line. */}
+			</div>
+			{!RichText.isEmpty(caption) && (
+				<RichText.Content tagName="figcaption" value={caption}/>
+			)}
+		</figure>
+	)
 }
