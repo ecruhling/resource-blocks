@@ -21,7 +21,7 @@ import icons from '../../../icons/icons'
 /**
  * Internal dependencies
  */
-import Image from './image'
+import Image, { isExternalImage, isMediaDestroyed } from '../lib/image'
 
 /**
  * Module constants
@@ -48,17 +48,6 @@ export const pickRelevantMediaFiles = (image, size) => {
 const isTemporaryImage = (id, url) => !id && isBlobURL(url)
 
 /**
- * Is the url for the image hosted externally. An externally hosted image has no
- * id and is not a blob url.
- *
- * @param {number=} id  The id of the image.
- * @param {string=} url The url of the image.
- *
- * @return {boolean} Is the url an externally hosted url?
- */
-export const isExternalImage = (id, url) => url && !id && !isBlobURL(url)
-
-/**
  * Checks if WP generated default image size. Size generation is skipped
  * when the image is smaller than the said size.
  *
@@ -69,20 +58,6 @@ export const isExternalImage = (id, url) => url && !id && !isBlobURL(url)
  */
 function hasDefaultSize (image, defaultSize) {
 	return (has(image, ['sizes', defaultSize, 'url']) || has(image, ['media_details', 'sizes', defaultSize, 'source_url']))
-}
-
-/**
- * Checks if a media attachment object has been "destroyed",
- * that is, removed from the media library. The core Media Library
- * adds a `destroyed` property to a deleted attachment object in the media collection.
- *
- * @param {number} id The attachment id.
- *
- * @return {boolean} Whether the image has been destroyed.
- */
-export function isMediaDestroyed (id) {
-	const attachment = wp?.media?.attachment(id) || {}
-	return attachment.destroyed
 }
 
 /**
