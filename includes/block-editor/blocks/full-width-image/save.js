@@ -41,7 +41,7 @@ export default function save ({ attributes }) {
 
 	return (
 		<div {...useBlockProps.save({ className: classes })}>
-			<div className={'col-12 px-sm-0'}>
+			<div className={'col-12'}>
 				{figure}
 			</div>
 		</div>

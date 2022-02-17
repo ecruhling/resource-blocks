@@ -12,26 +12,21 @@ export default function save( { attributes } ) {
 	const {
 		url,
 		alt,
-		align,
 		width,
 		height,
 		id,
-		sizeSlug,
 		title,
 	} = attributes;
 
 	const classes = classnames( {
-		[ `align${ align }` ]: align,
-		[ `size-${ sizeSlug }` ]: sizeSlug,
-		'is-resized': width || height,
-		[ `col-12 px-sm-0` ]: 'col-12 px-sm-0',
+		[ `col-md-6` ]: 'col-md-6',
 	} );
 
 	const image = (
 		<img
 			src={ url }
 			alt={ alt }
-			className={ id ? `wp-image-${ id }` : null }
+			className={ id ? `wp-image-${ id } img-fluid` : `img-fluid` }
 			width={ width }
 			height={ height }
 			title={ title }

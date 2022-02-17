@@ -43,10 +43,6 @@
 	},
 	"height": {
 	  "type": "number"
-	},
-	"sizeSlug": {
-	  "type": "string",
-	  "default": "full"
 	}
   },
   "supports": {

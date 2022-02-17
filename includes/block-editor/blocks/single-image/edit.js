@@ -95,7 +95,7 @@ export function ImageEdit ({
 														 clientId,
 													 }) {
 	const {
-		required_width, required_height, instructions, url = '', alt, id, width, height, sizeSlug,
+		required_width, required_height, instructions, url = '', alt, id, width, height,
 	} = attributes
 	const [temporaryURL, setTemporaryURL] = useState()
 
@@ -167,8 +167,6 @@ export function ImageEdit ({
 		if (!media.id || media.id !== id) {
 			additionalAttributes = {
 				width: undefined, height: undefined, // Fallback to size "full" if there's no default image size.
-				// It means the image is smaller, and the block will use a full-size URL.
-				sizeSlug: hasDefaultSize(media, imageDefaultSize) ? imageDefaultSize : 'full',
 			}
 		} else {
 			// Keep the same url when selecting the same file, so "Image Size"
@@ -200,7 +198,7 @@ export function ImageEdit ({
 	function onSelectURL (newURL) {
 		if (newURL !== url) {
 			setAttributes({
-				url: newURL, id: undefined, width: undefined, height: undefined, sizeSlug: imageDefaultSize,
+				url: newURL, id: undefined, width: undefined, height: undefined,
 			})
 		}
 	}
@@ -268,7 +266,7 @@ export function ImageEdit ({
 	/>)
 
 	const classes = classnames(className, {
-		'is-transient': temporaryURL, 'is-resized': !!width || !!height, [`size-${sizeSlug}`]: sizeSlug,
+		'is-transient': temporaryURL, 'is-resized': !!width || !!height,
 	})
 
 	const blockProps = useBlockProps({

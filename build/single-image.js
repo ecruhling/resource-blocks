@@ -584,8 +584,7 @@ function ImageEdit(_ref) {
     alt,
     id,
     width,
-    height,
-    sizeSlug
+    height
   } = attributes;
   const [temporaryURL, setTemporaryURL] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
   const altRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
@@ -667,10 +666,8 @@ function ImageEdit(_ref) {
     if (!media.id || media.id !== id) {
       additionalAttributes = {
         width: undefined,
-        height: undefined,
-        // Fallback to size "full" if there's no default image size.
-        // It means the image is smaller, and the block will use a full-size URL.
-        sizeSlug: hasDefaultSize(media, imageDefaultSize) ? imageDefaultSize : 'full'
+        height: undefined // Fallback to size "full" if there's no default image size.
+
       };
     } else {
       // Keep the same url when selecting the same file, so "Image Size"
@@ -707,8 +704,7 @@ function ImageEdit(_ref) {
         url: newURL,
         id: undefined,
         width: undefined,
-        height: undefined,
-        sizeSlug: imageDefaultSize
+        height: undefined
       });
     }
   }
@@ -782,8 +778,7 @@ function ImageEdit(_ref) {
   });
   const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()(className, {
     'is-transient': temporaryURL,
-    'is-resized': !!width || !!height,
-    [`size-${sizeSlug}`]: sizeSlug
+    'is-resized': !!width || !!height
   });
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.useBlockProps)({
     ref,
@@ -934,23 +929,18 @@ function save(_ref) {
   const {
     url,
     alt,
-    align,
     width,
     height,
     id,
-    sizeSlug,
     title
   } = attributes;
   const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()({
-    [`align${align}`]: align,
-    [`size-${sizeSlug}`]: sizeSlug,
-    'is-resized': width || height,
-    [`col-12 px-sm-0`]: 'col-12 px-sm-0'
+    [`col-md-6`]: 'col-md-6'
   });
   const image = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: url,
     alt: alt,
-    className: id ? `wp-image-${id}` : null,
+    className: id ? `wp-image-${id} img-fluid` : `img-fluid`,
     width: width,
     height: height,
     title: title
@@ -1275,7 +1265,7 @@ module.exports = window["wp"]["url"];
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/single-image","version":"1.0.0","title":"Single Image","category":"resource-blocks","attributes":{"required_width":{"type":"number"},"required_height":{"type":"number"},"instructions":{"type":"string","default":""},"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"id":{"type":"number"},"width":{"type":"number"},"height":{"type":"number"},"sizeSlug":{"type":"string","default":"full"}},"supports":{"anchor":false,"color":{"text":false,"background":false}},"example":{"attributes":{"cover":"https://example.com/image.jpg"}},"textdomain":"resource-blocks","parent":["resource-blocks/two-column-images"],"editorScript":"file:../../../../build/single-image.js","editorStyle":"file:../../../../build/single-image.css","style":"file:../../../../build/style-single-image.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/single-image","version":"1.0.0","title":"Single Image","category":"resource-blocks","attributes":{"required_width":{"type":"number"},"required_height":{"type":"number"},"instructions":{"type":"string","default":""},"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"id":{"type":"number"},"width":{"type":"number"},"height":{"type":"number"}},"supports":{"anchor":false,"color":{"text":false,"background":false}},"example":{"attributes":{"cover":"https://example.com/image.jpg"}},"textdomain":"resource-blocks","parent":["resource-blocks/two-column-images"],"editorScript":"file:../../../../build/single-image.js","editorStyle":"file:../../../../build/single-image.css","style":"file:../../../../build/style-single-image.css"}');
 
 /***/ })
 
