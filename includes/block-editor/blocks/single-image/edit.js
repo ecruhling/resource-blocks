@@ -29,7 +29,7 @@ import Image from './image'
  * Module constants
  */
 import {
-	ALLOWED_MEDIA_TYPES, WIDTH,
+	ALLOWED_MEDIA_TYPES,
 } from './constants'
 
 export const pickRelevantMediaFiles = (image, size) => {
@@ -115,7 +115,7 @@ export function ImageEdit ({
 														 clientId,
 													 }) {
 	let {
-		url = '', alt, id, width, height, sizeSlug,
+		required_width, required_height, url = '', alt, id, width, height, sizeSlug,
 	} = attributes
 	const [temporaryURL, setTemporaryURL] = useState()
 
@@ -201,7 +201,7 @@ export function ImageEdit ({
 		// Uploading a new image uses media.media_details.width
 		let mediaCheck = media.width ?? media.media_details.width
 
-		if (mediaCheck !== WIDTH) {
+		if (mediaCheck !== required_width) {
 			openModal()
 
 			return
@@ -305,7 +305,7 @@ export function ImageEdit ({
 			contentLabel="Error"
 			title="Error"
 		>
-			<p>Image must be {WIDTH}px wide! Choose another image.</p>
+			<p>Image must be {required_width}px wide! Choose another image.</p>
 		</Modal>)}
 		<MediaPlaceholder
 			icon={<BlockIcon icon={icons.single_image}/>}
@@ -319,7 +319,7 @@ export function ImageEdit ({
 			mediaPreview={mediaPreview}
 			labels={{
 				title: 'Single Image',
-				instructions: 'Upload an image, or pick one from the media library. Image must be ' + WIDTH + 'px wide. 990px is an appropriate height, but it is not enforced.'
+				instructions: 'Upload an image, or pick one from the media library. Image must be ' + required_width + 'px wide. 990px is an appropriate height, but it is not enforced.'
 			}}
 			disableMediaButtons={temporaryURL || url}
 		/>

@@ -6,6 +6,12 @@
   "title": "Single Image",
   "category": "resource-blocks",
   "attributes": {
+	"required_width": {
+	  "type": "number"
+	},
+	"required_height": {
+	  "type": "number"
+	},
 	"url": {
 	  "type": "string",
 	  "source": "attribute",

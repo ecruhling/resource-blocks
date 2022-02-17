@@ -39,14 +39,14 @@ export function ColumnsEdit ({
 
 	// use just the single-image blocks as a template
 	const template = [
-		['resource-blocks/single-image', {}],
-		['resource-blocks/single-image', {}],
+		['resource-blocks/single-image', { required_width: 990 }],
+		['resource-blocks/single-image', { required_width: 990 }],
 	]
 
 	return (<div {...blockProps}>
 		<InnerBlocks
 			template={template}
-			templateLock="all"
+			templateLock="insert"
 		/>
 	</div>)
 }
