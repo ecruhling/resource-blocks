@@ -10,5 +10,8 @@
 div.wp-block-resource-blocks-full-width-image {
   margin: 0 auto;
 }
+div.wp-block-resource-blocks-full-width-image figure {
+  margin-bottom: 40px;
+}
 
 /*# sourceMappingURL=style-full-width-image.css.map*/

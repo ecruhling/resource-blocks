@@ -7,6 +7,10 @@
 .wp-block-resource-blocks-single-image {
   width: 50%;
 
+  img {
+	display: block;
+  }
+
   .components-placeholder__instructions {
 	display: block !important;
   }

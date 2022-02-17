@@ -5,6 +5,10 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-resource-blocks-single-image {
+div.wp-block-resource-blocks-single-image {
   margin: 0 auto;
+
+  figure {
+	margin-bottom: 40px;
+  }
 }
