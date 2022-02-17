@@ -52,7 +52,7 @@ function resource_block_category( array $block_categories ): array {
 
 }
 
-add_action( 'block_categories', 'resource_block_category', 10, 2 );
+add_action( 'block_categories_all', 'resource_block_category', 10, 2 );
 
 /**
  * Filter to remove all blocks other than Resource blocks.

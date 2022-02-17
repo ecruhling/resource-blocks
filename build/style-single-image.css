@@ -7,11 +7,14 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-div.wp-block-resource-blocks-single-image {
-  margin: 0 auto;
-}
 div.wp-block-resource-blocks-single-image figure {
-  margin-bottom: 40px;
+  margin: 0 0 40px;
+}
+@media (min-width: 768px) {
+  div.wp-block-resource-blocks-single-image[class*=" col-"], div.wp-block-resource-blocks-single-image[class^=col-] {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 /*# sourceMappingURL=style-single-image.css.map*/

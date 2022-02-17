@@ -6,14 +6,25 @@
  */
 
  .wp-block-resource-blocks-full-width-video {
-   margin: 0 auto;
-
    .wp-block-embed {
 	 margin-bottom: 0 !important;
 	 margin-top: 0 !important;
    }
 
+   .wp-block-embed__wrapper {
+	 position: relative;
+
+	 &::before {
+	   padding-top: 48.8%;
+	 }
+   }
+
    iframe {
 	 display: block;
+	 width: 100%;
+	 position: absolute;
+	 height: 100%;
+	 left: 0;
+	 top: 0;
    }
  }
