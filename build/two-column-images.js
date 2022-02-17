@@ -61,9 +61,11 @@ function ColumnsEdit(_ref) {
   }); // use just the single-image blocks as a template
 
   const template = [['resource-blocks/single-image', {
-    required_width: 990
+    required_width: 990,
+    instructions: 'Upload an image, or pick one from the media library. Image must be 990px wide. 990px is an appropriate height, but it is not enforced.'
   }], ['resource-blocks/single-image', {
-    required_width: 990
+    required_width: 990,
+    instructions: 'Upload an image, or pick one from the media library. Image must be 990px wide. 990px is an appropriate height, but it is not enforced.'
   }]];
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InnerBlocks, {
     template: template,

@@ -77,8 +77,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../icons/icons */ "./includes/icons/icons.js");
 /* harmony import */ var _image__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./image */ "./includes/block-editor/blocks/single-image/image.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./constants */ "./includes/block-editor/blocks/single-image/constants.js");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./editor.scss */ "./includes/block-editor/blocks/single-image/editor.scss");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./editor.scss */ "./includes/block-editor/blocks/single-image/editor.scss");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./constants */ "./includes/block-editor/blocks/single-image/constants.js");
 
 
 /**
@@ -98,10 +98,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/* global wp */
-
 /**
  * Internal dependencies
+ */
+
+
+/**
+ * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
+ * Those files can contain any CSS code that gets applied to the editor.
+ *
+ * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 
 
@@ -109,6 +115,14 @@ __webpack_require__.r(__webpack_exports__);
  * Module constants
  */
 
+
+/**
+ * pickRelevantMediaFiles.
+ *
+ * @param image
+ * @param size
+ * @returns {Pick<*, keyof *>}
+ */
 
 const pickRelevantMediaFiles = (image, size) => {
   const imageProps = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.pick)(image, ['alt', 'id']);
@@ -169,14 +183,6 @@ function isMediaDestroyed(id) {
   return attachment.destroyed;
 }
 /**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-
-
-/**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
@@ -197,9 +203,10 @@ function ImageEdit(_ref) {
     context,
     clientId
   } = _ref;
-  let {
+  const {
     required_width,
     required_height,
+    instructions,
     url = '',
     alt,
     id,
@@ -303,9 +310,9 @@ function ImageEdit(_ref) {
     // Uploading a new image uses media.media_details.width
 
 
-    let mediaCheck = (_media$width = media.width) !== null && _media$width !== void 0 ? _media$width : media.media_details.width;
+    let widthCheck = (_media$width = media.width) !== null && _media$width !== void 0 ? _media$width : media.media_details.width;
 
-    if (mediaCheck !== required_width) {
+    if (widthCheck !== required_width) {
       openModal();
       return;
     }
@@ -314,6 +321,12 @@ function ImageEdit(_ref) {
       ...additionalAttributes
     });
   }
+  /**
+   * onSelectURL.
+   *
+   * @param newURL
+   */
+
 
   function onSelectURL(newURL) {
     if (newURL !== url) {
@@ -326,6 +339,10 @@ function ImageEdit(_ref) {
       });
     }
   }
+  /**
+   * Set up modal.
+   */
+
 
   const [modalIsOpen, setIsOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
 
@@ -336,6 +353,12 @@ function ImageEdit(_ref) {
   function closeModal() {
     setIsOpen(false);
   }
+  /**
+   * Temporary image.
+   *
+   * @type {boolean}
+   */
+
 
   let isTemp = isTemporaryImage(id, url); // Upload a temporary image on mount.
 
@@ -353,7 +376,7 @@ function ImageEdit(_ref) {
           let [img] = _ref2;
           onSelectImage(img);
         },
-        allowedTypes: _constants__WEBPACK_IMPORTED_MODULE_10__.ALLOWED_MEDIA_TYPES,
+        allowedTypes: _constants__WEBPACK_IMPORTED_MODULE_11__.ALLOWED_MEDIA_TYPES,
         onError: message => {
           isTemp = false;
           noticeOperations.createErrorNotice(message);
@@ -422,7 +445,7 @@ function ImageEdit(_ref) {
     onError: onUploadError,
     onClose: onCloseModal,
     accept: "image/*",
-    allowedTypes: _constants__WEBPACK_IMPORTED_MODULE_10__.ALLOWED_MEDIA_TYPES,
+    allowedTypes: _constants__WEBPACK_IMPORTED_MODULE_11__.ALLOWED_MEDIA_TYPES,
     value: {
       id,
       src
@@ -430,7 +453,7 @@ function ImageEdit(_ref) {
     mediaPreview: mediaPreview,
     labels: {
       title: 'Single Image',
-      instructions: 'Upload an image, or pick one from the media library. Image must be ' + required_width + 'px wide. 990px is an appropriate height, but it is not enforced.'
+      instructions: instructions
     },
     disableMediaButtons: temporaryURL || url
   }));
@@ -1239,7 +1262,7 @@ module.exports = window["wp"]["url"];
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/single-image","version":"1.0.0","title":"Single Image","category":"resource-blocks","attributes":{"required_width":{"type":"number"},"required_height":{"type":"number"},"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"id":{"type":"number"},"width":{"type":"number"},"height":{"type":"number"},"sizeSlug":{"type":"string","default":"full"}},"supports":{"anchor":false,"color":{"text":false,"background":false}},"example":{"attributes":{"cover":"https://example.com/image.jpg"}},"textdomain":"resource-blocks","parent":["resource-blocks/two-column-images"],"editorScript":"file:../../../../build/single-image.js","editorStyle":"file:../../../../build/single-image.css","style":"file:../../../../build/style-single-image.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/single-image","version":"1.0.0","title":"Single Image","category":"resource-blocks","attributes":{"required_width":{"type":"number"},"required_height":{"type":"number"},"instructions":{"type":"string","default":""},"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"id":{"type":"number"},"width":{"type":"number"},"height":{"type":"number"},"sizeSlug":{"type":"string","default":"full"}},"supports":{"anchor":false,"color":{"text":false,"background":false}},"example":{"attributes":{"cover":"https://example.com/image.jpg"}},"textdomain":"resource-blocks","parent":["resource-blocks/two-column-images"],"editorScript":"file:../../../../build/single-image.js","editorStyle":"file:../../../../build/single-image.css","style":"file:../../../../build/style-single-image.css"}');
 
 /***/ })
 

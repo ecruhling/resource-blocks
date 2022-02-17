@@ -12,6 +12,10 @@
 	"required_height": {
 	  "type": "number"
 	},
+	"instructions": {
+	  "type": "string",
+	  "default": ""
+	},
 	"url": {
 	  "type": "string",
 	  "source": "attribute",

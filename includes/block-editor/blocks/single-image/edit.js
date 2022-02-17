@@ -18,12 +18,18 @@ import { Modal } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import icons from '../../../icons/icons'
 
-/* global wp */
-
 /**
  * Internal dependencies
  */
 import Image from './image'
+
+/**
+ * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
+ * Those files can contain any CSS code that gets applied to the editor.
+ *
+ * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
+ */
+import './editor.scss'
 
 /**
  * Module constants
@@ -32,6 +38,13 @@ import {
 	ALLOWED_MEDIA_TYPES,
 } from './constants'
 
+/**
+ * pickRelevantMediaFiles.
+ *
+ * @param image
+ * @param size
+ * @returns {Pick<*, keyof *>}
+ */
 export const pickRelevantMediaFiles = (image, size) => {
 	const imageProps = pick(image, ['alt', 'id'])
 	imageProps.url = get(image, ['sizes', size, 'url']) || get(image, ['media_details', 'sizes', size, 'source_url']) || image.url
@@ -88,14 +101,6 @@ export function isMediaDestroyed (id) {
 }
 
 /**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-import './editor.scss'
-
-/**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
@@ -114,8 +119,8 @@ export function ImageEdit ({
 														 context,
 														 clientId,
 													 }) {
-	let {
-		required_width, required_height, url = '', alt, id, width, height, sizeSlug,
+	const {
+		required_width, required_height, instructions, url = '', alt, id, width, height, sizeSlug,
 	} = attributes
 	const [temporaryURL, setTemporaryURL] = useState()
 
@@ -199,9 +204,9 @@ export function ImageEdit ({
 		// Check for minimum width.
 		// Selecting a new image from the Media Library uses media.width,
 		// Uploading a new image uses media.media_details.width
-		let mediaCheck = media.width ?? media.media_details.width
+		let widthCheck = media.width ?? media.media_details.width
 
-		if (mediaCheck !== required_width) {
+		if (widthCheck !== required_width) {
 			openModal()
 
 			return
@@ -212,6 +217,11 @@ export function ImageEdit ({
 		})
 	}
 
+	/**
+	 * onSelectURL.
+	 *
+	 * @param newURL
+	 */
 	function onSelectURL (newURL) {
 		if (newURL !== url) {
 			setAttributes({
@@ -220,6 +230,9 @@ export function ImageEdit ({
 		}
 	}
 
+	/**
+	 * Set up modal.
+	 */
 	const [modalIsOpen, setIsOpen] = useState(false)
 
 	function openModal () {
@@ -230,6 +243,11 @@ export function ImageEdit ({
 		setIsOpen(false)
 	}
 
+	/**
+	 * Temporary image.
+	 *
+	 * @type {boolean}
+	 */
 	let isTemp = isTemporaryImage(id, url)
 
 	// Upload a temporary image on mount.
@@ -319,7 +337,7 @@ export function ImageEdit ({
 			mediaPreview={mediaPreview}
 			labels={{
 				title: 'Single Image',
-				instructions: 'Upload an image, or pick one from the media library. Image must be ' + required_width + 'px wide. 990px is an appropriate height, but it is not enforced.'
+				instructions: instructions
 			}}
 			disableMediaButtons={temporaryURL || url}
 		/>
