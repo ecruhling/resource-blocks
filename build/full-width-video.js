@@ -920,7 +920,6 @@ function save(_ref) {
   } = _ref;
   const {
     url,
-    caption,
     type,
     providerNameSlug
   } = attributes;
@@ -929,21 +928,20 @@ function save(_ref) {
     return null;
   }
 
-  const className = classnames_dedupe__WEBPACK_IMPORTED_MODULE_1___default()('wp-block-embed', {
+  const className = classnames_dedupe__WEBPACK_IMPORTED_MODULE_1___default()('wp-block-embed row', {
     [`is-type-${type}`]: type,
     [`is-provider-${providerNameSlug}`]: providerNameSlug,
     [`wp-block-embed-${providerNameSlug}`]: providerNameSlug
   });
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save({
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save({
     className
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", {
+    className: 'col-12'
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wp-block-embed__wrapper"
   }, `\n${url}\n`
   /* URL needs to be on its own line. */
-  ), !_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText.isEmpty(caption) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText.Content, {
-    tagName: "figcaption",
-    value: caption
-  }));
+  )));
 }
 
 /***/ }),
