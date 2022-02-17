@@ -24,6 +24,14 @@ import icons from '../../../icons/icons'
 import Image, { isExternalImage, isMediaDestroyed } from '../lib/image'
 
 /**
+ * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
+ * Those files can contain any CSS code that gets applied to the editor.
+ *
+ * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
+ */
+import './editor.scss'
+
+/**
  * Module constants
  */
 import {
@@ -61,14 +69,6 @@ function hasDefaultSize (image, defaultSize) {
 }
 
 /**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-import './editor.scss'
-
-/**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
@@ -88,7 +88,7 @@ export function ImageEdit ({
 														 clientId,
 													 }) {
 	let {
-		url = '', alt, id, width, height, sizeSlug,
+		url = '', alt, id, width, height,
 	} = attributes
 	const [temporaryURL, setTemporaryURL] = useState()
 
@@ -98,9 +98,9 @@ export function ImageEdit ({
 	}, [alt])
 
 	const ref = useRef()
-	const { imageDefaultSize, mediaUpload } = useSelect((select) => {
+	const { mediaUpload } = useSelect((select) => {
 		const { getSettings } = select(blockEditorStore)
-		return pick(getSettings(), ['imageDefaultSize', 'mediaUpload'])
+		return pick(getSettings(), ['mediaUpload'])
 	}, [])
 
 	// A callback passed to MediaUpload,
@@ -153,15 +153,13 @@ export function ImageEdit ({
 
 		setTemporaryURL()
 
-		let mediaAttributes = pickRelevantMediaFiles(media, imageDefaultSize)
+		let mediaAttributes = pickRelevantMediaFiles(media, 'full')
 
 		let additionalAttributes
 		// Reset the dimension attributes if changing to a different image.
 		if (!media.id || media.id !== id) {
 			additionalAttributes = {
 				width: undefined, height: undefined, // Fallback to size "full" if there's no default image size.
-				// It means the image is smaller, and the block will use a full-size URL.
-				sizeSlug: hasDefaultSize(media, imageDefaultSize) ? imageDefaultSize : 'full',
 			}
 		} else {
 			// Keep the same url when selecting the same file, so "Image Size"
@@ -172,9 +170,9 @@ export function ImageEdit ({
 		// Check for minimum width.
 		// Selecting a new image from the Media Library uses media.width,
 		// Uploading a new image uses media.media_details.width
-		let mediaCheck = media.width ?? media.media_details.width
+		let widthCheck = media.width ?? media.media_details.width
 
-		if (mediaCheck !== WIDTH) {
+		if (widthCheck !== WIDTH) {
 			openModal()
 
 			return
@@ -188,7 +186,7 @@ export function ImageEdit ({
 	function onSelectURL (newURL) {
 		if (newURL !== url) {
 			setAttributes({
-				url: newURL, id: undefined, width: undefined, height: undefined, sizeSlug: imageDefaultSize,
+				url: newURL, id: undefined, width: undefined, height: undefined,
 			})
 		}
 	}
@@ -248,7 +246,7 @@ export function ImageEdit ({
 	/>)
 
 	const classes = classnames(className, {
-		'is-transient': temporaryURL, 'is-resized': !!width || !!height, [`size-${sizeSlug}`]: sizeSlug,
+		'is-transient': temporaryURL, 'is-resized': !!width || !!height
 	})
 
 	const blockProps = useBlockProps({

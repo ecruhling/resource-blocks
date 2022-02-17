@@ -77,8 +77,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../icons/icons */ "./includes/icons/icons.js");
 /* harmony import */ var _lib_image__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../lib/image */ "./includes/block-editor/blocks/lib/image.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./constants */ "./includes/block-editor/blocks/full-width-image/constants.js");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./editor.scss */ "./includes/block-editor/blocks/full-width-image/editor.scss");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./editor.scss */ "./includes/block-editor/blocks/full-width-image/editor.scss");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./constants */ "./includes/block-editor/blocks/full-width-image/constants.js");
 
 
 /**
@@ -100,6 +100,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /**
  * Internal dependencies
+ */
+
+
+/**
+ * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
+ * Those files can contain any CSS code that gets applied to the editor.
+ *
+ * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 
 
@@ -139,21 +147,13 @@ function hasDefaultSize(image, defaultSize) {
   return (0,lodash__WEBPACK_IMPORTED_MODULE_2__.has)(image, ['sizes', defaultSize, 'url']) || (0,lodash__WEBPACK_IMPORTED_MODULE_2__.has)(image, ['media_details', 'sizes', defaultSize, 'source_url']);
 }
 /**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-
-
-
-/**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
+
 
 function ImageEdit(_ref) {
   let {
@@ -173,8 +173,7 @@ function ImageEdit(_ref) {
     alt,
     id,
     width,
-    height,
-    sizeSlug
+    height
   } = attributes;
   const [temporaryURL, setTemporaryURL] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
   const altRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
@@ -183,13 +182,12 @@ function ImageEdit(_ref) {
   }, [alt]);
   const ref = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const {
-    imageDefaultSize,
     mediaUpload
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
     const {
       getSettings
     } = select(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.store);
-    return (0,lodash__WEBPACK_IMPORTED_MODULE_2__.pick)(getSettings(), ['imageDefaultSize', 'mediaUpload']);
+    return (0,lodash__WEBPACK_IMPORTED_MODULE_2__.pick)(getSettings(), ['mediaUpload']);
   }, []); // A callback passed to MediaUpload,
   // fired when the media modal closes.
 
@@ -250,16 +248,14 @@ function ImageEdit(_ref) {
     }
 
     setTemporaryURL();
-    let mediaAttributes = pickRelevantMediaFiles(media, imageDefaultSize);
+    let mediaAttributes = pickRelevantMediaFiles(media, 'full');
     let additionalAttributes; // Reset the dimension attributes if changing to a different image.
 
     if (!media.id || media.id !== id) {
       additionalAttributes = {
         width: undefined,
-        height: undefined,
-        // Fallback to size "full" if there's no default image size.
-        // It means the image is smaller, and the block will use a full-size URL.
-        sizeSlug: hasDefaultSize(media, imageDefaultSize) ? imageDefaultSize : 'full'
+        height: undefined // Fallback to size "full" if there's no default image size.
+
       };
     } else {
       // Keep the same url when selecting the same file, so "Image Size"
@@ -272,9 +268,9 @@ function ImageEdit(_ref) {
     // Uploading a new image uses media.media_details.width
 
 
-    let mediaCheck = (_media$width = media.width) !== null && _media$width !== void 0 ? _media$width : media.media_details.width;
+    let widthCheck = (_media$width = media.width) !== null && _media$width !== void 0 ? _media$width : media.media_details.width;
 
-    if (mediaCheck !== _constants__WEBPACK_IMPORTED_MODULE_10__.WIDTH) {
+    if (widthCheck !== _constants__WEBPACK_IMPORTED_MODULE_11__.WIDTH) {
       openModal();
       return;
     }
@@ -290,8 +286,7 @@ function ImageEdit(_ref) {
         url: newURL,
         id: undefined,
         width: undefined,
-        height: undefined,
-        sizeSlug: imageDefaultSize
+        height: undefined
       });
     }
   }
@@ -322,7 +317,7 @@ function ImageEdit(_ref) {
           let [img] = _ref2;
           onSelectImage(img);
         },
-        allowedTypes: _constants__WEBPACK_IMPORTED_MODULE_10__.ALLOWED_MEDIA_TYPES,
+        allowedTypes: _constants__WEBPACK_IMPORTED_MODULE_11__.ALLOWED_MEDIA_TYPES,
         onError: message => {
           isTemp = false;
           noticeOperations.createErrorNotice(message);
@@ -355,8 +350,7 @@ function ImageEdit(_ref) {
   });
   const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()(className, {
     'is-transient': temporaryURL,
-    'is-resized': !!width || !!height,
-    [`size-${sizeSlug}`]: sizeSlug
+    'is-resized': !!width || !!height
   });
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.useBlockProps)({
     ref,
@@ -382,7 +376,7 @@ function ImageEdit(_ref) {
     onRequestClose: closeModal,
     contentLabel: "Error",
     title: "Error"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Image must be ", _constants__WEBPACK_IMPORTED_MODULE_10__.WIDTH, "px wide! Choose another image.")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.MediaPlaceholder, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Image must be ", _constants__WEBPACK_IMPORTED_MODULE_11__.WIDTH, "px wide! Choose another image.")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.MediaPlaceholder, {
     icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.BlockIcon, {
       icon: _icons_icons__WEBPACK_IMPORTED_MODULE_8__["default"].image_full_width
     }),
@@ -391,7 +385,7 @@ function ImageEdit(_ref) {
     onError: onUploadError,
     onClose: onCloseModal,
     accept: "image/*",
-    allowedTypes: _constants__WEBPACK_IMPORTED_MODULE_10__.ALLOWED_MEDIA_TYPES,
+    allowedTypes: _constants__WEBPACK_IMPORTED_MODULE_11__.ALLOWED_MEDIA_TYPES,
     value: {
       id,
       src
@@ -399,7 +393,7 @@ function ImageEdit(_ref) {
     mediaPreview: mediaPreview,
     labels: {
       title: 'Full-width Image',
-      instructions: 'Upload an image, or pick one from the media library. Image must be ' + _constants__WEBPACK_IMPORTED_MODULE_10__.WIDTH + 'px wide. 870px is an appropriate height, but it is not enforced.'
+      instructions: 'Upload an image, or pick one from the media library. Image must be ' + _constants__WEBPACK_IMPORTED_MODULE_11__.WIDTH + 'px wide. 870px is an appropriate height, but it is not enforced.'
     },
     disableMediaButtons: temporaryURL || url
   }));
@@ -473,7 +467,6 @@ const {
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)(name, { ...settings,
   icon: _icons_icons__WEBPACK_IMPORTED_MODULE_2__["default"].image_full_width,
-  transforms: {},
 
   /**
    * @see ./edit.js
@@ -523,23 +516,18 @@ function save(_ref) {
   const {
     url,
     alt,
-    align,
     width,
     height,
     id,
-    sizeSlug,
     title
   } = attributes;
   const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()({
-    [`align${align}`]: align,
-    [`size-${sizeSlug}`]: sizeSlug,
-    'is-resized': width || height,
-    [`col-12 px-sm-0`]: 'col-12 px-sm-0'
+    [`row`]: 'row'
   });
   const image = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: url,
     alt: alt,
-    className: id ? `wp-image-${id}` : null,
+    className: id ? `wp-image-${id} img-fluid` : `img-fluid`,
     width: width,
     height: height,
     title: title
@@ -547,7 +535,9 @@ function save(_ref) {
   const figure = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", null, image);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save({
     className: classes
-  }), figure);
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: 'col-12 px-sm-0'
+  }, figure));
 }
 
 /***/ }),
@@ -1266,7 +1256,7 @@ module.exports = window["wp"]["url"];
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-image","version":"1.0.0","title":"Full-width Image","category":"resource-blocks","description":"A single full-width image. 2040px width.","keywords":["img","photo","picture"],"attributes":{"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"id":{"type":"number"},"width":{"type":"number"},"height":{"type":"number"},"sizeSlug":{"type":"string","default":"full"}},"supports":{"anchor":false,"color":{"text":false,"background":false}},"example":{"attributes":{"cover":"https://example.com/image.jpg"}},"textdomain":"resource-blocks","editorScript":"file:../../../../build/full-width-image.js","editorStyle":"file:../../../../build/full-width-image.css","style":"file:../../../../build/style-full-width-image.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-image","version":"1.0.0","title":"Full-width Image","category":"resource-blocks","description":"A single full-width image. 2040px width.","keywords":["img","photo","picture"],"attributes":{"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"id":{"type":"number"},"width":{"type":"number"},"height":{"type":"number"}},"supports":{"anchor":false,"color":{"text":false,"background":false}},"example":{"attributes":{"cover":"https://example.com/image.jpg"}},"textdomain":"resource-blocks","editorScript":"file:../../../../build/full-width-image.js","editorStyle":"file:../../../../build/full-width-image.css","style":"file:../../../../build/style-full-width-image.css"}');
 
 /***/ })
 
