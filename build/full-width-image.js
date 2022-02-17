@@ -521,9 +521,7 @@ function save(_ref) {
     id,
     title
   } = attributes;
-  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()({
-    [`row`]: 'row'
-  });
+  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('row');
   const image = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: url,
     alt: alt,

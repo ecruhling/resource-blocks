@@ -1,47 +1,34 @@
 /**
  * External dependencies
  */
-import classnames from 'classnames';
+import classnames from 'classnames'
 
 /**
  * WordPress dependencies
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor'
 
-export default function save( { attributes } ) {
+export default function save ({ attributes }) {
 	const {
-		url,
-		alt,
-		width,
-		height,
-		id,
-		title,
-	} = attributes;
+		url, alt, width, height, id, title,
+	} = attributes
 
-	const classes = classnames( {
-		[ `col-md-6` ]: 'col-md-6',
-	} );
+	const classes = classnames('col-md-6')
 
-	const image = (
-		<img
-			src={ url }
-			alt={ alt }
-			className={ id ? `wp-image-${ id } img-fluid` : `img-fluid` }
-			width={ width }
-			height={ height }
-			title={ title }
-		/>
-	);
+	const image = (<img
+			src={url}
+			alt={alt}
+			className={id ? `wp-image-${id} img-fluid` : `img-fluid`}
+			width={width}
+			height={height}
+			title={title}
+		/>)
 
-	const figure = (
-		<figure>
-			{ image }
-		</figure>
-	);
+	const figure = (<figure>
+			{image}
+		</figure>)
 
-	return (
-		<div { ...useBlockProps.save( { className: classes } ) }>
-			{ figure }
-		</div>
-	);
+	return (<div {...useBlockProps.save({ className: classes })}>
+			{figure}
+		</div>)
 }

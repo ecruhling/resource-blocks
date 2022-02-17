@@ -18,9 +18,7 @@ export default function save ({ attributes }) {
 		title,
 	} = attributes
 
-	const classes = classnames({
-		[`row`]: 'row',
-	})
+	const classes = classnames('row')
 
 	const image = (
 		<img

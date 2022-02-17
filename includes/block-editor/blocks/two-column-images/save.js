@@ -1,20 +1,18 @@
 /**
  * External dependencies
  */
-import classnames from 'classnames';
+import classnames from 'classnames'
 
 /**
  * WordPress dependencies
  */
-import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor'
 
-export default function save( { attributes } ) {
+export default function save ({ attributes }) {
 
-	const classes = classnames();
+	const classes = classnames('row')
 
-	return (
-		<div { ...useBlockProps.save( { className: classes } ) }>
-			<InnerBlocks.Content />
-		</div>
-	);
+	return (<div {...useBlockProps.save({ className: classes })}>
+			<InnerBlocks.Content/>
+		</div>)
 }
