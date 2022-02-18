@@ -18,13 +18,13 @@ export default function save ({ attributes }) {
 		title,
 	} = attributes
 
-	const classes = classnames('row')
+	const classes = classnames('resource-blocks-row')
 
 	const image = (
 		<img
 			src={url}
 			alt={alt}
-			className={id ? `wp-image-${id} img-fluid` : `img-fluid`}
+			className={id ? `wp-image-${id}` : ``}
 			width={width}
 			height={height}
 			title={title}
@@ -39,7 +39,7 @@ export default function save ({ attributes }) {
 
 	return (
 		<div {...useBlockProps.save({ className: classes })}>
-			<div className={'col-12'}>
+			<div className={'resource-blocks-column'}>
 				{figure}
 			</div>
 		</div>

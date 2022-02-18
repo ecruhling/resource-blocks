@@ -348,7 +348,7 @@ function ImageEdit(_ref) {
     className: 'edit-image-preview',
     src: url
   });
-  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()(className, {
+  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()(className, 'resource-blocks-row', {
     'is-transient': temporaryURL,
     'is-resized': !!width || !!height
   });
@@ -356,7 +356,9 @@ function ImageEdit(_ref) {
     ref,
     className: classes
   });
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (temporaryURL || url) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_lib_image__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: 'resource-blocks-column'
+  }, (temporaryURL || url) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_lib_image__WEBPACK_IMPORTED_MODULE_9__["default"], {
     temporaryURL: temporaryURL,
     attributes: attributes,
     setAttributes: setAttributes,
@@ -396,7 +398,7 @@ function ImageEdit(_ref) {
       instructions: 'Upload an image, or pick one from the media library. Image must be ' + _constants__WEBPACK_IMPORTED_MODULE_11__.WIDTH + 'px wide. 870px is an appropriate height, but it is not enforced.'
     },
     disableMediaButtons: temporaryURL || url
-  }));
+  })));
 }
 /* harmony default export */ __webpack_exports__["default"] = ((0,_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.withNotices)(ImageEdit));
 
@@ -521,11 +523,11 @@ function save(_ref) {
     id,
     title
   } = attributes;
-  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('row');
+  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('resource-blocks-row');
   const image = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: url,
     alt: alt,
-    className: id ? `wp-image-${id} img-fluid` : `img-fluid`,
+    className: id ? `wp-image-${id}` : ``,
     width: width,
     height: height,
     title: title
@@ -534,7 +536,7 @@ function save(_ref) {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save({
     className: classes
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: 'col-12'
+    className: 'resource-blocks-column'
   }, figure));
 }
 

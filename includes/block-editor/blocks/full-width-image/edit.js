@@ -2,26 +2,26 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { get, has, pick } from 'lodash'
+import {get, has, pick} from 'lodash'
 
 /**
  * WordPress dependencies
  */
-import { getBlobByURL, isBlobURL, revokeBlobURL } from '@wordpress/blob'
-import { withNotices } from '@wordpress/components'
-import { useSelect } from '@wordpress/data'
+import {getBlobByURL, isBlobURL, revokeBlobURL} from '@wordpress/blob'
+import {withNotices} from '@wordpress/components'
+import {useSelect} from '@wordpress/data'
 import {
 	BlockIcon, MediaPlaceholder, useBlockProps, store as blockEditorStore,
 } from '@wordpress/block-editor'
-import { useEffect, useRef, useState } from '@wordpress/element'
-import { Modal } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+import {useEffect, useRef, useState} from '@wordpress/element'
+import {Modal} from '@wordpress/components'
+import {__} from '@wordpress/i18n'
 import icons from '../../../icons/icons'
 
 /**
  * Internal dependencies
  */
-import Image, { isExternalImage, isMediaDestroyed } from '../lib/image'
+import Image, {isExternalImage, isMediaDestroyed} from '../lib/image'
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -64,7 +64,7 @@ const isTemporaryImage = (id, url) => !id && isBlobURL(url)
  *
  * @return {boolean} Whether or not it has default image size.
  */
-function hasDefaultSize (image, defaultSize) {
+function hasDefaultSize(image, defaultSize) {
 	return (has(image, ['sizes', defaultSize, 'url']) || has(image, ['media_details', 'sizes', defaultSize, 'source_url']))
 }
 
@@ -75,18 +75,18 @@ function hasDefaultSize (image, defaultSize) {
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
-export function ImageEdit ({
-														 attributes,
-														 setAttributes,
-														 isSelected,
-														 className,
-														 noticeUI,
-														 insertBlocksAfter,
-														 noticeOperations,
-														 onReplace,
-														 context,
-														 clientId,
-													 }) {
+export function ImageEdit({
+							  attributes,
+							  setAttributes,
+							  isSelected,
+							  className,
+							  noticeUI,
+							  insertBlocksAfter,
+							  noticeOperations,
+							  onReplace,
+							  context,
+							  clientId,
+						  }) {
 	let {
 		url = '', alt, id, width, height,
 	} = attributes
@@ -98,14 +98,14 @@ export function ImageEdit ({
 	}, [alt])
 
 	const ref = useRef()
-	const { mediaUpload } = useSelect((select) => {
-		const { getSettings } = select(blockEditorStore)
+	const {mediaUpload} = useSelect((select) => {
+		const {getSettings} = select(blockEditorStore)
 		return pick(getSettings(), ['mediaUpload'])
 	}, [])
 
 	// A callback passed to MediaUpload,
 	// fired when the media modal closes.
-	function onCloseModal () {
+	function onCloseModal() {
 		if (isMediaDestroyed(attributes?.id)) {
 			setAttributes({
 				url: undefined, id: undefined,
@@ -118,7 +118,7 @@ export function ImageEdit ({
 		 If the error callback is triggered, we infer that that image
 		 has been deleted.
 	*/
-	function onImageError (isReplaced = false) {
+	function onImageError(isReplaced = false) {
 		// If the image block was not replaced with an embed,
 		// clear the attributes and trigger the placeholder.
 		if (!isReplaced) {
@@ -128,7 +128,7 @@ export function ImageEdit ({
 		}
 	}
 
-	function onUploadError (message) {
+	function onUploadError(message) {
 		noticeOperations.removeAllNotices()
 		noticeOperations.createErrorNotice(message)
 	}
@@ -137,7 +137,7 @@ export function ImageEdit ({
 	 * Image selected.
 	 * @param media
 	 */
-	function onSelectImage (media) {
+	function onSelectImage(media) {
 		if (!media || !media.url) {
 			setAttributes({
 				url: undefined, alt: undefined, id: undefined, title: undefined,
@@ -164,7 +164,7 @@ export function ImageEdit ({
 		} else {
 			// Keep the same url when selecting the same file, so "Image Size"
 			// option is not changed.
-			additionalAttributes = { url }
+			additionalAttributes = {url}
 		}
 
 		// Check for minimum width.
@@ -183,7 +183,7 @@ export function ImageEdit ({
 		})
 	}
 
-	function onSelectURL (newURL) {
+	function onSelectURL(newURL) {
 		if (newURL !== url) {
 			setAttributes({
 				url: newURL, id: undefined, width: undefined, height: undefined,
@@ -193,11 +193,11 @@ export function ImageEdit ({
 
 	const [modalIsOpen, setIsOpen] = useState(false)
 
-	function openModal () {
+	function openModal() {
 		setIsOpen(true)
 	}
 
-	function closeModal () {
+	function closeModal() {
 		setIsOpen(false)
 	}
 
@@ -245,7 +245,7 @@ export function ImageEdit ({
 		src={url}
 	/>)
 
-	const classes = classnames(className, {
+	const classes = classnames(className, 'resource-blocks-row', {
 		'is-transient': temporaryURL, 'is-resized': !!width || !!height
 	})
 
@@ -254,46 +254,48 @@ export function ImageEdit ({
 	})
 
 	return (<div {...blockProps}>
-		{(temporaryURL || url) && (<Image
-			temporaryURL={temporaryURL}
-			attributes={attributes}
-			setAttributes={setAttributes}
-			isSelected={isSelected}
-			insertBlocksAfter={insertBlocksAfter}
-			onReplace={onReplace}
-			onSelectImage={onSelectImage}
-			onSelectURL={onSelectURL}
-			onUploadError={onUploadError}
-			containerRef={ref}
-			context={context}
-			clientId={clientId}
-			onCloseModal={onCloseModal}
-			onImageLoadError={onImageError}
-		/>)}
-		{modalIsOpen && (<Modal
-			isOpen={modalIsOpen}
-			onRequestClose={closeModal}
-			contentLabel="Error"
-			title="Error"
-		>
-			<p>Image must be {WIDTH}px wide! Choose another image.</p>
-		</Modal>)}
-		<MediaPlaceholder
-			icon={<BlockIcon icon={icons.image_full_width}/>}
-			onSelect={onSelectImage}
-			notices={noticeUI}
-			onError={onUploadError}
-			onClose={onCloseModal}
-			accept="image/*"
-			allowedTypes={ALLOWED_MEDIA_TYPES}
-			value={{ id, src }}
-			mediaPreview={mediaPreview}
-			labels={{
-				title: 'Full-width Image',
-				instructions: 'Upload an image, or pick one from the media library. Image must be ' + WIDTH + 'px wide. 870px is an appropriate height, but it is not enforced.'
-			}}
-			disableMediaButtons={temporaryURL || url}
-		/>
+		<div className={'resource-blocks-column'}>
+			{(temporaryURL || url) && (<Image
+				temporaryURL={temporaryURL}
+				attributes={attributes}
+				setAttributes={setAttributes}
+				isSelected={isSelected}
+				insertBlocksAfter={insertBlocksAfter}
+				onReplace={onReplace}
+				onSelectImage={onSelectImage}
+				onSelectURL={onSelectURL}
+				onUploadError={onUploadError}
+				containerRef={ref}
+				context={context}
+				clientId={clientId}
+				onCloseModal={onCloseModal}
+				onImageLoadError={onImageError}
+			/>)}
+			{modalIsOpen && (<Modal
+				isOpen={modalIsOpen}
+				onRequestClose={closeModal}
+				contentLabel="Error"
+				title="Error"
+			>
+				<p>Image must be {WIDTH}px wide! Choose another image.</p>
+			</Modal>)}
+			<MediaPlaceholder
+				icon={<BlockIcon icon={icons.image_full_width}/>}
+				onSelect={onSelectImage}
+				notices={noticeUI}
+				onError={onUploadError}
+				onClose={onCloseModal}
+				accept="image/*"
+				allowedTypes={ALLOWED_MEDIA_TYPES}
+				value={{id, src}}
+				mediaPreview={mediaPreview}
+				labels={{
+					title: 'Full-width Image',
+					instructions: 'Upload an image, or pick one from the media library. Image must be ' + WIDTH + 'px wide. 870px is an appropriate height, but it is not enforced.'
+				}}
+				disableMediaButtons={temporaryURL || url}
+			/>
+		</div>
 	</div>)
 }
 
