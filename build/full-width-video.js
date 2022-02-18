@@ -263,7 +263,9 @@ const EmbedEdit = props => {
       }
     }
   }, [preview, isEditingURL]);
-  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_10__.useBlockProps)();
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_10__.useBlockProps)({
+    className: 'resource-blocks-row'
+  });
 
   if (fetching) {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_12__.View, blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_embed_loading__WEBPACK_IMPORTED_MODULE_4__["default"], null));
@@ -274,7 +276,9 @@ const EmbedEdit = props => {
   const showEmbedPlaceholder = !preview || cannotEmbed || isEditingURL;
 
   if (showEmbedPlaceholder) {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_12__.View, blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_embed_placeholder__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_12__.View, blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "resource-blocks-column"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_embed_placeholder__WEBPACK_IMPORTED_MODULE_5__["default"], {
       icon: icon,
       label: label,
       onFocus: onFocus,
@@ -295,7 +299,7 @@ const EmbedEdit = props => {
       tryAgain: () => {
         invalidateResolution('getEmbedPreview', [url]);
       }
-    }));
+    })));
   } // Even though we set attributes that get derived from the preview,
   // we don't access them directly because for the initial render,
   // the `setAttributes` call will not have taken effect. If we're
@@ -314,7 +318,9 @@ const EmbedEdit = props => {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_embed_controls__WEBPACK_IMPORTED_MODULE_2__["default"], {
     showEditButton: preview && !cannotEmbed,
     switchBackToURLInput: () => setIsEditingURL(true)
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_12__.View, blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_embed_preview__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_12__.View, blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "resource-blocks-column"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_embed_preview__WEBPACK_IMPORTED_MODULE_6__["default"], {
     preview: preview,
     previewable: previewable,
     className: className,
@@ -324,7 +330,7 @@ const EmbedEdit = props => {
     icon: icon,
     label: label,
     insertBlocksAfter: insertBlocksAfter
-  })));
+  }))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (EmbedEdit);
