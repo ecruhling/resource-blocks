@@ -519,9 +519,9 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * pickRelevantMediaFiles.
  *
- * @param image
- * @param size
- * @returns {Pick<*, keyof *>}
+ * @param  image
+ * @param  size
+ * @return {Pick<*, keyof *>}
  */
 
 const pickRelevantMediaFiles = (image, size) => {
@@ -558,6 +558,17 @@ function hasDefaultSize(image, defaultSize) {
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
+ * @param  root0
+ * @param  root0.attributes
+ * @param  root0.setAttributes
+ * @param  root0.isSelected
+ * @param  root0.className
+ * @param  root0.noticeUI
+ * @param  root0.insertBlocksAfter
+ * @param  root0.noticeOperations
+ * @param  root0.onReplace
+ * @param  root0.context
+ * @param  root0.clientId
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
@@ -637,7 +648,8 @@ function ImageEdit(_ref) {
   }
   /**
    * Image selected.
-   * @param media
+   *
+   * @param  media
    */
 
 
@@ -660,7 +672,7 @@ function ImageEdit(_ref) {
     }
 
     setTemporaryURL();
-    let mediaAttributes = pickRelevantMediaFiles(media, imageDefaultSize);
+    const mediaAttributes = pickRelevantMediaFiles(media, imageDefaultSize);
     let additionalAttributes; // Reset the dimension attributes if changing to a different image.
 
     if (!media.id || media.id !== id) {
@@ -680,7 +692,7 @@ function ImageEdit(_ref) {
     // Uploading a new image uses media.media_details.width
 
 
-    let widthCheck = (_media$width = media.width) !== null && _media$width !== void 0 ? _media$width : media.media_details.width;
+    const widthCheck = (_media$width = media.width) !== null && _media$width !== void 0 ? _media$width : media.media_details.width;
 
     if (widthCheck !== required_width) {
       openModal();
@@ -694,7 +706,7 @@ function ImageEdit(_ref) {
   /**
    * onSelectURL.
    *
-   * @param newURL
+   * @param  newURL
    */
 
 
@@ -776,7 +788,7 @@ function ImageEdit(_ref) {
     className: 'edit-image-preview',
     src: url
   });
-  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()(className, {
+  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()(className, 'resource-blocks-column', {
     'is-transient': temporaryURL,
     'is-resized': !!width || !!height
   });
@@ -821,7 +833,7 @@ function ImageEdit(_ref) {
     mediaPreview: mediaPreview,
     labels: {
       title: 'Single Image',
-      instructions: instructions
+      instructions
     },
     disableMediaButtons: temporaryURL || url
   }));
@@ -934,11 +946,11 @@ function save(_ref) {
     id,
     title
   } = attributes;
-  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('col-md-6');
+  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('resource-blocks-column');
   const image = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: url,
     alt: alt,
-    className: id ? `wp-image-${id} img-fluid` : `img-fluid`,
+    className: id ? `wp-image-${id}` : ``,
     width: width,
     height: height,
     title: title
