@@ -6,19 +6,20 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-.wp-block-resource-blocks-single-image {
+div.wp-block-resource-blocks-single-image {
+  margin: 0 auto;
   width: 50%;
 }
-.wp-block-resource-blocks-single-image img {
+div.wp-block-resource-blocks-single-image img {
   display: block;
 }
-.wp-block-resource-blocks-single-image .components-placeholder__instructions {
+div.wp-block-resource-blocks-single-image .components-placeholder__instructions {
   display: block !important;
 }
-.wp-block-resource-blocks-single-image .components-placeholder__fieldset {
+div.wp-block-resource-blocks-single-image .components-placeholder__fieldset {
   flex-direction: row !important;
 }
-.wp-block-resource-blocks-single-image .components-placeholder__fieldset .components-button {
+div.wp-block-resource-blocks-single-image .components-placeholder__fieldset .components-button {
   margin-right: 12px !important;
 }
 
