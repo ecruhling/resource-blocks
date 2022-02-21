@@ -26,6 +26,7 @@ Build file is named: style-global.css
   max-width: 100%;
   width: 100%;
   height: auto;
+  display: block;
 }
 
 /*# sourceMappingURL=style-global.css.map*/
