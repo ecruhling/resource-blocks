@@ -936,7 +936,7 @@ function save(_ref) {
     return null;
   }
 
-  const className = classnames_dedupe__WEBPACK_IMPORTED_MODULE_1___default()('wp-block-embed resource-blocks-row', {
+  const className = classnames_dedupe__WEBPACK_IMPORTED_MODULE_1___default()('wp-block-embed wp-embed-responsive resource-blocks-row', {
     [`is-type-${type}`]: type,
     [`is-provider-${providerNameSlug}`]: providerNameSlug,
     [`wp-block-embed-${providerNameSlug}`]: providerNameSlug

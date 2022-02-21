@@ -7,5 +7,27 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
+.wp-has-aspect-ratio .wp-block-embed__wrapper {
+  position: relative;
+}
+.wp-has-aspect-ratio .wp-block-embed__wrapper::before {
+  content: "";
+  display: block;
+  padding-top: 50%;
+}
+
+.wp-embed-aspect-18-9 .wp-block-embed__wrapper::before {
+  padding-top: 47.9%;
+}
+
+.wp-block-resource-blocks-full-width-video iframe {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
 
 /*# sourceMappingURL=style-full-width-video.css.map*/

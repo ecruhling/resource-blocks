@@ -15,11 +15,14 @@ export default function save( { attributes } ) {
 		return null;
 	}
 
-	const className = classnames( 'wp-block-embed resource-blocks-row', {
-		[ `is-type-${ type }` ]: type,
-		[ `is-provider-${ providerNameSlug }` ]: providerNameSlug,
-		[ `wp-block-embed-${ providerNameSlug }` ]: providerNameSlug,
-	} );
+	const className = classnames(
+		'wp-block-embed wp-embed-responsive resource-blocks-row',
+		{
+			[ `is-type-${ type }` ]: type,
+			[ `is-provider-${ providerNameSlug }` ]: providerNameSlug,
+			[ `wp-block-embed-${ providerNameSlug }` ]: providerNameSlug,
+		}
+	);
 
 	return (
 		<div { ...useBlockProps.save( { className } ) }>
