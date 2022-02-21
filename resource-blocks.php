@@ -69,3 +69,42 @@ function allow_only_resource_blocks(): array {
 }
 
 add_filter( 'allowed_block_types_all', 'allow_only_resource_blocks', 10, 2 );
+
+
+/**
+ * Enqueue block CSS for the editor
+ */
+function resource_blocks_editor_styles()
+{
+
+	// Enqueue block editor styles
+	wp_enqueue_style(
+		'resource-blocks-global-editor-css',
+		plugins_url('/build/global.css', __FILE__),
+		['wp-edit-blocks'],
+		filemtime(plugin_dir_path(__FILE__) . 'build/global.css')
+	);
+
+}
+
+// Hook the enqueue functions into the editor
+add_action('enqueue_block_editor_assets', 'resource_blocks_editor_styles');
+
+/**
+ * Enqueue frontend and editor CSS
+ */
+function resource_blocks_styles()
+{
+
+	// Enqueue block editor styles
+	wp_enqueue_style(
+		'resource-blocks-global-css',
+		plugins_url('/build/style-global.css', __FILE__),
+		[],
+		filemtime(plugin_dir_path(__FILE__) . 'build/style-global.css')
+	);
+
+}
+
+// Hook the enqueue functions into the frontend and editor
+add_action('enqueue_block_assets', 'resource_blocks_styles');

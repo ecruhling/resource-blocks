@@ -1,0 +1,17 @@
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./includes/global/style.scss ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+/**
+Global CSS for Resource Blocks
+
+CSS gets applied BOTH to the front of the site and to the editor.
+
+For the most part, uses Bootstrap's row and column layouts.
+
+Build file is named: style-global.css
+ */
+.resource-blocks-row {
+  background: red;
+}
+
+/*# sourceMappingURL=style-global.css.map*/

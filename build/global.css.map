@@ -1,0 +1,1 @@
+{"version":3,"file":"global.css","mappings":";;;AAAA;;;;;;EAAA,C","sources":["webpack://resource-blocks/./includes/global/editor.scss"],"sourcesContent":["/**\nGlobal Editor CSS for Resource Blocks\n\nCSS code that gets applied to the editor.\n\nBuild file is named: global.css\n */\n\n//.resource-blocks-row {\n//  background: red;\n//}\n"],"names":[],"sourceRoot":""}
