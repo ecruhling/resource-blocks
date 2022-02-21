@@ -8,6 +8,31 @@ For the most part, uses Bootstrap's row and column layouts.
 Build file is named: style-global.css
  */
 
+//.is-root-container.block-editor-block-list__layout {
+//  width: 100%;
+//  padding-right: 35px;
+//  padding-left: 35px;
+//  margin-right: auto;
+//  margin-left: auto;
+//}
+
+// Bootstrap Row
 .resource-blocks-row {
-  background: red;
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -35px;
+  margin-left: -35px;
+}
+
+// Bootstrap Column
+.resource-blocks-column {
+  width: 100%;
+  padding-right: 35px;
+  padding-left: 35px;
+
+  img {
+	max-width: 100%;
+	width: 100%;
+	height: auto;
+  }
 }
