@@ -37,4 +37,8 @@ div.resource-blocks-row.wp-block.wp-block-resource-blocks-two-column-images .blo
   margin-left: -35px;
 }
 
+.wp-embed-responsive .wp-embed-aspect-18-9 .wp-block-embed__wrapper::before {
+  padding-top: 47.9%;
+}
+
 /*# sourceMappingURL=global.css.map*/

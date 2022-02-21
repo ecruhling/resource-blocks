@@ -131,6 +131,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * External dependencies
  */
+// eslint-disable-next-line import/no-extraneous-dependencies
 
 
 /**
@@ -269,7 +270,8 @@ const EmbedEdit = props => {
 
   if (fetching) {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_12__.View, blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_embed_loading__WEBPACK_IMPORTED_MODULE_4__["default"], null));
-  }
+  } // eslint-disable-next-line @wordpress/valid-sprintf
+
 
   const label = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Full-width Video'), title); // No preview, or we can't embed the current URL, or we've clicked the edit button.
 
@@ -934,15 +936,15 @@ function save(_ref) {
     return null;
   }
 
-  const className = classnames_dedupe__WEBPACK_IMPORTED_MODULE_1___default()('wp-block-embed row', {
+  const className = classnames_dedupe__WEBPACK_IMPORTED_MODULE_1___default()('wp-block-embed resource-blocks-row', {
     [`is-type-${type}`]: type,
     [`is-provider-${providerNameSlug}`]: providerNameSlug,
     [`wp-block-embed-${providerNameSlug}`]: providerNameSlug
   });
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save({
     className
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", {
-    className: 'col-12'
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: 'resource-blocks-column'
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wp-block-embed__wrapper"
   }, `\n${url}\n`

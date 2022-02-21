@@ -1,33 +1,33 @@
 /**
  * External dependencies
  */
-import classnames from 'classnames/dedupe'
+import classnames from 'classnames/dedupe';
 
 /**
  * WordPress dependencies
  */
-import { useBlockProps } from '@wordpress/block-editor'
+import { useBlockProps } from '@wordpress/block-editor';
 
-export default function save ({ attributes }) {
-	const { url, type, providerNameSlug } = attributes
+export default function save( { attributes } ) {
+	const { url, type, providerNameSlug } = attributes;
 
-	if (!url) {
-		return null
+	if ( ! url ) {
+		return null;
 	}
 
-	const className = classnames('wp-block-embed row', {
-		[`is-type-${type}`]: type,
-		[`is-provider-${providerNameSlug}`]: providerNameSlug,
-		[`wp-block-embed-${providerNameSlug}`]: providerNameSlug,
-	})
+	const className = classnames( 'wp-block-embed resource-blocks-row', {
+		[ `is-type-${ type }` ]: type,
+		[ `is-provider-${ providerNameSlug }` ]: providerNameSlug,
+		[ `wp-block-embed-${ providerNameSlug }` ]: providerNameSlug,
+	} );
 
 	return (
-		<div {...useBlockProps.save({ className })}>
-			<figure className={'col-12'}>
+		<div { ...useBlockProps.save( { className } ) }>
+			<div className={ 'resource-blocks-column' }>
 				<div className="wp-block-embed__wrapper">
-					{`\n${url}\n` /* URL needs to be on its own line. */}
+					{ `\n${ url }\n` /* URL needs to be on its own line. */ }
 				</div>
-			</figure>
+			</div>
 		</div>
-	)
+	);
 }

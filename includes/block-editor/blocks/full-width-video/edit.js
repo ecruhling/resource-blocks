@@ -16,6 +16,7 @@ import EmbedPreview from './embed-preview';
 /**
  * External dependencies
  */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import classnames from 'classnames';
 
 /**
@@ -151,6 +152,7 @@ const EmbedEdit = ( props ) => {
 		);
 	}
 
+	// eslint-disable-next-line @wordpress/valid-sprintf
 	const label = sprintf( __( 'Full-width Video' ), title );
 
 	// No preview, or we can't embed the current URL, or we've clicked the edit button.
