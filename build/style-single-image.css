@@ -7,13 +7,12 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-div.wp-block-resource-blocks-single-image figure {
-  margin: 0 0 40px;
-}
 @media (min-width: 768px) {
-  div.wp-block-resource-blocks-single-image[class*=" col-"], div.wp-block-resource-blocks-single-image[class^=col-] {
+  div.wp-block-resource-blocks-single-image.resource-blocks-column {
     padding-left: 20px;
     padding-right: 20px;
+    flex: 0 0 50%;
+    max-width: 50%;
   }
 }
 

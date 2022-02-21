@@ -55,7 +55,11 @@ export function ColumnsEdit( { className } ) {
 
 	return (
 		<div { ...blockProps }>
-			<InnerBlocks template={ template } templateLock="insert" />
+			<InnerBlocks
+				template={ template }
+				templateLock="insert"
+				orientation="horizontal"
+			/>
 		</div>
 	);
 }

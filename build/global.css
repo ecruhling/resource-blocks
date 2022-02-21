@@ -8,5 +8,25 @@ CSS code that gets applied to the editor.
 
 Build file is named: global.css
  */
+html :where(.wp-block) {
+  max-width: initial;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+html :where(.editor-styles-wrapper) {
+  padding: 35px;
+}
+
+.is-root-container.block-editor-block-list__layout {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+div.resource-blocks-row.wp-block-resource-blocks-two-column-images {
+  margin: 0;
+  display: block;
+}
 
 /*# sourceMappingURL=global.css.map*/

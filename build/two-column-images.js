@@ -69,7 +69,8 @@ function ColumnsEdit(_ref) {
   }]];
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InnerBlocks, {
     template: template,
-    templateLock: "insert"
+    templateLock: "insert",
+    orientation: "horizontal"
   }));
 }
 /* harmony default export */ __webpack_exports__["default"] = ((0,_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.withNotices)(ColumnsEdit));

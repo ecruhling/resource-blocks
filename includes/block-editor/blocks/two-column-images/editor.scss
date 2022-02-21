@@ -4,8 +4,11 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-//.wp-block-resource-blocks-two-column-images {
-//  .block-editor-block-list__layout {
-//	display: flex;
-//  }
-//}
+.wp-block-resource-blocks-two-column-images {
+  .block-editor-block-list__layout {
+	display: flex;
+	flex-wrap: wrap;
+	margin-right: -35px;
+	margin-left: -35px;
+  }
+}

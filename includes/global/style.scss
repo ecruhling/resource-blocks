@@ -8,16 +8,8 @@ For the most part, uses Bootstrap's row and column layouts.
 Build file is named: style-global.css
  */
 
-//.is-root-container.block-editor-block-list__layout {
-//  width: 100%;
-//  padding-right: 35px;
-//  padding-left: 35px;
-//  margin-right: auto;
-//  margin-left: auto;
-//}
-
 // Bootstrap Row
-.resource-blocks-row {
+div.resource-blocks-row[class^='wp-block'], div.resource-blocks-row[class*=' wp-block-'] {
   display: flex;
   flex-wrap: wrap;
   margin-right: -35px;
@@ -25,10 +17,18 @@ Build file is named: style-global.css
 }
 
 // Bootstrap Column
-.resource-blocks-column {
+div.resource-blocks-column {
   width: 100%;
   padding-right: 35px;
   padding-left: 35px;
+
+  figure {
+	margin-block-start: 0;
+	margin-block-end: 0;
+	margin-inline-start: 0;
+	margin-inline-end: 0;
+	margin-bottom: 0;
+  }
 
   img {
 	max-width: 100%;

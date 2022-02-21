@@ -7,23 +7,5 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-.wp-block-resource-blocks-full-width-video .wp-block-embed {
-  margin-bottom: 0 !important;
-  margin-top: 0 !important;
-}
-.wp-block-resource-blocks-full-width-video .wp-block-embed__wrapper {
-  position: relative;
-}
-.wp-block-resource-blocks-full-width-video .wp-block-embed__wrapper::before {
-  padding-top: 48.8%;
-}
-.wp-block-resource-blocks-full-width-video iframe {
-  display: block;
-  width: 100%;
-  position: absolute;
-  height: 100%;
-  left: 0;
-  top: 0;
-}
 
 /*# sourceMappingURL=style-full-width-video.css.map*/

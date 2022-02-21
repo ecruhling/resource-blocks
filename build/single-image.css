@@ -6,21 +6,5 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-div.wp-block-resource-blocks-single-image {
-  margin: 0 auto;
-  width: 50%;
-}
-div.wp-block-resource-blocks-single-image img {
-  display: block;
-}
-div.wp-block-resource-blocks-single-image .components-placeholder__instructions {
-  display: block !important;
-}
-div.wp-block-resource-blocks-single-image .components-placeholder__fieldset {
-  flex-direction: row !important;
-}
-div.wp-block-resource-blocks-single-image .components-placeholder__fieldset .components-button {
-  margin-right: 12px !important;
-}
 
 /*# sourceMappingURL=single-image.css.map*/
