@@ -10,7 +10,8 @@ For the most part, uses Bootstrap's row and column layouts.
 
 Build file is named: style-global.css
  */
-div.resource-blocks-row[class^=wp-block], div.resource-blocks-row[class*=" wp-block-"] {
+div.resource-blocks-row[class^=wp-block],
+div.resource-blocks-row[class*=" wp-block-"] {
   display: flex;
   flex-wrap: wrap;
   margin-right: -35px;
@@ -38,6 +39,19 @@ div.resource-blocks-column img {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.wp-has-aspect-ratio .wp-block-embed__wrapper {
+  position: relative;
+}
+.wp-has-aspect-ratio .wp-block-embed__wrapper::before {
+  content: "";
+  display: block;
+  padding-top: 50%;
+}
+
+.wp-embed-aspect-18-9 .wp-block-embed__wrapper::before {
+  padding-top: 47.9% !important;
 }
 
 /*# sourceMappingURL=style-global.css.map*/

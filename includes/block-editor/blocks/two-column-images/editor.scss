@@ -4,3 +4,19 @@
  * Replace them with your own styles or remove the file completely.
  */
 
+// Two column images
+div.resource-blocks-row.wp-block.wp-block-resource-blocks-two-column-images {
+  // disable the 'row'
+  margin: 0;
+  display: block;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  .block-editor-block-list__layout {
+	// new 'Row'
+	display: flex;
+	flex-wrap: wrap;
+	margin-right: -35px;
+	margin-left: -35px;
+  }
+}

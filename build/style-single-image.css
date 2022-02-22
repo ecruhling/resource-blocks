@@ -7,6 +7,9 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
+div.wp-block-resource-blocks-single-image.resource-blocks-column {
+  padding-bottom: 40px;
+}
 @media (min-width: 768px) {
   div.wp-block-resource-blocks-single-image.resource-blocks-column {
     padding-left: 20px;
