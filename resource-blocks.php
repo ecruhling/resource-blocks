@@ -3,7 +3,7 @@
  * Plugin Name:       Resource Blocks
  * Requires at least: 5.8
  * Requires PHP:      7.0
- * Version:           0.1.0
+ * Version:           1.0.0
  * Author:            Resource
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -16,7 +16,7 @@
  * Register blocks.
  */
 function resource_blocks_init() {
-
+	// The order below is the order that they will appear in the editor.
 	$blocks = array(
 		'intro-paragraph/',
 		'full-width-image/',
@@ -62,11 +62,11 @@ add_action( 'block_categories_all', 'resource_block_category', 10, 2 );
  */
 function allow_only_resource_blocks(): array {
 	return array(
-		'resource-blocks/full-width-image',
-		'resource-blocks/full-width-video',
-		'resource-blocks/two-column-images',
-		'resource-blocks/single-image',
 		'resource-blocks/intro-paragraph',
+		'resource-blocks/full-width-image',
+		'resource-blocks/two-column-images',
+		'resource-blocks/full-width-video',
+		'resource-blocks/single-image',
 	);
 }
 

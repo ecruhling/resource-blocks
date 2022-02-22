@@ -1,12 +1,36 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
-	"name": "resource-blocks/intro-paragraph",
-	"version": "1.0.0",
-	"title": "Introductory Paragraph",
-	"category": "resource-blocks",
-	"textdomain": "resource-blocks",
-	"editorScript": "file:../../../../build/intro-paragraph.js",
-	"editorStyle": "file:../../../../build/intro-paragraph.css",
-	"style": "file:../../../../build/style-intro-paragraph.css"
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "resource-blocks/intro-paragraph",
+  "version": "1.0.0",
+  "title": "Introductory Paragraph",
+  "category": "resource-blocks",
+  "description": "The introductory paragraph.",
+  "keywords": [
+	"text"
+  ],
+  "textdomain": "resource-blocks",
+  "attributes": {
+	"align": {
+	  "type": "string"
+	},
+	"content": {
+	  "type": "string",
+	  "source": "html",
+	  "selector": "p",
+	  "default": "",
+	  "__experimentalRole": "content"
+	},
+	"placeholder": {
+	  "type": "string"
+	}
+  },
+  "supports": {
+	"anchor": true,
+	"className": false,
+	"__experimentalSelector": "p"
+  },
+  "editorScript": "file:../../../../build/intro-paragraph.js",
+  "editorStyle": "file:../../../../build/intro-paragraph.css",
+  "style": "file:../../../../build/style-intro-paragraph.css"
 }
