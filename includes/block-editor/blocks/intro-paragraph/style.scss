@@ -5,8 +5,25 @@
  * Replace them with your own styles or remove the file completely.
  */
 
- .wp-block-resource-blocks-intro-paragraph {
-	//background-color: #21759b;
-	//color: #fff;
-	//padding: 2px;
+.editor-styles-wrapper div.wp-block-resource-blocks-intro-paragraph,
+article.post div.wp-block-resource-blocks-intro-paragraph {
+  padding-bottom: 3rem;
+
+  .resource-blocks-column {
+	@media (min-width: 768px) {
+	  flex: 0 0 66.6666666667%;
+	  max-width: 66.6666666667%;
+	}
+  }
+
+  p {
+	font-family: RomainHeadline-Regular-WebS, sans-serif;
+	font-size: 1.425rem;
+	color: #37535b;
+	margin-bottom: 0;
+
+	@media (min-width: 768px) {
+	  font-size: 1.625rem;
+	}
+  }
 }

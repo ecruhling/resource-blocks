@@ -23,3 +23,17 @@ html :where(.editor-styles-wrapper) {
   margin-right: auto;
   margin-left: auto;
 }
+
+// Post Editor
+.edit-post-visual-editor__post-title-wrapper {
+  margin-bottom: 1rem;
+}
+
+.wp-block.wp-block-post-title {
+  font-family: Questrial,sans-serif;
+  letter-spacing: 2.7px;
+  font-size: 1.125rem;
+  color: #37535b;
+  text-transform: uppercase;
+  font-weight: bolder;
+}
