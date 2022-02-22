@@ -1,37 +1,95 @@
 /**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
+ * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import {
+	AlignmentControl,
+	BlockControls,
+	RichText,
+	useBlockProps,
+} from '@wordpress/block-editor';
+import { createBlock } from '@wordpress/blocks';
 
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
- */
-import { useBlockProps } from '@wordpress/block-editor';
+const name = 'resource-blocks/intro-paragraph';
 
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-import './editor.scss';
+function BodyTextBlock( {
+	attributes,
+	mergeBlocks,
+	onReplace,
+	onRemove,
+	setAttributes,
+	clientId,
+} ) {
+	const { align, content, placeholder } = attributes;
+	const blockProps = useBlockProps( {
+		className: classnames( 'resource-blocks-row', {
+			[ `has-text-align-${ align }` ]: align,
+		} ),
+	} );
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
- * @return {WPElement} Element to render.
- */
-export default function Edit() {
 	return (
-		<p { ...useBlockProps() }>
-			{ __( 'Body Text – hello from the editor!', 'body-text' ) }
-		</p>
+		<>
+			<BlockControls group="block">
+				<AlignmentControl
+					value={ align }
+					onChange={ ( newAlign ) =>
+						setAttributes( { align: newAlign } )
+					}
+				/>
+			</BlockControls>
+			<div { ...blockProps }>
+				<div className="resource-blocks-column">
+					<RichText
+						identifier="content"
+						tagName="p"
+						value={ content }
+						onChange={ ( newContent ) =>
+							setAttributes( { content: newContent } )
+						}
+						onSplit={ ( value, isOriginal ) => {
+							let newAttributes;
+
+							if ( isOriginal || value ) {
+								newAttributes = {
+									...attributes,
+									content: value,
+								};
+							}
+
+							const block = createBlock( name, newAttributes );
+
+							if ( isOriginal ) {
+								block.clientId = clientId;
+							}
+
+							return block;
+						} }
+						onMerge={ mergeBlocks }
+						onReplace={ onReplace }
+						onRemove={ onRemove }
+						aria-label={
+							content
+								? __( 'Body text block' )
+								: __(
+										'Empty Body text; start writing or type forward slash to choose a block'
+								  )
+						}
+						data-empty={ ! content }
+						placeholder={
+							placeholder || __( 'Body text.' )
+						}
+						__unstableEmbedURLOnPaste
+						__unstableAllowPrefixTransformations
+					/>
+				</div>
+			</div>
+		</>
 	);
 }
+
+export default BodyTextBlock;

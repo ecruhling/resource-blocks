@@ -1,12 +1,36 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
-	"name": "resource-blocks/body-text",
-	"version": "1.0.0",
-	"title": "Body Text",
-	"category": "resource-blocks",
-	"textdomain": "resource-blocks",
-	"editorScript": "file:../../../../build/body-text.js",
-	"editorStyle": "file:../../../../build/body-text.css",
-	"style": "file:../../../../build/style-body-text.css"
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "resource-blocks/body-text",
+  "version": "1.0.0",
+  "title": "Body Text",
+  "category": "resource-blocks",
+  "description": "Body text.",
+  "keywords": [
+	"text"
+  ],
+  "textdomain": "resource-blocks",
+  "attributes": {
+	"align": {
+	  "type": "string"
+	},
+	"content": {
+	  "type": "string",
+	  "source": "html",
+	  "selector": "p",
+	  "default": "",
+	  "__experimentalRole": "content"
+	},
+	"placeholder": {
+	  "type": "string"
+	}
+  },
+  "supports": {
+	"anchor": true,
+	"className": false,
+	"__experimentalSelector": "p"
+  },
+  "editorScript": "file:../../../../build/body-text.js",
+  "editorStyle": "file:../../../../build/body-text.css",
+  "style": "file:../../../../build/style-body-text.css"
 }
