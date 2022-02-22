@@ -16,7 +16,7 @@ export default function save( { attributes } ) {
 	}
 
 	const className = classnames(
-		'wp-block-embed wp-embed-responsive resource-blocks-row',
+		'wp-block-embed wp-embed-responsive resource-blocks-row wp-has-aspect-ratio wp-embed-aspect-18-9',
 		{
 			[ `is-type-${ type }` ]: type,
 			[ `is-provider-${ providerNameSlug }` ]: providerNameSlug,
