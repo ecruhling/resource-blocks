@@ -1,0 +1,12 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "resource-blocks/body-text",
+	"version": "1.0.0",
+	"title": "Body Text",
+	"category": "widgets",
+	"textdomain": "body-text",
+	"editorScript": "file:../../../../build/{{slug}}.js",
+	"editorStyle": "file:../../../../build/{{slug}}.css",
+	"style": "file:../../../../build/{{slug}}.css"
+}
