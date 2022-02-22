@@ -18,6 +18,7 @@
 function resource_blocks_init() {
 
 	$blocks = array(
+		'intro-paragraph/',
 		'full-width-image/',
 		'two-column-images/',
 		'full-width-video/',
@@ -65,6 +66,7 @@ function allow_only_resource_blocks(): array {
 		'resource-blocks/full-width-video',
 		'resource-blocks/two-column-images',
 		'resource-blocks/single-image',
+		'resource-blocks/intro-paragraph',
 	);
 }
 
@@ -72,7 +74,7 @@ add_filter( 'allowed_block_types_all', 'allow_only_resource_blocks', 10, 2 );
 
 
 /**
- * Enqueue block CSS for the editor
+ * Enqueue global block CSS for the editor
  */
 function resource_blocks_editor_styles()
 {
@@ -91,7 +93,7 @@ function resource_blocks_editor_styles()
 add_action('enqueue_block_editor_assets', 'resource_blocks_editor_styles');
 
 /**
- * Enqueue frontend and editor CSS
+ * Enqueue global frontend and editor CSS
  */
 function resource_blocks_styles()
 {

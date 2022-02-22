@@ -1,4 +1,8 @@
 /**
+ * TODO: check original video embed block and get the original responsive / aspect ratio class logic from there. See edit.js for how it calculates this.
+ */
+
+/**
  * External dependencies
  */
 import classnames from 'classnames/dedupe';

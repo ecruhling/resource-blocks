@@ -4,9 +4,9 @@
 	"name": "resource-blocks/intro-paragraph",
 	"version": "1.0.0",
 	"title": "Introductory Paragraph",
-	"category": "widgets",
-	"textdomain": "intro-paragraph",
-	"editorScript": "file:../../../../build/{{slug}}.js",
-	"editorStyle": "file:../../../../build/{{slug}}.css",
-	"style": "file:../../../../build/{{slug}}.css"
+	"category": "resource-blocks",
+	"textdomain": "resource-blocks",
+	"editorScript": "file:../../../../build/intro-paragraph.js",
+	"editorStyle": "file:../../../../build/intro-paragraph.css",
+	"style": "file:../../../../build/style-intro-paragraph.css"
 }
