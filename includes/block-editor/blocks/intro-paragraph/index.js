@@ -5,6 +5,9 @@
  */
 import { registerBlockType } from '@wordpress/blocks';
 
+// import SVG icons
+import icons from '../../../icons/icons';
+
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * All files containing `style` keyword are bundled together. The code used
@@ -30,6 +33,7 @@ const { name, ...settings } = json;
  */
 registerBlockType( name, {
 	...settings,
+	icon: icons.intro_paragraph,
 	/**
 	 * @see ./edit.js
 	 */

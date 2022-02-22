@@ -4,9 +4,9 @@
 	"name": "resource-blocks/body-text",
 	"version": "1.0.0",
 	"title": "Body Text",
-	"category": "widgets",
-	"textdomain": "body-text",
-	"editorScript": "file:../../../../build/{{slug}}.js",
-	"editorStyle": "file:../../../../build/{{slug}}.css",
-	"style": "file:../../../../build/{{slug}}.css"
+	"category": "resource-blocks",
+	"textdomain": "resource-blocks",
+	"editorScript": "file:../../../../build/body-text.js",
+	"editorStyle": "file:../../../../build/body-text.css",
+	"style": "file:../../../../build/style-body-text.css"
 }
