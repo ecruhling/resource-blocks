@@ -5,8 +5,37 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-// .wp-block-resource-blocks-body-text {
-//	background-color: #21759b;
-//	color: #fff;
-//	padding: 2px;
-//}
+// if there is a block before this, move the block up
+.resource-blocks-row + .wp-block-resource-blocks-body-text {
+  margin-top: -40px;
+}
+
+.wp-block-resource-blocks-body-text {
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+  .resource-blocks-column {
+	padding-top: 1.5rem;
+	padding-bottom: 1.5rem;
+
+	@media (min-width: 768px) {
+	  padding-top: 3rem;
+	  padding-bottom: 3rem;
+	}
+  }
+
+  p {
+	font-size: 1.5rem;
+	color: #37535b;
+	font-family: Questrial, sans-serif;
+	line-height: 1.9;
+	margin: 0;
+	padding-left: 20px;
+	padding-right: 20px;
+
+	@media (min-width: 768px) {
+	  padding-left: 50px;
+	  padding-right: 0;
+	}
+  }
+}
