@@ -17,6 +17,14 @@
 	"providerNameSlug": {
 	  "type": "string"
 	},
+	"allowResponsive": {
+	  "type": "boolean",
+	  "default": true
+	},
+	"responsive": {
+	  "type": "boolean",
+	  "default": false
+	},
 	"previewable": {
 	  "type": "boolean",
 	  "default": true

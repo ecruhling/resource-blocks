@@ -60,6 +60,14 @@ div.resource-blocks-column {
   }
 }
 
+.wp-embed-aspect-16-9 {
+  .wp-block-embed__wrapper {
+	&::before {
+	  padding-top: 56.25% !important;
+	}
+  }
+}
+
 // Paragraphs
 .has-text-align-left {
   text-align: left;

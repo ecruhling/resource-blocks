@@ -54,6 +54,10 @@ div.resource-blocks-column img {
   padding-top: 47.9% !important;
 }
 
+.wp-embed-aspect-16-9 .wp-block-embed__wrapper::before {
+  padding-top: 56.25% !important;
+}
+
 .has-text-align-left {
   text-align: left;
 }
