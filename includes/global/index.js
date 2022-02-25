@@ -68,7 +68,6 @@ wp.domReady( () => {
 import { registerPlugin } from '@wordpress/plugins';
 
 import ResourceBlocksMeta from './post-meta-fields';
-import {useSelect} from "@wordpress/data";
 
 registerPlugin( 'resource-blocks-meta', {
 	render() {

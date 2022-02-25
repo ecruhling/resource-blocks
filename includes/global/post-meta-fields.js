@@ -61,6 +61,8 @@ function PostThumbnail( {
 				className="editor-post-featured-image"
 				style={ { width: '100%' } }
 			>
+				<h2>Post thumbnail (995px x 410px)</h2>
+
 				{ media && (
 					<div
 						id={ `editor-post-featured-image-${ meta.post_thumbnail }-describedby` }
@@ -187,7 +189,10 @@ const ResourceBlocksMeta = () => {
 			</PanelRow>
 			<PanelRow>
 				<TextareaControl
-					label={ __( 'Optional Description', 'resource-blocks' ) }
+					label={ __(
+						'Optional Description: displayed after title',
+						'resource-blocks'
+					) }
 					value={ meta.optional_description }
 					onChange={ ( value ) =>
 						editPost( {
