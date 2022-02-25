@@ -8,7 +8,7 @@ import {
 	PanelRow,
 	TextareaControl,
 	Spinner,
-	ResponsiveWrapper,
+	ResponsiveWrapper, PanelHeader,
 } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
@@ -61,8 +61,9 @@ function PostThumbnail( {
 				className="editor-post-featured-image"
 				style={ { width: '100%' } }
 			>
-				<h2>Post thumbnail (995px x 410px)</h2>
-
+				<h2 style={ { marginBottom: '0.6em', display: 'block' } }>
+					Post thumbnail (995px x 410px)
+				</h2>
 				{ media && (
 					<div
 						id={ `editor-post-featured-image-${ meta.post_thumbnail }-describedby` }

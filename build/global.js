@@ -168,7 +168,12 @@ function PostThumbnail(_ref) {
     style: {
       width: '100%'
     }
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Post thumbnail (995px x 410px)"), media && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
+    style: {
+      marginBottom: '0.6em',
+      display: 'block'
+    }
+  }, "Post thumbnail (995px x 410px)"), media && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     id: `editor-post-featured-image-${meta.post_thumbnail}-describedby`,
     className: "hidden"
   }, media.alt_text && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)( // Translators: %s: The selected image alt text.
