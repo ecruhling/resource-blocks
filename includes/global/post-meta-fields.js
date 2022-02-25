@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import { get } from 'lodash';
-
-/**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
@@ -19,6 +14,9 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 
+/**
+ * Internal dependencies
+ */
 import icons from '../icons/icons';
 
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
@@ -59,7 +57,10 @@ function PostThumbnail( {
 	return (
 		<>
 			{ noticeUI }
-			<div className="editor-post-featured-image">
+			<div
+				className="editor-post-featured-image"
+				style={ { width: '100%' } }
+			>
 				{ media && (
 					<div
 						id={ `editor-post-featured-image-${ meta.post_thumbnail }-describedby` }

@@ -63,7 +63,7 @@ add_action('enqueue_block_editor_assets', function () {
 	wp_enqueue_script(
 		'resource-blocks-meta',
 		plugins_url('build/global.js', __FILE__),
-		['wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-block-editor']
+		['wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-block-editor', 'wp-dom-ready']
 	);
 });
 
