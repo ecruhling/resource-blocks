@@ -15,7 +15,8 @@
 /**
  * Register blocks.
  */
-function resource_blocks_init() {
+function resource_blocks_init()
+{
 	// The order below is the order that they will appear in the editor.
 	$blocks = array(
 		'intro-paragraph/',
@@ -26,42 +27,77 @@ function resource_blocks_init() {
 		'single-image/',
 	);
 
-	foreach ( $blocks as $block ) {
-		register_block_type( plugin_dir_path( __FILE__ ) . 'includes/block-editor/blocks/' . $block );
+	foreach ($blocks as $block) {
+		register_block_type(plugin_dir_path(__FILE__) . 'includes/block-editor/blocks/' . $block);
 	}
+
+	/**
+	 * Register new post meta for the editor sidebar on the post edit screen.
+	 */
+//	acf_localize_data(array( 'post_thumbnail' => get_field('post_thumbnail', showid()) ));
+//	acf_localize_data(array( 'optional_description' => get_field('optional_description', showid()) ));
+	register_post_meta('post', 'post_thumbnail', [
+		'show_in_rest' => true,
+		'single' => true,
+		'type' => 'string',
+		'auth_callback' => function () {
+			return current_user_can('edit_posts');
+		}
+	]);
+
+	register_post_meta('post', 'optional_description', [
+		'show_in_rest' => true,
+		'single' => true,
+		'type' => 'string',
+		'sanitize_callback' => 'sanitize_text_field',
+		'auth_callback' => function () {
+			return current_user_can('edit_posts');
+		}
+	]);
+
 }
 
-add_action( 'init', 'resource_blocks_init' );
+add_action('init', 'resource_blocks_init');
+
+add_action('enqueue_block_editor_assets', function () {
+	wp_enqueue_script(
+		'resource-blocks-meta',
+		plugins_url('build/global.js', __FILE__),
+		['wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-block-editor']
+	);
+});
 
 /**
  * Register custom block category.
  *
  * @param array $block_categories Array of categories for block types.
  */
-function resource_block_category( array $block_categories ): array {
+function resource_block_category(array $block_categories): array
+{
 
 	// define new block category.
 	$resource_category = array(
-		'slug'  => 'resource-blocks',
-		'title' => __( 'Resource Blocks', 'resource-blocks' ),
-		'icon'  => null, // icon is set in index.js of each block.
+		'slug' => 'resource-blocks',
+		'title' => __('Resource Blocks', 'resource-blocks'),
+		'icon' => null, // icon is set in index.js of each block.
 	);
 
 	// move new category to beginning of block list.
-	array_unshift( $block_categories, $resource_category );
+	array_unshift($block_categories, $resource_category);
 
 	return $block_categories;
 
 }
 
-add_action( 'block_categories_all', 'resource_block_category', 10, 2 );
+add_action('block_categories_all', 'resource_block_category', 10, 2);
 
 /**
  * Filter to remove all blocks other than Resource blocks.
  *
  * @return string[]
  */
-function allow_only_resource_blocks(): array {
+function allow_only_resource_blocks(): array
+{
 	return array(
 		'resource-blocks/intro-paragraph',
 		'resource-blocks/body-text',
@@ -72,7 +108,7 @@ function allow_only_resource_blocks(): array {
 	);
 }
 
-add_filter( 'allowed_block_types_all', 'allow_only_resource_blocks', 10, 2 );
+add_filter('allowed_block_types_all', 'allow_only_resource_blocks', 10, 2);
 
 
 /**

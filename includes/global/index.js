@@ -37,3 +37,16 @@ const { name, ...settings } = json;
 registerBlockType( name, {
 	...settings,
 } );
+
+/**
+ * Register post meta fields, uses global.js
+ */
+import { registerPlugin } from '@wordpress/plugins';
+
+import ResourceBlocksMeta from './post-meta-fields';
+
+registerPlugin( 'resource-blocks-meta', {
+	render() {
+		return <ResourceBlocksMeta />;
+	},
+} );

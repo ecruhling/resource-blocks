@@ -44,7 +44,7 @@ import useClientWidth from './use-client-width';
  *
  * @return {boolean} Is the url an externally hosted url?
  */
-export const isExternalImage = (id, url) => url && !id && !isBlobURL(url)
+export const isExternalImage = ( id, url ) => url && ! id && ! isBlobURL( url );
 
 /**
  * Checks if a media attachment object has been "destroyed",
@@ -55,9 +55,9 @@ export const isExternalImage = (id, url) => url && !id && !isBlobURL(url)
  *
  * @return {boolean} Whether the image has been destroyed.
  */
-export function isMediaDestroyed (id) {
-	const attachment = wp?.media?.attachment(id) || {}
-	return attachment.destroyed
+export function isMediaDestroyed( id ) {
+	const attachment = wp?.media?.attachment( id ) || {};
+	return attachment.destroyed;
 }
 
 /**
@@ -66,25 +66,18 @@ export function isMediaDestroyed (id) {
 import { ALLOWED_MEDIA_TYPES } from './constants';
 
 export default function Image( {
-																 temporaryURL,
-																 attributes: {
-																	 url = '',
-																	 alt,
-																	 id,
-																	 title,
-																	 width,
-																	 height,
-																 },
-																 setAttributes,
-																 isSelected,
-																 onCloseModal,
-																 onSelectImage,
-																 onSelectURL,
-																 onUploadError,
-																 containerRef,
-																 clientId,
-																 onImageLoadError,
-															 } ) {
+	temporaryURL,
+	attributes: { url = '', alt, id, title, width, height },
+	setAttributes,
+	isSelected,
+	onCloseModal,
+	onSelectImage,
+	onSelectURL,
+	onUploadError,
+	containerRef,
+	clientId,
+	onImageLoadError,
+} ) {
 	const imageRef = useRef();
 
 	const { image, multiImageSelection } = useSelect(
@@ -106,14 +99,9 @@ export default function Image( {
 		},
 		[ id, isSelected ]
 	);
-	const {
-		imageSizes,
-		mediaUpload,
-	} = useSelect(
+	const { imageSizes, mediaUpload } = useSelect(
 		( select ) => {
-			const {
-				getSettings,
-			} = select( blockEditorStore );
+			const { getSettings } = select( blockEditorStore );
 
 			const settings = pick( getSettings(), [
 				'imageSizes',
