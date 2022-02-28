@@ -43,7 +43,7 @@ registerBlockType( name, {
  */
 import { registerPlugin } from '@wordpress/plugins';
 
-import ResourceBlocksMeta from './post-meta-fields';
+import PostMeta from './post-thumbnail';
 
 /**
  * Check what kind of post
@@ -68,14 +68,14 @@ wp.domReady( () => {
 				removeEditorPanel( 'featured-image' );
 				removeEditorPanel( 'post-excerpt' );
 				removeEditorPanel( 'discussion-panel' );
-				// register plugin
-				registerPlugin( 'resource-blocks-meta', {
-					render() {
-						return <ResourceBlocksMeta />;
-					},
-				} );
-
 			}
 		}
 	} );
+} );
+
+// register panel
+registerPlugin( 'post-thumbnail', {
+	render() {
+		return <PostMeta />;
+	},
 } );

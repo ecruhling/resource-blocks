@@ -8,7 +8,7 @@ import { get, has, pick } from 'lodash';
  * WordPress dependencies
  */
 import { getBlobByURL, isBlobURL, revokeBlobURL } from '@wordpress/blob';
-import { withNotices } from '@wordpress/components';
+import { Modal, withNotices } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import {
 	BlockIcon,
@@ -17,7 +17,6 @@ import {
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import { useEffect, useRef, useState } from '@wordpress/element';
-import { Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import icons from '../../../icons/icons';
 

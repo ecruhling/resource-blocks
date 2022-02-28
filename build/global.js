@@ -18,7 +18,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./block.json */ "./includes/global/block.json");
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _post_meta_fields__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./post-meta-fields */ "./includes/global/post-meta-fields.js");
+/* harmony import */ var _post_thumbnail__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./post-thumbnail */ "./includes/global/post-thumbnail.js");
 
 
 /**
@@ -90,25 +90,25 @@ wp.domReady(() => {
         // remove panels
         removeEditorPanel('featured-image');
         removeEditorPanel('post-excerpt');
-        removeEditorPanel('discussion-panel'); // register plugin
-
-        (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__.registerPlugin)('resource-blocks-meta', {
-          render() {
-            return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_post_meta_fields__WEBPACK_IMPORTED_MODULE_6__["default"], null);
-          }
-
-        });
+        removeEditorPanel('discussion-panel');
       }
     }
   });
+}); // register panel
+
+(0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__.registerPlugin)('post-thumbnail', {
+  render() {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_post_thumbnail__WEBPACK_IMPORTED_MODULE_6__["default"], null);
+  }
+
 });
 
 /***/ }),
 
-/***/ "./includes/global/post-meta-fields.js":
-/*!*********************************************!*\
-  !*** ./includes/global/post-meta-fields.js ***!
-  \*********************************************/
+/***/ "./includes/global/post-thumbnail.js":
+/*!*******************************************!*\
+  !*** ./includes/global/post-thumbnail.js ***!
+  \*******************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -140,6 +140,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 
+
 const ALLOWED_MEDIA_TYPES = ['image']; // Used when labels from post type were not yet loaded or when they are not present.
 
 const DEFAULT_FEATURE_IMAGE_LABEL = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post thumbnail');
@@ -167,6 +168,37 @@ function PostThumbnail(_ref) {
     mediaHeight = media.media_details.height;
     mediaSourceUrl = media.source_url;
   }
+  /**
+   * Image selected.
+   *
+   * @param  image
+   */
+
+
+  function imageSizeCheck(image) {
+    var _image$width, _image$height;
+
+    // Check for minimum width.
+    // Selecting a new image from the Media Library uses media.width,
+    // Uploading a new image uses media.media_details.width
+    console.log(image);
+    const widthCheck = (_image$width = image.width) !== null && _image$width !== void 0 ? _image$width : image.media_details.width;
+    const heightCheck = (_image$height = image.height) !== null && _image$height !== void 0 ? _image$height : image.media_details.height;
+
+    if (widthCheck !== 995 || heightCheck !== 410) {
+      openModal();
+    }
+  }
+
+  const [modalIsOpen, setIsOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, noticeUI, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "editor-post-featured-image",
@@ -183,7 +215,12 @@ function PostThumbnail(_ref) {
     className: "hidden"
   }, media.alt_text && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)( // Translators: %s: The selected image alt text.
   (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Current image: %s'), media.alt_text), !media.alt_text && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)( // Translators: %s: The selected image filename.
-  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('The current image has no alternative text. The file name is: %s'), ((_media$media_details$ = media.media_details.sizes) === null || _media$media_details$ === void 0 ? void 0 : (_media$media_details$2 = _media$media_details$.full) === null || _media$media_details$2 === void 0 ? void 0 : _media$media_details$2.file) || media.slug)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.MediaUploadCheck, {
+  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('The current image has no alternative text. The file name is: %s'), ((_media$media_details$ = media.media_details.sizes) === null || _media$media_details$ === void 0 ? void 0 : (_media$media_details$2 = _media$media_details$.full) === null || _media$media_details$2 === void 0 ? void 0 : _media$media_details$2.file) || media.slug)), modalIsOpen && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Modal, {
+    isOpen: modalIsOpen,
+    onRequestClose: closeModal,
+    contentLabel: "Error",
+    title: "Error"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Image must be 995px x 410px! Choose another image.")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.MediaUploadCheck, {
     fallback: instructions
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.MediaUpload, {
     title: DEFAULT_FEATURE_IMAGE_LABEL,
@@ -236,7 +273,7 @@ function PostThumbnail(_ref) {
   }, DEFAULT_REMOVE_FEATURE_IMAGE_LABEL))));
 }
 
-const ResourceBlocksMeta = () => {
+const PostMeta = () => {
   const meta = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core/editor').getEditedPostAttribute('meta'), []);
   const {
     editPost
@@ -260,7 +297,7 @@ const ResourceBlocksMeta = () => {
   })));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (ResourceBlocksMeta);
+/* harmony default export */ __webpack_exports__["default"] = (PostMeta);
 
 /***/ }),
 

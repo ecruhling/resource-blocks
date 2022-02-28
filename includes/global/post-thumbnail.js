@@ -4,11 +4,12 @@
 import { __, sprintf } from '@wordpress/i18n';
 import {
 	DropZone,
+	ResponsiveWrapper,
 	Button,
 	PanelRow,
 	TextareaControl,
 	Spinner,
-	ResponsiveWrapper, PanelHeader,
+	Modal,
 } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
@@ -18,6 +19,7 @@ import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
  * Internal dependencies
  */
 import icons from '../icons/icons';
+import { useState } from '@wordpress/element';
 
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
@@ -54,6 +56,35 @@ function PostThumbnail( {
 		mediaSourceUrl = media.source_url;
 	}
 
+	/**
+	 * Image selected.
+	 *
+	 * @param  image
+	 */
+	function imageSizeCheck( image ) {
+
+		// Check for minimum width.
+		// Selecting a new image from the Media Library uses media.width,
+		// Uploading a new image uses media.media_details.width
+		console.log( image );
+		const widthCheck = image.width ?? image.media_details.width;
+		const heightCheck = image.height ?? image.media_details.height;
+
+		if ( widthCheck !== 995 || heightCheck !== 410 ) {
+			openModal();
+		}
+	}
+
+	const [ modalIsOpen, setIsOpen ] = useState( false );
+
+	function openModal() {
+		setIsOpen( true );
+	}
+
+	function closeModal() {
+		setIsOpen( false );
+	}
+
 	return (
 		<>
 			{ noticeUI }
@@ -85,6 +116,18 @@ function PostThumbnail( {
 									media.slug
 							) }
 					</div>
+				) }
+				{ modalIsOpen && (
+					<Modal
+						isOpen={ modalIsOpen }
+						onRequestClose={ closeModal }
+						contentLabel="Error"
+						title="Error"
+					>
+						<p>
+							Image must be 995px x 410px! Choose another image.
+						</p>
+					</Modal>
 				) }
 				<MediaUploadCheck fallback={ instructions }>
 					<MediaUpload
@@ -169,7 +212,7 @@ function PostThumbnail( {
 	);
 }
 
-const ResourceBlocksMeta = () => {
+const PostMeta = () => {
 	const meta = useSelect(
 		( select ) => select( 'core/editor' ).getEditedPostAttribute( 'meta' ),
 		[]
@@ -206,4 +249,4 @@ const ResourceBlocksMeta = () => {
 	);
 };
 
-export default ResourceBlocksMeta;
+export default PostMeta;
