@@ -191,7 +191,7 @@ const ResourceBlocksMeta = () => {
 			<PanelRow>
 				<TextareaControl
 					label={ __(
-						'Optional Description: displayed after title',
+						'Optional Description (displayed after title)',
 						'resource-blocks'
 					) }
 					value={ meta.optional_description }
