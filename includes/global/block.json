@@ -6,6 +6,16 @@
   "title": "Global Styles",
   "category": "resource-blocks",
   "textdomain": "resource-blocks",
+  "attributes": {
+	"mediaId": {
+	  "type": "number",
+	  "default": 0
+	},
+	"mediaUrl": {
+	  "type": "string",
+	  "default": ""
+	}
+  },
   "editorStyle": "file:../../../../build/global.css",
   "style": "file:../../../../build/style-global.css"
 }

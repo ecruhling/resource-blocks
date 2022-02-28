@@ -10,10 +10,18 @@ import {
 	TextareaControl,
 	Spinner,
 	Modal,
+	withNotices,
 } from '@wordpress/components';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { compose } from '@wordpress/compose';
+import {
+	useSelect,
+	useDispatch,
+	withSelect,
+	withDispatch,
+} from '@wordpress/data';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
+import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies
@@ -249,4 +257,30 @@ const PostMeta = () => {
 	);
 };
 
-export default PostMeta;
+const applyWithSelect = withSelect( ( select ) => {
+	const { getMedia, getPostType } = select( coreStore );
+	const featuredImageId = wp.data
+		.select( 'core/editor' )
+		.getEditedPostAttribute( 'meta' ).post_thumbnail;
+	const postID = wp.data
+		.select( 'core/editor' )
+		.getCurrentPostId();
+	const postType = wp.data
+		.select( 'core/editor' )
+		.getEditedPostAttribute( 'type' );
+console.log(featuredImageId, postID, postType);
+	return {
+		media: featuredImageId
+			? getMedia( featuredImageId, { context: 'view' } )
+			: null,
+		currentPostId: postID,
+		postType: getPostType( postType ),
+		featuredImageId,
+	};
+} );
+
+export default compose(
+	withNotices,
+	applyWithSelect
+	// applyWithDispatch,
+)( PostMeta );
