@@ -39,38 +39,43 @@ registerBlockType( name, {
 } );
 
 /**
- * Remove sidebar panels for certain post types
- */
-
-const getPostType = () => wp.data.select( 'core/editor' ).getCurrentPostType();
-
-const postType = getPostType();
-
-wp.domReady( () => {
-	const { removeEditorPanel } = wp.data.dispatch( 'core/edit-post' );
-
-	wp.data.subscribe( () => {
-		// get the current postFormat
-		const newPostType = getPostType();
-		if ( postType !== newPostType ) {
-			if ( newPostType === 'post' ) {
-				removeEditorPanel( 'featured-image' );
-				removeEditorPanel( 'post-excerpt' );
-				removeEditorPanel( 'discussion-panel' );
-			}
-		}
-	} );
-} );
-
-/**
  * Register post meta fields, uses global.js
  */
 import { registerPlugin } from '@wordpress/plugins';
 
 import ResourceBlocksMeta from './post-meta-fields';
 
-registerPlugin( 'resource-blocks-meta', {
-	render() {
-		return <ResourceBlocksMeta />;
-	},
+/**
+ * Check what kind of post
+ */
+const getPostType = () => wp.data.select( 'core/editor' ).getCurrentPostType();
+
+const postType = getPostType();
+
+// DOM ready
+wp.domReady( () => {
+	const { removeEditorPanel } = wp.data.dispatch( 'core/edit-post' );
+
+	// subscribe, since this runs multiple times
+	wp.data.subscribe( () => {
+		// get the current postFormat
+		const newPostType = getPostType();
+		// once the post type changes from null to an actual value, the post type is valid
+		if ( postType !== newPostType ) {
+			// this is a post
+			if ( newPostType === 'post' ) {
+				// remove panels
+				removeEditorPanel( 'featured-image' );
+				removeEditorPanel( 'post-excerpt' );
+				removeEditorPanel( 'discussion-panel' );
+				// register plugin
+				registerPlugin( 'resource-blocks-meta', {
+					render() {
+						return <ResourceBlocksMeta />;
+					},
+				} );
+
+			}
+		}
+	} );
 } );

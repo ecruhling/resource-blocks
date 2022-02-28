@@ -62,40 +62,45 @@ const {
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)(name, { ...settings
 });
 /**
- * Remove sidebar panels for certain post types
- */
-
-const getPostType = () => wp.data.select('core/editor').getCurrentPostType();
-
-const postType = getPostType();
-wp.domReady(() => {
-  const {
-    removeEditorPanel
-  } = wp.data.dispatch('core/edit-post');
-  wp.data.subscribe(() => {
-    // get the current postFormat
-    const newPostType = getPostType();
-
-    if (postType !== newPostType) {
-      if (newPostType === 'post') {
-        removeEditorPanel('featured-image');
-        removeEditorPanel('post-excerpt');
-        removeEditorPanel('discussion-panel');
-      }
-    }
-  });
-});
-/**
  * Register post meta fields, uses global.js
  */
 
 
 
-(0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__.registerPlugin)('resource-blocks-meta', {
-  render() {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_post_meta_fields__WEBPACK_IMPORTED_MODULE_6__["default"], null);
-  }
+/**
+ * Check what kind of post
+ */
 
+const getPostType = () => wp.data.select('core/editor').getCurrentPostType();
+
+const postType = getPostType(); // DOM ready
+
+wp.domReady(() => {
+  const {
+    removeEditorPanel
+  } = wp.data.dispatch('core/edit-post'); // subscribe, since this runs multiple times
+
+  wp.data.subscribe(() => {
+    // get the current postFormat
+    const newPostType = getPostType(); // once the post type changes from null to an actual value, the post type is valid
+
+    if (postType !== newPostType) {
+      // this is a post
+      if (newPostType === 'post') {
+        // remove panels
+        removeEditorPanel('featured-image');
+        removeEditorPanel('post-excerpt');
+        removeEditorPanel('discussion-panel'); // register plugin
+
+        (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__.registerPlugin)('resource-blocks-meta', {
+          render() {
+            return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_post_meta_fields__WEBPACK_IMPORTED_MODULE_6__["default"], null);
+          }
+
+        });
+      }
+    }
+  });
 });
 
 /***/ }),
