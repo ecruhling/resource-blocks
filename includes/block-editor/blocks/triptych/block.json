@@ -1,0 +1,12 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "resource-blocks/triptych",
+	"version": "1.0.0",
+	"title": "Triptych",
+	"category": "resource-blocks",
+	"textdomain": "triptych",
+	"editorScript": "file:../../../../build/triptych.js",
+	"editorStyle": "file:../../../../build/triptych.css",
+	"style": "file:../../../../build/style-triptych.css"
+}

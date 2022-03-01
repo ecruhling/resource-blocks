@@ -67,14 +67,15 @@ wp.domReady( () => {
 				removeEditorPanel( 'featured-image' );
 				removeEditorPanel( 'post-excerpt' );
 				removeEditorPanel( 'discussion-panel' );
+
+				// register panel
+				registerPlugin( 'post-meta', {
+					render() {
+						return <PostMeta />;
+					},
+				} );
+
 			}
 		}
 	} );
-} );
-
-// register panel
-registerPlugin( 'post-meta', {
-	render() {
-		return <PostMeta />;
-	},
 } );

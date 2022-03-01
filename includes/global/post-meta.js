@@ -23,7 +23,7 @@ const PostMeta = () => {
 		[]
 	);
 
-	const featuredImageId = meta.post_thumbnail;
+	const featuredImageId = meta ? meta.post_thumbnail : null;
 
 	const { editPost } = useDispatch( 'core/editor' );
 

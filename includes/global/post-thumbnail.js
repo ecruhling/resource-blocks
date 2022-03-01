@@ -1,6 +1,6 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { useDispatch } from '@wordpress/data';
+import {useDispatch, useSelect, withSelect} from '@wordpress/data';
 import {
 	Button,
 	Modal,
@@ -8,6 +8,9 @@ import {
 	Spinner,
 } from '@wordpress/components';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
+import { store as coreStore } from '@wordpress/core-data';
+// import { store as editorStore } from '@wordpress/core';
+import { compose } from '@wordpress/compose';
 
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
@@ -18,11 +21,10 @@ const DEFAULT_REMOVE_FEATURE_IMAGE_LABEL = __( 'Remove post thumbnail' );
 
 function PostThumbnail( {
 	// onUpdateImage,
-	onDropImage,
+	// onDropImage,
 	featuredImageId,
 	onRemoveImage,
 	noticeUI,
-	meta,
 	media,
 } ) {
 	const instructions = (
@@ -72,7 +74,7 @@ function PostThumbnail( {
 	const { editPost } = useDispatch( 'core/editor' );
 
 	function onUpdateImage( image ) {
-		console.log( image );
+		// console.log( image );
 		editPost( {
 			meta: { post_thumbnail: image },
 		} );

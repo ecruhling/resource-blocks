@@ -25,6 +25,7 @@ function resource_blocks_init()
 		'two-column-images/',
 		'full-width-video/',
 		'single-image/',
+		'triptych/',
 	);
 
 	foreach ($blocks as $block) {
@@ -103,6 +104,7 @@ function allow_only_resource_blocks(): array
 		'resource-blocks/two-column-images',
 		'resource-blocks/full-width-video',
 		'resource-blocks/single-image',
+		'resource-blocks/triptych',
 	);
 }
 

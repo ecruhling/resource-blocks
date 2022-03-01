@@ -90,17 +90,17 @@ wp.domReady(() => {
         // remove panels
         removeEditorPanel('featured-image');
         removeEditorPanel('post-excerpt');
-        removeEditorPanel('discussion-panel');
+        removeEditorPanel('discussion-panel'); // register panel
+
+        (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__.registerPlugin)('post-meta', {
+          render() {
+            return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_post_meta__WEBPACK_IMPORTED_MODULE_6__["default"], null);
+          }
+
+        });
       }
     }
   });
-}); // register panel
-
-(0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__.registerPlugin)('post-meta', {
-  render() {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_post_meta__WEBPACK_IMPORTED_MODULE_6__["default"], null);
-  }
-
 });
 
 /***/ }),
@@ -143,7 +143,7 @@ __webpack_require__.r(__webpack_exports__);
 const PostMeta = () => {
   const meta = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core/editor').getEditedPostAttribute('meta'), []);
   const media = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core').getMedia(meta.post_thumbnail), []);
-  const featuredImageId = meta.post_thumbnail;
+  const featuredImageId = meta ? meta.post_thumbnail : null;
   const {
     editPost
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)('core/editor');
@@ -189,10 +189,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_6__);
 
 
 
 
+
+
+ // import { store as editorStore } from '@wordpress/core';
 
 
 const ALLOWED_MEDIA_TYPES = ['image']; // Used when labels from post type were not yet loaded or when they are not present.
@@ -208,11 +215,10 @@ function PostThumbnail(_ref) {
 
   let {
     // onUpdateImage,
-    onDropImage,
+    // onDropImage,
     featuredImageId,
     onRemoveImage,
     noticeUI,
-    meta,
     media
   } = _ref;
   const instructions = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('To edit the post thumbnail, you need permission to upload media.'));
@@ -257,7 +263,7 @@ function PostThumbnail(_ref) {
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)('core/editor');
 
   function onUpdateImage(image) {
-    console.log(image);
+    // console.log( image );
     editPost({
       meta: {
         post_thumbnail: image
@@ -491,6 +497,26 @@ module.exports = window["wp"]["blocks"];
 /***/ (function(module) {
 
 module.exports = window["wp"]["components"];
+
+/***/ }),
+
+/***/ "@wordpress/compose":
+/*!*********************************!*\
+  !*** external ["wp","compose"] ***!
+  \*********************************/
+/***/ (function(module) {
+
+module.exports = window["wp"]["compose"];
+
+/***/ }),
+
+/***/ "@wordpress/core-data":
+/*!**********************************!*\
+  !*** external ["wp","coreData"] ***!
+  \**********************************/
+/***/ (function(module) {
+
+module.exports = window["wp"]["coreData"];
 
 /***/ }),
 

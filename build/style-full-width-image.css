@@ -1,1 +1,14 @@
-div.wp-block-resource-blocks-full-width-image{padding-bottom:40px}
+/*!*********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./includes/block-editor/blocks/full-width-image/style.scss ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************/
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+div.wp-block-resource-blocks-full-width-image {
+  padding-bottom: 40px;
+}
+
+/*# sourceMappingURL=style-full-width-image.css.map*/
