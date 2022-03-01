@@ -1,34 +1,34 @@
 /**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import classnames from 'classnames';
 
 /**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
+ * WordPress dependencies
  */
 import { useBlockProps } from '@wordpress/block-editor';
 
-/**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
- *
- * @return {WPElement} Element to render.
- */
-export default function save() {
+export default function save( { attributes } ) {
+	const { url, alt, width, height, id, title } = attributes;
+
+	const classes = classnames( 'resource-blocks-row' );
+
+	const image = (
+		<img
+			src={ url }
+			alt={ alt }
+			className={ id ? `wp-image-${ id }` : `` }
+			width={ width }
+			height={ height }
+			title={ title }
+		/>
+	);
+
+	const figure = <figure>{ image }</figure>;
+
 	return (
-		<p { ...useBlockProps.save() }>
-			{ __(
-				'Triptych – hello from the saved content!',
-				'triptych'
-			) }
-		</p>
+		<div { ...useBlockProps.save( { className: classes } ) }>
+			<div className={ 'resource-blocks-column' }>{ figure }</div>
+		</div>
 	);
 }

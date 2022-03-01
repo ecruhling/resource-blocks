@@ -1,12 +1,60 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
-	"name": "resource-blocks/triptych",
-	"version": "1.0.0",
-	"title": "Triptych",
-	"category": "resource-blocks",
-	"textdomain": "triptych",
-	"editorScript": "file:../../../../build/triptych.js",
-	"editorStyle": "file:../../../../build/triptych.css",
-	"style": "file:../../../../build/style-triptych.css"
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "resource-blocks/triptych",
+  "version": "1.0.0",
+  "title": "Triptych",
+  "category": "resource-blocks",
+  "textdomain": "resource-blocks",
+  "description": "A triptych image. 2040px x 668px.",
+  "keywords": [
+	"img",
+	"photo",
+	"picture"
+  ],
+  "attributes": {
+	"url": {
+	  "type": "string",
+	  "source": "attribute",
+	  "selector": "img",
+	  "attribute": "src"
+	},
+	"alt": {
+	  "type": "string",
+	  "source": "attribute",
+	  "selector": "img",
+	  "attribute": "alt",
+	  "default": ""
+	},
+	"title": {
+	  "type": "string",
+	  "source": "attribute",
+	  "selector": "img",
+	  "attribute": "title"
+	},
+	"id": {
+	  "type": "number"
+	},
+	"width": {
+	  "type": "number"
+	},
+	"height": {
+	  "type": "number"
+	}
+  },
+  "supports": {
+	"anchor": false,
+	"color": {
+	  "text": false,
+	  "background": false
+	}
+  },
+  "example": {
+	"attributes": {
+	  "cover": "https://example.com/image.jpg"
+	}
+  },
+  "editorScript": "file:../../../../build/triptych.js",
+  "editorStyle": "file:../../../../build/triptych.css",
+  "style": "file:../../../../build/style-triptych.css"
 }

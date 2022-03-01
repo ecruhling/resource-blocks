@@ -141,9 +141,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const PostMeta = () => {
+  var _meta$post_thumbnail;
+
   const meta = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core/editor').getEditedPostAttribute('meta'), []);
   const media = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core').getMedia(meta.post_thumbnail), []);
-  const featuredImageId = meta ? meta.post_thumbnail : null;
+  const featuredImageId = (_meta$post_thumbnail = meta.post_thumbnail) !== null && _meta$post_thumbnail !== void 0 ? _meta$post_thumbnail : null;
   const {
     editPost
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)('core/editor');
