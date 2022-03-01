@@ -42,8 +42,7 @@ registerBlockType( name, {
  * Register post meta fields, uses global.js
  */
 import { registerPlugin } from '@wordpress/plugins';
-
-import PostMeta from './post-thumbnail';
+import PostMeta from './post-meta';
 
 /**
  * Check what kind of post
@@ -74,7 +73,7 @@ wp.domReady( () => {
 } );
 
 // register panel
-registerPlugin( 'post-thumbnail', {
+registerPlugin( 'post-meta', {
 	render() {
 		return <PostMeta />;
 	},

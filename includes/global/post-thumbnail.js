@@ -1,33 +1,13 @@
-/**
- * WordPress dependencies
- */
 import { __, sprintf } from '@wordpress/i18n';
-import {
-	DropZone,
-	ResponsiveWrapper,
-	Button,
-	PanelRow,
-	TextareaControl,
-	Spinner,
-	Modal,
-	withNotices,
-} from '@wordpress/components';
-import { compose } from '@wordpress/compose';
-import {
-	useSelect,
-	useDispatch,
-	withSelect,
-	withDispatch,
-} from '@wordpress/data';
-import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
-import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
-import { store as coreStore } from '@wordpress/core-data';
-
-/**
- * Internal dependencies
- */
-import icons from '../icons/icons';
 import { useState } from '@wordpress/element';
+import { useDispatch } from '@wordpress/data';
+import {
+	Button,
+	Modal,
+	ResponsiveWrapper,
+	Spinner,
+} from '@wordpress/components';
+import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
@@ -37,11 +17,13 @@ const DEFAULT_SET_FEATURE_IMAGE_LABEL = __( 'Set post thumbnail' );
 const DEFAULT_REMOVE_FEATURE_IMAGE_LABEL = __( 'Remove post thumbnail' );
 
 function PostThumbnail( {
-	onUpdateImage,
+	// onUpdateImage,
 	onDropImage,
+	featuredImageId,
 	onRemoveImage,
 	noticeUI,
 	meta,
+	media,
 } ) {
 	const instructions = (
 		<p>
@@ -49,11 +31,6 @@ function PostThumbnail( {
 				'To edit the post thumbnail, you need permission to upload media.'
 			) }
 		</p>
-	);
-
-	const media = useSelect(
-		( select ) => select( 'core' ).getMedia( meta.post_thumbnail ),
-		[]
 	);
 
 	let mediaWidth, mediaHeight, mediaSourceUrl;
@@ -69,19 +46,18 @@ function PostThumbnail( {
 	 *
 	 * @param  image
 	 */
-	function imageSizeCheck( image ) {
-
-		// Check for minimum width.
-		// Selecting a new image from the Media Library uses media.width,
-		// Uploading a new image uses media.media_details.width
-		console.log( image );
-		const widthCheck = image.width ?? image.media_details.width;
-		const heightCheck = image.height ?? image.media_details.height;
-
-		if ( widthCheck !== 995 || heightCheck !== 410 ) {
-			openModal();
-		}
-	}
+	// function imageSizeCheck( image ) {
+	// 	// Check for minimum width.
+	// 	// Selecting a new image from the Media Library uses media.width,
+	// 	// Uploading a new image uses media.media_details.width
+	// 	console.log( image );
+	// 	const widthCheck = image.width ?? image.media_details.width;
+	// 	const heightCheck = image.height ?? image.media_details.height;
+	//
+	// 	if ( widthCheck !== 995 || heightCheck !== 410 ) {
+	// 		openModal();
+	// 	}
+	// }
 
 	const [ modalIsOpen, setIsOpen ] = useState( false );
 
@@ -91,6 +67,15 @@ function PostThumbnail( {
 
 	function closeModal() {
 		setIsOpen( false );
+	}
+
+	const { editPost } = useDispatch( 'core/editor' );
+
+	function onUpdateImage( image ) {
+		console.log( image );
+		editPost( {
+			meta: { post_thumbnail: image },
+		} );
 	}
 
 	return (
@@ -105,7 +90,7 @@ function PostThumbnail( {
 				</h2>
 				{ media && (
 					<div
-						id={ `editor-post-featured-image-${ meta.post_thumbnail }-describedby` }
+						id={ `editor-post-featured-image-${ featuredImageId }-describedby` }
 						className="hidden"
 					>
 						{ media.alt_text &&
@@ -141,30 +126,30 @@ function PostThumbnail( {
 					<MediaUpload
 						title={ DEFAULT_FEATURE_IMAGE_LABEL }
 						onSelect={ onUpdateImage }
-						unstableFeaturedImageFlow
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
 						modalClass="editor-post-featured-image__media-modal"
+						value={ featuredImageId }
 						render={ ( { open } ) => (
 							<div className="editor-post-featured-image__container">
 								<Button
 									className={
-										! meta.post_thumbnail
+										! featuredImageId
 											? 'editor-post-featured-image__toggle'
 											: 'editor-post-featured-image__preview'
 									}
 									onClick={ open }
 									aria-label={
-										! meta.post_thumbnail
+										! featuredImageId
 											? null
 											: __( 'Edit or update the image' )
 									}
 									aria-describedby={
-										! meta.post_thumbnail
+										! featuredImageId
 											? null
-											: `editor-post-featured-image-${ meta.post_thumbnail }-describedby`
+											: `editor-post-featured-image-${ featuredImageId }-describedby`
 									}
 								>
-									{ !! meta.post_thumbnail && media && (
+									{ !! featuredImageId && media && (
 										<ResponsiveWrapper
 											naturalWidth={ mediaWidth }
 											naturalHeight={ mediaHeight }
@@ -176,19 +161,17 @@ function PostThumbnail( {
 											/>
 										</ResponsiveWrapper>
 									) }
-									{ !! meta.post_thumbnail && ! media && (
+									{ !! featuredImageId && ! media && (
 										<Spinner />
 									) }
-									{ ! meta.post_thumbnail &&
+									{ ! featuredImageId &&
 										DEFAULT_SET_FEATURE_IMAGE_LABEL }
 								</Button>
-								<DropZone onFilesDrop={ onDropImage } />
 							</div>
 						) }
-						value={ meta.post_thumbnail }
 					/>
 				</MediaUploadCheck>
-				{ !! meta.post_thumbnail && media && ! media.isLoading && (
+				{ !! featuredImageId && media && ! media.isLoading && (
 					<MediaUploadCheck>
 						<MediaUpload
 							title={ DEFAULT_FEATURE_IMAGE_LABEL }
@@ -204,7 +187,7 @@ function PostThumbnail( {
 						/>
 					</MediaUploadCheck>
 				) }
-				{ !! meta.post_thumbnail && (
+				{ !! featuredImageId && (
 					<MediaUploadCheck>
 						<Button
 							onClick={ onRemoveImage }
@@ -220,67 +203,4 @@ function PostThumbnail( {
 	);
 }
 
-const PostMeta = () => {
-	const meta = useSelect(
-		( select ) => select( 'core/editor' ).getEditedPostAttribute( 'meta' ),
-		[]
-	);
-
-	const { editPost } = useDispatch( 'core/editor' );
-
-	return (
-		<PluginDocumentSettingPanel
-			name="resource-blocks-meta"
-			title={ __( 'Post Meta', 'resource-blocks' ) }
-			initialOpen="true"
-			opened="true"
-			icon={ icons.resource }
-		>
-			<PanelRow>
-				<PostThumbnail meta={ meta } />
-			</PanelRow>
-			<PanelRow>
-				<TextareaControl
-					label={ __(
-						'Optional Description (displayed after title)',
-						'resource-blocks'
-					) }
-					value={ meta.optional_description }
-					onChange={ ( value ) =>
-						editPost( {
-							meta: { optional_description: value },
-						} )
-					}
-				/>
-			</PanelRow>
-		</PluginDocumentSettingPanel>
-	);
-};
-
-const applyWithSelect = withSelect( ( select ) => {
-	const { getMedia, getPostType } = select( coreStore );
-	const featuredImageId = wp.data
-		.select( 'core/editor' )
-		.getEditedPostAttribute( 'meta' ).post_thumbnail;
-	const postID = wp.data
-		.select( 'core/editor' )
-		.getCurrentPostId();
-	const postType = wp.data
-		.select( 'core/editor' )
-		.getEditedPostAttribute( 'type' );
-console.log(featuredImageId, postID, postType);
-	return {
-		media: featuredImageId
-			? getMedia( featuredImageId, { context: 'view' } )
-			: null,
-		currentPostId: postID,
-		postType: getPostType( postType ),
-		featuredImageId,
-	};
-} );
-
-export default compose(
-	withNotices,
-	applyWithSelect
-	// applyWithDispatch,
-)( PostMeta );
+export default PostThumbnail;

@@ -34,8 +34,6 @@ function resource_blocks_init()
 	/**
 	 * Register new post meta for the editor sidebar on the post edit screen.
 	 */
-//	acf_localize_data(array( 'post_thumbnail' => get_field('post_thumbnail', showid()) ));
-//	acf_localize_data(array( 'optional_description' => get_field('optional_description', showid()) ));
 	register_post_meta('post', 'post_thumbnail', [
 		'show_in_rest' => true,
 		'single' => true,
