@@ -173,12 +173,13 @@ export function ImageEdit( {
 			additionalAttributes = { url };
 		}
 
-		// Check for minimum width.
+		// Check for width and height.
 		// Selecting a new image from the Media Library uses media.width,
 		// Uploading a new image uses media.media_details.width
 		const widthCheck = media.width ?? media.media_details.width;
+		const heightCheck = media.height ?? media.media_details.height;
 
-		if ( widthCheck !== WIDTH ) {
+		if ( widthCheck !== WIDTH || heightCheck !== HEIGHT ) {
 			openModal();
 
 			return;
