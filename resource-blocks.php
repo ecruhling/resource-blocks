@@ -33,7 +33,7 @@ function resource_blocks_init()
 	}
 
 	/**
-	 * Register new post meta for the editor sidebar on the post edit screen.
+	 * Register post meta for the editor sidebar on the post edit screen.
 	 */
 	register_post_meta('post', 'post_thumbnail', [
 		'show_in_rest' => true,
@@ -49,6 +49,27 @@ function resource_blocks_init()
 		'single' => true,
 		'type' => 'string',
 		'sanitize_callback' => 'sanitize_text_field',
+		'auth_callback' => function () {
+			return current_user_can('edit_posts');
+		}
+	]);
+
+	/**
+	 * Register post meta for the editor sidebar on the team edit screen.
+	 */
+	register_post_meta('team', 'title', [
+		'show_in_rest' => true,
+		'single' => true,
+		'type' => 'string',
+		'auth_callback' => function () {
+			return current_user_can('edit_posts');
+		}
+	]);
+
+	register_post_meta('team', 'secondary_title', [
+		'show_in_rest' => true,
+		'single' => true,
+		'type' => 'string',
 		'auth_callback' => function () {
 			return current_user_can('edit_posts');
 		}
