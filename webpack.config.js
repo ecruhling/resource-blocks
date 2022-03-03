@@ -10,5 +10,6 @@ module.exports = {
 		'full-width-video': './includes/block-editor/blocks/full-width-video',
 		'single-image': './includes/block-editor/blocks/single-image',
 		triptych: './includes/block-editor/blocks/triptych',
+		questionnaire: './includes/block-editor/blocks/questionnaire',
 	},
 };

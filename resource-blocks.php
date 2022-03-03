@@ -26,6 +26,7 @@ function resource_blocks_init()
 		'full-width-video/',
 		'single-image/',
 		'triptych/',
+		'questionnaire/'
 	);
 
 	foreach ($blocks as $block) {
@@ -126,6 +127,7 @@ function allow_only_resource_blocks(): array
 		'resource-blocks/full-width-video',
 		'resource-blocks/single-image',
 		'resource-blocks/triptych',
+		'resource-blocks/questionnaire',
 	);
 }
 
