@@ -4,6 +4,7 @@
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
 import { __ } from '@wordpress/i18n';
+import 'lodash';
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -11,7 +12,11 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
-import { useBlockProps, RichText } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	RichText,
+	BlockControls,
+} from '@wordpress/block-editor';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -20,6 +25,13 @@ import { useBlockProps, RichText } from '@wordpress/block-editor';
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
+import { DropdownMenu, ToolbarGroup } from '@wordpress/components';
+import questions from './questions';
+
+const controls = questions.map( ( p ) => ( {
+	title: __( p, 'resource-blocks' ),
+	icon: 'admin-default',
+} ) );
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -29,5 +41,18 @@ import './editor.scss';
  * @return {WPElement} Element to render.
  */
 export default function Edit() {
-	return <RichText { ...useBlockProps() } placeholder={ __( 'Question' ) } />;
+	return (
+		<>
+			<BlockControls>
+				<ToolbarGroup>
+					<DropdownMenu
+						icon="arrow-down-alt2"
+						label={ __( 'Questions', 'resource-blocks' ) }
+						controls={ [ controls ] }
+					/>
+				</ToolbarGroup>
+			</BlockControls>
+			<RichText { ...useBlockProps() } placeholder={ __( 'Question' ) } />
+		</>
+	);
 }
