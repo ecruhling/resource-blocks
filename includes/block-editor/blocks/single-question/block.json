@@ -10,7 +10,8 @@
 	"question": {
 	  "type": "string",
 	  "default": "",
-	  "source": "attribute"
+	  "source": "html",
+	  "selector": "h3 strong"
 	}
   },
   "parent": [

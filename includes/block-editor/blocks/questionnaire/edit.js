@@ -1,22 +1,21 @@
 /**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
+ * WordPress dependencies.
  */
 import { __ } from '@wordpress/i18n';
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
- */
 import {
 	useBlockProps,
 	BlockControls,
 	InnerBlocks,
 } from '@wordpress/block-editor';
-import { dispatch } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
+import { ToolbarDropdownMenu, ToolbarGroup } from '@wordpress/components';
+import { createBlock } from '@wordpress/blocks';
+
+/**
+ * Internal dependencies.
+ */
+import questions from './questions';
+import icons from '../../../icons/icons';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -25,60 +24,56 @@ import { dispatch } from '@wordpress/data';
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
-import { ToolbarDropdownMenu, ToolbarGroup } from '@wordpress/components';
-import { createBlock } from '@wordpress/blocks';
-
-import questions from './questions';
-import icons from '../../../icons/icons';
 
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
- * @param  props
- * @param  attributes
- * @param  setAttributes
+ * @param {Object} props
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
-export default function Edit( props, attributes, setAttributes ) {
+export default function Edit( props ) {
 	const {
 		attributes: { question },
 		clientId,
 	} = props;
 
-console.log(question, clientId);
+	const innerBlockCount = useSelect(
+		( select ) =>
+			select( 'core/block-editor' ).getBlock( clientId ).innerBlocks
+	);
 
 	/**
 	 * Add Single Question Block
+	 *
+	 * @param {string} singleQuestion
 	 */
-	const onAddBlock = () => {
-		// const newColumn = 0;
+	const addBlock = ( singleQuestion ) => {
 
 		// Create a new block
 		const block = createBlock( 'resource-blocks/single-question', {
-			content: 'test content',
+			question: singleQuestion,
 		} );
 
 		// Insert the block
 		wp.data
 			.dispatch( 'core/block-editor' )
-			.insertBlock( block, 1, clientId, true );
+			.insertBlock( block, innerBlockCount.length, clientId, true, {
+				question: singleQuestion,
+			} );
 
-		console.log( block, clientId );
-
-		// Update the columns attribute
-		// setAttributes( {
-		// 	columns: columns.concat( newColumn ),
-		// } );
+		// Update the question attribute
+		props.setAttributes( {
+			question: singleQuestion,
+		} );
 	};
 
 	const controls = questions.map( ( singleQuestion ) => ( {
-		title: __( singleQuestion, 'resource-blocks' ),
+		title: singleQuestion,
 		icon: icons.question,
 		onClick: () => {
-			onAddBlock();
-			props.setAttributes( { question: singleQuestion } );
+			addBlock( singleQuestion );
 		},
 	} ) );
 
@@ -86,10 +81,7 @@ console.log(question, clientId);
 	const template = [
 		[
 			'resource-blocks/single-question',
-			{
-				question: 990,
-				instructions: '',
-			},
+			{ question: question ? question : null },
 		],
 	];
 
@@ -110,7 +102,6 @@ console.log(question, clientId);
 				template={ template }
 				templateLock={ false }
 				orientation="horizontal"
-				// renderAppender={ false }
 			/>
 		</>
 	);

@@ -25,13 +25,22 @@ import './editor.scss';
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
+ * @param {Object} props
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
-export default function Edit() {
+export default function Edit( props ) {
+	const {
+		attributes: { question },
+	} = props;
+
+	console.log( question );
+
 	return (
-		<p { ...useBlockProps() }>
-			{ __( 'Single Question – hello from the editor!', 'single-question' ) }
-		</p>
+		<div { ...useBlockProps() }>
+			<h3>
+				<strong>{ question }</strong>
+			</h3>
+		</div>
 	);
 }

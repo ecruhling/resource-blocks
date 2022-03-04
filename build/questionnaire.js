@@ -21,27 +21,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./editor.scss */ "./includes/block-editor/blocks/questionnaire/editor.scss");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _questions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./questions */ "./includes/block-editor/blocks/questionnaire/questions.js");
-/* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../icons/icons */ "./includes/icons/icons.js");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _questions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./questions */ "./includes/block-editor/blocks/questionnaire/questions.js");
+/* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../icons/icons */ "./includes/icons/icons.js");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./editor.scss */ "./includes/block-editor/blocks/questionnaire/editor.scss");
 
 
 
 /**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
+ * WordPress dependencies.
  */
 
+
+
+
+
 /**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
+ * Internal dependencies.
  */
 
 
@@ -54,74 +53,66 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 
-
-
-
-
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
- * @param  props
- * @param  attributes
- * @param  setAttributes
+ * @param {Object} props
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
 
-function Edit(props, attributes, setAttributes) {
+function Edit(props) {
   const {
     attributes: {
       question
     },
     clientId
   } = props;
-  console.log(question, clientId);
+  const innerBlockCount = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select('core/block-editor').getBlock(clientId).innerBlocks);
   /**
    * Add Single Question Block
+   *
+   * @param {string} singleQuestion
    */
 
-  const onAddBlock = () => {
-    // const newColumn = 0;
+  const addBlock = singleQuestion => {
     // Create a new block
-    const block = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_7__.createBlock)('resource-blocks/single-question', {
-      content: 'test content'
+    const block = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_6__.createBlock)('resource-blocks/single-question', {
+      question: singleQuestion
     }); // Insert the block
 
-    wp.data.dispatch('core/block-editor').insertBlock(block, 1, clientId, true);
-    console.log(block, clientId); // Update the columns attribute
-    // setAttributes( {
-    // 	columns: columns.concat( newColumn ),
-    // } );
+    wp.data.dispatch('core/block-editor').insertBlock(block, innerBlockCount.length, clientId, true, {
+      question: singleQuestion
+    }); // Update the question attribute
+
+    props.setAttributes({
+      question: singleQuestion
+    });
   };
 
-  const controls = _questions__WEBPACK_IMPORTED_MODULE_8__["default"].map(singleQuestion => ({
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)(singleQuestion, 'resource-blocks'),
-    icon: _icons_icons__WEBPACK_IMPORTED_MODULE_9__["default"].question,
+  const controls = _questions__WEBPACK_IMPORTED_MODULE_7__["default"].map(singleQuestion => ({
+    title: singleQuestion,
+    icon: _icons_icons__WEBPACK_IMPORTED_MODULE_8__["default"].question,
     onClick: () => {
-      onAddBlock();
-      props.setAttributes({
-        question: singleQuestion
-      });
+      addBlock(singleQuestion);
     }
   })); // use just the single-image blocks as a template
 
   const template = [['resource-blocks/single-question', {
-    question: 990,
-    instructions: ''
+    question: question ? question : null
   }]];
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.BlockControls, {
     group: "block"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.ToolbarGroup, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.ToolbarDropdownMenu, {
-    icon: _icons_icons__WEBPACK_IMPORTED_MODULE_9__["default"].question,
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToolbarGroup, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToolbarDropdownMenu, {
+    icon: _icons_icons__WEBPACK_IMPORTED_MODULE_8__["default"].question,
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Questions', 'resource-blocks'),
     controls: [controls]
   }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InnerBlocks, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)(), {
     allowedBlocks: ['resource-blocks/single-question'],
     template: template,
     templateLock: false,
-    orientation: "horizontal" // renderAppender={ false }
-
+    orientation: "horizontal"
   })));
 }
 

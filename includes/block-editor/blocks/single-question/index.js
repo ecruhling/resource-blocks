@@ -20,16 +20,18 @@ import './style.scss';
 import json from './block.json';
 import edit from './edit';
 import save from './save';
+import icons from '../../../icons/icons';
 
-const {name, ...settings} = json;
+const { name, ...settings } = json;
 
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType(name, {
+registerBlockType( name, {
 	...settings,
+	icon: icons.question,
 	/**
 	 * @see ./edit.js
 	 */
@@ -39,4 +41,4 @@ registerBlockType(name, {
 	 * @see ./save.js
 	 */
 	save,
-});
+} );
