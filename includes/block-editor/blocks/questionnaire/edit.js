@@ -35,7 +35,6 @@ import './editor.scss';
  */
 export default function Edit( props ) {
 	const {
-		attributes: { question },
 		clientId,
 	} = props;
 
@@ -50,7 +49,6 @@ export default function Edit( props ) {
 	 * @param {string} singleQuestion
 	 */
 	const addBlock = ( singleQuestion ) => {
-
 		// Create a new block
 		const block = createBlock( 'resource-blocks/single-question', {
 			question: singleQuestion,
@@ -77,16 +75,8 @@ export default function Edit( props ) {
 		},
 	} ) );
 
-	// use just the single-image blocks as a template
-	const template = [
-		[
-			'resource-blocks/single-question',
-			{ question: question ? question : null },
-		],
-	];
-
 	return (
-		<>
+		<div { ...useBlockProps() }>
 			<BlockControls group="block">
 				<ToolbarGroup>
 					<ToolbarDropdownMenu
@@ -97,12 +87,11 @@ export default function Edit( props ) {
 				</ToolbarGroup>
 			</BlockControls>
 			<InnerBlocks
-				{ ...useBlockProps() }
 				allowedBlocks={ [ 'resource-blocks/single-question' ] }
-				template={ template }
 				templateLock={ false }
 				orientation="horizontal"
+				renderAppender={ false }
 			/>
-		</>
+		</div>
 	);
 }
