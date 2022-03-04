@@ -4,18 +4,20 @@
   "name": "resource-blocks/questionnaire",
   "version": "1.0.0",
   "title": "Questionnaire",
+  "description": "The questions for each Team member.",
   "attributes": {
 	"question": {
 	  "type": "string",
-	  "default": "test",
-	  "source": "attribute"
-	},
-	"message": {
-	  "type": "string",
-	  "default": "message",
+	  "default": "",
 	  "source": "attribute"
 	}
   },
+  "example": {
+	"attributes": {
+	  "cover": "https://example.com/image.jpg"
+	}
+  },
+  "keywords": [ "text", "questions" ],
   "category": "resource-blocks",
   "textdomain": "resource-blocks",
   "editorScript": "file:../../../../build/questionnaire.js",

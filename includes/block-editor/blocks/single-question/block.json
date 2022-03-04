@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "resource-blocks/single-question",
+  "version": "1.0.0",
+  "title": "Single Question",
+  "category": "resource-blocks",
+  "textdomain": "resource-blocks",
+  "attributes": {
+	"question": {
+	  "type": "string",
+	  "default": "",
+	  "source": "attribute"
+	}
+  },
+  "parent": [
+	"resource-blocks/questionnaire"
+  ],
+  "editorScript": "file:../../../../build/single-question.js",
+  "editorStyle": "file:../../../../build/single-question.css",
+  "style": "file:../../../../build/style-single-question.css"
+}

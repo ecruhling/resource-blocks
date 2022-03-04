@@ -25,6 +25,7 @@ function resource_blocks_init()
 		'two-column-images/',
 		'full-width-video/',
 		'single-image/',
+		'single-question/',
 		'triptych/',
 		'questionnaire/'
 	);
@@ -126,6 +127,7 @@ function allow_only_resource_blocks(): array
 		'resource-blocks/two-column-images',
 		'resource-blocks/full-width-video',
 		'resource-blocks/single-image',
+		'resource-blocks/single-question',
 		'resource-blocks/triptych',
 		'resource-blocks/questionnaire',
 	);

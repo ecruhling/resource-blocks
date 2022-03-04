@@ -14,8 +14,8 @@ import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
 	RichText,
-	BlockControls,
-} from '@wordpress/block-editor';
+	BlockControls, InnerBlocks
+} from "@wordpress/block-editor";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -50,6 +50,24 @@ export default function Edit( props, attributes, setAttributes ) {
 		},
 	} ) );
 
+	// use just the single-image blocks as a template
+	const template = [
+		[
+			'resource-blocks/single-question',
+			{
+				question: 990,
+				instructions: '',
+			},
+		],
+		[
+			'resource-blocks/single-question',
+			{
+				question: 990,
+				instructions: '',
+			},
+		],
+	];
+
 	return (
 		<>
 			<BlockControls group="block">
@@ -61,7 +79,11 @@ export default function Edit( props, attributes, setAttributes ) {
 					/>
 				</ToolbarGroup>
 			</BlockControls>
-			<RichText { ...useBlockProps() } placeholder={ __( 'Question' ) } />
+			<InnerBlocks { ...useBlockProps() }
+				template={ template }
+				templateLock="insert"
+				orientation="horizontal"
+			/>
 		</>
 	);
 }
