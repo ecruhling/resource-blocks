@@ -4,7 +4,6 @@
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
 import { __ } from '@wordpress/i18n';
-import 'lodash';
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -25,27 +24,37 @@ import {
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
-import { DropdownMenu, ToolbarGroup } from '@wordpress/components';
+import { ToolbarDropdownMenu, ToolbarGroup } from '@wordpress/components';
 import questions from './questions';
-
-const controls = questions.map( ( p ) => ( {
-	title: __( p, 'resource-blocks' ),
-	icon: 'admin-default',
-} ) );
 
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
+ * @param props
+ * @param  attributes
+ * @param  setAttributes
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
-export default function Edit() {
+export default function Edit( props, attributes, setAttributes ) {
+	const { question } = props.attributes;
+
+	console.log( question );
+
+	const controls = questions.map( ( singleQuestion ) => ( {
+		title: __( singleQuestion, 'resource-blocks' ),
+		icon: 'admin-default',
+		onClick: () => {
+			props.setAttributes( { question: singleQuestion } );
+		},
+	} ) );
+
 	return (
 		<>
-			<BlockControls>
+			<BlockControls group="block">
 				<ToolbarGroup>
-					<DropdownMenu
+					<ToolbarDropdownMenu
 						icon="arrow-down-alt2"
 						label={ __( 'Questions', 'resource-blocks' ) }
 						controls={ [ controls ] }

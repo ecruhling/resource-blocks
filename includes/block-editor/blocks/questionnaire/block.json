@@ -1,12 +1,24 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
-	"name": "resource-blocks/questionnaire",
-	"version": "1.0.0",
-	"title": "Questionnaire",
-	"category": "resource-blocks",
-	"textdomain": "resource-blocks",
-	"editorScript": "file:../../../../build/questionnaire.js",
-	"editorStyle": "file:../../../../build/questionnaire.css",
-	"style": "file:../../../../build/style-questionnaire.css"
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "resource-blocks/questionnaire",
+  "version": "1.0.0",
+  "title": "Questionnaire",
+  "attributes": {
+	"question": {
+	  "type": "string",
+	  "default": "test",
+	  "source": "attribute"
+	},
+	"message": {
+	  "type": "string",
+	  "default": "message",
+	  "source": "attribute"
+	}
+  },
+  "category": "resource-blocks",
+  "textdomain": "resource-blocks",
+  "editorScript": "file:../../../../build/questionnaire.js",
+  "editorStyle": "file:../../../../build/questionnaire.css",
+  "style": "file:../../../../build/style-questionnaire.css"
 }
