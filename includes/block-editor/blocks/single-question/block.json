@@ -12,6 +12,11 @@
 	  "default": "",
 	  "source": "html",
 	  "selector": "h3 strong"
+	},
+	"answer": {
+	  "type": "string",
+	  "source": "html",
+	  "selector": "p"
 	}
   },
   "parent": [

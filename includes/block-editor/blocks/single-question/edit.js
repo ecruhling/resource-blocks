@@ -1,17 +1,10 @@
 /**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * React hook that is used to mark the block wrapper element.
  * It provides all the necessary props like the class name.
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, RichText } from '@wordpress/block-editor';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -31,16 +24,21 @@ import './editor.scss';
  */
 export default function Edit( props ) {
 	const {
-		attributes: { question },
+		attributes: { question, answer },
+		setAttributes,
 	} = props;
-
-	console.log( question );
 
 	return (
 		<div { ...useBlockProps() }>
 			<h3>
 				<strong>{ question }</strong>
 			</h3>
+			<RichText
+				tagName="p"
+				placeholder="Write the answer here."
+				value={ answer }
+				onChange={(value) => setAttributes({ answer: value })}
+			/>
 		</div>
 	);
 }
