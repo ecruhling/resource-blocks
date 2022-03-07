@@ -7,5 +7,12 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
+div.wp-block-resource-blocks-single-question h3 {
+  font-family: Questrial, sans-serif;
+  letter-spacing: 2.7px;
+  font-size: 1.125rem !important;
+  color: #37535b !important;
+  text-transform: uppercase;
+}
 
 /*# sourceMappingURL=style-single-question.css.map*/
