@@ -27,7 +27,8 @@ function resource_blocks_init()
 		'single-image/',
 		'single-question/',
 		'triptych/',
-		'questionnaire/'
+		'questionnaire/',
+		'secondary-title/'
 	);
 
 	foreach ($blocks as $block) {
@@ -130,6 +131,7 @@ function allow_only_resource_blocks(): array
 		'resource-blocks/single-question',
 		'resource-blocks/triptych',
 		'resource-blocks/questionnaire',
+		'resource-blocks/secondary-title',
 	);
 }
 

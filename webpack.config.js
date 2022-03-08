@@ -12,5 +12,6 @@ module.exports = {
 		triptych: './includes/block-editor/blocks/triptych',
 		questionnaire: './includes/block-editor/blocks/questionnaire',
 		'single-question': './includes/block-editor/blocks/single-question',
+		'secondary-title': './includes/block-editor/blocks/secondary-title',
 	},
 };
