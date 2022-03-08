@@ -17,7 +17,10 @@
 	  "cover": "https://example.com/image.jpg"
 	}
   },
-  "keywords": [ "text", "questions" ],
+  "keywords": [
+	"text",
+	"questions"
+  ],
   "category": "resource-blocks",
   "textdomain": "resource-blocks",
   "editorScript": "file:../../../../build/questionnaire.js",
