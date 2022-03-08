@@ -4,6 +4,9 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-// .wp-block-resource-blocks-secondary-title {
-//	border: 1px dotted #f00;
-//}
+.wp-block-resource-blocks-secondary-title {
+  @media (min-width: 768px) {
+	padding-left: 3.8rem;
+	padding-right: 3.8rem;
+  }
+}

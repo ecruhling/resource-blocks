@@ -5,8 +5,20 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-// .wp-block-resource-blocks-secondary-title {
-//	background-color: #21759b;
-//	color: #fff;
-//	padding: 2px;
-//}
+.wp-block-resource-blocks-secondary-title {
+  h2 {
+	color: #37535b;
+	margin-bottom: 3rem;
+	line-height: 1.87;
+	font-size: 1.625rem;
+	font-weight: 500;
+	font-family: RomainHeadline-Regular-WebS, sans-serif;
+	display: block;
+  }
+
+  @media (min-width: 768px) {
+	padding-left: 3rem;
+	padding-right: 3rem;
+	padding-top: 3rem;
+  }
+}

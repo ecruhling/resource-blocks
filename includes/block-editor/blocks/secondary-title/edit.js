@@ -25,11 +25,11 @@ import classnames from 'classnames';
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
-export default function Edit(
-	props,
-	{ className, secondaryTitle, setAttributes }
-) {
+export default function Edit( props, { className } ) {
 	const classes = classnames( className, 'resource-blocks-row' );
+
+	const { attributes, setAttributes } = props;
+	const { secondaryTitle } = attributes;
 
 	return (
 		<div
@@ -45,7 +45,9 @@ export default function Edit(
 						'resource-blocks'
 					) }
 					value={ secondaryTitle }
-					onChange={ ( value ) => setAttributes( { answer: value } ) }
+					onChange={ ( value ) =>
+						setAttributes( { secondaryTitle: value } )
+					}
 				/>
 			</div>
 		</div>
