@@ -18,6 +18,11 @@ import questions from './questions';
 import icons from '../../../icons/icons';
 
 /**
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
  *
@@ -30,13 +35,17 @@ import './editor.scss';
  * editor. This represents what the editor will render when the block is used.
  *
  * @param {Object} props
+ * @param className
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
-export default function Edit( props ) {
-	const {
-		clientId,
-	} = props;
+export default function Edit( props, { className } ) {
+	const { clientId } = props;
+	const classes = classnames( className, 'resource-blocks-row' );
+
+	const blockProps = useBlockProps( {
+		className: classes,
+	} );
 
 	const innerBlockCount = useSelect(
 		( select ) =>
@@ -76,7 +85,7 @@ export default function Edit( props ) {
 	} ) );
 
 	return (
-		<div { ...useBlockProps() }>
+		<div { ...blockProps }>
 			<BlockControls group="block">
 				<ToolbarGroup>
 					<ToolbarDropdownMenu

@@ -1,10 +1,12 @@
 /**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
+ * WordPress dependencies.
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, RichText } from '@wordpress/block-editor';
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -21,12 +23,14 @@ export default function save( props ) {
 		attributes: { question, answer },
 	} = props;
 
+	const classes = classnames( 'resource-blocks-column' );
+
 	return (
-		<div { ...useBlockProps.save() }>
+		<div { ...useBlockProps.save( { className: classes } ) }>
 			<h3>
 				<strong>{ question }</strong>
 			</h3>
-			<p>{ answer }</p>
+			<RichText.Content tagName="p" value={ answer } />
 		</div>
 	);
 }

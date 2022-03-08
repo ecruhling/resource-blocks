@@ -1,12 +1,12 @@
 /**
- * External dependencies
- */
-import classnames from 'classnames';
-
-/**
  * WordPress dependencies
  */
 import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames';
 
 export default function save() {
 	const classes = classnames( 'resource-blocks-row' );
