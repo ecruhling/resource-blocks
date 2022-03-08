@@ -14,5 +14,13 @@ div.wp-block-resource-blocks-single-question h3 {
   color: #37535b !important;
   text-transform: uppercase;
 }
+@media (min-width: 768px) {
+  div.wp-block-resource-blocks-single-question {
+    padding-left: 20px;
+    padding-right: 20px;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
 
 /*# sourceMappingURL=style-single-question.css.map*/

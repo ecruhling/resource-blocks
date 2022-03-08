@@ -35,6 +35,7 @@ import './editor.scss';
  * editor. This represents what the editor will render when the block is used.
  *
  * @param {Object} props
+ * @param className.className
  * @param className
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
