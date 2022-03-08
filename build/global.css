@@ -37,4 +37,9 @@ html :where(.editor-styles-wrapper) {
   font-weight: bolder;
 }
 
+.editor-styles-wrapper .wp-block.resource-blocks-column {
+  margin-left: initial;
+  margin-right: initial;
+}
+
 /*# sourceMappingURL=global.css.map*/

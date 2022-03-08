@@ -37,3 +37,9 @@ html :where(.editor-styles-wrapper) {
   text-transform: uppercase;
   font-weight: bolder;
 }
+
+.editor-styles-wrapper .wp-block.resource-blocks-column {
+  // override margin-left-right: auto
+  margin-left: initial;
+  margin-right: initial;
+}

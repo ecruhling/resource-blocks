@@ -7,6 +7,10 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
+div.wp-block-resource-blocks-single-question {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
 div.wp-block-resource-blocks-single-question h3 {
   font-family: Questrial, sans-serif;
   letter-spacing: 2.7px;

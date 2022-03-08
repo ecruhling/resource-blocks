@@ -5,8 +5,9 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-// .wp-block-resource-blocks-questionnaire {
-//	background-color: #21759b;
-//	color: #fff;
-//	padding: 2px;
-//}
+ .wp-block-resource-blocks-questionnaire {
+   @media (min-width: 768px) {
+	 padding-left: 3rem;
+	 padding-right: 3rem;
+   }
+ }

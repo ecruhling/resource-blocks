@@ -17,5 +17,10 @@ div.resource-blocks-row.wp-block.wp-block-resource-blocks-questionnaire {
 	flex-wrap: wrap;
 	margin-right: -35px;
 	margin-left: -35px;
+
+	@media (min-width: 768px) {
+	  padding-left: 3rem;
+	  padding-right: 3rem;
+	}
   }
 }
