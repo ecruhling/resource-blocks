@@ -1,8 +1,11 @@
 /**
  * WordPress dependencies.
  */
-import { __ } from '@wordpress/i18n';
 import { RichText, useBlockProps } from '@wordpress/block-editor';
+
+/**
+ * External dependencies.
+ */
 import classnames from 'classnames';
 
 /**
@@ -10,20 +13,17 @@ import classnames from 'classnames';
  * be combined into the final markup, which is then serialized by the block
  * editor into `post_content`.
  *
- * @param  props
- * @param  root0
- * @param  root0.className
- * @param  root0.secondaryTitle
+ * @param {Object} props
+ * @param {Object} props.attributes
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
  *
  * @return {WPElement} Element to render.
  */
-export default function save( props ) {
-	const {
-		attributes: { className, secondaryTitle },
-	} = props;
+export default function save( { attributes } ) {
 
-	const classes = classnames( className, 'resource-blocks-row' );
+	const { secondaryTitle } = attributes;
+
+	const classes = classnames( 'resource-blocks-row' );
 
 	return (
 		<div

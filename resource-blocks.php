@@ -130,8 +130,8 @@ function allow_only_resource_blocks(): array
 		'resource-blocks/single-image',
 		'resource-blocks/single-question',
 		'resource-blocks/triptych',
-		'resource-blocks/questionnaire',
 		'resource-blocks/secondary-title',
+		'resource-blocks/questionnaire',
 	);
 }
 
