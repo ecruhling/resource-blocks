@@ -29,6 +29,12 @@ html :where(.editor-styles-wrapper) {
   margin-bottom: 1rem;
 }
 
+body.post-type-team {
+  .edit-post-visual-editor__post-title-wrapper {
+	margin-bottom: 5rem;
+  }
+}
+
 .wp-block.wp-block-post-title {
   font-family: Questrial,sans-serif;
   letter-spacing: 2.7px;
