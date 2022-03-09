@@ -31,7 +31,7 @@ const { name, ...settings } = json;
  */
 registerBlockType( name, {
 	...settings,
-	icon: icons.question,
+	icon: icons.heading,
 	/**
 	 * @see ./edit.js
 	 */
