@@ -27,8 +27,8 @@ function resource_blocks_init()
 		'single-image/',
 		'single-question/',
 		'triptych/',
+		'secondary-title/',
 		'questionnaire/',
-		'secondary-title/'
 	);
 
 	foreach ($blocks as $block) {
@@ -179,16 +179,18 @@ add_action('enqueue_block_assets', 'resource_blocks_styles');
 /**
  * Block Patterns
  */
-function resource_blocks_register_block_patterns() {
+function resource_blocks_register_block_patterns()
+{
 	register_block_pattern(
 		'resource-blocks/team-member',
 		array(
-			'title'       => __( 'Team member template', 'resource-blocks' ),
-			'description' => _x( 'For new team members', 'Block pattern description', 'resource-blocks' ),
-			'content'     => "<!-- wp:resource-blocks/triptych --><div class='wp-block-resource-blocks-triptych resource-blocks-row'><div class='resource-blocks-column'><figure><img alt='' class=''/></figure></div></div>
-<!-- /wp:resource-blocks/triptych -->",
+			'title' => __('Team member template', 'resource-blocks'),
+			'description' => _x('For new team members', 'Block pattern description', 'resource-blocks'),
+			'content' => "<!-- wp:resource-blocks/triptych --><div class='wp-block-resource-blocks-triptych resource-blocks-row'><div class='resource-blocks-column'><figure><img alt='' class=''/></figure></div></div>
+<!-- /wp:resource-blocks/triptych --><!-- wp:resource-blocks/secondary-title --><div class='wp-block-resource-blocks-secondary-title resource-blocks-row'><div class='resource-blocks-column'><h2></h2></div></div>
+<!-- /wp:resource-blocks/secondary-title -->",
 		)
 	);
 }
 
-add_action( 'init', 'resource_blocks_register_block_patterns' );
+add_action('init', 'resource_blocks_register_block_patterns');
