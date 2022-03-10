@@ -17,6 +17,9 @@ html :where(.wp-block) {
 html :where(.editor-styles-wrapper) {
   padding: 35px;
 }
+html :where(.editor-styles-wrapper) p {
+  margin: inherit;
+}
 
 .is-root-container.block-editor-block-list__layout {
   width: 100%;
@@ -27,7 +30,6 @@ html :where(.editor-styles-wrapper) {
 .edit-post-visual-editor__post-title-wrapper {
   margin-bottom: 1rem;
 }
-
 body.post-type-team .edit-post-visual-editor__post-title-wrapper {
   margin-bottom: 5rem;
 }

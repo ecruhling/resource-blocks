@@ -6,6 +6,7 @@ import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 /**
  * External dependencies
  */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import classnames from 'classnames';
 
 /**

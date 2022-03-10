@@ -62,9 +62,8 @@ __webpack_require__.r(__webpack_exports__);
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
- * @param {Object} props
- * @param          className.className
- * @param          className
+ * @param {Object}    props
+ * @param {WPElement} className
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
@@ -234,6 +233,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * External dependencies
  */
+// eslint-disable-next-line import/no-extraneous-dependencies
 
 
 /**

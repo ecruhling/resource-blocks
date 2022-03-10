@@ -15,6 +15,10 @@ html :where(.wp-block) {
 
 html :where(.editor-styles-wrapper) {
   padding: 35px;
+
+  p {
+	margin: inherit;
+  }
 }
 
 .is-root-container.block-editor-block-list__layout {
@@ -27,16 +31,14 @@ html :where(.editor-styles-wrapper) {
 // Post Editor
 .edit-post-visual-editor__post-title-wrapper {
   margin-bottom: 1rem;
-}
 
-body.post-type-team {
-  .edit-post-visual-editor__post-title-wrapper {
+  body.post-type-team & {
 	margin-bottom: 5rem;
   }
 }
 
 .wp-block.wp-block-post-title {
-  font-family: Questrial,sans-serif;
+  font-family: Questrial, sans-serif;
   letter-spacing: 2.7px;
   font-size: 1.125rem;
   color: #37535b;

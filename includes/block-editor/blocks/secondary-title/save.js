@@ -6,6 +6,7 @@ import { RichText, useBlockProps } from '@wordpress/block-editor';
 /**
  * External dependencies.
  */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import classnames from 'classnames';
 
 /**
@@ -20,7 +21,6 @@ import classnames from 'classnames';
  * @return {WPElement} Element to render.
  */
 export default function save( { attributes } ) {
-
 	const { secondaryTitle } = attributes;
 
 	const classes = classnames( 'resource-blocks-row' );
