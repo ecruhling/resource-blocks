@@ -177,18 +177,26 @@ function resource_blocks_styles()
 add_action('enqueue_block_assets', 'resource_blocks_styles');
 
 /**
- * Block Patterns
+ * Block Patterns & Block Pattern Category
  */
 function resource_blocks_register_block_patterns()
 {
+	register_block_pattern_category(
+		'resource-blocks-patterns',
+		array('label' => __('Resource Blocks Patterns', 'resource-blocks'))
+	);
+
+	// Team Member pattern: Triptych, Secondary Title, Questionnaire
 	register_block_pattern(
 		'resource-blocks/team-member',
 		array(
 			'title' => __('Team member template', 'resource-blocks'),
+			'categories' => array('resource-blocks-patterns'),
 			'description' => _x('For new team members', 'Block pattern description', 'resource-blocks'),
 			'content' => "<!-- wp:resource-blocks/triptych --><div class='wp-block-resource-blocks-triptych resource-blocks-row'><div class='resource-blocks-column'><figure><img alt='' class=''/></figure></div></div>
 <!-- /wp:resource-blocks/triptych --><!-- wp:resource-blocks/secondary-title --><div class='wp-block-resource-blocks-secondary-title resource-blocks-row'><div class='resource-blocks-column'><h2></h2></div></div>
-<!-- /wp:resource-blocks/secondary-title -->",
+<!-- /wp:resource-blocks/secondary-title --><!-- wp:resource-blocks/questionnaire --><div class='wp-block-resource-blocks-questionnaire resource-blocks-row'></div>
+<!-- /wp:resource-blocks/questionnaire -->",
 		)
 	);
 }
