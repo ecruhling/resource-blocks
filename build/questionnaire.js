@@ -63,8 +63,8 @@ __webpack_require__.r(__webpack_exports__);
  * editor. This represents what the editor will render when the block is used.
  *
  * @param {Object} props
- * @param className.className
- * @param className
+ * @param          className.className
+ * @param          className
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
@@ -119,6 +119,7 @@ function Edit(props, _ref) {
     allowedBlocks: ['resource-blocks/single-question'],
     templateLock: false,
     orientation: "horizontal",
+    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Select a question from the Question mark drop down menu above.', 'resource-blocks'),
     renderAppender: false
   }));
 }

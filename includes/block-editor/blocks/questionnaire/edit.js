@@ -3,9 +3,9 @@
  */
 import { __ } from '@wordpress/i18n';
 import {
-	useBlockProps,
 	BlockControls,
 	InnerBlocks,
+	useBlockProps,
 } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 import { ToolbarDropdownMenu, ToolbarGroup } from '@wordpress/components';
@@ -35,8 +35,8 @@ import './editor.scss';
  * editor. This represents what the editor will render when the block is used.
  *
  * @param {Object} props
- * @param className.className
- * @param className
+ * @param          className.className
+ * @param          className
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
@@ -100,6 +100,10 @@ export default function Edit( props, { className } ) {
 				allowedBlocks={ [ 'resource-blocks/single-question' ] }
 				templateLock={ false }
 				orientation="horizontal"
+				placeholder={ __(
+					'Select a question from the Question mark drop down menu above.',
+					'resource-blocks'
+				) }
 				renderAppender={ false }
 			/>
 		</div>
