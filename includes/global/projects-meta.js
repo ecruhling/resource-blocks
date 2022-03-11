@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { PanelRow, TextareaControl } from '@wordpress/components';
+import { PanelRow, TextControl } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 
@@ -16,8 +16,12 @@ const ProjectsMeta = () => {
 		( select ) => select( 'core/editor' ).getEditedPostAttribute( 'meta' ),
 		[]
 	);
-
 	const { editPost } = useDispatch( 'core/editor' );
+
+	const onSecondLineChange = ( newSecondLine ) =>
+		editPost( {
+			meta: { second_line: newSecondLine },
+		} );
 
 	return (
 		<PluginDocumentSettingPanel
@@ -28,17 +32,13 @@ const ProjectsMeta = () => {
 			icon={ icons.resource }
 		>
 			<PanelRow>
-				<TextareaControl
+				<TextControl
 					label={ __(
 						'Second Line (displayed after title). Usually City, ST',
 						'resource-blocks'
 					) }
 					value={ meta.second_line }
-					onChange={ ( value ) =>
-						editPost( {
-							meta: { second_line: value },
-						} )
-					}
+					onChange={ onSecondLineChange }
 				/>
 			</PanelRow>
 		</PluginDocumentSettingPanel>
