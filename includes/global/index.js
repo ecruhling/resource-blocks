@@ -43,6 +43,7 @@ registerBlockType( name, {
  */
 import { registerPlugin } from '@wordpress/plugins';
 import PostMeta from './post-meta';
+import ProjectsMeta from './projects-meta';
 
 /**
  * Check what kind of post
@@ -74,7 +75,14 @@ wp.domReady( () => {
 						return <PostMeta />;
 					},
 				} );
-
+			}
+			if ( newPostType === 'projects' ) {
+				// register panel
+				registerPlugin( 'projects-meta', {
+					render() {
+						return <ProjectsMeta />;
+					},
+				} );
 			}
 		}
 	} );

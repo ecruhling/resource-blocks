@@ -4,16 +4,14 @@
  * Requires at least: 5.8
  * Requires PHP:      7.0
  * Version:           1.0.0
- * Author:            Resource
- * License:           GPL-2.0-or-later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Author:            Erik Rühling
  * Text Domain:       resource-blocks
  *
- * @package           create-block
+ * @package           resource-blocks
  */
 
 /**
- * Register blocks.
+ * Register blocks, meta & patterns.
  */
 function resource_blocks_init()
 {
@@ -78,10 +76,47 @@ function resource_blocks_init()
 		}
 	]);
 
+	/**
+	 * Register post meta for the editor sidebar on the project edit screen.
+	 */
+	register_post_meta('projects', 'second_line', [
+		'show_in_rest' => true,
+		'single' => true,
+		'type' => 'string',
+		'auth_callback' => function () {
+			return current_user_can('edit_posts');
+		}
+	]);
+
+	/**
+	 * Block patterns & Resource Blocks pattern category.
+	 */
+	register_block_pattern_category(
+		'resource-blocks-patterns',
+		array('label' => __('Resource Blocks Patterns', 'resource-blocks'))
+	);
+
+	// Team Member pattern: Triptych, Secondary Title, Questionnaire
+	register_block_pattern(
+		'resource-blocks/team-member',
+		array(
+			'title' => __('Team member template', 'resource-blocks'),
+			'categories' => array('resource-blocks-patterns'),
+			'description' => _x('For new team members', 'Block pattern description', 'resource-blocks'),
+			'content' => "<!-- wp:resource-blocks/triptych --><div class='wp-block-resource-blocks-triptych resource-blocks-row'><div class='resource-blocks-column'><figure><img alt='' class=''/></figure></div></div>
+<!-- /wp:resource-blocks/triptych --><!-- wp:resource-blocks/secondary-title --><div class='wp-block-resource-blocks-secondary-title resource-blocks-row'><div class='resource-blocks-column'><h2></h2></div></div>
+<!-- /wp:resource-blocks/secondary-title --><!-- wp:resource-blocks/questionnaire --><div class='wp-block-resource-blocks-questionnaire resource-blocks-row'></div>
+<!-- /wp:resource-blocks/questionnaire -->",
+		)
+	);
+
 }
 
 add_action('init', 'resource_blocks_init');
 
+/**
+ * Enqueue Resource Blocks meta (sidebar editor).
+ */
 add_action('enqueue_block_editor_assets', function () {
 	wp_enqueue_script(
 		'resource-blocks-meta',
@@ -91,21 +126,54 @@ add_action('enqueue_block_editor_assets', function () {
 });
 
 /**
- * Register custom block category.
+ * Enqueue global block CSS for the editor.
+ */
+function resource_blocks_editor_styles()
+{
+
+	wp_enqueue_style(
+		'resource-blocks-global-editor-css',
+		plugins_url('/build/global.css', __FILE__),
+		['wp-edit-blocks'],
+		filemtime(plugin_dir_path(__FILE__) . 'build/global.css')
+	);
+
+}
+
+add_action('enqueue_block_editor_assets', 'resource_blocks_editor_styles');
+
+/**
+ * Enqueue global frontend and editor CSS.
+ */
+function resource_blocks_styles()
+{
+
+	wp_enqueue_style(
+		'resource-blocks-global-css',
+		plugins_url('/build/style-global.css', __FILE__),
+		[],
+		filemtime(plugin_dir_path(__FILE__) . 'build/style-global.css')
+	);
+
+}
+
+add_action('enqueue_block_assets', 'resource_blocks_styles');
+
+/**
+ * Register Resource Blocks category.
  *
  * @param array $block_categories Array of categories for block types.
  */
 function resource_block_category(array $block_categories): array
 {
 
-	// define new block category.
 	$resource_category = array(
 		'slug' => 'resource-blocks',
 		'title' => __('Resource Blocks', 'resource-blocks'),
 		'icon' => null, // icon is set in index.js of each block.
 	);
 
-	// move new category to beginning of block list.
+	// move Resource Blocks category to beginning of block list.
 	array_unshift($block_categories, $resource_category);
 
 	return $block_categories;
@@ -115,7 +183,7 @@ function resource_block_category(array $block_categories): array
 add_action('block_categories_all', 'resource_block_category', 10, 2);
 
 /**
- * Filter to remove all blocks other than Resource blocks.
+ * Filter to remove all blocks other than Resource Blocks.
  *
  * @return string[]
  */
@@ -136,69 +204,3 @@ function allow_only_resource_blocks(): array
 }
 
 add_filter('allowed_block_types_all', 'allow_only_resource_blocks', 10, 2);
-
-
-/**
- * Enqueue global block CSS for the editor
- */
-function resource_blocks_editor_styles()
-{
-
-	// Enqueue block editor styles
-	wp_enqueue_style(
-		'resource-blocks-global-editor-css',
-		plugins_url('/build/global.css', __FILE__),
-		['wp-edit-blocks'],
-		filemtime(plugin_dir_path(__FILE__) . 'build/global.css')
-	);
-
-}
-
-// Hook the enqueue functions into the editor
-add_action('enqueue_block_editor_assets', 'resource_blocks_editor_styles');
-
-/**
- * Enqueue global frontend and editor CSS
- */
-function resource_blocks_styles()
-{
-
-	// Enqueue block editor styles
-	wp_enqueue_style(
-		'resource-blocks-global-css',
-		plugins_url('/build/style-global.css', __FILE__),
-		[],
-		filemtime(plugin_dir_path(__FILE__) . 'build/style-global.css')
-	);
-
-}
-
-// Hook the enqueue functions into the frontend and editor
-add_action('enqueue_block_assets', 'resource_blocks_styles');
-
-/**
- * Block Patterns & Block Pattern Category
- */
-function resource_blocks_register_block_patterns()
-{
-	register_block_pattern_category(
-		'resource-blocks-patterns',
-		array('label' => __('Resource Blocks Patterns', 'resource-blocks'))
-	);
-
-	// Team Member pattern: Triptych, Secondary Title, Questionnaire
-	register_block_pattern(
-		'resource-blocks/team-member',
-		array(
-			'title' => __('Team member template', 'resource-blocks'),
-			'categories' => array('resource-blocks-patterns'),
-			'description' => _x('For new team members', 'Block pattern description', 'resource-blocks'),
-			'content' => "<!-- wp:resource-blocks/triptych --><div class='wp-block-resource-blocks-triptych resource-blocks-row'><div class='resource-blocks-column'><figure><img alt='' class=''/></figure></div></div>
-<!-- /wp:resource-blocks/triptych --><!-- wp:resource-blocks/secondary-title --><div class='wp-block-resource-blocks-secondary-title resource-blocks-row'><div class='resource-blocks-column'><h2></h2></div></div>
-<!-- /wp:resource-blocks/secondary-title --><!-- wp:resource-blocks/questionnaire --><div class='wp-block-resource-blocks-questionnaire resource-blocks-row'></div>
-<!-- /wp:resource-blocks/questionnaire -->",
-		)
-	);
-}
-
-add_action('init', 'resource_blocks_register_block_patterns');

@@ -19,6 +19,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _post_meta__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./post-meta */ "./includes/global/post-meta.js");
+/* harmony import */ var _projects_meta__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./projects-meta */ "./includes/global/projects-meta.js");
 
 
 /**
@@ -67,6 +68,7 @@ const {
 
 
 
+
 /**
  * Check what kind of post
  */
@@ -95,6 +97,16 @@ wp.domReady(() => {
         (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__.registerPlugin)('post-meta', {
           render() {
             return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_post_meta__WEBPACK_IMPORTED_MODULE_6__["default"], null);
+          }
+
+        });
+      }
+
+      if (newPostType === 'projects') {
+        // register panel
+        (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__.registerPlugin)('projects-meta', {
+          render() {
+            return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_projects_meta__WEBPACK_IMPORTED_MODULE_7__["default"], null);
           }
 
         });
@@ -344,6 +356,65 @@ function PostThumbnail(_ref) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (PostThumbnail);
+
+/***/ }),
+
+/***/ "./includes/global/projects-meta.js":
+/*!******************************************!*\
+  !*** ./includes/global/projects-meta.js ***!
+  \******************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
+/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../icons/icons */ "./includes/icons/icons.js");
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const ProjectsMeta = () => {
+  const meta = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core/editor').getEditedPostAttribute('meta'), []);
+  const {
+    editPost
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)('core/editor');
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__.PluginDocumentSettingPanel, {
+    name: "resource-blocks-meta",
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post Meta', 'resource-blocks'),
+    initialOpen: "true",
+    opened: "true",
+    icon: _icons_icons__WEBPACK_IMPORTED_MODULE_5__["default"].resource
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Second Line (displayed after title). Usually City, ST', 'resource-blocks'),
+    value: meta.second_line,
+    onChange: value => editPost({
+      meta: {
+        second_line: value
+      }
+    })
+  })));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ProjectsMeta);
 
 /***/ }),
 
