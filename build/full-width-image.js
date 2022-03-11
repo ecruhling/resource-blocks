@@ -500,18 +500,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
 
-
-/**
- * External dependencies
- */
 
 /**
  * WordPress dependencies
+ */
+
+/**
+ * External dependencies
  */
 
 
@@ -527,17 +527,17 @@ function save(_ref) {
     id,
     title
   } = attributes;
-  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('resource-blocks-row');
+  const classes = classnames__WEBPACK_IMPORTED_MODULE_2___default()('resource-blocks-row');
   const image = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: url,
     alt: alt,
-    className: id ? `wp-image-${id}` : ``,
+    className: id ? `wp-image-${id}` : null,
     width: width,
     height: height,
     title: title
   });
   const figure = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", null, image);
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save({
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
     className: classes
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: 'resource-blocks-column'
@@ -1319,7 +1319,7 @@ module.exports = window["wp"]["url"];
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-image","version":"1.0.0","title":"Full-width Image","category":"resource-blocks","description":"A single full-width image. 2040px width.","keywords":["img","photo","picture"],"attributes":{"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"id":{"type":"number"},"width":{"type":"number"},"height":{"type":"number"}},"supports":{"anchor":false,"color":{"text":false,"background":false}},"example":{"attributes":{"cover":"https://example.com/image.jpg"}},"textdomain":"resource-blocks","editorScript":"file:../../../../build/full-width-image.js","editorStyle":"file:../../../../build/full-width-image.css","style":"file:../../../../build/style-full-width-image.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-image","version":"1.0.0","title":"Full-width Image","category":"resource-blocks","description":"A single full-width image. 2040px width.","keywords":["img","photo","picture"],"attributes":{"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"id":{"type":"number"},"width":{"type":"number"},"height":{"type":"number"}},"supports":{"anchor":false},"example":{"attributes":{"cover":"https://example.com/image.jpg"}},"textdomain":"resource-blocks","editorScript":"file:../../../../build/full-width-image.js","editorStyle":"file:../../../../build/full-width-image.css","style":"file:../../../../build/style-full-width-image.css"}');
 
 /***/ })
 

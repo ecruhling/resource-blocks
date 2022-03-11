@@ -46,11 +46,7 @@
 	}
   },
   "supports": {
-	"anchor": false,
-	"color": {
-	  "text": false,
-	  "background": false
-	}
+	"anchor": false
   },
   "example": {
 	"attributes": {

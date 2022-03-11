@@ -1,12 +1,12 @@
 /**
- * External dependencies
- */
-import classnames from 'classnames';
-
-/**
  * WordPress dependencies
  */
 import { useBlockProps } from '@wordpress/block-editor';
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames';
 
 export default function save( { attributes } ) {
 	const { url, alt, width, height, id, title } = attributes;
@@ -17,7 +17,7 @@ export default function save( { attributes } ) {
 		<img
 			src={ url }
 			alt={ alt }
-			className={ id ? `wp-image-${ id }` : `` }
+			className={ id ? `wp-image-${ id }` : null }
 			width={ width }
 			height={ height }
 			title={ title }
