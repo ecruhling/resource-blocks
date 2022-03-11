@@ -1,6 +1,6 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import {useDispatch, useSelect, withSelect} from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import {
 	Button,
 	Modal,
@@ -8,9 +8,6 @@ import {
 	Spinner,
 } from '@wordpress/components';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
-import { store as coreStore } from '@wordpress/core-data';
-// import { store as editorStore } from '@wordpress/core';
-import { compose } from '@wordpress/compose';
 
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
@@ -19,14 +16,7 @@ const DEFAULT_FEATURE_IMAGE_LABEL = __( 'Post thumbnail' );
 const DEFAULT_SET_FEATURE_IMAGE_LABEL = __( 'Set post thumbnail' );
 const DEFAULT_REMOVE_FEATURE_IMAGE_LABEL = __( 'Remove post thumbnail' );
 
-function PostThumbnail( {
-	// onUpdateImage,
-	// onDropImage,
-	featuredImageId,
-	onRemoveImage,
-	noticeUI,
-	media,
-} ) {
+function PostThumbnail( { featuredImageId, onRemoveImage, noticeUI, media } ) {
 	const instructions = (
 		<p>
 			{ __(
@@ -74,7 +64,6 @@ function PostThumbnail( {
 	const { editPost } = useDispatch( 'core/editor' );
 
 	function onUpdateImage( image ) {
-		// console.log( image );
 		editPost( {
 			meta: { post_thumbnail: image },
 		} );
@@ -97,13 +86,11 @@ function PostThumbnail( {
 					>
 						{ media.alt_text &&
 							sprintf(
-								// Translators: %s: The selected image alt text.
 								__( 'Current image: %s' ),
 								media.alt_text
 							) }
 						{ ! media.alt_text &&
 							sprintf(
-								// Translators: %s: The selected image filename.
 								__(
 									'The current image has no alternative text. The file name is: %s'
 								),
