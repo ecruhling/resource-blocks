@@ -30,6 +30,7 @@
 	"@wordpress/compose": "^5.1.2",
 	"@wordpress/core-data": "^4.1.1",
 	"@wordpress/data": "^6.2.1",
+	"@wordpress/dom-ready": "^3.4.1",
 	"@wordpress/edit-post": "^6.0.2",
 	"@wordpress/element": "^4.1.1",
 	"@wordpress/eslint-plugin": "^10.0.1",

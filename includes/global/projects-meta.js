@@ -21,8 +21,8 @@ const ProjectsMeta = () => {
 
 	return (
 		<PluginDocumentSettingPanel
-			name="resource-blocks-meta"
-			title={ __( 'Post Meta', 'resource-blocks' ) }
+			name="resource-blocks-projects-meta"
+			title={ __( 'Projects Meta', 'resource-blocks' ) }
 			initialOpen="true"
 			opened="true"
 			icon={ icons.resource }

@@ -271,8 +271,8 @@ const ProjectsMeta = () => {
     editPost
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)('core/editor');
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__.PluginDocumentSettingPanel, {
-    name: "resource-blocks-meta",
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post Meta', 'resource-blocks'),
+    name: "resource-blocks-projects-meta",
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Projects Meta', 'resource-blocks'),
     initialOpen: "true",
     opened: "true",
     icon: _icons_icons__WEBPACK_IMPORTED_MODULE_5__["default"].resource
@@ -459,6 +459,16 @@ module.exports = window["wp"]["data"];
 
 /***/ }),
 
+/***/ "@wordpress/dom-ready":
+/*!**********************************!*\
+  !*** external ["wp","domReady"] ***!
+  \**********************************/
+/***/ (function(module) {
+
+module.exports = window["wp"]["domReady"];
+
+/***/ }),
+
 /***/ "@wordpress/edit-post":
 /*!**********************************!*\
   !*** external ["wp","editPost"] ***!
@@ -578,8 +588,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _post_meta__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./post-meta */ "./includes/global/post-meta.js");
-/* harmony import */ var _projects_meta__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./projects-meta */ "./includes/global/projects-meta.js");
+/* harmony import */ var _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/dom-ready */ "@wordpress/dom-ready");
+/* harmony import */ var _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _post_meta__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./post-meta */ "./includes/global/post-meta.js");
+/* harmony import */ var _projects_meta__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./projects-meta */ "./includes/global/projects-meta.js");
 
 
 /**
@@ -588,21 +600,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /**
  * Check what kind of post
  */
 
-const getPostType = () => wp.data.select('core/editor').getCurrentPostType();
+const getPostType = () => wp.data.select('core/editor').getCurrentPostType(); // set the initial postType
 
-const postType = getPostType(); // DOM ready
 
-wp.domReady(() => {
+let postType = getPostType(); // DOM ready
+
+_wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2___default()(() => {
   const {
     removeEditorPanel
   } = wp.data.dispatch('core/edit-post'); // subscribe, since this runs multiple times
 
   wp.data.subscribe(() => {
-    // get the current postFormat
+    // get the current postType
     const newPostType = getPostType(); // once the post type changes from null to an actual value, the post type is valid
 
     if (postType !== newPostType) {
@@ -615,7 +629,7 @@ wp.domReady(() => {
 
         (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.registerPlugin)('post-meta', {
           render() {
-            return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_post_meta__WEBPACK_IMPORTED_MODULE_2__["default"], null);
+            return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_post_meta__WEBPACK_IMPORTED_MODULE_3__["default"], null);
           }
 
         });
@@ -625,12 +639,15 @@ wp.domReady(() => {
         // register panel
         (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.registerPlugin)('projects-meta', {
           render() {
-            return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_projects_meta__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+            return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_projects_meta__WEBPACK_IMPORTED_MODULE_4__["default"], null);
           }
 
         });
       }
-    }
+    } // update the postType variable, so the above runs only once.
+
+
+    postType = newPostType;
   });
 });
 }();

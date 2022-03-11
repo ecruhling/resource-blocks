@@ -2,6 +2,7 @@
  * Register post meta fields, uses global.js
  */
 import { registerPlugin } from '@wordpress/plugins';
+import domReady from '@wordpress/dom-ready';
 import PostMeta from './post-meta';
 import ProjectsMeta from './projects-meta';
 
@@ -10,15 +11,16 @@ import ProjectsMeta from './projects-meta';
  */
 const getPostType = () => wp.data.select( 'core/editor' ).getCurrentPostType();
 
-const postType = getPostType();
+// set the initial postType
+let postType = getPostType();
 
 // DOM ready
-wp.domReady( () => {
+domReady( () => {
 	const { removeEditorPanel } = wp.data.dispatch( 'core/edit-post' );
 
 	// subscribe, since this runs multiple times
 	wp.data.subscribe( () => {
-		// get the current postFormat
+		// get the current postType
 		const newPostType = getPostType();
 		// once the post type changes from null to an actual value, the post type is valid
 		if ( postType !== newPostType ) {
@@ -45,5 +47,7 @@ wp.domReady( () => {
 				} );
 			}
 		}
+		// update the postType variable, so the above runs only once.
+		postType = newPostType;
 	} );
 } );
