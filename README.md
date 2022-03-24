@@ -20,55 +20,33 @@
 <h3 align="center">Resource Blocks</h3>
 
   <p align="center">
-    Custom WordPress block editor blocks for Resource Branding's website
+    Custom WordPress block for <a href="https://resourceatlanta.com">Resource Branding's</a> website
     <br />
     <a href="https://github.com/ecruhling/resource-blocks"><strong>Explore the docs »</strong></a>
     <br />
-    <br />
-    <a href="https://github.com/ecruhling/resource-blocks">View Demo</a>
-    ·
-    <a href="https://github.com/ecruhling/resource-blocks/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/ecruhling/resource-blocks/issues">Request Feature</a>
   </p>
 </div>
 
 
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
 
+<!-- ABOUT -->
+## About
 
+[![Resource Blocks][product-screenshot]](https://resourceatlanta.com)
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+A collection of custom blocks built for the WordPress block editor. These blocks integrate with the custom WordPress theme used by <a href="https://resourceatlanta.com">Resource Branding's website</a>.
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+Blocks include:
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `ecruhling`, `resource-blocks`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `Resource Blocks`, `Custom WordPress block editor blocks for Resource Branding's website`
+* Full-width Image
+* Two-column Images
+* Tryptych
+* Full-width Vimeo Video
+* Body Text
+* Introductory Paragraph
+* Secondary Title
+* Questionnaire
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -76,7 +54,8 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [React.js](https://reactjs.org/)
+* [@wordpress/create-block](https://www.npmjs.com/package/@wordpress/create-block)
+* [@ryanwelcher/multiple-blocks-template](https://www.npmjs.com/package/@ryanwelcher/multiple-blocks-template)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
