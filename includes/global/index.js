@@ -7,6 +7,12 @@ import PostMeta from './post-meta';
 import ProjectsMeta from './projects-meta';
 
 /**
+ * Import styles
+ */
+import './style.scss';
+import './editor.scss';
+
+/**
  * Check what kind of post
  */
 const getPostType = () => wp.data.select( 'core/editor' ).getCurrentPostType();

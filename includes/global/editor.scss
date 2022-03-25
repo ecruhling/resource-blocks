@@ -37,6 +37,10 @@ html :where(.editor-styles-wrapper) {
   }
 }
 
+.block-editor-block-card__title {
+  display: block !important;
+}
+
 .wp-block.wp-block-post-title {
   font-family: Questrial, sans-serif;
   letter-spacing: 2.7px;
