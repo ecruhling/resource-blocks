@@ -22,15 +22,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- * Register post meta fields, uses global.js
+ * WordPress dependencies
  */
-
-
 
 
 /**
- * Import styles
+ * Internal dependencies
  */
+
+
 
 
 
@@ -362,13 +362,6 @@ const ProjectsMeta = () => {
   const {
     editPost
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)('core/editor');
-
-  const onSecondLineChange = newSecondLine => editPost({
-    meta: {
-      second_line: newSecondLine
-    }
-  });
-
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__.PluginDocumentSettingPanel, {
     name: "resource-blocks-projects-meta",
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Projects Meta', 'resource-blocks'),
@@ -378,7 +371,11 @@ const ProjectsMeta = () => {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Second Line (displayed after title). Usually City, ST', 'resource-blocks'),
     value: meta.second_line,
-    onChange: onSecondLineChange
+    onChange: value => editPost({
+      meta: {
+        second_line: value
+      }
+    })
   })));
 };
 

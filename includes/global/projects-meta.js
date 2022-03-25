@@ -18,11 +18,6 @@ const ProjectsMeta = () => {
 	);
 	const { editPost } = useDispatch( 'core/editor' );
 
-	const onSecondLineChange = ( newSecondLine ) =>
-		editPost( {
-			meta: { second_line: newSecondLine },
-		} );
-
 	return (
 		<PluginDocumentSettingPanel
 			name="resource-blocks-projects-meta"
@@ -38,7 +33,11 @@ const ProjectsMeta = () => {
 						'resource-blocks'
 					) }
 					value={ meta.second_line }
-					onChange={ onSecondLineChange }
+					onChange={ ( value ) =>
+						editPost( {
+							meta: { second_line: value },
+						} )
+					}
 				/>
 			</PanelRow>
 		</PluginDocumentSettingPanel>

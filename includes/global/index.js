@@ -1,14 +1,14 @@
 /**
- * Register post meta fields, uses global.js
+ * WordPress dependencies
  */
 import { getPlugins, registerPlugin } from '@wordpress/plugins';
 import domReady from '@wordpress/dom-ready';
-import PostMeta from './post-meta';
-import ProjectsMeta from './projects-meta';
 
 /**
- * Import styles
+ * Internal dependencies
  */
+import PostMeta from './post-meta';
+import ProjectsMeta from './projects-meta';
 import './style.scss';
 import './editor.scss';
 
