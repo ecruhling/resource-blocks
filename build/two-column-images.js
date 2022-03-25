@@ -479,7 +479,7 @@ module.exports = window["wp"]["i18n"];
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/two-column-images","version":"1.0.0","title":"Two Column Images","category":"resource-blocks","description":"Two columns holding 990px wide images.","keywords":["img","photo","picture","column"],"example":{"attributes":{"cover":"https://example.com/image.jpg"}},"textdomain":"resource-blocks","editorScript":"file:../../../../build/two-column-images.js","editorStyle":"file:../../../../build/two-column-images.css","style":"file:../../../../build/style-two-column-images.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/two-column-images","version":"1.0.0","title":"Two Column Images","category":"resource-blocks","description":"Two columns holding two 990px wide images.","keywords":["img","photo","picture","column"],"example":{"innerBlocks":[{"name":"resource-blocks/single-image","attributes":{"url":"https://picsum.photos/200/150"}}]},"textdomain":"resource-blocks","editorScript":"file:../../../../build/two-column-images.js","editorStyle":"file:../../../../build/two-column-images.css","style":"file:../../../../build/style-two-column-images.css"}');
 
 /***/ })
 

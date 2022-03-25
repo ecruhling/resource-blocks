@@ -484,7 +484,7 @@ module.exports = window["wp"]["i18n"];
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/secondary-title","version":"1.0.0","title":"Secondary Title","description":"The secondary \'fun\' title for a Team member.","category":"resource-blocks","textdomain":"secondary-title","attributes":{"secondaryTitle":{"type":"string","default":"","source":"html","selector":"h2"}},"example":{"attributes":{"cover":"https://example.com/image.jpg"}},"keywords":["text","title"],"editorScript":"file:../../../../build/secondary-title.js","editorStyle":"file:../../../../build/secondary-title.css","style":"file:../../../../build/style-secondary-title.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/secondary-title","version":"1.0.0","title":"Secondary Title","description":"The secondary \'fun\' title for a Team member.","category":"resource-blocks","textdomain":"secondary-title","attributes":{"secondaryTitle":{"type":"string","default":"","source":"html","selector":"h2"}},"example":{"attributes":{"secondaryTitle":"Coffee-break Captain."}},"keywords":["text","title"],"editorScript":"file:../../../../build/secondary-title.js","editorStyle":"file:../../../../build/secondary-title.css","style":"file:../../../../build/style-secondary-title.css"}');
 
 /***/ })
 

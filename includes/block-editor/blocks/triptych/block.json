@@ -6,7 +6,7 @@
   "title": "Triptych",
   "category": "resource-blocks",
   "textdomain": "resource-blocks",
-  "description": "A triptych image. 2040px x 668px.",
+  "description": "A triptych image with dimensions of 2040px x 668px.",
   "keywords": [
 	"img",
 	"photo",
@@ -47,7 +47,7 @@
   },
   "example": {
 	"attributes": {
-	  "cover": "https://example.com/image.jpg"
+	  "url": "https://picsum.photos/300/150"
 	}
   },
   "editorScript": "file:../../../../build/triptych.js",

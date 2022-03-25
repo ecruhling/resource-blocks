@@ -488,7 +488,7 @@ module.exports = window["wp"]["i18n"];
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/body-text","version":"1.0.0","title":"Body Text","category":"resource-blocks","description":"Body text.","keywords":["text"],"textdomain":"resource-blocks","attributes":{"align":{"type":"string"},"content":{"type":"string","source":"html","selector":"p","default":"","__experimentalRole":"content"},"placeholder":{"type":"string"}},"supports":{"anchor":true,"className":false,"__experimentalSelector":"p"},"editorScript":"file:../../../../build/body-text.js","editorStyle":"file:../../../../build/body-text.css","style":"file:../../../../build/style-body-text.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/body-text","version":"1.0.0","title":"Body Text","category":"resource-blocks","description":"The main body text for posts and pages.","keywords":["text"],"textdomain":"resource-blocks","attributes":{"align":{"type":"string"},"content":{"type":"string","source":"html","selector":"p","default":"","__experimentalRole":"content"},"placeholder":{"type":"string"}},"supports":{"anchor":true,"className":false,"__experimentalSelector":"p"},"example":{"attributes":{"content":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."}},"editorScript":"file:../../../../build/body-text.js","editorStyle":"file:../../../../build/body-text.css","style":"file:../../../../build/style-body-text.css"}');
 
 /***/ })
 

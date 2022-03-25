@@ -560,7 +560,7 @@ module.exports = window["wp"]["i18n"];
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/questionnaire","version":"1.0.0","title":"Questionnaire","description":"The questions for each Team member.","attributes":{"question":{"type":"string","default":"","source":"attribute"}},"example":{"attributes":{"cover":"https://example.com/image.jpg"}},"keywords":["text","questions"],"category":"resource-blocks","textdomain":"resource-blocks","editorScript":"file:../../../../build/questionnaire.js","editorStyle":"file:../../../../build/questionnaire.css","style":"file:../../../../build/style-questionnaire.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/questionnaire","version":"1.0.0","title":"Questionnaire","description":"The questions for each Team member.","keywords":["text","questions"],"attributes":{"question":{"type":"string","default":"","source":"attribute"}},"example":{"innerBlocks":[{"name":"resource-blocks/single-question","attributes":{"question":"What was your first job?"}}]},"category":"resource-blocks","textdomain":"resource-blocks","editorScript":"file:../../../../build/questionnaire.js","editorStyle":"file:../../../../build/questionnaire.css","style":"file:../../../../build/style-questionnaire.css"}');
 
 /***/ })
 

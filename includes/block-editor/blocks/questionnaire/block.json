@@ -5,6 +5,10 @@
   "version": "1.0.0",
   "title": "Questionnaire",
   "description": "The questions for each Team member.",
+  "keywords": [
+	"text",
+	"questions"
+  ],
   "attributes": {
 	"question": {
 	  "type": "string",
@@ -13,14 +17,15 @@
 	}
   },
   "example": {
-	"attributes": {
-	  "cover": "https://example.com/image.jpg"
-	}
+	"innerBlocks": [
+	  {
+		"name": "resource-blocks/single-question",
+		"attributes": {
+		  "question": "What was your first job?"
+		}
+	  }
+	]
   },
-  "keywords": [
-	"text",
-	"questions"
-  ],
   "category": "resource-blocks",
   "textdomain": "resource-blocks",
   "editorScript": "file:../../../../build/questionnaire.js",

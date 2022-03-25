@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "title": "Full-width Image",
   "category": "resource-blocks",
-  "description": "A single full-width image. 2040px width.",
+  "description": "A single full-width image, constrained to a 2040px width.",
   "keywords": [ "img", "photo", "picture" ],
   "attributes": {
 	"url": {
@@ -42,7 +42,7 @@
   },
   "example": {
 	"attributes": {
-	  "cover": "https://example.com/image.jpg"
+	  "url": "https://picsum.photos/300/150"
 	}
   },
   "textdomain": "resource-blocks",

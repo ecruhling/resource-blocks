@@ -5,12 +5,17 @@
   "version": "1.0.0",
   "title": "Two Column Images",
   "category": "resource-blocks",
-  "description": "Two columns holding 990px wide images.",
+  "description": "Two columns holding two 990px wide images.",
   "keywords": [ "img", "photo", "picture", "column" ],
   "example": {
-	"attributes": {
-	  "cover": "https://example.com/image.jpg"
-	}
+	"innerBlocks": [
+	  {
+		"name": "resource-blocks/single-image",
+		"attributes": {
+		  "url": "https://picsum.photos/200/150"
+		}
+	  }
+	]
   },
   "textdomain": "resource-blocks",
   "editorScript": "file:../../../../build/two-column-images.js",

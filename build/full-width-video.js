@@ -2062,7 +2062,7 @@ function _extends() {
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-video","version":"1.0.0","title":"Full-width Video","category":"resource-blocks","description":"Full-width Vimeo video embed.","textdomain":"resource-blocks","attributes":{"url":{"type":"string"},"type":{"type":"string"},"providerNameSlug":{"type":"string"},"allowResponsive":{"type":"boolean","default":true},"responsive":{"type":"boolean","default":false},"previewable":{"type":"boolean","default":true}},"example":{"attributes":{"cover":"https://example.com/image.jpg"}},"editorScript":"file:../../../../build/full-width-video.js","editorStyle":"file:../../../../build/full-width-video.css","style":"file:../../../../build/style-full-width-video.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-video","version":"1.0.0","title":"Full-width Video","category":"resource-blocks","description":"Full-width Vimeo video embed.","textdomain":"resource-blocks","attributes":{"url":{"type":"string"},"type":{"type":"string"},"providerNameSlug":{"type":"string"},"allowResponsive":{"type":"boolean","default":true},"responsive":{"type":"boolean","default":false},"previewable":{"type":"boolean","default":true}},"example":{"attributes":{"url":"https://vimeo.com/100902001"}},"editorScript":"file:../../../../build/full-width-video.js","editorStyle":"file:../../../../build/full-width-video.css","style":"file:../../../../build/style-full-width-video.css"}');
 
 /***/ })
 
