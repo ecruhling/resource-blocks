@@ -25,12 +25,24 @@ function IntroductoryParagraphBlock( {
 	setAttributes,
 	clientId,
 } ) {
-	const { align, content, placeholder } = attributes;
+	const { align, content, placeholder, preview } = attributes;
 	const blockProps = useBlockProps( {
 		className: classnames( 'resource-blocks-row', {
 			[ `has-text-align-${ align }` ]: align,
 		} ),
 	} );
+
+	if ( preview ) {
+		return (
+			<img
+				src={
+					resource_blocks_meta.plugin_path +
+					'assets/images/intro-paragraph.gif'
+				}
+				alt="preview"
+			/>
+		);
+	}
 
 	return (
 		<>

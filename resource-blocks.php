@@ -123,6 +123,9 @@ add_action('enqueue_block_editor_assets', function () {
 		plugins_url('build/global.js', __FILE__),
 		['wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-block-editor', 'wp-dom-ready']
 	);
+	wp_localize_script( 'resource-blocks-meta', 'resource_blocks_meta', array(
+		'plugin_path' => plugin_dir_url( __FILE__ )
+	) );
 });
 
 /**
@@ -130,7 +133,6 @@ add_action('enqueue_block_editor_assets', function () {
  */
 function resource_blocks_editor_styles()
 {
-
 	wp_enqueue_style(
 		'resource-blocks-global-editor-css',
 		plugins_url('/build/global.css', __FILE__),
@@ -147,7 +149,6 @@ add_action('enqueue_block_editor_assets', 'resource_blocks_editor_styles');
  */
 function resource_blocks_styles()
 {
-
 	wp_enqueue_style(
 		'resource-blocks-global-css',
 		plugins_url('/build/style-global.css', __FILE__),

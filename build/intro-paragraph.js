@@ -46,13 +46,22 @@ function IntroductoryParagraphBlock(_ref) {
   const {
     align,
     content,
-    placeholder
+    placeholder,
+    preview
   } = attributes;
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)({
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('resource-blocks-row', {
       [`has-text-align-${align}`]: align
     })
   });
+
+  if (preview) {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+      src: resource_blocks_meta.plugin_path + 'assets/images/intro-paragraph.gif',
+      alt: "preview"
+    });
+  }
+
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.BlockControls, {
     group: "block"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.AlignmentControl, {
@@ -488,7 +497,7 @@ module.exports = window["wp"]["i18n"];
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/intro-paragraph","version":"1.0.0","title":"Introductory Paragraph","category":"resource-blocks","description":"An introductory paragraph of text that is larger than the body text, with an extra large margin on the right at desktop sizes.","keywords":["text"],"textdomain":"resource-blocks","attributes":{"align":{"type":"string"},"content":{"type":"string","source":"html","selector":"p","default":"","__experimentalRole":"content"},"placeholder":{"type":"string"}},"supports":{"anchor":true,"className":false,"__experimentalSelector":"p"},"example":{"attributes":{"content":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."}},"editorScript":"file:../../../../build/intro-paragraph.js","editorStyle":"file:../../../../build/intro-paragraph.css","style":"file:../../../../build/style-intro-paragraph.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/intro-paragraph","version":"1.0.0","title":"Introductory Paragraph","category":"resource-blocks","description":"An introductory paragraph of text that is larger than the body text, with an extra large margin on the right at desktop sizes.","keywords":["text"],"textdomain":"resource-blocks","attributes":{"align":{"type":"string"},"content":{"type":"string","source":"html","selector":"p","default":"","__experimentalRole":"content"},"placeholder":{"type":"string"},"preview":{"type":"boolean","default":false}},"supports":{"anchor":true,"className":false,"__experimentalSelector":"p"},"example":{"attributes":{"preview":true}},"editorScript":"file:../../../../build/intro-paragraph.js","editorStyle":"file:../../../../build/intro-paragraph.css","style":"file:../../../../build/style-intro-paragraph.css"}');
 
 /***/ })
 

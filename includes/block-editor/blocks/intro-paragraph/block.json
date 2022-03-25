@@ -23,6 +23,10 @@
 	},
 	"placeholder": {
 	  "type": "string"
+	},
+	"preview": {
+	  "type": "boolean",
+	  "default": false
 	}
   },
   "supports": {
@@ -32,7 +36,7 @@
   },
   "example": {
 	"attributes": {
-	  "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+	  "preview": true
 	}
   },
   "editorScript": "file:../../../../build/intro-paragraph.js",
