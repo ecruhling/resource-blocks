@@ -1,7 +1,7 @@
 /**
  * Register post meta fields, uses global.js
  */
-import { registerPlugin } from '@wordpress/plugins';
+import { getPlugins, registerPlugin } from '@wordpress/plugins';
 import domReady from '@wordpress/dom-ready';
 import PostMeta from './post-meta';
 import ProjectsMeta from './projects-meta';
@@ -28,6 +28,7 @@ domReady( () => {
 	wp.data.subscribe( () => {
 		// get the current postType
 		const newPostType = getPostType();
+
 		// once the post type changes from null to an actual value, the post type is valid
 		if ( postType !== newPostType ) {
 			// this is a post
@@ -36,21 +37,38 @@ domReady( () => {
 				removeEditorPanel( 'featured-image' );
 				removeEditorPanel( 'post-excerpt' );
 				removeEditorPanel( 'discussion-panel' );
+				// get registered plugins
+				const registeredPlugins = getPlugins();
 
-				// register panel
-				registerPlugin( 'post-meta', {
-					render() {
-						return <PostMeta />;
-					},
-				} );
+				// register panel (verify that plugin is registered only once)
+				if (
+					! registeredPlugins.some(
+						( plugin ) => plugin.name === 'post-meta'
+					)
+				) {
+					registerPlugin( 'post-meta', {
+						render() {
+							return <PostMeta />;
+						},
+					} );
+				}
 			}
 			if ( newPostType === 'projects' ) {
-				// register panel
-				registerPlugin( 'projects-meta', {
-					render() {
-						return <ProjectsMeta />;
-					},
-				} );
+				// get registered plugins
+				const registeredPlugins = getPlugins();
+
+				// register panel (verify that plugin is registered only once)
+				if (
+					! registeredPlugins.some(
+						( plugin ) => plugin.name === 'projects-meta'
+					)
+				) {
+					registerPlugin( 'projects-meta', {
+						render() {
+							return <ProjectsMeta />;
+						},
+					} );
+				}
 			}
 		}
 		// update the postType variable, so the above runs only once.

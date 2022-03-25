@@ -1,1 +1,27 @@
-.wp-block-resource-blocks-secondary-title h2{color:#37535b;display:block;font-family:RomainHeadline-Regular-WebS,sans-serif;font-size:1.625rem;font-weight:500;line-height:1.87;margin-bottom:3rem}@media(min-width:768px){.wp-block-resource-blocks-secondary-title{padding-left:3rem;padding-right:3rem;padding-top:3rem}}
+/*!********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./includes/block-editor/blocks/secondary-title/style.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************/
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-resource-blocks-secondary-title h2 {
+  color: #37535b;
+  margin-bottom: 3rem;
+  line-height: 1.87;
+  font-size: 1.625rem;
+  font-weight: 500;
+  font-family: RomainHeadline-Regular-WebS, sans-serif;
+  display: block;
+}
+@media (min-width: 768px) {
+  .wp-block-resource-blocks-secondary-title {
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-top: 3rem;
+  }
+}
+
+/*# sourceMappingURL=style-secondary-title.css.map*/

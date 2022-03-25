@@ -1,1 +1,16 @@
-@media(min-width:768px){.wp-block-resource-blocks-secondary-title{padding-left:3.8rem;padding-right:3.8rem}}
+/*!*********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./includes/block-editor/blocks/secondary-title/editor.scss ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************/
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+@media (min-width: 768px) {
+  .wp-block-resource-blocks-secondary-title {
+    padding-left: 3.8rem;
+    padding-right: 3.8rem;
+  }
+}
+
+/*# sourceMappingURL=secondary-title.css.map*/
