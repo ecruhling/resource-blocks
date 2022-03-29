@@ -57,7 +57,8 @@ function IntroductoryParagraphBlock(_ref) {
 
   if (preview) {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-      src: resource_blocks_meta.plugin_path + 'assets/images/intro-paragraph.gif',
+      src: // eslint-disable-next-line no-undef,camelcase
+      resource_blocks_meta.plugin_path + 'assets/images/intro-paragraph.gif',
       alt: "preview"
     });
   }

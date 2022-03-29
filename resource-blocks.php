@@ -80,9 +80,10 @@ function resource_blocks_init()
 	 * Register post meta for the editor sidebar on the project edit screen.
 	 */
 	register_post_meta('projects', 'second_line', [
-		'show_in_rest' => true,
 		'single' => true,
 		'type' => 'string',
+		'show_in_rest' => true,
+		'sanitize_callback' => 'sanitize_text_field',
 		'auth_callback' => function () {
 			return current_user_can('edit_posts');
 		}

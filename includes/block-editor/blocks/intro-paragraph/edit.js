@@ -36,6 +36,7 @@ function IntroductoryParagraphBlock( {
 		return (
 			<img
 				src={
+					// eslint-disable-next-line no-undef,camelcase
 					resource_blocks_meta.plugin_path +
 					'assets/images/intro-paragraph.gif'
 				}
