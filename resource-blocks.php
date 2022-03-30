@@ -37,18 +37,18 @@ function resource_blocks_init()
 	 * Register post meta for the editor sidebar on the post edit screen.
 	 */
 	register_post_meta('post', 'post_thumbnail', [
-		'show_in_rest' => true,
 		'single' => true,
 		'type' => 'integer',
+		'show_in_rest' => true,
 		'auth_callback' => function () {
 			return current_user_can('edit_posts');
 		}
 	]);
 
 	register_post_meta('post', 'optional_description', [
-		'show_in_rest' => true,
 		'single' => true,
 		'type' => 'string',
+		'show_in_rest' => true,
 		'sanitize_callback' => 'sanitize_text_field',
 		'auth_callback' => function () {
 			return current_user_can('edit_posts');
@@ -59,18 +59,20 @@ function resource_blocks_init()
 	 * Register post meta for the editor sidebar on the team edit screen.
 	 */
 	register_post_meta('team', 'title', [
-		'show_in_rest' => true,
 		'single' => true,
 		'type' => 'string',
+		'show_in_rest' => true,
+		'sanitize_callback' => 'sanitize_text_field',
 		'auth_callback' => function () {
 			return current_user_can('edit_posts');
 		}
 	]);
 
 	register_post_meta('team', 'secondary_title', [
-		'show_in_rest' => true,
 		'single' => true,
 		'type' => 'string',
+		'show_in_rest' => true,
+		'sanitize_callback' => 'sanitize_text_field',
 		'auth_callback' => function () {
 			return current_user_can('edit_posts');
 		}
@@ -116,23 +118,11 @@ function resource_blocks_init()
 add_action('init', 'resource_blocks_init');
 
 /**
- * Enqueue Resource Blocks meta (sidebar editor).
- */
-add_action('enqueue_block_editor_assets', function () {
-	wp_enqueue_script(
-		'resource-blocks-meta',
-		plugins_url('build/global.js', __FILE__),
-		['wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-block-editor', 'wp-dom-ready']
-	);
-	wp_localize_script( 'resource-blocks-meta', 'resource_blocks_meta', array(
-		'plugin_path' => plugin_dir_url( __FILE__ )
-	) );
-});
-
-/**
  * Enqueue global block CSS for the editor.
+ * Enqueue Resource Blocks meta script (sidebar editor).
+ * Localize script to create plugin_path variable.
  */
-function resource_blocks_editor_styles()
+function resource_blocks_styles_scripts()
 {
 	wp_enqueue_style(
 		'resource-blocks-global-editor-css',
@@ -141,9 +131,18 @@ function resource_blocks_editor_styles()
 		filemtime(plugin_dir_path(__FILE__) . 'build/global.css')
 	);
 
+	wp_enqueue_script(
+		'resource-blocks-meta',
+		plugins_url('build/global.js', __FILE__),
+		['wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-block-editor', 'wp-dom-ready']
+	);
+
+	wp_localize_script( 'resource-blocks-meta', 'resource_blocks_meta', array(
+		'plugin_path' => plugin_dir_url( __FILE__ )
+	) );
 }
 
-add_action('enqueue_block_editor_assets', 'resource_blocks_editor_styles');
+add_action('enqueue_block_editor_assets', 'resource_blocks_styles_scripts');
 
 /**
  * Enqueue global frontend and editor CSS.
@@ -156,7 +155,6 @@ function resource_blocks_styles()
 		[],
 		filemtime(plugin_dir_path(__FILE__) . 'build/style-global.css')
 	);
-
 }
 
 add_action('enqueue_block_assets', 'resource_blocks_styles');
@@ -168,7 +166,6 @@ add_action('enqueue_block_assets', 'resource_blocks_styles');
  */
 function resource_block_category(array $block_categories): array
 {
-
 	$resource_category = array(
 		'slug' => 'resource-blocks',
 		'title' => __('Resource Blocks', 'resource-blocks'),
@@ -179,7 +176,6 @@ function resource_block_category(array $block_categories): array
 	array_unshift($block_categories, $resource_category);
 
 	return $block_categories;
-
 }
 
 add_action('block_categories_all', 'resource_block_category', 10, 2);
