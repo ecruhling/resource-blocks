@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "title": "Image [Constrained]",
   "category": "resource-blocks",
-  "description": "A simple image that has a field to constrain the width or height.",
+  "description": "A simple image that has an additional field to constrain the width or height.",
   "keywords": [
 	"img",
 	"photo",
@@ -64,7 +64,13 @@
 	"width": {
 	  "type": "number"
 	},
+	"designWidth": {
+	  "type": "number"
+	},
 	"height": {
+	  "type": "number"
+	},
+	"dsignHeight": {
 	  "type": "number"
 	},
 	"sizeSlug": {

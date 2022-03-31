@@ -1,8 +1,5 @@
 /**
- * The following styles get applied both on the front of your site
- * and in the editor.
- *
- * Replace them with your own styles or remove the file completely.
+ * Styles.
  */
 
 .wp-block-resource-blocks-image-constrained {
@@ -75,7 +72,7 @@
   // Reason being: the new markup, <figcaptions>, are not likely to be styled in the majority of existing themes,
   // so we supply the styles so as to not appear broken or unstyled in those themes.
   figcaption {
-	@include caption-style();
+	//@include caption-style();
   }
 
   // Variations

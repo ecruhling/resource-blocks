@@ -1,37 +1,63 @@
 /**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
+ * WordPress dependencies.
  */
+import { Component } from '@wordpress/element';
+import {
+	RichText,
+	MediaPlaceholder,
+	BlockControls,
+	MediaUpload,
+	MediaUploadCheck,
+	InspectorControls,
+	URLInput,
+	useBlockProps,
+} from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
+import { getBlobByURL, isBlobURL, revokeBlobURL } from '@wordpress/blob';
+import {
+	Spinner,
+	withNotices,
+	Toolbar,
+	IconButton,
+	PanelBody,
+	TextareaControl,
+	SelectControl,
+	Dashicon,
+	Tooltip,
+	TextControl,
+} from '@wordpress/components';
+import { withSelect } from '@wordpress/data';
 
 /**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
- */
-import { useBlockProps } from '@wordpress/block-editor';
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
+ * Import editor styles.
  */
 import './editor.scss';
 
 /**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
+ * Edit function.
  *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
+ * @param {WPElement} root0
+ * @param {WPElement} root0.attributes
+ * @param {WPElement} root0.setAttributes
+ *
  * @return {WPElement} Element to render.
  */
-export default function Edit() {
+export default function Edit( { attributes, setAttributes } ) {
 	return (
-		<p { ...useBlockProps() }>
-			{ __( 'Image [Constrained] – hello from the editor!', 'image-constrained' ) }
-		</p>
+		<figure { ...useBlockProps() }>
+			<MediaPlaceholder
+			// icon={ <BlockIcon icon={ icon } /> }
+			// onSelect={ onSelectImage }
+			// onSelectURL={ onSelectURL }
+			// notices={ noticeUI }
+			// onError={ onUploadError }
+			// onClose={ onCloseModal }
+			// accept="image/*"
+			// allowedTypes={ ALLOWED_MEDIA_TYPES }
+			// value={ { id, src } }
+			// mediaPreview={ mediaPreview }
+			// disableMediaButtons={ temporaryURL || url }
+			/>
+		</figure>
 	);
 }

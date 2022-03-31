@@ -1,7 +1,5 @@
 /**
- * The following styles get applied inside the editor only.
- *
- * Replace them with your own styles or remove the file completely.
+ * Editor styles.
  */
 
 figure.wp-block-resource-blocks-image-constrained:not(.wp-block) {
@@ -49,11 +47,11 @@ figure.wp-block-resource-blocks-image-constrained:not(.wp-block) {
   position: absolute;
   left: 0;
   right: 0;
-  margin: -$border-width 0;
+  //margin: -$border-width 0;
 
-  @include break-small() {
-	margin: -$border-width;
-  }
+  //@include break-small() {
+	//margin: -$border-width;
+  //}
 }
 
 [data-align="wide"] > .wp-block-resource-blocks-image-constrained,
@@ -134,13 +132,13 @@ figure.wp-block-resource-blocks-image-constrained:not(.wp-block) {
 }
 
 .wp-block-resource-blocks-image-constrained__aspect-ratio {
-  height: $grid-unit-60 - $border-width - $border-width;
-  margin-bottom: -$grid-unit-10;
+  //height: $grid-unit-60 - $border-width - $border-width;
+  //margin-bottom: -$grid-unit-10;
   display: flex;
   align-items: center;
 
   .components-button {
-	width: $button-size;
+	//width: $button-size;
 	padding-left: 0;
 	padding-right: 0;
   }
