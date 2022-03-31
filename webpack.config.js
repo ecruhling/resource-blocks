@@ -9,6 +9,7 @@ module.exports = {
 		'two-column-images': './includes/block-editor/blocks/two-column-images',
 		'full-width-video': './includes/block-editor/blocks/full-width-video',
 		'single-image': './includes/block-editor/blocks/single-image',
+		'image-constrained': './includes/block-editor/blocks/image-constrained',
 		triptych: './includes/block-editor/blocks/triptych',
 		questionnaire: './includes/block-editor/blocks/questionnaire',
 		'single-question': './includes/block-editor/blocks/single-question',

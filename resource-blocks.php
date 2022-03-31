@@ -27,6 +27,7 @@ function resource_blocks_init()
 		'triptych/',
 		'secondary-title/',
 		'questionnaire/',
+		'image-constrained/',
 	);
 
 	foreach ($blocks as $block) {
@@ -198,6 +199,7 @@ function allow_only_resource_blocks(): array
 		'resource-blocks/triptych',
 		'resource-blocks/secondary-title',
 		'resource-blocks/questionnaire',
+		'resource-blocks/image-constrained',
 	);
 }
 
