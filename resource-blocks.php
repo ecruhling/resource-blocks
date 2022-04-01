@@ -208,42 +208,50 @@ add_filter('allowed_block_types_all', 'allow_only_resource_blocks', 10, 2);
 /**
  * Add media file size column in media library.
  */
-add_filter( 'manage_media_columns', 'sk_media_columns_filesize' );
 /**
  * Filter the Media list table columns to add a File Size column.
  *
  * @param array $posts_columns Existing array of columns displayed in the Media list table.
  * @return array Amended array of columns to be displayed in the Media list table.
  */
-function sk_media_columns_filesize(array $posts_columns ): array
+function resource_media_columns_filesize(array $posts_columns ): array
 {
-	$posts_columns['filesize'] = __( 'File Size', 'resource-blocks' );
+	unset($posts_columns['comments']);
+	$posts_columns['filesize'] = __( 'Size & Dimensions', 'resource-blocks' );
 
 	return $posts_columns;
 }
 
-add_action( 'manage_media_custom_column', 'sk_media_custom_column_filesize', 10, 2 );
+add_filter( 'manage_media_columns', 'resource_media_columns_filesize' );
+
 /**
  * Display File Size custom column in the Media list table.
  *
  * @param string $column_name Name of the custom column.
  * @param int $post_id Current Attachment ID.
  */
-function sk_media_custom_column_filesize(string $column_name, int $post_id ) {
+function resource_media_custom_column_filesize(string $column_name, int $post_id ) {
 	if ( 'filesize' !== $column_name ) {
 		return;
 	}
 
+	$width = wp_get_attachment_metadata($post_id)['width'] ?? null;
+	$height = wp_get_attachment_metadata($post_id)['height'] ?? null;
 	$bytes = filesize( get_attached_file( $post_id ) );
 
-	echo size_format( $bytes, 2 );
+	$string = size_format($bytes, 2) . '</br>';
+	$string .= 'height: ' . $width . 'px</br>';
+	$string .= 'width: ' . $height . 'px</br>';
+
+	echo $string;
 }
 
-add_action( 'admin_print_styles-upload.php', 'sk_filesize_column_filesize' );
+add_action( 'manage_media_custom_column', 'resource_media_custom_column_filesize', 10, 2 );
+
 /**
  * Adjust File Size column on Media Library page in WP admin
  */
-function sk_filesize_column_filesize() {
+function resource_filesize_column_filesize() {
 	echo
 	'<style>
         .fixed .column-filesize {
@@ -251,3 +259,5 @@ function sk_filesize_column_filesize() {
         }
     </style>';
 }
+
+add_action( 'admin_print_styles-upload.php', 'resource_filesize_column_filesize' );
