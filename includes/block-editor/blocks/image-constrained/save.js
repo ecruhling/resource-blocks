@@ -12,10 +12,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 export default function save() {
 	return (
 		<figure { ...useBlockProps.save() }>
-			{ __(
-				'Image [Constrained] – hello from the saved content!',
-				'image-constrained'
-			) }
+			{ __( 'Image [Constrained]', 'resource-blocks' ) }
 		</figure>
 	);
 }

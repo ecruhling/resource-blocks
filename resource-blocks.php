@@ -19,6 +19,7 @@ function resource_blocks_init()
 	$blocks = array(
 		'intro-paragraph/',
 		'body-text/',
+		'image-constrained/',
 		'full-width-image/',
 		'two-column-images/',
 		'full-width-video/',
@@ -27,7 +28,6 @@ function resource_blocks_init()
 		'triptych/',
 		'secondary-title/',
 		'questionnaire/',
-		'image-constrained/',
 	);
 
 	foreach ($blocks as $block) {

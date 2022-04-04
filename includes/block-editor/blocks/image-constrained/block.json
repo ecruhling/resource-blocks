@@ -11,7 +11,6 @@
 	"photo",
 	"picture"
   ],
-  "textdomain": "resource-blocks",
   "attributes": {
 	"align": {
 	  "type": "string"
@@ -70,7 +69,7 @@
 	"height": {
 	  "type": "number"
 	},
-	"dsignHeight": {
+	"designHeight": {
 	  "type": "number"
 	},
 	"sizeSlug": {
@@ -111,6 +110,7 @@
 	  "label": "Rounded"
 	}
   ],
+  "textdomain": "resource-blocks",
   "editorScript": "file:../../../../build/image-constrained.js",
   "editorStyle": "file:../../../../build/image-constrained.css",
   "style": "file:../../../../build/style-image-constrained.css"
