@@ -42,7 +42,7 @@ import { store as coreStore } from '@wordpress/core-data';
  * Internal dependencies.
  */
 import useClientWidth from './use-client-width';
-import { isExternalImage, isMediaDestroyed } from './edit';
+import { isMediaDestroyed } from './edit';
 
 export default function Image( {
 	temporaryURL,
@@ -154,22 +154,6 @@ export default function Image( {
 		),
 		( { name, slug } ) => ( { value: slug, label: name } )
 	);
-
-	// If an image is externally hosted, try to fetch the image data. This may
-	// fail if the image host doesn't allow CORS with the domain. If it works,
-	// we can enable a button in the toolbar to upload the image.
-	useEffect( () => {
-		if ( ! isExternalImage( id, url ) || ! isSelected || externalBlob ) {
-			return;
-		}
-
-		window
-			.fetch( url )
-			.then( ( response ) => response.blob() )
-			.then( ( blob ) => setExternalBlob( blob ) )
-			// Do nothing, cannot upload.
-			.catch( () => {} );
-	}, [ id, url, isSelected, externalBlob ] );
 
 	// Focus the caption after inserting an image from the placeholder. This is
 	// done to preserve the behaviour of focussing the first tabbable element

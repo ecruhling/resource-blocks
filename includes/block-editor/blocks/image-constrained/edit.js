@@ -46,7 +46,7 @@ export const pickRelevantMediaFiles = ( image, size ) => {
  * @param {number=} id  The id of the image.
  * @param {string=} url The url of the image.
  *
- * @return {boolean} Is the URL a Blob URL
+ * @return {boolean} Is the URL a Blob URL?
  */
 const isTemporaryImage = ( id, url ) => ! id && isBlobURL( url );
 
@@ -59,7 +59,7 @@ const isTemporaryImage = ( id, url ) => ! id && isBlobURL( url );
  *
  * @return {boolean} Is the url an externally hosted url?
  */
-export const isExternalImage = ( id, url ) => url && ! id && ! isBlobURL( url );
+// export const isExternalImage = ( id, url ) => url && ! id && ! isBlobURL( url );
 
 /**
  * Checks if WP generated default image size. Size generation is skipped
@@ -172,9 +172,9 @@ export function Edit( {
 		}
 	}
 
-	const isExternal = isExternalImage( id, url );
+	// const isExternal = isExternalImage( id, url );
 
-	const src = isExternal ? url : undefined;
+	// const src = isExternal ? url : undefined;
 
 	const mediaPreview = !! url && (
 		<img
@@ -331,18 +331,6 @@ export function Edit( {
 		}
 	}, [] );
 
-	function onSelectURL( newURL ) {
-		if ( newURL !== url ) {
-			setAttributes( {
-				url: newURL,
-				id: undefined,
-				width: undefined,
-				height: undefined,
-				sizeSlug: imageDefaultSize,
-			} );
-		}
-	}
-
 	return (
 		<>
 			<figure { ...blockProps }>
@@ -355,7 +343,6 @@ export function Edit( {
 						insertBlocksAfter={ insertBlocksAfter }
 						onReplace={ onReplace }
 						onSelectImage={ onSelectImage }
-						onSelectURL={ onSelectURL }
 						onUploadError={ onUploadError }
 						containerRef={ ref }
 						context={ context }
@@ -373,16 +360,25 @@ export function Edit( {
 					</BlockControls>
 				) }
 				<MediaPlaceholder
+					multiple={ false }
+					labels={ {
+						title: __( 'Image [Size Constrained]' ),
+						instructions: __(
+							'Upload an image file, or pick one from the media library.'
+						),
+					} }
+					disableDropZone={ true }
 					onSelect={ onSelectImage }
-					onSelectURL={ onSelectURL }
 					notices={ noticeUI }
 					onError={ onUploadError }
 					onClose={ onCloseModal }
 					accept="image/*"
 					allowedTypes={ [ 'image' ] }
-					value={ { id, src } }
+					value={ { id } }
 					mediaPreview={ mediaPreview }
 					disableMediaButtons={ temporaryURL || url }
+					// onFilesPreUpload={}
+					// handleUpload={}
 				/>
 			</figure>
 		</>

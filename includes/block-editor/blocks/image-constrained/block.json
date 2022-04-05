@@ -3,7 +3,7 @@
   "apiVersion": 2,
   "name": "resource-blocks/image-constrained",
   "version": "1.0.0",
-  "title": "Image [Constrained]",
+  "title": "Image [Size Constrained]",
   "category": "resource-blocks",
   "description": "A simple image that has an additional field to constrain the width or height.",
   "keywords": [
