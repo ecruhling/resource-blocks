@@ -163,31 +163,6 @@ const pickRelevantMediaFiles = (image, size) => {
 
 const isTemporaryImage = (id, url) => !id && (0,_wordpress_blob__WEBPACK_IMPORTED_MODULE_3__.isBlobURL)(url);
 /**
- * Is the url for the image hosted externally. An externally hosted image has no
- * id and is not a blob url.
- *
- * @param {number=} id  The id of the image.
- * @param {string=} url The url of the image.
- *
- * @return {boolean} Is the url an externally hosted url?
- */
-// export const isExternalImage = ( id, url ) => url && ! id && ! isBlobURL( url );
-
-/**
- * Checks if WP generated default image size. Size generation is skipped
- * when the image is smaller than the said size.
- *
- * @param {Object} image
- * @param {string} defaultSize
- *
- * @return {boolean} Whether or not it has default image size.
- */
-
-
-function hasDefaultSize(image, defaultSize) {
-  return (0,lodash__WEBPACK_IMPORTED_MODULE_2__.has)(image, ['sizes', defaultSize, 'url']) || (0,lodash__WEBPACK_IMPORTED_MODULE_2__.has)(image, ['media_details', 'sizes', defaultSize, 'source_url']);
-}
-/**
  * Checks if a media attachment object has been "destroyed",
  * that is, removed from the media library. The core Media Library
  * adds a `destroyed` property to a deleted attachment object in the media collection.
@@ -236,8 +211,7 @@ function Edit(_ref) {
     width,
     designWidth,
     height,
-    designHeight,
-    sizeSlug
+    designHeight
   } = attributes;
   const [temporaryURL, setTemporaryURL] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
   const altRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
@@ -286,9 +260,7 @@ function Edit(_ref) {
         id: undefined
       });
     }
-  } // const isExternal = isExternalImage( id, url );
-  // const src = isExternal ? url : undefined;
-
+  }
 
   const mediaPreview = !!url && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Edit image'),
@@ -296,10 +268,9 @@ function Edit(_ref) {
     className: 'edit-image-preview',
     src: url
   });
-  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()(className, {
+  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()(className, 'size-full', {
     'is-transient': temporaryURL,
-    'is-resized': !!width || !!height,
-    [`size-${sizeSlug}`]: sizeSlug
+    'is-resized': !!width || !!height
   });
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.useBlockProps)({
     ref,
@@ -349,10 +320,7 @@ function Edit(_ref) {
     if (!media.id || media.id !== id) {
       additionalAttributes = {
         width: undefined,
-        height: undefined,
-        // Fallback to size "full" if there's no default image size.
-        // It means the image is smaller, and the block will use a full-size URL.
-        sizeSlug: hasDefaultSize(media, imageDefaultSize) ? imageDefaultSize : 'full'
+        height: undefined
       };
     } else {
       // Keep the same url when selecting the same file, so "Image Size"
@@ -575,8 +543,7 @@ function Image(_ref) {
       title,
       width,
       height,
-      linkTarget,
-      sizeSlug
+      linkTarget
     },
     setAttributes,
     isSelected,
@@ -600,28 +567,20 @@ function Image(_ref) {
     getBlock
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.store);
   const {
-    image,
-    multiImageSelection
+    image
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
     const {
       getMedia
     } = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_11__.store);
-    const {
-      getMultiSelectedBlockClientIds,
-      getBlockName
-    } = select(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.store);
-    const multiSelectedClientIds = getMultiSelectedBlockClientIds();
     return {
       image: id && isSelected ? getMedia(id, {
         context: 'view'
-      }) : null,
-      multiImageSelection: multiSelectedClientIds.length && multiSelectedClientIds.every(_clientId => getBlockName(_clientId) === 'core/image')
+      }) : null
     };
   }, [id, isSelected]);
   const {
     canInsertCover,
     imageEditing,
-    imageSizes,
     maxWidth,
     mediaUpload
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
@@ -653,22 +612,7 @@ function Image(_ref) {
   const [isEditingImage, setIsEditingImage] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [externalBlob, setExternalBlob] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
   const clientWidth = (0,_use_client_width__WEBPACK_IMPORTED_MODULE_12__["default"])(containerRef, [align]);
-  const isResizable = allowResize && !(isWideAligned && isLargeViewport);
-  const imageSizeOptions = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.map)((0,lodash__WEBPACK_IMPORTED_MODULE_1__.filter)(imageSizes, _ref2 => {
-    let {
-      slug
-    } = _ref2;
-    return (0,lodash__WEBPACK_IMPORTED_MODULE_1__.get)(image, ['media_details', 'sizes', slug, 'source_url']);
-  }), _ref3 => {
-    let {
-      name,
-      slug
-    } = _ref3;
-    return {
-      value: slug,
-      label: name
-    };
-  }); // Focus the caption after inserting an image from the placeholder. This is
+  const isResizable = allowResize && !(isWideAligned && isLargeViewport); // Focus the caption after inserting an image from the placeholder. This is
   // done to preserve the behaviour of focussing the first tabbable element
   // when a block is mounted. Previously, the image block would remount when
   // the placeholder is removed. Maybe this behaviour could be removed.
@@ -720,27 +664,12 @@ function Image(_ref) {
     });
   }
 
-  function updateImage(newSizeSlug) {
-    const newUrl = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.get)(image, ['media_details', 'sizes', newSizeSlug, 'source_url']);
-
-    if (!newUrl) {
-      return null;
-    }
-
-    setAttributes({
-      url: newUrl,
-      width: undefined,
-      height: undefined,
-      sizeSlug: newSizeSlug
-    });
-  }
-
   function uploadExternal() {
     mediaUpload({
       filesList: [externalBlob],
 
-      onFileChange(_ref4) {
-        let [img] = _ref4;
+      onFileChange(_ref2) {
+        let [img] = _ref2;
         onSelectImage(img);
 
         if ((0,_wordpress_blob__WEBPACK_IMPORTED_MODULE_2__.isBlobURL)(img.url)) {
@@ -784,7 +713,7 @@ function Image(_ref) {
     }
   }, [isSelected]);
   const canEditImage = id && naturalWidth && naturalHeight && imageEditing;
-  const allowCrop = !multiImageSelection && canEditImage && !isEditingImage;
+  const allowCrop = canEditImage && !isEditingImage;
 
   function switchToCover() {
     replaceBlocks(clientId, (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_9__.switchToBlockType)(getBlock(clientId), 'core/cover'));
@@ -795,7 +724,7 @@ function Image(_ref) {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.BlockAlignmentControl, {
     value: align,
     onChange: updateAlignment
-  }), !multiImageSelection && !isEditingImage && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.__experimentalImageURLInputUI, {
+  }), !isEditingImage && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.__experimentalImageURLInputUI, {
     url: href || '',
     onChangeUrl: onSetHref,
     linkDestination: linkDestination,
@@ -812,11 +741,11 @@ function Image(_ref) {
     onClick: uploadExternal,
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_15__["default"],
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Upload external image')
-  }), !multiImageSelection && canInsertCover && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToolbarButton, {
+  }), canInsertCover && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToolbarButton, {
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_16__["default"],
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Add text over image'),
     onClick: switchToCover
-  })), !multiImageSelection && !isEditingImage && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.BlockControls, {
+  })), !isEditingImage && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.BlockControls, {
     group: "other"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.MediaReplaceFlow, {
     mediaId: id,
@@ -829,23 +758,13 @@ function Image(_ref) {
     onCloseModal: onCloseModal
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Image settings')
-  }, !multiImageSelection && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextareaControl, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextareaControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Alt text (alternative text)'),
     value: alt,
     onChange: updateAlt,
     help: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ExternalLink, {
       href: "https://www.w3.org/WAI/tutorials/images/decision-tree"
     }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Describe the purpose of the image')), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Leave empty if the image is purely decorative.'))
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.__experimentalImageSizeControl, {
-    onChangeImage: updateImage,
-    onChange: value => setAttributes(value),
-    slug: sizeSlug,
-    width: width,
-    height: height,
-    imageSizeOptions: imageSizeOptions,
-    isResizable: isResizable,
-    imageWidth: naturalWidth,
-    imageHeight: naturalHeight
   }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.InspectorControls, {
     __experimentalGroup: "advanced"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
@@ -862,8 +781,7 @@ function Image(_ref) {
   if (alt) {
     defaultedAlt = alt;
   } else if (filename) {
-    defaultedAlt = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.sprintf)(
-    /* translators: %s: file name */
+    defaultedAlt = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.sprintf)( // eslint-disable-next-line @wordpress/i18n-translator-comments
     (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('This image has an empty alt attribute; its file name is %s'), filename);
   } else {
     defaultedAlt = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('This image has an empty alt attribute');
@@ -1384,7 +1302,7 @@ module.exports = window["wp"]["url"];
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/image-constrained","version":"1.0.0","title":"Image [Size Constrained]","category":"resource-blocks","description":"A simple image that has an additional field to constrain the width or height.","keywords":["img","photo","picture"],"attributes":{"align":{"type":"string"},"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"caption":{"type":"string","source":"html","selector":"figcaption"},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"href":{"type":"string","source":"attribute","selector":"figure > a","attribute":"href"},"rel":{"type":"string","source":"attribute","selector":"figure > a","attribute":"rel"},"linkClass":{"type":"string","source":"attribute","selector":"figure > a","attribute":"class"},"id":{"type":"number"},"width":{"type":"number"},"designWidth":{"type":"number"},"height":{"type":"number"},"designHeight":{"type":"number"},"sizeSlug":{"type":"string"},"linkDestination":{"type":"string"},"linkTarget":{"type":"string","source":"attribute","selector":"figure > a","attribute":"target"}},"supports":{"anchor":true,"color":{"__experimentalDuotone":"img","text":false,"background":false},"__experimentalBorder":{"radius":true,"__experimentalDefaultControls":{"radius":true}}},"styles":[{"name":"default","label":"Default","isDefault":true},{"name":"rounded","label":"Rounded"}],"textdomain":"resource-blocks","editorScript":"file:../../../../build/image-constrained.js","editorStyle":"file:../../../../build/image-constrained.css","style":"file:../../../../build/style-image-constrained.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/image-constrained","version":"1.0.0","title":"Image [Size Constrained]","category":"resource-blocks","description":"A simple image that has an additional field to constrain the width or height.","keywords":["img","photo","picture"],"attributes":{"align":{"type":"string"},"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"caption":{"type":"string","source":"html","selector":"figcaption"},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"href":{"type":"string","source":"attribute","selector":"figure > a","attribute":"href"},"rel":{"type":"string","source":"attribute","selector":"figure > a","attribute":"rel"},"linkClass":{"type":"string","source":"attribute","selector":"figure > a","attribute":"class"},"id":{"type":"number"},"width":{"type":"number"},"designWidth":{"type":"number"},"height":{"type":"number"},"designHeight":{"type":"number"},"linkDestination":{"type":"string"},"linkTarget":{"type":"string","source":"attribute","selector":"figure > a","attribute":"target"}},"supports":{"anchor":true,"color":{"__experimentalDuotone":"img","text":false,"background":false},"__experimentalBorder":{"radius":true,"__experimentalDefaultControls":{"radius":true}}},"styles":[{"name":"default","label":"Default","isDefault":true},{"name":"rounded","label":"Rounded"}],"textdomain":"resource-blocks","editorScript":"file:../../../../build/image-constrained.js","editorStyle":"file:../../../../build/image-constrained.css","style":"file:../../../../build/style-image-constrained.css"}');
 
 /***/ })
 

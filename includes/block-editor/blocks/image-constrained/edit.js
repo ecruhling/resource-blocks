@@ -2,7 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { get, has, omit, pick } from 'lodash';
+import { get, omit, pick } from 'lodash';
 
 /**
  * WordPress dependencies.
@@ -51,33 +51,6 @@ export const pickRelevantMediaFiles = ( image, size ) => {
 const isTemporaryImage = ( id, url ) => ! id && isBlobURL( url );
 
 /**
- * Is the url for the image hosted externally. An externally hosted image has no
- * id and is not a blob url.
- *
- * @param {number=} id  The id of the image.
- * @param {string=} url The url of the image.
- *
- * @return {boolean} Is the url an externally hosted url?
- */
-// export const isExternalImage = ( id, url ) => url && ! id && ! isBlobURL( url );
-
-/**
- * Checks if WP generated default image size. Size generation is skipped
- * when the image is smaller than the said size.
- *
- * @param {Object} image
- * @param {string} defaultSize
- *
- * @return {boolean} Whether or not it has default image size.
- */
-function hasDefaultSize( image, defaultSize ) {
-	return (
-		has( image, [ 'sizes', defaultSize, 'url' ] ) ||
-		has( image, [ 'media_details', 'sizes', defaultSize, 'source_url' ] )
-	);
-}
-
-/**
  * Checks if a media attachment object has been "destroyed",
  * that is, removed from the media library. The core Media Library
  * adds a `destroyed` property to a deleted attachment object in the media collection.
@@ -123,7 +96,6 @@ export function Edit( {
 		designWidth,
 		height,
 		designHeight,
-		sizeSlug,
 	} = attributes;
 
 	const [ temporaryURL, setTemporaryURL ] = useState();
@@ -172,10 +144,6 @@ export function Edit( {
 		}
 	}
 
-	// const isExternal = isExternalImage( id, url );
-
-	// const src = isExternal ? url : undefined;
-
 	const mediaPreview = !! url && (
 		<img
 			alt={ __( 'Edit image' ) }
@@ -185,10 +153,9 @@ export function Edit( {
 		/>
 	);
 
-	const classes = classnames( className, {
+	const classes = classnames( className, 'size-full', {
 		'is-transient': temporaryURL,
 		'is-resized': !! width || !! height,
-		[ `size-${ sizeSlug }` ]: sizeSlug,
 	} );
 
 	const blockProps = useBlockProps( {
@@ -241,11 +208,6 @@ export function Edit( {
 			additionalAttributes = {
 				width: undefined,
 				height: undefined,
-				// Fallback to size "full" if there's no default image size.
-				// It means the image is smaller, and the block will use a full-size URL.
-				sizeSlug: hasDefaultSize( media, imageDefaultSize )
-					? imageDefaultSize
-					: 'full',
 			};
 		} else {
 			// Keep the same url when selecting the same file, so "Image Size"

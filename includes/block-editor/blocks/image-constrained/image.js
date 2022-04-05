@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { get, filter, map, pick, includes } from 'lodash';
+import { pick, includes } from 'lodash';
 
 /**
  * WordPress dependencies.
@@ -22,7 +22,6 @@ import {
 	BlockControls,
 	InspectorControls,
 	RichText,
-	__experimentalImageSizeControl as ImageSizeControl,
 	__experimentalImageURLInputUI as ImageURLInputUI,
 	MediaReplaceFlow,
 	store as blockEditorStore,
@@ -60,7 +59,6 @@ export default function Image( {
 		width,
 		height,
 		linkTarget,
-		sizeSlug,
 	},
 	setAttributes,
 	isSelected,
@@ -80,35 +78,19 @@ export default function Image( {
 	const { allowResize = true } = context;
 	const { getBlock } = useSelect( blockEditorStore );
 
-	const { image, multiImageSelection } = useSelect(
+	const { image } = useSelect(
 		( select ) => {
 			const { getMedia } = select( coreStore );
-			const { getMultiSelectedBlockClientIds, getBlockName } = select(
-				blockEditorStore
-			);
-			const multiSelectedClientIds = getMultiSelectedBlockClientIds();
 			return {
 				image:
 					id && isSelected
 						? getMedia( id, { context: 'view' } )
 						: null,
-				multiImageSelection:
-					multiSelectedClientIds.length &&
-					multiSelectedClientIds.every(
-						( _clientId ) =>
-							getBlockName( _clientId ) === 'core/image'
-					),
 			};
 		},
 		[ id, isSelected ]
 	);
-	const {
-		canInsertCover,
-		imageEditing,
-		imageSizes,
-		maxWidth,
-		mediaUpload,
-	} = useSelect(
+	const { canInsertCover, imageEditing, maxWidth, mediaUpload } = useSelect(
 		( select ) => {
 			const {
 				getBlockRootClientId,
@@ -148,12 +130,6 @@ export default function Image( {
 	const [ externalBlob, setExternalBlob ] = useState();
 	const clientWidth = useClientWidth( containerRef, [ align ] );
 	const isResizable = allowResize && ! ( isWideAligned && isLargeViewport );
-	const imageSizeOptions = map(
-		filter( imageSizes, ( { slug } ) =>
-			get( image, [ 'media_details', 'sizes', slug, 'source_url' ] )
-		),
-		( { name, slug } ) => ( { value: slug, label: name } )
-	);
 
 	// Focus the caption after inserting an image from the placeholder. This is
 	// done to preserve the behaviour of focussing the first tabbable element
@@ -208,25 +184,6 @@ export default function Image( {
 		setAttributes( { alt: newAlt } );
 	}
 
-	function updateImage( newSizeSlug ) {
-		const newUrl = get( image, [
-			'media_details',
-			'sizes',
-			newSizeSlug,
-			'source_url',
-		] );
-		if ( ! newUrl ) {
-			return null;
-		}
-
-		setAttributes( {
-			url: newUrl,
-			width: undefined,
-			height: undefined,
-			sizeSlug: newSizeSlug,
-		} );
-	}
-
 	function uploadExternal() {
 		mediaUpload( {
 			filesList: [ externalBlob ],
@@ -269,7 +226,7 @@ export default function Image( {
 	}, [ isSelected ] );
 
 	const canEditImage = id && naturalWidth && naturalHeight && imageEditing;
-	const allowCrop = ! multiImageSelection && canEditImage && ! isEditingImage;
+	const allowCrop = canEditImage && ! isEditingImage;
 
 	function switchToCover() {
 		replaceBlocks(
@@ -285,7 +242,7 @@ export default function Image( {
 					value={ align }
 					onChange={ updateAlignment }
 				/>
-				{ ! multiImageSelection && ! isEditingImage && (
+				{ ! isEditingImage && (
 					<ImageURLInputUI
 						url={ href || '' }
 						onChangeUrl={ onSetHref }
@@ -311,7 +268,7 @@ export default function Image( {
 						label={ __( 'Upload external image' ) }
 					/>
 				) }
-				{ ! multiImageSelection && canInsertCover && (
+				{ canInsertCover && (
 					<ToolbarButton
 						icon={ overlayText }
 						label={ __( 'Add text over image' ) }
@@ -319,7 +276,7 @@ export default function Image( {
 					/>
 				) }
 			</BlockControls>
-			{ ! multiImageSelection && ! isEditingImage && (
+			{ ! isEditingImage && (
 				<BlockControls group="other">
 					<MediaReplaceFlow
 						mediaId={ id }
@@ -335,35 +292,22 @@ export default function Image( {
 			) }
 			<InspectorControls>
 				<PanelBody title={ __( 'Image settings' ) }>
-					{ ! multiImageSelection && (
-						<TextareaControl
-							label={ __( 'Alt text (alternative text)' ) }
-							value={ alt }
-							onChange={ updateAlt }
-							help={
-								<>
-									<ExternalLink href="https://www.w3.org/WAI/tutorials/images/decision-tree">
-										{ __(
-											'Describe the purpose of the image'
-										) }
-									</ExternalLink>
+					<TextareaControl
+						label={ __( 'Alt text (alternative text)' ) }
+						value={ alt }
+						onChange={ updateAlt }
+						help={
+							<>
+								<ExternalLink href="https://www.w3.org/WAI/tutorials/images/decision-tree">
 									{ __(
-										'Leave empty if the image is purely decorative.'
+										'Describe the purpose of the image'
 									) }
-								</>
-							}
-						/>
-					) }
-					<ImageSizeControl
-						onChangeImage={ updateImage }
-						onChange={ ( value ) => setAttributes( value ) }
-						slug={ sizeSlug }
-						width={ width }
-						height={ height }
-						imageSizeOptions={ imageSizeOptions }
-						isResizable={ isResizable }
-						imageWidth={ naturalWidth }
-						imageHeight={ naturalHeight }
+								</ExternalLink>
+								{ __(
+									'Leave empty if the image is purely decorative.'
+								) }
+							</>
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>
@@ -396,7 +340,7 @@ export default function Image( {
 		defaultedAlt = alt;
 	} else if ( filename ) {
 		defaultedAlt = sprintf(
-			/* translators: %s: file name */
+			// eslint-disable-next-line @wordpress/i18n-translator-comments
 			__( 'This image has an empty alt attribute; its file name is %s' ),
 			filename
 		);

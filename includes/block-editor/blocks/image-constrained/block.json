@@ -72,9 +72,6 @@
 	"designHeight": {
 	  "type": "number"
 	},
-	"sizeSlug": {
-	  "type": "string"
-	},
 	"linkDestination": {
 	  "type": "string"
 	},
