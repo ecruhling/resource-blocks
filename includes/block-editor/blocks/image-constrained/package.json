@@ -2,5 +2,10 @@
   "name": "image-constrained",
   "version": "1.0.0",
   "author": "Resource Branding",
-  "license": "GPL-2.0-or-later"
+  "license": "GPL-2.0-or-later",
+  "dependencies": {
+	"@wordpress/icons": "^6.3.0",
+	"classnames": "^2.3.1",
+	"lodash": "^4.17.21"
+  }
 }
