@@ -13,9 +13,10 @@ import {
 	BlockControls,
 	MediaPlaceholder,
 	useBlockProps,
+	InspectorControls,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { withNotices } from '@wordpress/components';
+import { PanelBody, TextControl, withNotices } from '@wordpress/components';
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -142,6 +143,14 @@ export function Edit( {
 				id: undefined,
 			} );
 		}
+	}
+
+	function onSetDesignWidth( value ) {
+		setAttributes( { designWidth: value } );
+	}
+
+	function onSetDesignHeight( value ) {
+		setAttributes( { designHeight: value } );
 	}
 
 	const mediaPreview = !! url && (
@@ -342,6 +351,20 @@ export function Edit( {
 					// onFilesPreUpload={ onFilesPreUpload }
 					// handleUpload={ false }
 				/>
+				<InspectorControls>
+					<PanelBody title={ __( 'Image design size' ) }>
+						<TextControl
+							label={ __( 'Width:' ) }
+							value={ designWidth || '' }
+							onChange={ onSetDesignWidth }
+						/>
+						<TextControl
+							label={ __( 'Height:' ) }
+							value={ designHeight || '' }
+							onChange={ onSetDesignHeight }
+						/>
+					</PanelBody>
+				</InspectorControls>
 			</figure>
 		</>
 	);

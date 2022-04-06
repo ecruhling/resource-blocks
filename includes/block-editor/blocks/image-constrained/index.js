@@ -32,7 +32,10 @@ wp.media.view.Attachment.Library = AttachmentLibrary.extend( {
 	// 	return 'attachment resource-disabled';
 	// },
 	render() {
-		console.log( this );
+		console.log( 'name:' + this.model.attributes.filename );
+		console.log( 'height:' + this.model.attributes.height );
+		console.log( 'width:' + this.model.attributes.width );
+		// console.log( this.$el );
 		return AttachmentLibrary.prototype.render.apply( this, arguments );
 	},
 } );

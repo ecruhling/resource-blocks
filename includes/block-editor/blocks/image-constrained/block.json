@@ -64,13 +64,21 @@
 	  "type": "number"
 	},
 	"designWidth": {
-	  "type": "number"
+	  "type": "string",
+	  "source": "attribute",
+	  "selector": "figure > img",
+	  "attribute": "data-design-width",
+	  "default": ""
 	},
 	"height": {
 	  "type": "number"
 	},
 	"designHeight": {
-	  "type": "number"
+	  "type": "string",
+	  "source": "attribute",
+	  "selector": "figure > img",
+	  "attribute": "data-design-height",
+	  "default": ""
 	},
 	"linkDestination": {
 	  "type": "string"
@@ -88,25 +96,8 @@
 	  "__experimentalDuotone": "img",
 	  "text": false,
 	  "background": false
-	},
-	"__experimentalBorder": {
-	  "radius": true,
-	  "__experimentalDefaultControls": {
-		"radius": true
-	  }
 	}
   },
-  "styles": [
-	{
-	  "name": "default",
-	  "label": "Default",
-	  "isDefault": true
-	},
-	{
-	  "name": "rounded",
-	  "label": "Rounded"
-	}
-  ],
   "textdomain": "resource-blocks",
   "editorScript": "file:../../../../build/image-constrained.js",
   "editorStyle": "file:../../../../build/image-constrained.css",
