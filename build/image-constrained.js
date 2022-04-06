@@ -424,6 +424,28 @@ function Edit(_ref) {
       });
     }
   }, []);
+  console.log(designWidth, designHeight);
+  const AttachmentLibrary = wp.media.view.Attachment.Library;
+  wp.media.view.Attachment.Library = AttachmentLibrary.extend({
+    render() {
+      // console.log( 'height:' + this.model.attributes.height );
+      // console.log( 'width:' + this.model.attributes.width );
+      if ('' !== designWidth) {
+        if (parseInt(designWidth) !== this.model.attributes.width) {
+          this.$el.addClass('resource-disabled');
+        }
+      }
+
+      if ('' !== designHeight) {
+        if (parseInt(designHeight) !== this.model.attributes.height) {
+          this.$el.addClass('resource-disabled');
+        }
+      }
+
+      return AttachmentLibrary.prototype.render.apply(this, arguments);
+    }
+
+  });
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", blockProps, (temporaryURL || url) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_image__WEBPACK_IMPORTED_MODULE_8__["default"], {
     temporaryURL: temporaryURL,
     attributes: attributes,
@@ -986,29 +1008,7 @@ __webpack_require__.r(__webpack_exports__);
 const {
   name,
   ...settings
-} = _block_json__WEBPACK_IMPORTED_MODULE_2__; // Media Library opens
-// wp.media.view.Modal.prototype.on( 'open', function () {
-// 	console.log( wp.media.frame );
-// } );
-//
-
-const AttachmentLibrary = wp.media.view.Attachment.Library;
-wp.media.view.Attachment.Library = AttachmentLibrary.extend({
-  // initialize() {
-  // 	console.log( 'init' );
-  // },
-  // className() {
-  // 	return 'attachment resource-disabled';
-  // },
-  render() {
-    console.log('name:' + this.model.attributes.filename);
-    console.log('height:' + this.model.attributes.height);
-    console.log('width:' + this.model.attributes.width); // console.log( this.$el );
-
-    return AttachmentLibrary.prototype.render.apply(this, arguments);
-  }
-
-});
+} = _block_json__WEBPACK_IMPORTED_MODULE_2__;
 /**
  * Register block.
  */

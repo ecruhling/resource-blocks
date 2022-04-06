@@ -17,29 +17,6 @@ import save from './save';
 
 const { name, ...settings } = json;
 
-// Media Library opens
-// wp.media.view.Modal.prototype.on( 'open', function () {
-// 	console.log( wp.media.frame );
-// } );
-//
-const AttachmentLibrary = wp.media.view.Attachment.Library;
-
-wp.media.view.Attachment.Library = AttachmentLibrary.extend( {
-	// initialize() {
-	// 	console.log( 'init' );
-	// },
-	// className() {
-	// 	return 'attachment resource-disabled';
-	// },
-	render() {
-		console.log( 'name:' + this.model.attributes.filename );
-		console.log( 'height:' + this.model.attributes.height );
-		console.log( 'width:' + this.model.attributes.width );
-		// console.log( this.$el );
-		return AttachmentLibrary.prototype.render.apply( this, arguments );
-	},
-} );
-
 /**
  * Register block.
  */
