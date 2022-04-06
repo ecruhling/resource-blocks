@@ -302,33 +302,13 @@ export function Edit( {
 		}
 	}, [] );
 
-	console.log( designWidth, designHeight );
-
-	const AttachmentLibrary = wp.media.view.Attachment.Library;
-
-	wp.media.view.Attachment.Library = AttachmentLibrary.extend( {
-		render() {
-			// console.log( 'height:' + this.model.attributes.height );
-			// console.log( 'width:' + this.model.attributes.width );
-			if ( '' !== designWidth ) {
-				if ( parseInt( designWidth ) !== this.model.attributes.width ) {
-					this.$el.addClass( 'resource-disabled' );
-				}
-			}
-			if ( '' !== designHeight ) {
-				if (
-					parseInt( designHeight ) !== this.model.attributes.height
-				) {
-					this.$el.addClass( 'resource-disabled' );
-				}
-			}
-			return AttachmentLibrary.prototype.render.apply( this, arguments );
-		},
-	} );
-
 	return (
 		<>
-			<figure { ...blockProps }>
+			<figure
+				{ ...blockProps }
+				data-design-width={ designWidth }
+				data-design-height={ designHeight }
+			>
 				{ ( temporaryURL || url ) && (
 					<Image
 						temporaryURL={ temporaryURL }
