@@ -17,6 +17,26 @@ import save from './save';
 
 const { name, ...settings } = json;
 
+// Media Library opens
+// wp.media.view.Modal.prototype.on( 'open', function () {
+// 	console.log( wp.media.frame );
+// } );
+//
+const AttachmentLibrary = wp.media.view.Attachment.Library;
+
+wp.media.view.Attachment.Library = AttachmentLibrary.extend( {
+	// initialize() {
+	// 	console.log( 'init' );
+	// },
+	// className() {
+	// 	return 'attachment resource-disabled';
+	// },
+	render() {
+		console.log( this );
+		return AttachmentLibrary.prototype.render.apply( this, arguments );
+	},
+} );
+
 /**
  * Register block.
  */

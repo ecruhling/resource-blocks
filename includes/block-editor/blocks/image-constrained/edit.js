@@ -339,8 +339,8 @@ export function Edit( {
 					value={ { id } }
 					mediaPreview={ mediaPreview }
 					disableMediaButtons={ temporaryURL || url }
-					// onFilesPreUpload={}
-					// handleUpload={}
+					// onFilesPreUpload={ onFilesPreUpload }
+					// handleUpload={ false }
 				/>
 			</figure>
 		</>

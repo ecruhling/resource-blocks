@@ -448,8 +448,8 @@ function Edit(_ref) {
       id
     },
     mediaPreview: mediaPreview,
-    disableMediaButtons: temporaryURL || url // onFilesPreUpload={}
-    // handleUpload={}
+    disableMediaButtons: temporaryURL || url // onFilesPreUpload={ onFilesPreUpload }
+    // handleUpload={ false }
 
   })));
 }
@@ -964,7 +964,26 @@ __webpack_require__.r(__webpack_exports__);
 const {
   name,
   ...settings
-} = _block_json__WEBPACK_IMPORTED_MODULE_2__;
+} = _block_json__WEBPACK_IMPORTED_MODULE_2__; // Media Library opens
+// wp.media.view.Modal.prototype.on( 'open', function () {
+// 	console.log( wp.media.frame );
+// } );
+//
+
+const AttachmentLibrary = wp.media.view.Attachment.Library;
+wp.media.view.Attachment.Library = AttachmentLibrary.extend({
+  // initialize() {
+  // 	console.log( 'init' );
+  // },
+  // className() {
+  // 	return 'attachment resource-disabled';
+  // },
+  render() {
+    console.log(this);
+    return AttachmentLibrary.prototype.render.apply(this, arguments);
+  }
+
+});
 /**
  * Register block.
  */
