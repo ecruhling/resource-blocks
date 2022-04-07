@@ -25,10 +25,9 @@ import {
 	MediaReplaceFlow,
 	store as blockEditorStore,
 	BlockAlignmentControl,
-	__experimentalImageEditingProvider as ImageEditingProvider,
 } from '@wordpress/block-editor';
-import { useEffect, useMemo, useState, useRef } from '@wordpress/element';
-import { __, sprintf, isRTL } from '@wordpress/i18n';
+import { useEffect, useState, useRef } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
 import { getFilename } from '@wordpress/url';
 import { createBlock, switchToBlockType } from '@wordpress/blocks';
 import { overlayText, upload } from '@wordpress/icons';
@@ -38,7 +37,6 @@ import { store as coreStore } from '@wordpress/core-data';
 /**
  * Internal dependencies.
  */
-import useClientWidth from './use-client-width';
 import { isMediaDestroyed } from './edit';
 
 export default function Image( {
@@ -65,7 +63,6 @@ export default function Image( {
 	onSelectImage,
 	onSelectURL,
 	onUploadError,
-	containerRef,
 	clientId,
 	onImageLoadError,
 } ) {
@@ -86,6 +83,7 @@ export default function Image( {
 		},
 		[ id, isSelected ]
 	);
+
 	const { canInsertCover, mediaUpload } = useSelect(
 		( select ) => {
 			const {
@@ -110,17 +108,16 @@ export default function Image( {
 		},
 		[ clientId ]
 	);
+
 	const { replaceBlocks } = useDispatch( blockEditorStore );
+
 	const { createErrorNotice, createSuccessNotice } = useDispatch(
 		noticesStore
 	);
-	const [
-		{ loadedNaturalWidth, loadedNaturalHeight },
-		setLoadedNaturalSize,
-	] = useState( {} );
+
 	const [ isEditingImage, setIsEditingImage ] = useState( false );
+
 	const [ externalBlob, setExternalBlob ] = useState();
-	const clientWidth = useClientWidth( containerRef, [ align ] );
 
 	// Focus the caption after inserting an image from the placeholder. This is
 	// done to preserve the behaviour of focussing the first tabbable element
@@ -131,27 +128,6 @@ export default function Image( {
 			captionRef.current.focus();
 		}
 	}, [ url, prevUrl ] );
-
-	// Get naturalWidth and naturalHeight from image ref, and fall back to loaded natural
-	// width and height. This resolves an issue in Safari where the loaded natural
-	// width and height is otherwise lost when switching between alignments.
-	// See: https://github.com/WordPress/gutenberg/pull/37210.
-	const { naturalWidth, naturalHeight } = useMemo( () => {
-		return {
-			naturalWidth:
-				imageRef.current?.naturalWidth ||
-				loadedNaturalWidth ||
-				undefined,
-			naturalHeight:
-				imageRef.current?.naturalHeight ||
-				loadedNaturalHeight ||
-				undefined,
-		};
-	}, [
-		loadedNaturalWidth,
-		loadedNaturalHeight,
-		imageRef.current?.complete,
-	] );
 
 	function onSetHref( props ) {
 		setAttributes( props );
@@ -329,12 +305,8 @@ export default function Image( {
 			<img
 				src={ temporaryURL || url }
 				alt={ defaultedAlt }
-				onLoad={ ( event ) => {
-					setLoadedNaturalSize( {
-						loadedNaturalWidth: event.target?.naturalWidth,
-						loadedNaturalHeight: event.target?.naturalHeight,
-					} );
-				} }
+				width={ width }
+				height={ height }
 				ref={ imageRef }
 			/>
 			{ temporaryURL && <Spinner /> }

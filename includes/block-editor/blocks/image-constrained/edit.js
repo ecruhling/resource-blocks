@@ -39,7 +39,14 @@ import Image from './image';
 import './editor.scss';
 
 export const pickRelevantMediaFiles = ( image, size ) => {
-	const imageProps = pick( image, [ 'alt', 'id', 'link', 'caption' ] );
+	const imageProps = pick( image, [
+		'alt',
+		'id',
+		'link',
+		'caption',
+		'width',
+		'height',
+	] );
 	imageProps.url =
 		get( image, [ 'sizes', size, 'url' ] ) ||
 		get( image, [ 'media_details', 'sizes', size, 'source_url' ] ) ||
@@ -102,6 +109,7 @@ export function Edit( {
 		id,
 		width,
 		designWidth,
+		imageWidthInsideContainer,
 		height,
 		designHeight,
 	} = attributes;
@@ -109,6 +117,7 @@ export function Edit( {
 	const [ temporaryURL, setTemporaryURL ] = useState();
 
 	const altRef = useRef();
+
 	useEffect( () => {
 		altRef.current = alt;
 	}, [ alt ] );
@@ -158,6 +167,10 @@ export function Edit( {
 
 	function onSetDesignHeight( value ) {
 		setAttributes( { designHeight: value } );
+	}
+
+	function onSetImageWidthInsideContainer( value ) {
+		setAttributes( { imageWidthInsideContainer: value } );
 	}
 
 	const mediaPreview = !! url && (
@@ -218,19 +231,6 @@ export function Edit( {
 			mediaAttributes = omit( mediaAttributes, [ 'caption' ] );
 		}
 
-		let additionalAttributes;
-		// Reset the dimension attributes if changing to a different image.
-		if ( ! media.id || media.id !== id ) {
-			additionalAttributes = {
-				width: undefined,
-				height: undefined,
-			};
-		} else {
-			// Keep the same url when selecting the same file, so "Image Size"
-			// option is not changed.
-			additionalAttributes = { url };
-		}
-
 		// Check if default link setting should be used.
 		let linkDestination = attributes.linkDestination;
 		if ( ! linkDestination ) {
@@ -269,17 +269,12 @@ export function Edit( {
 
 		setAttributes( {
 			...mediaAttributes,
-			...additionalAttributes,
 			linkDestination,
 		} );
 	}
 
 	function updateAlignment( nextAlign ) {
-		const extraUpdatedAttributes = [ 'wide', 'full' ].includes( nextAlign )
-			? { width: undefined, height: undefined }
-			: {};
 		setAttributes( {
-			...extraUpdatedAttributes,
 			align: nextAlign,
 		} );
 	}
@@ -389,6 +384,15 @@ export function Edit( {
 						</PanelRow>
 						<PanelRow className={ 'image-sizing-heading' }>
 							Image width inside container
+						</PanelRow>
+						<PanelRow>
+							<TextControl
+								label={ __( 'Width (%)' ) }
+								value={ imageWidthInsideContainer || '' }
+								onChange={ onSetImageWidthInsideContainer }
+								type={ 'number' }
+								className={ 'image-sizing-text-control' }
+							/>
 						</PanelRow>
 					</PanelBody>
 				</InspectorControls>

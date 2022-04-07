@@ -20,6 +20,7 @@ export default function save( { attributes } ) {
 		linkClass,
 		width,
 		designWidth,
+		imageWidthInsideContainer,
 		height,
 		designHeight,
 		id,

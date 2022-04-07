@@ -122,7 +122,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const pickRelevantMediaFiles = (image, size) => {
-  const imageProps = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.pick)(image, ['alt', 'id', 'link', 'caption']);
+  const imageProps = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.pick)(image, ['alt', 'id', 'link', 'caption', 'width', 'height']);
   imageProps.url = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.get)(image, ['sizes', size, 'url']) || (0,lodash__WEBPACK_IMPORTED_MODULE_3__.get)(image, ['media_details', 'sizes', size, 'source_url']) || image.url;
   return imageProps;
 };
@@ -185,6 +185,7 @@ function Edit(_ref) {
     id,
     width,
     designWidth,
+    imageWidthInsideContainer,
     height,
     designHeight
   } = attributes;
@@ -249,6 +250,12 @@ function Edit(_ref) {
     });
   }
 
+  function onSetImageWidthInsideContainer(value) {
+    setAttributes({
+      imageWidthInsideContainer: value
+    });
+  }
+
   const mediaPreview = !!url && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("img", {
     alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Edit image'),
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Edit image'),
@@ -300,21 +307,6 @@ function Edit(_ref) {
 
     if (captionRef.current && !(0,lodash__WEBPACK_IMPORTED_MODULE_3__.get)(mediaAttributes, ['caption'])) {
       mediaAttributes = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.omit)(mediaAttributes, ['caption']);
-    }
-
-    let additionalAttributes; // Reset the dimension attributes if changing to a different image.
-
-    if (!media.id || media.id !== id) {
-      additionalAttributes = {
-        width: undefined,
-        height: undefined
-      };
-    } else {
-      // Keep the same url when selecting the same file, so "Image Size"
-      // option is not changed.
-      additionalAttributes = {
-        url
-      };
     } // Check if default link setting should be used.
 
 
@@ -360,17 +352,12 @@ function Edit(_ref) {
 
     mediaAttributes.href = href;
     setAttributes({ ...mediaAttributes,
-      ...additionalAttributes,
       linkDestination
     });
   }
 
   function updateAlignment(nextAlign) {
-    const extraUpdatedAttributes = ['wide', 'full'].includes(nextAlign) ? {
-      width: undefined,
-      height: undefined
-    } : {};
-    setAttributes({ ...extraUpdatedAttributes,
+    setAttributes({
       align: nextAlign
     });
   }
@@ -462,7 +449,13 @@ function Edit(_ref) {
     className: 'image-sizing-text-control'
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelRow, {
     className: 'image-sizing-heading'
-  }, "Image width inside container")))));
+  }, "Image width inside container"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Width (%)'),
+    value: imageWidthInsideContainer || '',
+    onChange: onSetImageWidthInsideContainer,
+    type: 'number',
+    className: 'image-sizing-text-control'
+  }))))));
 }
 /* harmony default export */ __webpack_exports__["default"] = ((0,_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.withNotices)(Edit));
 
@@ -499,14 +492,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/upload.js");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/overlay-text.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/upload.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/overlay-text.js");
 /* harmony import */ var _wordpress_notices__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @wordpress/notices */ "@wordpress/notices");
 /* harmony import */ var _wordpress_notices__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_wordpress_notices__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
 /* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _use_client_width__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./use-client-width */ "./includes/block-editor/blocks/image-constrained/use-client-width.js");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./edit */ "./includes/block-editor/blocks/image-constrained/edit.js");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./edit */ "./includes/block-editor/blocks/image-constrained/edit.js");
 
 
 /**
@@ -534,10 +526,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 
-
 function Image(_ref) {
-  var _imageRef$current3;
-
   let {
     temporaryURL,
     attributes: {
@@ -562,7 +551,6 @@ function Image(_ref) {
     onSelectImage,
     onSelectURL,
     onUploadError,
-    containerRef,
     clientId,
     onImageLoadError
   } = _ref;
@@ -606,13 +594,8 @@ function Image(_ref) {
     createErrorNotice,
     createSuccessNotice
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useDispatch)(_wordpress_notices__WEBPACK_IMPORTED_MODULE_10__.store);
-  const [{
-    loadedNaturalWidth,
-    loadedNaturalHeight
-  }, setLoadedNaturalSize] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({});
   const [isEditingImage, setIsEditingImage] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const [externalBlob, setExternalBlob] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
-  const clientWidth = (0,_use_client_width__WEBPACK_IMPORTED_MODULE_12__["default"])(containerRef, [align]); // Focus the caption after inserting an image from the placeholder. This is
+  const [externalBlob, setExternalBlob] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(); // Focus the caption after inserting an image from the placeholder. This is
   // done to preserve the behaviour of focussing the first tabbable element
   // when a block is mounted. Previously, the image block would remount when
   // the placeholder is removed. Maybe this behaviour could be removed.
@@ -621,22 +604,7 @@ function Image(_ref) {
     if (url && !prevUrl && isSelected) {
       captionRef.current.focus();
     }
-  }, [url, prevUrl]); // Get naturalWidth and naturalHeight from image ref, and fall back to loaded natural
-  // width and height. This resolves an issue in Safari where the loaded natural
-  // width and height is otherwise lost when switching between alignments.
-  // See: https://github.com/WordPress/gutenberg/pull/37210.
-
-  const {
-    naturalWidth,
-    naturalHeight
-  } = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
-    var _imageRef$current, _imageRef$current2;
-
-    return {
-      naturalWidth: ((_imageRef$current = imageRef.current) === null || _imageRef$current === void 0 ? void 0 : _imageRef$current.naturalWidth) || loadedNaturalWidth || undefined,
-      naturalHeight: ((_imageRef$current2 = imageRef.current) === null || _imageRef$current2 === void 0 ? void 0 : _imageRef$current2.naturalHeight) || loadedNaturalHeight || undefined
-    };
-  }, [loadedNaturalWidth, loadedNaturalHeight, (_imageRef$current3 = imageRef.current) === null || _imageRef$current3 === void 0 ? void 0 : _imageRef$current3.complete]);
+  }, [url, prevUrl]);
 
   function onSetHref(props) {
     setAttributes(props);
@@ -700,7 +668,7 @@ function Image(_ref) {
       setIsEditingImage(false);
     }
 
-    if (isSelected && (0,_edit__WEBPACK_IMPORTED_MODULE_13__.isMediaDestroyed)(id)) {
+    if (isSelected && (0,_edit__WEBPACK_IMPORTED_MODULE_12__.isMediaDestroyed)(id)) {
       onImageLoadError();
     }
   }, [isSelected]);
@@ -725,10 +693,10 @@ function Image(_ref) {
     rel: rel
   }), externalBlob && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToolbarButton, {
     onClick: uploadExternal,
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_14__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__["default"],
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Upload external image')
   }), canInsertCover && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToolbarButton, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_15__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_14__["default"],
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Add text over image'),
     onClick: switchToCover
   })), !isEditingImage && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.BlockControls, {
@@ -781,14 +749,8 @@ function Image(_ref) {
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: temporaryURL || url,
     alt: defaultedAlt,
-    onLoad: event => {
-      var _event$target, _event$target2;
-
-      setLoadedNaturalSize({
-        loadedNaturalWidth: (_event$target = event.target) === null || _event$target === void 0 ? void 0 : _event$target.naturalWidth,
-        loadedNaturalHeight: (_event$target2 = event.target) === null || _event$target2 === void 0 ? void 0 : _event$target2.naturalHeight
-      });
-    },
+    width: width,
+    height: height,
     ref: imageRef
   }), temporaryURL && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Spinner, null))
   /* eslint-enable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */
@@ -945,6 +907,7 @@ function save(_ref) {
     linkClass,
     width,
     designWidth,
+    imageWidthInsideContainer,
     height,
     designHeight,
     id,
@@ -980,45 +943,6 @@ function save(_ref) {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps.save({
     className: classes
   }), figure);
-}
-
-/***/ }),
-
-/***/ "./includes/block-editor/blocks/image-constrained/use-client-width.js":
-/*!****************************************************************************!*\
-  !*** ./includes/block-editor/blocks/image-constrained/use-client-width.js ***!
-  \****************************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ useClientWidth; }
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/**
- * WordPress dependencies.
- */
-
-function useClientWidth(ref, dependencies) {
-  const [clientWidth, setClientWidth] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
-
-  function calculateClientWidth() {
-    setClientWidth(ref.current.clientWidth);
-  }
-
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(calculateClientWidth, dependencies);
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    const {
-      defaultView
-    } = ref.current.ownerDocument;
-    defaultView.addEventListener('resize', calculateClientWidth);
-    return () => {
-      defaultView.removeEventListener('resize', calculateClientWidth);
-    };
-  }, []);
-  return clientWidth;
 }
 
 /***/ }),
@@ -1436,7 +1360,7 @@ function _extends() {
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/image-constrained","version":"1.0.0","title":"Image [Size Constrained]","category":"resource-blocks","description":"A simple image that has an additional field to constrain the width or height.","keywords":["img","photo","picture"],"attributes":{"align":{"type":"string"},"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"caption":{"type":"string","source":"html","selector":"figcaption"},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"href":{"type":"string","source":"attribute","selector":"figure > a","attribute":"href"},"rel":{"type":"string","source":"attribute","selector":"figure > a","attribute":"rel"},"linkClass":{"type":"string","source":"attribute","selector":"figure > a","attribute":"class"},"id":{"type":"number"},"width":{"type":"number"},"designWidth":{"type":"string","source":"attribute","selector":"figure > img","attribute":"data-design-width","default":""},"height":{"type":"number"},"designHeight":{"type":"string","source":"attribute","selector":"figure > img","attribute":"data-design-height","default":""},"linkDestination":{"type":"string"},"linkTarget":{"type":"string","source":"attribute","selector":"figure > a","attribute":"target"}},"supports":{"anchor":true},"textdomain":"resource-blocks","editorScript":"file:../../../../build/image-constrained.js","editorStyle":"file:../../../../build/image-constrained.css","style":"file:../../../../build/style-image-constrained.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/image-constrained","version":"1.0.0","title":"Image [Size Constrained]","category":"resource-blocks","description":"A simple image that has an additional field to constrain the width or height.","keywords":["img","photo","picture"],"attributes":{"align":{"type":"string"},"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"caption":{"type":"string","source":"html","selector":"figcaption"},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"href":{"type":"string","source":"attribute","selector":"figure > a","attribute":"href"},"rel":{"type":"string","source":"attribute","selector":"figure > a","attribute":"rel"},"linkClass":{"type":"string","source":"attribute","selector":"figure > a","attribute":"class"},"id":{"type":"number"},"width":{"type":"number"},"designWidth":{"type":"string","source":"attribute","selector":"figure > img","attribute":"data-design-width","default":""},"imageWidthInsideContainer":{"type":"string","source":"attribute","selector":"figure > img","attribute":"width","default":""},"height":{"type":"number"},"designHeight":{"type":"string","source":"attribute","selector":"figure > img","attribute":"data-design-height","default":""},"linkDestination":{"type":"string"},"linkTarget":{"type":"string","source":"attribute","selector":"figure > a","attribute":"target"}},"supports":{"anchor":true},"textdomain":"resource-blocks","editorScript":"file:../../../../build/image-constrained.js","editorStyle":"file:../../../../build/image-constrained.css","style":"file:../../../../build/style-image-constrained.css"}');
 
 /***/ })
 
