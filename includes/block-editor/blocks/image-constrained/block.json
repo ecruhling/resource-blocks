@@ -91,12 +91,7 @@
 	}
   },
   "supports": {
-	"anchor": true,
-	"color": {
-	  "__experimentalDuotone": "img",
-	  "text": false,
-	  "background": false
-	}
+	"anchor": true
   },
   "textdomain": "resource-blocks",
   "editorScript": "file:../../../../build/image-constrained.js",

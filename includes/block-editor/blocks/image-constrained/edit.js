@@ -360,8 +360,6 @@ export function Edit( {
 					value={ { id } }
 					mediaPreview={ mediaPreview }
 					disableMediaButtons={ temporaryURL || url }
-					// onFilesPreUpload={ onFilesPreUpload }
-					// handleUpload={ false }
 				/>
 				<InspectorControls>
 					<PanelBody title={ __( 'Image design size' ) }>
