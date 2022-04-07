@@ -15,11 +15,13 @@ import {
 	useBlockProps,
 	InspectorControls,
 	store as blockEditorStore,
+	BlockIcon,
 } from '@wordpress/block-editor';
 import { PanelBody, TextControl, withNotices } from '@wordpress/components';
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
+import icons from '../../../icons/icons';
 
 /**
  * Internal dependencies.
@@ -335,11 +337,17 @@ export function Edit( {
 					</BlockControls>
 				) }
 				<MediaPlaceholder
+					icon={ <BlockIcon icon={ icons.single_image } /> }
 					multiple={ false }
 					labels={ {
 						title: __( 'Image [Size Constrained]' ),
-						instructions: __(
-							'Upload an image file, or pick one from the media library.'
+						instructions: sprintf(
+							/* translators: %1$s: designWidth %2$s: designHeight */
+							__(
+								'Upload an image file, or pick one from the media library. Required image size is %1$spx x %2$spx.'
+							),
+							designWidth,
+							designHeight
 						),
 					} }
 					disableDropZone={ true }

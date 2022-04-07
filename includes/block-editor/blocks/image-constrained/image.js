@@ -340,7 +340,7 @@ export default function Image( {
 		defaultedAlt = alt;
 	} else if ( filename ) {
 		defaultedAlt = sprintf(
-			// eslint-disable-next-line @wordpress/i18n-translator-comments
+			/* translators: %s: file name */
 			__( 'This image has an empty alt attribute; its file name is %s' ),
 			filename
 		);
