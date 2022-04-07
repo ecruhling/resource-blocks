@@ -387,10 +387,9 @@ export function Edit( {
 						</PanelRow>
 						<PanelRow>
 							<TextControl
-								label={ __( 'Width (%)' ) }
+								label={ __( 'Width (auto, %, px, rem, etc.)' ) }
 								value={ imageWidthInsideContainer || '' }
 								onChange={ onSetImageWidthInsideContainer }
-								type={ 'number' }
 								className={ 'image-sizing-text-control' }
 							/>
 						</PanelRow>

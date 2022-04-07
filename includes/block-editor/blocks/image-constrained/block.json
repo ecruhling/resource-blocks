@@ -72,9 +72,6 @@
 	},
 	"imageWidthInsideContainer": {
 	  "type": "string",
-	  "source": "attribute",
-	  "selector": "figure > img",
-	  "attribute": "width",
 	  "default": ""
 	},
 	"height": {

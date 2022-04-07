@@ -47,6 +47,7 @@ export default function save( { attributes } ) {
 			title={ title }
 			data-design-width={ designWidth }
 			data-design-height={ designHeight }
+			style={ { width: imageWidthInsideContainer } }
 		/>
 	);
 
