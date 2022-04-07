@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { pick, includes } from 'lodash';
+import { pick } from 'lodash';
 
 /**
  * WordPress dependencies.
@@ -15,7 +15,7 @@ import {
 	TextControl,
 	ToolbarButton,
 } from '@wordpress/components';
-import { useViewportMatch, usePrevious } from '@wordpress/compose';
+import { usePrevious } from '@wordpress/compose';
 import { useSelect, useDispatch } from '@wordpress/data';
 import {
 	BlockControls,
@@ -66,14 +66,12 @@ export default function Image( {
 	onSelectURL,
 	onUploadError,
 	containerRef,
-	context,
 	clientId,
 	onImageLoadError,
 } ) {
 	const imageRef = useRef();
 	const captionRef = useRef();
 	const prevUrl = usePrevious( url );
-	const { allowResize = true } = context;
 	const { getBlock } = useSelect( blockEditorStore );
 
 	const { image } = useSelect(
@@ -323,7 +321,7 @@ export default function Image( {
 		defaultedAlt = __( 'This image has an empty alt attribute' );
 	}
 
-	let img = (
+	const img = (
 		// Disable reason: Image itself is not meant to be interactive, but
 		// should direct focus to block.
 		/* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */
@@ -344,21 +342,8 @@ export default function Image( {
 		/* eslint-enable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */
 	);
 
-	img = <div style={ { width, height } }>{ img }</div>;
-
 	return (
-		<ImageEditingProvider
-			id={ id }
-			url={ url }
-			naturalWidth={ naturalWidth }
-			naturalHeight={ naturalHeight }
-			clientWidth={ clientWidth }
-			onSaveImage={ ( imageAttributes ) =>
-				setAttributes( imageAttributes )
-			}
-			isEditing={ isEditingImage }
-			onFinishEditing={ () => setIsEditingImage( false ) }
-		>
+		<>
 			{ /* Hide controls during upload to avoid component remount,
 				which causes duplicated image upload. */ }
 			{ ! temporaryURL && controls }
@@ -379,6 +364,6 @@ export default function Image( {
 					}
 				/>
 			) }
-		</ImageEditingProvider>
+		</>
 	);
 }

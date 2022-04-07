@@ -17,7 +17,12 @@ import {
 	store as blockEditorStore,
 	BlockIcon,
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl, withNotices } from '@wordpress/components';
+import {
+	PanelBody,
+	PanelRow,
+	TextControl,
+	withNotices,
+} from '@wordpress/components';
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { __, sprintf } from '@wordpress/i18n';
@@ -362,17 +367,29 @@ export function Edit( {
 					disableMediaButtons={ temporaryURL || url }
 				/>
 				<InspectorControls>
-					<PanelBody title={ __( 'Image design size' ) }>
-						<TextControl
-							label={ __( 'Width:' ) }
-							value={ designWidth || '' }
-							onChange={ onSetDesignWidth }
-						/>
-						<TextControl
-							label={ __( 'Height:' ) }
-							value={ designHeight || '' }
-							onChange={ onSetDesignHeight }
-						/>
+					<PanelBody title={ __( 'Image sizing' ) }>
+						<PanelRow className={ 'image-sizing-heading' }>
+							Required image size
+						</PanelRow>
+						<PanelRow>
+							<TextControl
+								label={ __( 'Width' ) }
+								value={ designWidth || '' }
+								onChange={ onSetDesignWidth }
+								type={ 'number' }
+								className={ 'image-sizing-text-control' }
+							/>
+							<TextControl
+								label={ __( 'Height' ) }
+								value={ designHeight || '' }
+								onChange={ onSetDesignHeight }
+								type={ 'number' }
+								className={ 'image-sizing-text-control' }
+							/>
+						</PanelRow>
+						<PanelRow className={ 'image-sizing-heading' }>
+							Image width inside container
+						</PanelRow>
 					</PanelBody>
 				</InspectorControls>
 			</figure>
