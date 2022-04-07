@@ -33,7 +33,7 @@ import { useEffect, useMemo, useState, useRef } from '@wordpress/element';
 import { __, sprintf, isRTL } from '@wordpress/i18n';
 import { getFilename } from '@wordpress/url';
 import { createBlock, switchToBlockType } from '@wordpress/blocks';
-import { crop, overlayText, upload } from '@wordpress/icons';
+import { overlayText, upload } from '@wordpress/icons';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 
@@ -226,7 +226,6 @@ export default function Image( {
 	}, [ isSelected ] );
 
 	const canEditImage = id && naturalWidth && naturalHeight && imageEditing;
-	const allowCrop = canEditImage && ! isEditingImage;
 
 	function switchToCover() {
 		replaceBlocks(
@@ -252,13 +251,6 @@ export default function Image( {
 						linkTarget={ linkTarget }
 						linkClass={ linkClass }
 						rel={ rel }
-					/>
-				) }
-				{ allowCrop && (
-					<ToolbarButton
-						onClick={ () => setIsEditingImage( true ) }
-						icon={ crop }
-						label={ __( 'Crop' ) }
 					/>
 				) }
 				{ externalBlob && (
