@@ -297,7 +297,6 @@ export default function Image( {
 	} else {
 		defaultedAlt = __( 'This image has an empty alt attribute' );
 	}
-	console.log( imageWidthInsideContainer );
 
 	const img = (
 		// Disable reason: Image itself is not meant to be interactive, but

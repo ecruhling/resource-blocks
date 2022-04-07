@@ -38,19 +38,20 @@ import Image from './image';
  */
 import './editor.scss';
 
-export const pickRelevantMediaFiles = ( image, size ) => {
-	const imageProps = pick( image, [
-		'alt',
-		'id',
-		'link',
-		'caption',
-		'width',
-		'height',
-	] );
+export const pickRelevantMediaFiles = ( image ) => {
+	const imageProps = pick( image, [ 'alt', 'id', 'link', 'caption' ] );
+
+	imageProps.width =
+		get( image, [ 'media_details', 'width' ] ) || image.width;
+
+	imageProps.height =
+		get( image, [ 'media_details', 'height' ] ) || image.height;
+
 	imageProps.url =
-		get( image, [ 'sizes', size, 'url' ] ) ||
-		get( image, [ 'media_details', 'sizes', size, 'source_url' ] ) ||
+		get( image, [ 'sizes', 'full', 'url' ] ) ||
+		get( image, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
 		image.url;
+
 	return imageProps;
 };
 
@@ -129,9 +130,9 @@ export function Edit( {
 
 	const ref = useRef();
 
-	const { imageDefaultSize, mediaUpload } = useSelect( ( select ) => {
+	const { mediaUpload } = useSelect( ( select ) => {
 		const { getSettings } = select( blockEditorStore );
-		return pick( getSettings(), [ 'imageDefaultSize', 'mediaUpload' ] );
+		return pick( getSettings(), [ 'mediaUpload' ] );
 	}, [] );
 
 	// A callback passed to MediaUpload,
@@ -223,7 +224,7 @@ export function Edit( {
 
 		setTemporaryURL();
 
-		let mediaAttributes = pickRelevantMediaFiles( media, imageDefaultSize );
+		let mediaAttributes = pickRelevantMediaFiles( media );
 
 		// If a caption text was meanwhile written by the user,
 		// make sure the text is not overwritten by empty captions.

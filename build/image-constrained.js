@@ -121,9 +121,11 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 
-const pickRelevantMediaFiles = (image, size) => {
-  const imageProps = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.pick)(image, ['alt', 'id', 'link', 'caption', 'width', 'height']);
-  imageProps.url = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.get)(image, ['sizes', size, 'url']) || (0,lodash__WEBPACK_IMPORTED_MODULE_3__.get)(image, ['media_details', 'sizes', size, 'source_url']) || image.url;
+const pickRelevantMediaFiles = image => {
+  const imageProps = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.pick)(image, ['alt', 'id', 'link', 'caption']);
+  imageProps.width = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.get)(image, ['media_details', 'width']) || image.width;
+  imageProps.height = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.get)(image, ['media_details', 'height']) || image.height;
+  imageProps.url = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.get)(image, ['sizes', 'full', 'url']) || (0,lodash__WEBPACK_IMPORTED_MODULE_3__.get)(image, ['media_details', 'sizes', 'full', 'source_url']) || image.url;
   return imageProps;
 };
 /**
@@ -200,13 +202,12 @@ function Edit(_ref) {
   }, [caption]);
   const ref = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useRef)();
   const {
-    imageDefaultSize,
     mediaUpload
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_7__.useSelect)(select => {
     const {
       getSettings
     } = select(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.store);
-    return (0,lodash__WEBPACK_IMPORTED_MODULE_3__.pick)(getSettings(), ['imageDefaultSize', 'mediaUpload']);
+    return (0,lodash__WEBPACK_IMPORTED_MODULE_3__.pick)(getSettings(), ['mediaUpload']);
   }, []); // A callback passed to MediaUpload,
   // fired when the media modal closes.
 
@@ -302,7 +303,7 @@ function Edit(_ref) {
     }
 
     setTemporaryURL();
-    let mediaAttributes = pickRelevantMediaFiles(media, imageDefaultSize); // If a caption text was meanwhile written by the user,
+    let mediaAttributes = pickRelevantMediaFiles(media); // If a caption text was meanwhile written by the user,
     // make sure the text is not overwritten by empty captions.
 
     if (captionRef.current && !(0,lodash__WEBPACK_IMPORTED_MODULE_3__.get)(mediaAttributes, ['caption'])) {
@@ -742,7 +743,6 @@ function Image(_ref) {
     defaultedAlt = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('This image has an empty alt attribute');
   }
 
-  console.log(imageWidthInsideContainer);
   const img = // Disable reason: Image itself is not meant to be interactive, but
   // should direct focus to block.
 
