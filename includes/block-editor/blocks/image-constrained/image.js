@@ -10,7 +10,6 @@ import { isBlobURL } from '@wordpress/blob';
 import {
 	ExternalLink,
 	PanelBody,
-	ResizableBox,
 	Spinner,
 	TextareaControl,
 	TextControl,
@@ -26,7 +25,6 @@ import {
 	MediaReplaceFlow,
 	store as blockEditorStore,
 	BlockAlignmentControl,
-	__experimentalImageEditor as ImageEditor,
 	__experimentalImageEditingProvider as ImageEditingProvider,
 } from '@wordpress/block-editor';
 import { useEffect, useMemo, useState, useRef } from '@wordpress/element';
@@ -90,7 +88,7 @@ export default function Image( {
 		},
 		[ id, isSelected ]
 	);
-	const { canInsertCover, imageEditing, maxWidth, mediaUpload } = useSelect(
+	const { canInsertCover, mediaUpload } = useSelect(
 		( select ) => {
 			const {
 				getBlockRootClientId,
@@ -100,9 +98,7 @@ export default function Image( {
 
 			const rootClientId = getBlockRootClientId( clientId );
 			const settings = pick( getSettings(), [
-				'imageEditing',
 				'imageSizes',
-				'maxWidth',
 				'mediaUpload',
 			] );
 
@@ -116,12 +112,10 @@ export default function Image( {
 		},
 		[ clientId ]
 	);
-	const { replaceBlocks, toggleSelection } = useDispatch( blockEditorStore );
+	const { replaceBlocks } = useDispatch( blockEditorStore );
 	const { createErrorNotice, createSuccessNotice } = useDispatch(
 		noticesStore
 	);
-	const isLargeViewport = useViewportMatch( 'medium' );
-	const isWideAligned = includes( [ 'wide', 'full' ], align );
 	const [
 		{ loadedNaturalWidth, loadedNaturalHeight },
 		setLoadedNaturalSize,
@@ -129,7 +123,6 @@ export default function Image( {
 	const [ isEditingImage, setIsEditingImage ] = useState( false );
 	const [ externalBlob, setExternalBlob ] = useState();
 	const clientWidth = useClientWidth( containerRef, [ align ] );
-	const isResizable = allowResize && ! ( isWideAligned && isLargeViewport );
 
 	// Focus the caption after inserting an image from the placeholder. This is
 	// done to preserve the behaviour of focussing the first tabbable element
@@ -161,14 +154,6 @@ export default function Image( {
 		loadedNaturalHeight,
 		imageRef.current?.complete,
 	] );
-
-	function onResizeStart() {
-		toggleSelection( false );
-	}
-
-	function onResizeStop() {
-		toggleSelection( true );
-	}
 
 	function onSetHref( props ) {
 		setAttributes( props );
@@ -224,8 +209,6 @@ export default function Image( {
 			onImageLoadError();
 		}
 	}, [ isSelected ] );
-
-	const canEditImage = id && naturalWidth && naturalHeight && imageEditing;
 
 	function switchToCover() {
 		replaceBlocks(
@@ -361,110 +344,7 @@ export default function Image( {
 		/* eslint-enable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */
 	);
 
-	let imageWidthWithinContainer;
-	let imageHeightWithinContainer;
-
-	if ( clientWidth && naturalWidth && naturalHeight ) {
-		const exceedMaxWidth = naturalWidth > clientWidth;
-		const ratio = naturalHeight / naturalWidth;
-		imageWidthWithinContainer = exceedMaxWidth ? clientWidth : naturalWidth;
-		imageHeightWithinContainer = exceedMaxWidth
-			? clientWidth * ratio
-			: naturalHeight;
-	}
-
-	if ( canEditImage && isEditingImage ) {
-		img = (
-			<ImageEditor
-				url={ url }
-				width={ width }
-				height={ height }
-				clientWidth={ clientWidth }
-				naturalHeight={ naturalHeight }
-				naturalWidth={ naturalWidth }
-			/>
-		);
-	} else if ( ! isResizable || ! imageWidthWithinContainer ) {
-		img = <div style={ { width, height } }>{ img }</div>;
-	} else {
-		const currentWidth = width || imageWidthWithinContainer;
-		const currentHeight = height || imageHeightWithinContainer;
-
-		const ratio = naturalWidth / naturalHeight;
-		const minWidth = naturalWidth < naturalHeight ? 20 : 20 * ratio;
-		const minHeight = naturalHeight < naturalWidth ? 20 : 20 / ratio;
-
-		// With the current implementation of ResizableBox, an image needs an
-		// explicit pixel value for the max-width. In absence of being able to
-		// set the content-width, this max-width is currently dictated by the
-		// vanilla editor style. The following variable adds a buffer to this
-		// vanilla style, so 3rd party themes have some wiggle room. This does,
-		// in most cases, allow you to scale the image beyond the width of the
-		// main column, though not infinitely.
-		// @todo It would be good to revisit this once a content-width variable
-		// becomes available.
-		const maxWidthBuffer = maxWidth * 2.5;
-
-		let showRightHandle = false;
-		let showLeftHandle = false;
-
-		/* eslint-disable no-lonely-if */
-		// See https://github.com/WordPress/gutenberg/issues/7584.
-		if ( align === 'center' ) {
-			// When the image is centered, show both handles.
-			showRightHandle = true;
-			showLeftHandle = true;
-		} else if ( isRTL() ) {
-			// In RTL mode the image is on the right by default.
-			// Show the right handle and hide the left handle only when it is
-			// aligned left. Otherwise, always show the left handle.
-			if ( align === 'left' ) {
-				showRightHandle = true;
-			} else {
-				showLeftHandle = true;
-			}
-		} else {
-			// Show the left handle and hide the right handle only when the
-			// image is aligned right. Otherwise, always show the right handle.
-			if ( align === 'right' ) {
-				showLeftHandle = true;
-			} else {
-				showRightHandle = true;
-			}
-		}
-		/* eslint-enable no-lonely-if */
-
-		img = (
-			<ResizableBox
-				size={ {
-					width: width ?? 'auto',
-					height: height ?? 'auto',
-				} }
-				showHandle={ isSelected }
-				minWidth={ minWidth }
-				maxWidth={ maxWidthBuffer }
-				minHeight={ minHeight }
-				maxHeight={ maxWidthBuffer / ratio }
-				lockAspectRatio
-				enable={ {
-					top: false,
-					right: showRightHandle,
-					bottom: true,
-					left: showLeftHandle,
-				} }
-				onResizeStart={ onResizeStart }
-				onResizeStop={ ( event, direction, elt, delta ) => {
-					onResizeStop();
-					setAttributes( {
-						width: parseInt( currentWidth + delta.width, 10 ),
-						height: parseInt( currentHeight + delta.height, 10 ),
-					} );
-				} }
-			>
-				{ img }
-			</ResizableBox>
-		);
-	}
+	img = <div style={ { width, height } }>{ img }</div>;
 
 	return (
 		<ImageEditingProvider

@@ -582,8 +582,6 @@ function Image(_ref) {
   }, [id, isSelected]);
   const {
     canInsertCover,
-    imageEditing,
-    maxWidth,
     mediaUpload
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
     const {
@@ -592,29 +590,25 @@ function Image(_ref) {
       canInsertBlockType
     } = select(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.store);
     const rootClientId = getBlockRootClientId(clientId);
-    const settings = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.pick)(getSettings(), ['imageEditing', 'imageSizes', 'maxWidth', 'mediaUpload']);
+    const settings = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.pick)(getSettings(), ['imageSizes', 'mediaUpload']);
     return { ...settings,
       canInsertCover: canInsertBlockType('core/cover', rootClientId)
     };
   }, [clientId]);
   const {
-    replaceBlocks,
-    toggleSelection
+    replaceBlocks
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useDispatch)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.store);
   const {
     createErrorNotice,
     createSuccessNotice
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useDispatch)(_wordpress_notices__WEBPACK_IMPORTED_MODULE_10__.store);
-  const isLargeViewport = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_4__.useViewportMatch)('medium');
-  const isWideAligned = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.includes)(['wide', 'full'], align);
   const [{
     loadedNaturalWidth,
     loadedNaturalHeight
   }, setLoadedNaturalSize] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({});
   const [isEditingImage, setIsEditingImage] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [externalBlob, setExternalBlob] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
-  const clientWidth = (0,_use_client_width__WEBPACK_IMPORTED_MODULE_12__["default"])(containerRef, [align]);
-  const isResizable = allowResize && !(isWideAligned && isLargeViewport); // Focus the caption after inserting an image from the placeholder. This is
+  const clientWidth = (0,_use_client_width__WEBPACK_IMPORTED_MODULE_12__["default"])(containerRef, [align]); // Focus the caption after inserting an image from the placeholder. This is
   // done to preserve the behaviour of focussing the first tabbable element
   // when a block is mounted. Previously, the image block would remount when
   // the placeholder is removed. Maybe this behaviour could be removed.
@@ -639,14 +633,6 @@ function Image(_ref) {
       naturalHeight: ((_imageRef$current2 = imageRef.current) === null || _imageRef$current2 === void 0 ? void 0 : _imageRef$current2.naturalHeight) || loadedNaturalHeight || undefined
     };
   }, [loadedNaturalWidth, loadedNaturalHeight, (_imageRef$current3 = imageRef.current) === null || _imageRef$current3 === void 0 ? void 0 : _imageRef$current3.complete]);
-
-  function onResizeStart() {
-    toggleSelection(false);
-  }
-
-  function onResizeStop() {
-    toggleSelection(true);
-  }
 
   function onSetHref(props) {
     setAttributes(props);
@@ -714,7 +700,6 @@ function Image(_ref) {
       onImageLoadError();
     }
   }, [isSelected]);
-  const canEditImage = id && naturalWidth && naturalHeight && imageEditing;
 
   function switchToCover() {
     replaceBlocks(clientId, (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_9__.switchToBlockType)(getBlock(clientId), 'core/cover'));
@@ -804,106 +789,12 @@ function Image(_ref) {
   }), temporaryURL && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Spinner, null))
   /* eslint-enable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */
   ;
-  let imageWidthWithinContainer;
-  let imageHeightWithinContainer;
-
-  if (clientWidth && naturalWidth && naturalHeight) {
-    const exceedMaxWidth = naturalWidth > clientWidth;
-    const ratio = naturalHeight / naturalWidth;
-    imageWidthWithinContainer = exceedMaxWidth ? clientWidth : naturalWidth;
-    imageHeightWithinContainer = exceedMaxWidth ? clientWidth * ratio : naturalHeight;
-  }
-
-  if (canEditImage && isEditingImage) {
-    img = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.__experimentalImageEditor, {
-      url: url,
-      width: width,
-      height: height,
-      clientWidth: clientWidth,
-      naturalHeight: naturalHeight,
-      naturalWidth: naturalWidth
-    });
-  } else if (!isResizable || !imageWidthWithinContainer) {
-    img = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      style: {
-        width,
-        height
-      }
-    }, img);
-  } else {
-    const currentWidth = width || imageWidthWithinContainer;
-    const currentHeight = height || imageHeightWithinContainer;
-    const ratio = naturalWidth / naturalHeight;
-    const minWidth = naturalWidth < naturalHeight ? 20 : 20 * ratio;
-    const minHeight = naturalHeight < naturalWidth ? 20 : 20 / ratio; // With the current implementation of ResizableBox, an image needs an
-    // explicit pixel value for the max-width. In absence of being able to
-    // set the content-width, this max-width is currently dictated by the
-    // vanilla editor style. The following variable adds a buffer to this
-    // vanilla style, so 3rd party themes have some wiggle room. This does,
-    // in most cases, allow you to scale the image beyond the width of the
-    // main column, though not infinitely.
-    // @todo It would be good to revisit this once a content-width variable
-    // becomes available.
-
-    const maxWidthBuffer = maxWidth * 2.5;
-    let showRightHandle = false;
-    let showLeftHandle = false;
-    /* eslint-disable no-lonely-if */
-    // See https://github.com/WordPress/gutenberg/issues/7584.
-
-    if (align === 'center') {
-      // When the image is centered, show both handles.
-      showRightHandle = true;
-      showLeftHandle = true;
-    } else if ((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.isRTL)()) {
-      // In RTL mode the image is on the right by default.
-      // Show the right handle and hide the left handle only when it is
-      // aligned left. Otherwise, always show the left handle.
-      if (align === 'left') {
-        showRightHandle = true;
-      } else {
-        showLeftHandle = true;
-      }
-    } else {
-      // Show the left handle and hide the right handle only when the
-      // image is aligned right. Otherwise, always show the right handle.
-      if (align === 'right') {
-        showLeftHandle = true;
-      } else {
-        showRightHandle = true;
-      }
+  img = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    style: {
+      width,
+      height
     }
-    /* eslint-enable no-lonely-if */
-
-
-    img = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ResizableBox, {
-      size: {
-        width: width !== null && width !== void 0 ? width : 'auto',
-        height: height !== null && height !== void 0 ? height : 'auto'
-      },
-      showHandle: isSelected,
-      minWidth: minWidth,
-      maxWidth: maxWidthBuffer,
-      minHeight: minHeight,
-      maxHeight: maxWidthBuffer / ratio,
-      lockAspectRatio: true,
-      enable: {
-        top: false,
-        right: showRightHandle,
-        bottom: true,
-        left: showLeftHandle
-      },
-      onResizeStart: onResizeStart,
-      onResizeStop: (event, direction, elt, delta) => {
-        onResizeStop();
-        setAttributes({
-          width: parseInt(currentWidth + delta.width, 10),
-          height: parseInt(currentHeight + delta.height, 10)
-        });
-      }
-    }, img);
-  }
-
+  }, img);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.__experimentalImageEditingProvider, {
     id: id,
     url: url,
