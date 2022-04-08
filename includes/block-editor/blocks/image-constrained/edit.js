@@ -226,6 +226,30 @@ export function Edit( {
 
 		let mediaAttributes = pickRelevantMediaFiles( media );
 
+		// Check for width.
+		if ( '' !== designWidth ) {
+			if (
+				parseInt( mediaAttributes.width ) !== parseInt( designWidth )
+			) {
+				console.log( 'width check failed' );
+				// openModal();
+
+				return;
+			}
+		}
+
+		// Check for height.
+		if ( '' !== designHeight ) {
+			if (
+				parseInt( mediaAttributes.height ) !== parseInt( designHeight )
+			) {
+				console.log( 'height check failed' );
+				// openModal();
+
+				return;
+			}
+		}
+
 		// If a caption text was meanwhile written by the user,
 		// make sure the text is not overwritten by empty captions.
 		if ( captionRef.current && ! get( mediaAttributes, [ 'caption' ] ) ) {

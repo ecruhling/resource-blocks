@@ -43,13 +43,19 @@ wp.media.view.Attachment.Library = _AttachmentLibrary.extend( {
 			.getSelectedBlock().attributes.designHeight;
 
 		if ( '' !== designWidth ) {
-			if ( parseInt( designWidth ) !== this.model.attributes.width ) {
+			if (
+				parseInt( designWidth ) !==
+				parseInt( this.model.attributes.width )
+			) {
 				this.$el.addClass( 'resource-disabled' );
 			}
 		}
 
 		if ( '' !== designHeight ) {
-			if ( parseInt( designHeight ) !== this.model.attributes.height ) {
+			if (
+				parseInt( designHeight ) !==
+				parseInt( this.model.attributes.height )
+			) {
 				this.$el.addClass( 'resource-disabled' );
 			}
 		}

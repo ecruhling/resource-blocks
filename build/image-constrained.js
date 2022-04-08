@@ -303,8 +303,26 @@ function Edit(_ref) {
     }
 
     setTemporaryURL();
-    let mediaAttributes = pickRelevantMediaFiles(media); // If a caption text was meanwhile written by the user,
+    let mediaAttributes = pickRelevantMediaFiles(media); // Check for width.
+
+    if ('' !== designWidth) {
+      if (parseInt(mediaAttributes.width) !== parseInt(designWidth)) {
+        console.log('width check failed'); // openModal();
+
+        return;
+      }
+    } // Check for height.
+
+
+    if ('' !== designHeight) {
+      if (parseInt(mediaAttributes.height) !== parseInt(designHeight)) {
+        console.log('height check failed'); // openModal();
+
+        return;
+      }
+    } // If a caption text was meanwhile written by the user,
     // make sure the text is not overwritten by empty captions.
+
 
     if (captionRef.current && !(0,lodash__WEBPACK_IMPORTED_MODULE_3__.get)(mediaAttributes, ['caption'])) {
       mediaAttributes = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.omit)(mediaAttributes, ['caption']);
@@ -831,13 +849,13 @@ wp.media.view.Attachment.Library = _AttachmentLibrary.extend({
     const designHeight = wp.data.select('core/block-editor').getSelectedBlock().attributes.designHeight;
 
     if ('' !== designWidth) {
-      if (parseInt(designWidth) !== this.model.attributes.width) {
+      if (parseInt(designWidth) !== parseInt(this.model.attributes.width)) {
         this.$el.addClass('resource-disabled');
       }
     }
 
     if ('' !== designHeight) {
-      if (parseInt(designHeight) !== this.model.attributes.height) {
+      if (parseInt(designHeight) !== parseInt(this.model.attributes.height)) {
         this.$el.addClass('resource-disabled');
       }
     }
