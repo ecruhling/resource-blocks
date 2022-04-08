@@ -180,7 +180,8 @@ export function Edit( {
 		/>
 	);
 
-	const classes = classnames( className, 'size-full', 'align-' + align, {
+	const classes = classnames( className, 'size-full', {
+		[ `align${ align }` ]: align,
 		'is-transient': temporaryURL,
 	} );
 
@@ -412,7 +413,7 @@ export function Edit( {
 							/>
 						</PanelRow>
 						<PanelRow className={ 'image-sizing-heading' }>
-							Image width inside container
+							Image container width (figure)
 						</PanelRow>
 						<PanelRow>
 							<TextControl

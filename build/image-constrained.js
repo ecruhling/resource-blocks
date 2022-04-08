@@ -261,7 +261,8 @@ function Edit(_ref) {
     className: 'edit-image-preview',
     src: url
   });
-  const classes = classnames__WEBPACK_IMPORTED_MODULE_2___default()(className, 'size-full', 'align-' + align, {
+  const classes = classnames__WEBPACK_IMPORTED_MODULE_2___default()(className, 'size-full', {
+    [`align${align}`]: align,
     'is-transient': temporaryURL
   });
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.useBlockProps)({
@@ -466,7 +467,7 @@ function Edit(_ref) {
     className: 'image-sizing-text-control'
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelRow, {
     className: 'image-sizing-heading'
-  }, "Image width inside container"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextControl, {
+  }, "Image container width (figure)"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Width (auto, %, px, rem, etc.)'),
     value: imageWidthInsideContainer || '',
     onChange: onSetImageWidthInsideContainer,
