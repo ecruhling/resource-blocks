@@ -47,7 +47,6 @@ export default function save( { attributes } ) {
 			title={ title }
 			data-design-width={ designWidth }
 			data-design-height={ designHeight }
-			style={ { width: imageWidthInsideContainer } }
 		/>
 	);
 
@@ -73,6 +72,7 @@ export default function save( { attributes } ) {
 
 	return (
 		<figure
+			style={ { width: imageWidthInsideContainer } }
 			{ ...useBlockProps.save( {
 				className: classes,
 			} ) }

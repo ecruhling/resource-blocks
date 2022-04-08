@@ -28,8 +28,6 @@ figure.wp-block-resource-blocks-image-constrained:not(.wp-block) {
 }
 .wp-block-resource-blocks-image-constrained img {
   display: block;
-  width: inherit;
-  height: inherit;
 }
 .wp-block-resource-blocks-image-constrained + .block-list-appender.wp-block {
   position: relative;

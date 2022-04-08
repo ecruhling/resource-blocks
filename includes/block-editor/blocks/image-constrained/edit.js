@@ -334,6 +334,7 @@ export function Edit( {
 				{ ...blockProps }
 				data-design-width={ designWidth }
 				data-design-height={ designHeight }
+				style={ { width: imageWidthInsideContainer } }
 			>
 				{ ( temporaryURL || url ) && (
 					<Image

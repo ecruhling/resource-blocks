@@ -313,7 +313,6 @@ export default function Image( {
 				width={ width }
 				height={ height }
 				ref={ imageRef }
-				style={ { width: imageWidthInsideContainer } }
 			/>
 			{ temporaryURL && <Spinner /> }
 		</>

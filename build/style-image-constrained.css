@@ -10,6 +10,7 @@
 .wp-block-resource-blocks-image-constrained img {
   height: auto;
   max-width: 100%;
+  width: 100%;
   vertical-align: bottom;
 }
 .wp-block-resource-blocks-image-constrained.aligncenter {
