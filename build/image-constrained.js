@@ -144,7 +144,7 @@ const isTemporaryImage = (id, url) => !id && (0,_wordpress_blob__WEBPACK_IMPORTE
  * that is, removed from the media library. The core Media Library
  * adds a `destroyed` property to a deleted attachment object in the media collection.
  *
- * @param {number} id The attachment id.
+ * @param {string} id The attachment id.
  *
  * @return {boolean} Whether the image has been destroyed.
  */
@@ -185,10 +185,8 @@ function Edit(_ref) {
     caption,
     align,
     id,
-    width,
     designWidth,
     imageWidthInsideContainer,
-    height,
     designHeight
   } = attributes;
   const [temporaryURL, setTemporaryURL] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)();
@@ -263,14 +261,14 @@ function Edit(_ref) {
     className: 'edit-image-preview',
     src: url
   });
-  const classes = classnames__WEBPACK_IMPORTED_MODULE_2___default()(className, 'size-full', {
-    'is-transient': temporaryURL,
-    'is-resized': !!width || !!height
+  const classes = classnames__WEBPACK_IMPORTED_MODULE_2___default()(className, 'size-full', 'align-' + align, {
+    'is-transient': temporaryURL
   });
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.useBlockProps)({
     ref,
     className: classes
   });
+  const [modalIsOpen, setIsOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
 
   function onUploadError(message) {
     noticeOperations.removeAllNotices();
@@ -307,8 +305,7 @@ function Edit(_ref) {
 
     if ('' !== designWidth) {
       if (parseInt(mediaAttributes.width) !== parseInt(designWidth)) {
-        console.log('width check failed'); // openModal();
-
+        openModal();
         return;
       }
     } // Check for height.
@@ -316,8 +313,7 @@ function Edit(_ref) {
 
     if ('' !== designHeight) {
       if (parseInt(mediaAttributes.height) !== parseInt(designHeight)) {
-        console.log('height check failed'); // openModal();
-
+        openModal();
         return;
       }
     } // If a caption text was meanwhile written by the user,
@@ -375,10 +371,12 @@ function Edit(_ref) {
     });
   }
 
-  function updateAlignment(nextAlign) {
-    setAttributes({
-      align: nextAlign
-    });
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
   }
 
   let isTemp = isTemporaryImage(id, url); // Upload a temporary image on mount.
@@ -422,12 +420,12 @@ function Edit(_ref) {
     clientId: clientId,
     onCloseModal: onCloseModal,
     onImageLoadError: onImageError
-  }), !url && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.BlockControls, {
-    group: "block"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.BlockAlignmentControl, {
-    value: align,
-    onChange: updateAlignment
-  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.MediaPlaceholder, {
+  }), modalIsOpen && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Modal, {
+    isOpen: modalIsOpen,
+    onRequestClose: closeModal,
+    contentLabel: "Error",
+    title: "Error"
+  }, "Image must be ", designWidth, "px wide.", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("br", null), "Image must be ", designHeight, "px tall.", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("br", null), "Choose another image."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.MediaPlaceholder, {
     icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.BlockIcon, {
       icon: _icons_icons__WEBPACK_IMPORTED_MODULE_9__["default"].single_image
     }),
@@ -578,7 +576,7 @@ function Image(_ref) {
   const prevUrl = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_4__.usePrevious)(url);
   const {
     getBlock
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.store);
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.store, []);
   const {
     image
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
@@ -677,6 +675,11 @@ function Image(_ref) {
       width: undefined,
       height: undefined
     } : {};
+
+    if (!nextAlign) {
+      nextAlign = 'none';
+    }
+
     setAttributes({ ...extraUpdatedAttributes,
       align: nextAlign
     });
@@ -1385,7 +1388,7 @@ function _extends() {
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/image-constrained","version":"1.0.0","title":"Image [Size Constrained]","category":"resource-blocks","description":"A simple image that has an additional field to constrain the width or height.","keywords":["img","photo","picture"],"attributes":{"align":{"type":"string"},"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"caption":{"type":"string","source":"html","selector":"figcaption"},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"href":{"type":"string","source":"attribute","selector":"figure > a","attribute":"href"},"rel":{"type":"string","source":"attribute","selector":"figure > a","attribute":"rel"},"linkClass":{"type":"string","source":"attribute","selector":"figure > a","attribute":"class"},"id":{"type":"number"},"width":{"type":"number"},"designWidth":{"type":"string","source":"attribute","selector":"figure > img","attribute":"data-design-width","default":""},"imageWidthInsideContainer":{"type":"string","default":""},"height":{"type":"number"},"designHeight":{"type":"string","source":"attribute","selector":"figure > img","attribute":"data-design-height","default":""},"linkDestination":{"type":"string"},"linkTarget":{"type":"string","source":"attribute","selector":"figure > a","attribute":"target"}},"supports":{"anchor":true},"textdomain":"resource-blocks","editorScript":"file:../../../../build/image-constrained.js","editorStyle":"file:../../../../build/image-constrained.css","style":"file:../../../../build/style-image-constrained.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/image-constrained","version":"1.0.0","title":"Image [Size Constrained]","category":"resource-blocks","description":"A simple image that has an additional field to constrain the width or height.","keywords":["img","photo","picture"],"attributes":{"align":{"type":"string","default":"none"},"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"caption":{"type":"string","source":"html","selector":"figcaption"},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"href":{"type":"string","source":"attribute","selector":"figure > a","attribute":"href"},"rel":{"type":"string","source":"attribute","selector":"figure > a","attribute":"rel"},"linkClass":{"type":"string","source":"attribute","selector":"figure > a","attribute":"class"},"id":{"type":"number"},"width":{"type":"number"},"designWidth":{"type":"string","source":"attribute","selector":"figure > img","attribute":"data-design-width","default":""},"imageWidthInsideContainer":{"type":"string","default":""},"height":{"type":"number"},"designHeight":{"type":"string","source":"attribute","selector":"figure > img","attribute":"data-design-height","default":""},"linkDestination":{"type":"string"},"linkTarget":{"type":"string","source":"attribute","selector":"figure > a","attribute":"target"}},"supports":{"anchor":true},"textdomain":"resource-blocks","editorScript":"file:../../../../build/image-constrained.js","editorStyle":"file:../../../../build/image-constrained.css","style":"file:../../../../build/style-image-constrained.css"}');
 
 /***/ })
 

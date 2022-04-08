@@ -9,8 +9,6 @@ import { get, omit, pick } from 'lodash';
  */
 import { getBlobByURL, isBlobURL } from '@wordpress/blob';
 import {
-	BlockAlignmentControl,
-	BlockControls,
 	MediaPlaceholder,
 	useBlockProps,
 	InspectorControls,
@@ -22,6 +20,7 @@ import {
 	PanelRow,
 	TextControl,
 	withNotices,
+	Modal,
 } from '@wordpress/components';
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
@@ -71,7 +70,7 @@ const isTemporaryImage = ( id, url ) => ! id && isBlobURL( url );
  * that is, removed from the media library. The core Media Library
  * adds a `destroyed` property to a deleted attachment object in the media collection.
  *
- * @param {number} id The attachment id.
+ * @param {string} id The attachment id.
  *
  * @return {boolean} Whether the image has been destroyed.
  */
@@ -108,10 +107,8 @@ export function Edit( {
 		caption,
 		align,
 		id,
-		width,
 		designWidth,
 		imageWidthInsideContainer,
-		height,
 		designHeight,
 	} = attributes;
 
@@ -183,15 +180,16 @@ export function Edit( {
 		/>
 	);
 
-	const classes = classnames( className, 'size-full', {
+	const classes = classnames( className, 'size-full', 'align-' + align, {
 		'is-transient': temporaryURL,
-		'is-resized': !! width || !! height,
 	} );
 
 	const blockProps = useBlockProps( {
 		ref,
 		className: classes,
 	} );
+
+	const [ modalIsOpen, setIsOpen ] = useState( false );
 
 	function onUploadError( message ) {
 		noticeOperations.removeAllNotices();
@@ -231,8 +229,7 @@ export function Edit( {
 			if (
 				parseInt( mediaAttributes.width ) !== parseInt( designWidth )
 			) {
-				console.log( 'width check failed' );
-				// openModal();
+				openModal();
 
 				return;
 			}
@@ -243,8 +240,7 @@ export function Edit( {
 			if (
 				parseInt( mediaAttributes.height ) !== parseInt( designHeight )
 			) {
-				console.log( 'height check failed' );
-				// openModal();
+				openModal();
 
 				return;
 			}
@@ -298,10 +294,12 @@ export function Edit( {
 		} );
 	}
 
-	function updateAlignment( nextAlign ) {
-		setAttributes( {
-			align: nextAlign,
-		} );
+	function openModal() {
+		setIsOpen( true );
+	}
+
+	function closeModal() {
+		setIsOpen( false );
 	}
 
 	let isTemp = isTemporaryImage( id, url );
@@ -353,13 +351,19 @@ export function Edit( {
 						onImageLoadError={ onImageError }
 					/>
 				) }
-				{ ! url && (
-					<BlockControls group="block">
-						<BlockAlignmentControl
-							value={ align }
-							onChange={ updateAlignment }
-						/>
-					</BlockControls>
+				{ modalIsOpen && (
+					<Modal
+						isOpen={ modalIsOpen }
+						onRequestClose={ closeModal }
+						contentLabel="Error"
+						title="Error"
+					>
+						Image must be { designWidth }px wide.
+						<br />
+						Image must be { designHeight }px tall.
+						<br />
+						Choose another image.
+					</Modal>
 				) }
 				<MediaPlaceholder
 					icon={ <BlockIcon icon={ icons.single_image } /> }

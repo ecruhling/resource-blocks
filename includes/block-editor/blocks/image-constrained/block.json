@@ -13,7 +13,8 @@
   ],
   "attributes": {
 	"align": {
-	  "type": "string"
+	  "type": "string",
+	  "default": "none"
 	},
 	"url": {
 	  "type": "string",

@@ -21,6 +21,7 @@ import {
 	BlockControls,
 	InspectorControls,
 	RichText,
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalImageURLInputUI as ImageURLInputUI,
 	MediaReplaceFlow,
 	store as blockEditorStore,
@@ -70,7 +71,7 @@ export default function Image( {
 	const imageRef = useRef();
 	const captionRef = useRef();
 	const prevUrl = usePrevious( url );
-	const { getBlock } = useSelect( blockEditorStore );
+	const { getBlock } = useSelect( blockEditorStore, [] );
 
 	const { image } = useSelect(
 		( select ) => {
@@ -170,6 +171,9 @@ export default function Image( {
 		const extraUpdatedAttributes = [ 'wide', 'full' ].includes( nextAlign )
 			? { width: undefined, height: undefined }
 			: {};
+		if ( ! nextAlign ) {
+			nextAlign = 'none';
+		}
 		setAttributes( {
 			...extraUpdatedAttributes,
 			align: nextAlign,
