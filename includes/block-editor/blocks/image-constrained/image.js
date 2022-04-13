@@ -55,6 +55,8 @@ export default function Image( {
 		title,
 		width,
 		height,
+		designWidth,
+		designHeight,
 		linkTarget,
 	},
 	setAttributes,
@@ -312,6 +314,8 @@ export default function Image( {
 				width={ width }
 				height={ height }
 				ref={ imageRef }
+				data-design-width={ designWidth }
+				data-design-height={ designHeight }
 			/>
 			{ temporaryURL && <Spinner /> }
 		</>

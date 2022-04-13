@@ -5,7 +5,7 @@
  * Styles.
  */
 .wp-block-resource-blocks-image-constrained {
-  margin: 0 0 1em 0;
+  margin: 0;
 }
 .wp-block-resource-blocks-image-constrained img {
   height: auto;

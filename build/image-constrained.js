@@ -185,8 +185,8 @@ function Edit(_ref) {
     caption,
     align,
     id,
-    designWidth,
     imageWidthInsideContainer,
+    designWidth,
     designHeight
   } = attributes;
   const [temporaryURL, setTemporaryURL] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)();
@@ -304,7 +304,7 @@ function Edit(_ref) {
     setTemporaryURL();
     let mediaAttributes = pickRelevantMediaFiles(media); // Check for width.
 
-    if ('' !== designWidth) {
+    if (null !== designWidth) {
       if (parseInt(mediaAttributes.width) !== parseInt(designWidth)) {
         openModal();
         return;
@@ -312,7 +312,7 @@ function Edit(_ref) {
     } // Check for height.
 
 
-    if ('' !== designHeight) {
+    if (null !== designHeight) {
       if (parseInt(mediaAttributes.height) !== parseInt(designHeight)) {
         openModal();
         return;
@@ -405,8 +405,6 @@ function Edit(_ref) {
     }
   }, []);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("figure", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, blockProps, {
-    "data-design-width": designWidth,
-    "data-design-height": designHeight,
     style: {
       width: imageWidthInsideContainer
     }
@@ -561,8 +559,9 @@ function Image(_ref) {
       linkDestination,
       title,
       width,
-      imageWidthInsideContainer,
       height,
+      designWidth,
+      designHeight,
       linkTarget
     },
     setAttributes,
@@ -777,7 +776,9 @@ function Image(_ref) {
     alt: defaultedAlt,
     width: width,
     height: height,
-    ref: imageRef
+    ref: imageRef,
+    "data-design-width": designWidth,
+    "data-design-height": designHeight
   }), temporaryURL && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Spinner, null))
   /* eslint-enable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */
   ;
@@ -934,20 +935,18 @@ function save(_ref) {
     rel,
     linkClass,
     width,
-    designWidth,
     imageWidthInsideContainer,
     height,
+    designWidth,
     designHeight,
     id,
     linkTarget,
-    sizeSlug,
     title
   } = attributes;
+  console.log(attributes);
   const newRel = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.isEmpty)(rel) ? undefined : rel;
-  const classes = classnames__WEBPACK_IMPORTED_MODULE_2___default()({
-    [`align${align}`]: align,
-    [`size-${sizeSlug}`]: sizeSlug,
-    'is-resized': width || height
+  const classes = classnames__WEBPACK_IMPORTED_MODULE_2___default()('size-full', {
+    [`align${align}`]: align
   });
   const image = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("img", {
     src: url,

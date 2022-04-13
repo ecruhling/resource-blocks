@@ -19,14 +19,16 @@ export default function save( { attributes } ) {
 		rel,
 		linkClass,
 		width,
-		designWidth,
 		imageWidthInsideContainer,
 		height,
+		designWidth,
 		designHeight,
 		id,
 		linkTarget,
 		title,
 	} = attributes;
+
+	console.log( attributes );
 
 	const newRel = isEmpty( rel ) ? undefined : rel;
 

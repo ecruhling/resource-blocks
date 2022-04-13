@@ -107,8 +107,8 @@ export function Edit( {
 		caption,
 		align,
 		id,
-		designWidth,
 		imageWidthInsideContainer,
+		designWidth,
 		designHeight,
 	} = attributes;
 
@@ -226,7 +226,7 @@ export function Edit( {
 		let mediaAttributes = pickRelevantMediaFiles( media );
 
 		// Check for width.
-		if ( '' !== designWidth ) {
+		if ( null !== designWidth ) {
 			if (
 				parseInt( mediaAttributes.width ) !== parseInt( designWidth )
 			) {
@@ -237,7 +237,7 @@ export function Edit( {
 		}
 
 		// Check for height.
-		if ( '' !== designHeight ) {
+		if ( null !== designHeight ) {
 			if (
 				parseInt( mediaAttributes.height ) !== parseInt( designHeight )
 			) {
@@ -332,8 +332,6 @@ export function Edit( {
 		<>
 			<figure
 				{ ...blockProps }
-				data-design-width={ designWidth }
-				data-design-height={ designHeight }
 				style={ { width: imageWidthInsideContainer } }
 			>
 				{ ( temporaryURL || url ) && (
