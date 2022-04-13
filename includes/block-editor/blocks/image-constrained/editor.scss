@@ -10,6 +10,7 @@ figure.wp-block-resource-blocks-image-constrained:not(.wp-block) {
   // So the appender button does not overlay the image
   position: relative;
   z-index: 1;
+  display: block;
 
   .is-applying img,
   &.is-transient img {
@@ -28,7 +29,6 @@ figure.wp-block-resource-blocks-image-constrained:not(.wp-block) {
 	margin-top: -9px;
 	margin-left: -9px;
   }
-  display: inline-block;
 
   img {
 	display: block;

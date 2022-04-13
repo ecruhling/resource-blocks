@@ -14,6 +14,7 @@
 
   &.aligncenter {
 	text-align: center;
+	margin: 0 auto;
   }
 
   &.alignfull img,
@@ -36,24 +37,40 @@
 	}
   }
 
-  .alignleft {
+  &.alignnone {
+	margin-left: 0;
+	margin-right: 0;
+  }
+
+  &.alignleft {
 	/*rtl:ignore*/
 	float: left;
 	/*rtl:ignore*/
 	margin: 0.5em 1em 0.5em 0;
   }
 
-  .alignright {
+  &.alignright {
 	/*rtl:ignore*/
 	float: right;
 	/*rtl:ignore*/
 	margin: 0.5em 0 0.5em 1em;
   }
 
-  // This is needed for classic themes where the align class is not on the container.
-  .aligncenter {
+  &.aligncenter {
 	margin-left: auto;
 	margin-right: auto;
+  }
+
+  &.align-caption-left > figcaption {
+	text-align: left;
+  }
+
+  &.align-caption-right > figcaption {
+	text-align: right;
+  }
+
+  &.align-caption-center > figcaption {
+	text-align: center;
   }
 }
 

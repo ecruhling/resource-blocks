@@ -15,6 +15,7 @@ export default function save( { attributes } ) {
 		alt,
 		caption,
 		align,
+		alignCaption,
 		href,
 		rel,
 		linkClass,
@@ -28,12 +29,11 @@ export default function save( { attributes } ) {
 		title,
 	} = attributes;
 
-	console.log( attributes );
-
 	const newRel = isEmpty( rel ) ? undefined : rel;
 
 	const classes = classnames( 'size-full', {
 		[ `align${ align }` ]: align,
+		[ `align-caption-${ alignCaption }` ]: alignCaption,
 	} );
 
 	const image = (

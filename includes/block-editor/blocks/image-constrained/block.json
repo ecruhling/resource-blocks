@@ -16,6 +16,9 @@
 	  "type": "string",
 	  "default": "none"
 	},
+	"alignCaption": {
+	  "type": "string"
+	},
 	"url": {
 	  "type": "string",
 	  "source": "attribute",

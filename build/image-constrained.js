@@ -184,6 +184,7 @@ function Edit(_ref) {
     alt,
     caption,
     align,
+    alignCaption,
     id,
     imageWidthInsideContainer,
     designWidth,
@@ -263,7 +264,8 @@ function Edit(_ref) {
   });
   const classes = classnames__WEBPACK_IMPORTED_MODULE_2___default()(className, 'size-full', {
     [`align${align}`]: align,
-    'is-transient': temporaryURL
+    'is-transient': temporaryURL,
+    [`align-caption-${alignCaption}`]: alignCaption
   });
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.useBlockProps)({
     ref,
@@ -304,7 +306,7 @@ function Edit(_ref) {
     setTemporaryURL();
     let mediaAttributes = pickRelevantMediaFiles(media); // Check for width.
 
-    if (null !== designWidth) {
+    if ('' !== designWidth) {
       if (parseInt(mediaAttributes.width) !== parseInt(designWidth)) {
         openModal();
         return;
@@ -312,7 +314,7 @@ function Edit(_ref) {
     } // Check for height.
 
 
-    if (null !== designHeight) {
+    if ('' !== designHeight) {
       if (parseInt(mediaAttributes.height) !== parseInt(designHeight)) {
         openModal();
         return;
@@ -552,6 +554,7 @@ function Image(_ref) {
       alt,
       caption,
       align,
+      alignCaption,
       id,
       href,
       rel,
@@ -931,6 +934,7 @@ function save(_ref) {
     alt,
     caption,
     align,
+    alignCaption,
     href,
     rel,
     linkClass,
@@ -943,10 +947,10 @@ function save(_ref) {
     linkTarget,
     title
   } = attributes;
-  console.log(attributes);
   const newRel = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.isEmpty)(rel) ? undefined : rel;
   const classes = classnames__WEBPACK_IMPORTED_MODULE_2___default()('size-full', {
-    [`align${align}`]: align
+    [`align${align}`]: align,
+    [`align-caption-${alignCaption}`]: alignCaption
   });
   const image = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("img", {
     src: url,
@@ -1391,7 +1395,7 @@ function _extends() {
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/image-constrained","version":"1.0.0","title":"Image [Size Constrained]","category":"resource-blocks","description":"A simple image that has an additional field to constrain the width or height.","keywords":["img","photo","picture"],"attributes":{"align":{"type":"string","default":"none"},"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"caption":{"type":"string","source":"html","selector":"figcaption"},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"href":{"type":"string","source":"attribute","selector":"figure > a","attribute":"href"},"rel":{"type":"string","source":"attribute","selector":"figure > a","attribute":"rel"},"linkClass":{"type":"string","source":"attribute","selector":"figure > a","attribute":"class"},"id":{"type":"number"},"width":{"type":"number"},"designWidth":{"type":"string","source":"attribute","selector":"figure > img","attribute":"data-design-width","default":""},"imageWidthInsideContainer":{"type":"string","default":""},"height":{"type":"number"},"designHeight":{"type":"string","source":"attribute","selector":"figure > img","attribute":"data-design-height","default":""},"linkDestination":{"type":"string"},"linkTarget":{"type":"string","source":"attribute","selector":"figure > a","attribute":"target"}},"supports":{"anchor":true},"textdomain":"resource-blocks","editorScript":"file:../../../../build/image-constrained.js","editorStyle":"file:../../../../build/image-constrained.css","style":"file:../../../../build/style-image-constrained.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/image-constrained","version":"1.0.0","title":"Image [Size Constrained]","category":"resource-blocks","description":"A simple image that has an additional field to constrain the width or height.","keywords":["img","photo","picture"],"attributes":{"align":{"type":"string","default":"none"},"alignCaption":{"type":"string"},"url":{"type":"string","source":"attribute","selector":"img","attribute":"src"},"alt":{"type":"string","source":"attribute","selector":"img","attribute":"alt","default":""},"caption":{"type":"string","source":"html","selector":"figcaption"},"title":{"type":"string","source":"attribute","selector":"img","attribute":"title"},"href":{"type":"string","source":"attribute","selector":"figure > a","attribute":"href"},"rel":{"type":"string","source":"attribute","selector":"figure > a","attribute":"rel"},"linkClass":{"type":"string","source":"attribute","selector":"figure > a","attribute":"class"},"id":{"type":"number"},"width":{"type":"number"},"designWidth":{"type":"string","source":"attribute","selector":"figure > img","attribute":"data-design-width","default":""},"imageWidthInsideContainer":{"type":"string","default":""},"height":{"type":"number"},"designHeight":{"type":"string","source":"attribute","selector":"figure > img","attribute":"data-design-height","default":""},"linkDestination":{"type":"string"},"linkTarget":{"type":"string","source":"attribute","selector":"figure > a","attribute":"target"}},"supports":{"anchor":true},"textdomain":"resource-blocks","editorScript":"file:../../../../build/image-constrained.js","editorStyle":"file:../../../../build/image-constrained.css","style":"file:../../../../build/style-image-constrained.css"}');
 
 /***/ })
 

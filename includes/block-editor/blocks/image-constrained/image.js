@@ -47,6 +47,7 @@ export default function Image( {
 		alt,
 		caption,
 		align,
+		alignCaption,
 		id,
 		href,
 		rel,

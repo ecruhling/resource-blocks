@@ -106,6 +106,7 @@ export function Edit( {
 		alt,
 		caption,
 		align,
+		alignCaption,
 		id,
 		imageWidthInsideContainer,
 		designWidth,
@@ -183,6 +184,7 @@ export function Edit( {
 	const classes = classnames( className, 'size-full', {
 		[ `align${ align }` ]: align,
 		'is-transient': temporaryURL,
+		[ `align-caption-${ alignCaption }` ]: alignCaption,
 	} );
 
 	const blockProps = useBlockProps( {
@@ -226,7 +228,7 @@ export function Edit( {
 		let mediaAttributes = pickRelevantMediaFiles( media );
 
 		// Check for width.
-		if ( null !== designWidth ) {
+		if ( '' !== designWidth ) {
 			if (
 				parseInt( mediaAttributes.width ) !== parseInt( designWidth )
 			) {
@@ -237,7 +239,7 @@ export function Edit( {
 		}
 
 		// Check for height.
-		if ( null !== designHeight ) {
+		if ( '' !== designHeight ) {
 			if (
 				parseInt( mediaAttributes.height ) !== parseInt( designHeight )
 			) {

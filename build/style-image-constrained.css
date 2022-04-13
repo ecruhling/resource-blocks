@@ -15,6 +15,7 @@
 }
 .wp-block-resource-blocks-image-constrained.aligncenter {
   text-align: center;
+  margin: 0 auto;
 }
 .wp-block-resource-blocks-image-constrained.alignfull img, .wp-block-resource-blocks-image-constrained.alignwide img {
   height: auto;
@@ -33,21 +34,34 @@
   display: table-caption;
   caption-side: bottom;
 }
-.wp-block-resource-blocks-image-constrained .alignleft {
+.wp-block-resource-blocks-image-constrained.alignnone {
+  margin-left: 0;
+  margin-right: 0;
+}
+.wp-block-resource-blocks-image-constrained.alignleft {
   /*rtl:ignore*/
   float: left;
   /*rtl:ignore*/
   margin: 0.5em 1em 0.5em 0;
 }
-.wp-block-resource-blocks-image-constrained .alignright {
+.wp-block-resource-blocks-image-constrained.alignright {
   /*rtl:ignore*/
   float: right;
   /*rtl:ignore*/
   margin: 0.5em 0 0.5em 1em;
 }
-.wp-block-resource-blocks-image-constrained .aligncenter {
+.wp-block-resource-blocks-image-constrained.aligncenter {
   margin-left: auto;
   margin-right: auto;
+}
+.wp-block-resource-blocks-image-constrained.align-caption-left > figcaption {
+  text-align: left;
+}
+.wp-block-resource-blocks-image-constrained.align-caption-right > figcaption {
+  text-align: right;
+}
+.wp-block-resource-blocks-image-constrained.align-caption-center > figcaption {
+  text-align: center;
 }
 
 .wp-block-resource-blocks-image-constrained figure {
