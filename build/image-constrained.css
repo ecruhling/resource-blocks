@@ -59,17 +59,11 @@ figure.wp-block-resource-blocks-image-constrained:not(.wp-block) {
 }
 
 .wp-block[data-align=left] > .wp-block-resource-blocks-image-constrained {
-  margin-right: 1em;
-  margin-left: 0;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  margin: 0.5em 1em 0.5em 0;
 }
 
 .wp-block[data-align=right] > .wp-block-resource-blocks-image-constrained {
-  margin-left: 1em;
-  margin-right: 0;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  margin: 0.5em 0 0.5em 1em;
 }
 
 .wp-block[data-align=center] > .wp-block-resource-blocks-image-constrained {

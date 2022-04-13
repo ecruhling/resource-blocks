@@ -54,7 +54,6 @@ export default function Image( {
 		linkDestination,
 		title,
 		width,
-		imageWidthInsideContainer,
 		height,
 		linkTarget,
 	},

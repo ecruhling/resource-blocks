@@ -25,16 +25,13 @@ export default function save( { attributes } ) {
 		designHeight,
 		id,
 		linkTarget,
-		sizeSlug,
 		title,
 	} = attributes;
 
 	const newRel = isEmpty( rel ) ? undefined : rel;
 
-	const classes = classnames( {
+	const classes = classnames( 'size-full', {
 		[ `align${ align }` ]: align,
-		[ `size-${ sizeSlug }` ]: sizeSlug,
-		'is-resized': width || height,
 	} );
 
 	const image = (
