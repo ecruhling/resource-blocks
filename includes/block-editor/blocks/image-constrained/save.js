@@ -15,6 +15,7 @@ export default function save( { attributes } ) {
 		alt,
 		caption,
 		align,
+		showCaption,
 		alignCaption,
 		href,
 		rel,
@@ -34,6 +35,7 @@ export default function save( { attributes } ) {
 	const classes = classnames( 'size-full', {
 		[ `align${ align }` ]: align,
 		[ `align-caption-${ alignCaption }` ]: alignCaption,
+		[ `has-${ showCaption ? 'caption' : 'no-caption' }` ]: showCaption,
 	} );
 
 	const image = (

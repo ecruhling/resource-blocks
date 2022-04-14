@@ -19,6 +19,7 @@ import {
 	PanelBody,
 	PanelRow,
 	TextControl,
+	ToggleControl,
 	withNotices,
 	Modal,
 } from '@wordpress/components';
@@ -106,6 +107,7 @@ export function Edit( {
 		alt,
 		caption,
 		align,
+		showCaption,
 		alignCaption,
 		id,
 		imageWidthInsideContainer,
@@ -185,6 +187,7 @@ export function Edit( {
 		[ `align${ align }` ]: align,
 		'is-transient': temporaryURL,
 		[ `align-caption-${ alignCaption }` ]: alignCaption,
+		[ `has-${ showCaption ? 'caption' : 'no-caption' }` ]: showCaption,
 	} );
 
 	const blockProps = useBlockProps( {
@@ -393,8 +396,33 @@ export function Edit( {
 					disableMediaButtons={ temporaryURL || url }
 				/>
 				<InspectorControls>
-					<PanelBody title={ __( 'Image sizing' ) }>
-						<PanelRow className={ 'image-sizing-heading' }>
+					<PanelBody title={ __( 'Image attributes' ) }>
+						{ ( temporaryURL || url ) && (
+							<>
+								<PanelRow
+									className={ 'image-attributes-heading' }
+								>
+									Image caption
+								</PanelRow>
+								<PanelRow>
+									<ToggleControl
+										label="Display Image Caption?"
+										help={
+											showCaption
+												? 'Display the image caption.'
+												: 'Do not display the image caption.'
+										}
+										checked={ showCaption }
+										onChange={ ( value ) => {
+											setAttributes( {
+												showCaption: value,
+											} );
+										} }
+									/>
+								</PanelRow>
+							</>
+						) }
+						<PanelRow className={ 'image-attributes-heading' }>
 							Required image size
 						</PanelRow>
 						<PanelRow>
@@ -403,7 +431,7 @@ export function Edit( {
 								value={ designWidth || '' }
 								onChange={ onSetDesignWidth }
 								type={ 'number' }
-								className={ 'image-sizing-text-control' }
+								className={ 'image-attributes-text-control' }
 							/>
 							<TextControl
 								label={ __( 'Height' ) }
@@ -413,7 +441,7 @@ export function Edit( {
 								className={ 'image-sizing-text-control' }
 							/>
 						</PanelRow>
-						<PanelRow className={ 'image-sizing-heading' }>
+						<PanelRow className={ 'image-attributes-heading' }>
 							Image container width (figure)
 						</PanelRow>
 						<PanelRow>
@@ -421,7 +449,7 @@ export function Edit( {
 								label={ __( 'Width (auto, %, px, rem, etc.)' ) }
 								value={ imageWidthInsideContainer || '' }
 								onChange={ onSetImageWidthInsideContainer }
-								className={ 'image-sizing-text-control' }
+								className={ 'image-attributes-text-control' }
 							/>
 						</PanelRow>
 					</PanelBody>

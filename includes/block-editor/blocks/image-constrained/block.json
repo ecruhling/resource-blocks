@@ -16,8 +16,13 @@
 	  "type": "string",
 	  "default": "none"
 	},
+	"showCaption": {
+	  "type": "boolean",
+	  "default": false
+	},
 	"alignCaption": {
-	  "type": "string"
+	  "type": "string",
+	  "default": "none"
 	},
 	"url": {
 	  "type": "string",
