@@ -769,16 +769,17 @@ function Image(_ref) {
     help: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Describe the role of this image on the page.'), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ExternalLink, {
       href: "https://www.w3.org/TR/html52/dom.html#the-title-attribute"
     }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('(Note: many devices and browsers do not display this text.)')))
-  })));
+  }))); // caption controls are filled into the Toolbar, placed
+  // after the link button on the toolbar
+
   const captionControls = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Fill, {
-    name: "RichText.ToolbarControls.text-color"
+    name: "RichText.ToolbarControls.link"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.AlignmentToolbar, {
     value: alignCaption,
     onChange: newAlignCaption => setAttributes({
       alignCaption: newAlignCaption
     })
-  })); // console.log( RichText );
-
+  }));
   const filename = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_8__.getFilename)(url);
   let defaultedAlt;
 
@@ -807,37 +808,7 @@ function Image(_ref) {
   }), temporaryURL && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Spinner, null))
   /* eslint-enable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */
   ;
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !temporaryURL && controls, img, (!_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.RichText.isEmpty(caption) || isSelected) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.RichTextToolbarButton, {
-    icon: "align-left",
-    title: 'Align Left',
-    onClick: () => {
-      console.log('set-align-left');
-    },
-    isActive: () => {
-      console.log('set-align-left');
-    },
-    className: 'toolbar-button-with-text toolbar-button__align-left'
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.RichTextToolbarButton, {
-    icon: "align-center",
-    title: 'Align Center',
-    onClick: () => {
-      console.log('set-align-center');
-    },
-    isActive: () => {
-      console.log('set-align-center');
-    },
-    className: 'toolbar-button-with-text toolbar-button__align-center'
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.RichTextToolbarButton, {
-    icon: "align-right",
-    title: 'Align Right',
-    onClick: () => {
-      console.log('set-align-right');
-    },
-    isActive: () => {
-      console.log('set-align-right');
-    },
-    className: 'toolbar-button-with-text toolbar-button__align-right'
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.RichText, {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !temporaryURL && controls, img, isSelected && captionControls, (!_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.RichText.isEmpty(caption) || isSelected) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.RichText, {
     ref: captionRef,
     tagName: "figcaption",
     "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Image caption text'),
@@ -848,7 +819,7 @@ function Image(_ref) {
     }),
     inlineToolbar: true,
     __unstableOnSplitAtEnd: () => insertBlocksAfter((0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_9__.createBlock)('core/paragraph'))
-  })));
+  }));
 }
 
 /***/ }),
