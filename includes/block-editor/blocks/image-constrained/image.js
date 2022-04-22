@@ -8,6 +8,7 @@ import { pick } from 'lodash';
  */
 import { isBlobURL } from '@wordpress/blob';
 import {
+	Fill,
 	ExternalLink,
 	PanelBody,
 	Spinner,
@@ -18,6 +19,7 @@ import {
 import { usePrevious } from '@wordpress/compose';
 import { useSelect, useDispatch } from '@wordpress/data';
 import {
+	AlignmentControl,
 	BlockControls,
 	InspectorControls,
 	RichText,
@@ -26,6 +28,9 @@ import {
 	MediaReplaceFlow,
 	store as blockEditorStore,
 	BlockAlignmentControl,
+	RichTextToolbarButton,
+	RichTextShortcut,
+	AlignmentToolbar,
 } from '@wordpress/block-editor';
 import { useEffect, useState, useRef } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
@@ -289,6 +294,19 @@ export default function Image( {
 		</>
 	);
 
+	const captionControls = (
+		<Fill name="RichText.ToolbarControls.text-color">
+			<AlignmentToolbar
+				value={ alignCaption }
+				onChange={ ( newAlignCaption ) =>
+					setAttributes( { alignCaption: newAlignCaption } )
+				}
+			/>
+		</Fill>
+	);
+
+	// console.log( RichText );
+
 	const filename = getFilename( url );
 	let defaultedAlt;
 
@@ -330,20 +348,61 @@ export default function Image( {
 			{ ! temporaryURL && controls }
 			{ img }
 			{ ( ! RichText.isEmpty( caption ) || isSelected ) && (
-				<RichText
-					ref={ captionRef }
-					tagName="figcaption"
-					aria-label={ __( 'Image caption text' ) }
-					placeholder={ __( 'Add caption' ) }
-					value={ caption }
-					onChange={ ( value ) =>
-						setAttributes( { caption: value } )
-					}
-					inlineToolbar
-					__unstableOnSplitAtEnd={ () =>
-						insertBlocksAfter( createBlock( 'core/paragraph' ) )
-					}
-				/>
+				<>
+					<RichTextToolbarButton
+						icon="align-left"
+						title={ 'Align Left' }
+						onClick={ () => {
+							console.log( 'set-align-left' );
+						} }
+						isActive={ () => {
+							console.log( 'set-align-left' );
+						} }
+						className={
+							'toolbar-button-with-text toolbar-button__align-left'
+						}
+					/>
+					<RichTextToolbarButton
+						icon="align-center"
+						title={ 'Align Center' }
+						onClick={ () => {
+							console.log( 'set-align-center' );
+						} }
+						isActive={ () => {
+							console.log( 'set-align-center' );
+						} }
+						className={
+							'toolbar-button-with-text toolbar-button__align-center'
+						}
+					/>
+					<RichTextToolbarButton
+						icon="align-right"
+						title={ 'Align Right' }
+						onClick={ () => {
+							console.log( 'set-align-right' );
+						} }
+						isActive={ () => {
+							console.log( 'set-align-right' );
+						} }
+						className={
+							'toolbar-button-with-text toolbar-button__align-right'
+						}
+					/>
+					<RichText
+						ref={ captionRef }
+						tagName="figcaption"
+						aria-label={ __( 'Image caption text' ) }
+						placeholder={ __( 'Add caption' ) }
+						value={ caption }
+						onChange={ ( value ) =>
+							setAttributes( { caption: value } )
+						}
+						inlineToolbar={ true }
+						__unstableOnSplitAtEnd={ () =>
+							insertBlocksAfter( createBlock( 'core/paragraph' ) )
+						}
+					/>
+				</>
 			) }
 		</>
 	);

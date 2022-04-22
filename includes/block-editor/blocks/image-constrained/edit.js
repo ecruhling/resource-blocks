@@ -183,8 +183,6 @@ export function Edit( {
 		/>
 	);
 
-	console.log( showCaption );
-
 	const classes = classnames( className, 'size-full', {
 		[ `align${ align }` ]: align,
 		'is-transient': temporaryURL,
