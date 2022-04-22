@@ -39,6 +39,7 @@ Included blocks:
 
 * Full-width Image
 * Two-column Images
+* Image (Size constrained; image that has an additional field to constrain the width or height.)
 * Triptych
 * Full-width Video (Vimeo embed)
 * Body Text
@@ -63,47 +64,16 @@ Included patterns:
 
 
 
-<!-- GETTING STARTED -->
-## Getting Started
-
-### Prerequisites
-
-* WordPress >= v.5.9
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/ecruhling/resource-blocks.git
-   ```
-2. From the "resource-blocks" directory, install NPM packages
-   ```sh
-   npm install
-   ```
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+### Image (Size Constrained)
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+This is built from the core WordPress image block, but strips out the resize functionality and instead integrates a field allowing for size constraints to be added to the image.
+So if your design requires that an image be a specific size (in particular a certain aspect ratio), you can input the width & height in this control.
+Images that are not equal to the value(s) set in this control will not be allowed for upload or selection.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-See the [open issues](https://github.com/ecruhling/resource-blocks/issues) for a full list of proposed features (and known issues).
+This block also adds additional controls for the image caption, allowing the caption to be visually hidden, or for the alignment of the caption text.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
