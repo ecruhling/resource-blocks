@@ -117,6 +117,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @wordpress/primitives */ "@wordpress/primitives");
 /* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./editor.scss */ "./includes/block-editor/blocks/full-width-video/editor.scss");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_14__);
 
 
 /**
@@ -153,12 +155,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const EmbedEdit = props => {
   const {
     attributes: {
       providerNameSlug,
       previewable,
-      url: attributesUrl
+      url: attributesUrl,
+      autoplay
     },
     attributes,
     isSelected,
@@ -320,7 +324,18 @@ const EmbedEdit = props => {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_embed_controls__WEBPACK_IMPORTED_MODULE_2__["default"], {
     showEditButton: preview && !cannotEmbed,
     switchBackToURLInput: () => setIsEditingURL(true)
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_12__.View, blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_10__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_14__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Video attributes')
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_14__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_14__.ToggleControl, {
+    label: "Autoplay video?",
+    help: autoplay ? 'Autoplay the video in a loop.' : 'Do not autoplay the video.',
+    checked: autoplay,
+    onChange: value => {
+      setAttributes({
+        autoplay: value
+      });
+    }
+  })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_12__.View, blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "resource-blocks-column"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_embed_preview__WEBPACK_IMPORTED_MODULE_6__["default"], {
     preview: preview,
@@ -2062,7 +2077,7 @@ function _extends() {
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-video","version":"1.0.0","title":"Full-width Video","category":"resource-blocks","description":"Full-width Vimeo video embed.","textdomain":"resource-blocks","attributes":{"url":{"type":"string"},"type":{"type":"string"},"providerNameSlug":{"type":"string"},"allowResponsive":{"type":"boolean","default":true},"responsive":{"type":"boolean","default":false},"previewable":{"type":"boolean","default":true}},"example":{"attributes":{"url":"https://vimeo.com/100902001"}},"editorScript":"file:../../../../build/full-width-video.js","editorStyle":"file:../../../../build/full-width-video.css","style":"file:../../../../build/style-full-width-video.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"resource-blocks/full-width-video","version":"1.0.0","title":"Full-width Video","category":"resource-blocks","description":"Full-width Vimeo video embed.","textdomain":"resource-blocks","attributes":{"url":{"type":"string"},"type":{"type":"string"},"providerNameSlug":{"type":"string"},"allowResponsive":{"type":"boolean","default":true},"responsive":{"type":"boolean","default":false},"previewable":{"type":"boolean","default":true},"autoplay":{"type":"boolean","default":false}},"example":{"attributes":{"url":"https://vimeo.com/100902001"}},"editorScript":"file:../../../../build/full-width-video.js","editorStyle":"file:../../../../build/full-width-video.css","style":"file:../../../../build/style-full-width-video.css"}');
 
 /***/ })
 

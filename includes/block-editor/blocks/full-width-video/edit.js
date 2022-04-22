@@ -25,7 +25,7 @@ import classnames from 'classnames';
 import { __, _x, sprintf } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useBlockProps } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { store as coreStore } from '@wordpress/core-data';
 import { View } from '@wordpress/primitives';
 
@@ -36,10 +36,16 @@ import { View } from '@wordpress/primitives';
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
+import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
 
 const EmbedEdit = ( props ) => {
 	const {
-		attributes: { providerNameSlug, previewable, url: attributesUrl },
+		attributes: {
+			providerNameSlug,
+			previewable,
+			url: attributesUrl,
+			autoplay,
+		},
 		attributes,
 		isSelected,
 		onReplace,
@@ -204,6 +210,26 @@ const EmbedEdit = ( props ) => {
 				showEditButton={ preview && ! cannotEmbed }
 				switchBackToURLInput={ () => setIsEditingURL( true ) }
 			/>
+			<InspectorControls>
+				<PanelBody title={ __( 'Video attributes' ) }>
+					<PanelRow>
+						<ToggleControl
+							label="Autoplay video?"
+							help={
+								autoplay
+									? 'Autoplay the video in a loop.'
+									: 'Do not autoplay the video.'
+							}
+							checked={ autoplay }
+							onChange={ ( value ) => {
+								setAttributes( {
+									autoplay: value,
+								} );
+							} }
+						/>
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
 			<View { ...blockProps }>
 				<div className="resource-blocks-column">
 					<EmbedPreview

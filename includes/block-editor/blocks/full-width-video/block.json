@@ -28,6 +28,10 @@
 	"previewable": {
 	  "type": "boolean",
 	  "default": true
+	},
+	"autoplay": {
+	  "type": "boolean",
+	  "default": false
 	}
   },
   "example": {
