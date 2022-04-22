@@ -12,6 +12,16 @@
 	vertical-align: bottom;
   }
 
+  figcaption {
+	display: none;
+  }
+
+  &.has-caption {
+	figcaption {
+	  display: block;
+	}
+  }
+
   &.aligncenter {
 	text-align: center;
 	margin: 0 auto;

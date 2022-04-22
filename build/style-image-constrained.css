@@ -13,6 +13,12 @@
   width: 100%;
   vertical-align: bottom;
 }
+.wp-block-resource-blocks-image-constrained figcaption {
+  display: none;
+}
+.wp-block-resource-blocks-image-constrained.has-caption figcaption {
+  display: block;
+}
 .wp-block-resource-blocks-image-constrained.aligncenter {
   text-align: center;
   margin: 0 auto;

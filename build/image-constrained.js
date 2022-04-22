@@ -263,6 +263,7 @@ function Edit(_ref) {
     className: 'edit-image-preview',
     src: url
   });
+  console.log(showCaption);
   const classes = classnames__WEBPACK_IMPORTED_MODULE_2___default()(className, 'size-full', {
     [`align${align}`]: align,
     'is-transient': temporaryURL,
