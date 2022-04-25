@@ -206,29 +206,27 @@ function allow_only_resource_blocks(): array
 add_filter('allowed_block_types_all', 'allow_only_resource_blocks', 10, 2);
 
 /**
- * Filter Vimeo block markup to add embed parameters like autoplay.
+ * Filter Vimeo block markup to add autoplay parameters, according to the block attribute 'autoplay'.
  */
-function vimeo_embed_html_filter($block_content, $block)
+function resource_vimeo_embed_html_filter($block_content, $block)
 {
 	if ('resource-blocks/full-width-video' === $block['blockName']) {
 
 		preg_match('/src="(.+?)"/', $block_content, $matches);
 		$src = $matches[1];
 
-		/* Boolean parameters must be in number format */
+		// Boolean parameters must be in number format, so can't use the actual value of 'true' or 'false'.
+		// A null value will leave the parameter out of the argument.
 		$params = array(
-			'autoplay' => 1,
-			'loop' => 1,
-			'autopause' => 0,
-			'background' => 1,
-			'muted' => 1,
-			'byline' => 0,
-			'title' => 0,
-//			'controls'    => $atts['background'] ? 0 : null,
-//			'muted'       => $atts['background'] ? 1 : null,
-//			'playsinline' => $atts['background'] ? 1 : null,
-//			'autoplay'    => $atts['background'] && !$atts['scrollTrigger'] ? 1 : null,
-//			'loop'        => $atts['loop'] ? 1 : 0
+			// most of these parameters have to be enabled/disabled in order for video to actually autoplay.
+			'autoplay' => isset($block['attrs']['autoplay']) ? 1 : null,
+			'autopause' => isset($block['attrs']['autoplay']) ? 0 : null,
+			'background' => isset($block['attrs']['autoplay']) ? 1 : null,
+			'muted' => isset($block['attrs']['autoplay']) ? 1 : null,
+			'playsinline' => isset($block['attrs']['autoplay']) ? 1 : null,
+			'loop' => 1, // all videos will loop by default.
+			'byline' => 0, // no bylines by default.
+			'title' => 0, // no title by default.
 		);
 
 		$new_src = add_query_arg($params, $src);
@@ -238,11 +236,8 @@ function vimeo_embed_html_filter($block_content, $block)
 	return $block_content;
 }
 
-add_filter('render_block', 'vimeo_embed_html_filter', 10, 3);
+add_filter('render_block', 'resource_vimeo_embed_html_filter', 10, 3);
 
-/**
- * Add media file size column in media library.
- */
 /**
  * Filter the Media list table columns to add a File Size column.
  *

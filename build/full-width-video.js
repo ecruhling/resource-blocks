@@ -321,7 +321,6 @@ const EmbedEdit = props => {
     className: classFromPreview
   } = getMergedAttributes();
   const className = classnames__WEBPACK_IMPORTED_MODULE_7___default()(classFromPreview, props.className);
-  console.log(url);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_embed_controls__WEBPACK_IMPORTED_MODULE_2__["default"], {
     showEditButton: preview && !cannotEmbed,
     switchBackToURLInput: () => setIsEditingURL(true)
