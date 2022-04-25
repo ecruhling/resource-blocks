@@ -321,6 +321,7 @@ const EmbedEdit = props => {
     className: classFromPreview
   } = getMergedAttributes();
   const className = classnames__WEBPACK_IMPORTED_MODULE_7___default()(classFromPreview, props.className);
+  console.log(url);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_embed_controls__WEBPACK_IMPORTED_MODULE_2__["default"], {
     showEditButton: preview && !cannotEmbed,
     switchBackToURLInput: () => setIsEditingURL(true)
@@ -648,7 +649,7 @@ class EmbedPreview extends _wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Compo
       href: url
     }, url)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
       className: "components-placeholder__error"
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Embedded content from Vimeo can\'t be previewed in the editor.'), parsedHostBaseUrl))));
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("Embedded content from Vimeo can't be previewed in the editor."), parsedHostBaseUrl))));
   }
 
 }
@@ -948,7 +949,8 @@ function save(_ref) {
   const {
     url,
     type,
-    providerNameSlug
+    providerNameSlug,
+    autoplay
   } = attributes;
 
   if (!url) {

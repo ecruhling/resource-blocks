@@ -138,9 +138,9 @@ function resource_blocks_styles_scripts()
 		['wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-block-editor', 'wp-dom-ready']
 	);
 
-	wp_localize_script( 'resource-blocks-meta', 'resource_blocks_meta', array(
-		'plugin_path' => plugin_dir_url( __FILE__ )
-	) );
+	wp_localize_script('resource-blocks-meta', 'resource_blocks_meta', array(
+		'plugin_path' => plugin_dir_url(__FILE__)
+	));
 }
 
 add_action('enqueue_block_editor_assets', 'resource_blocks_styles_scripts');
@@ -206,6 +206,41 @@ function allow_only_resource_blocks(): array
 add_filter('allowed_block_types_all', 'allow_only_resource_blocks', 10, 2);
 
 /**
+ * Filter Vimeo block markup to add embed parameters like autoplay.
+ */
+function vimeo_embed_html_filter($block_content, $block)
+{
+	if ('resource-blocks/full-width-video' === $block['blockName']) {
+
+		preg_match('/src="(.+?)"/', $block_content, $matches);
+		$src = $matches[1];
+
+		/* Boolean parameters must be in number format */
+		$params = array(
+			'autoplay' => 1,
+			'loop' => 1,
+			'autopause' => 0,
+			'background' => 1,
+			'muted' => 1,
+			'byline' => 0,
+			'title' => 0,
+//			'controls'    => $atts['background'] ? 0 : null,
+//			'muted'       => $atts['background'] ? 1 : null,
+//			'playsinline' => $atts['background'] ? 1 : null,
+//			'autoplay'    => $atts['background'] && !$atts['scrollTrigger'] ? 1 : null,
+//			'loop'        => $atts['loop'] ? 1 : 0
+		);
+
+		$new_src = add_query_arg($params, $src);
+
+		$block_content = str_replace($src, $new_src, $block_content);
+	}
+	return $block_content;
+}
+
+add_filter('render_block', 'vimeo_embed_html_filter', 10, 3);
+
+/**
  * Add media file size column in media library.
  */
 /**
@@ -214,15 +249,15 @@ add_filter('allowed_block_types_all', 'allow_only_resource_blocks', 10, 2);
  * @param array $posts_columns Existing array of columns displayed in the Media list table.
  * @return array Amended array of columns to be displayed in the Media list table.
  */
-function resource_media_columns_filesize(array $posts_columns ): array
+function resource_media_columns_filesize(array $posts_columns): array
 {
 	unset($posts_columns['comments']);
-	$posts_columns['filesize'] = __( 'Size & Dimensions', 'resource-blocks' );
+	$posts_columns['filesize'] = __('Size & Dimensions', 'resource-blocks');
 
 	return $posts_columns;
 }
 
-add_filter( 'manage_media_columns', 'resource_media_columns_filesize' );
+add_filter('manage_media_columns', 'resource_media_columns_filesize');
 
 /**
  * Display File Size custom column in the Media list table.
@@ -230,14 +265,15 @@ add_filter( 'manage_media_columns', 'resource_media_columns_filesize' );
  * @param string $column_name Name of the custom column.
  * @param int $post_id Current Attachment ID.
  */
-function resource_media_custom_column_filesize(string $column_name, int $post_id ) {
-	if ( 'filesize' !== $column_name ) {
+function resource_media_custom_column_filesize(string $column_name, int $post_id)
+{
+	if ('filesize' !== $column_name) {
 		return;
 	}
 
 	$width = wp_get_attachment_metadata($post_id)['width'] ?? null;
 	$height = wp_get_attachment_metadata($post_id)['height'] ?? null;
-	$bytes = filesize( get_attached_file( $post_id ) );
+	$bytes = filesize(get_attached_file($post_id));
 
 	$string = size_format($bytes, 2) . '</br>';
 	$string .= 'height: ' . $width . 'px</br>';
@@ -246,12 +282,13 @@ function resource_media_custom_column_filesize(string $column_name, int $post_id
 	echo $string;
 }
 
-add_action( 'manage_media_custom_column', 'resource_media_custom_column_filesize', 10, 2 );
+add_action('manage_media_custom_column', 'resource_media_custom_column_filesize', 10, 2);
 
 /**
  * Adjust File Size column on Media Library page in WP admin
  */
-function resource_filesize_column_filesize() {
+function resource_filesize_column_filesize()
+{
 	echo
 	'<style>
         .fixed .column-filesize {
@@ -260,4 +297,4 @@ function resource_filesize_column_filesize() {
     </style>';
 }
 
-add_action( 'admin_print_styles-upload.php', 'resource_filesize_column_filesize' );
+add_action('admin_print_styles-upload.php', 'resource_filesize_column_filesize');

@@ -1,12 +1,12 @@
 /**
  * WordPress dependencies
  */
-import { Spinner } from '@wordpress/components'
+import { Spinner } from '@wordpress/components';
 
 const EmbedLoading = () => (
 	<div className="wp-block-embed is-loading">
-		<Spinner/>
+		<Spinner />
 	</div>
-)
+);
 
-export default EmbedLoading
+export default EmbedLoading;

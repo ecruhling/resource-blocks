@@ -13,7 +13,7 @@ import classnames from 'classnames/dedupe';
 import { useBlockProps } from '@wordpress/block-editor';
 
 export default function save( { attributes } ) {
-	const { url, type, providerNameSlug } = attributes;
+	const { url, type, providerNameSlug, autoplay } = attributes;
 
 	if ( ! url ) {
 		return null;

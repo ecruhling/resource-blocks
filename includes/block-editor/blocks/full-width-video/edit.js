@@ -204,6 +204,8 @@ const EmbedEdit = ( props ) => {
 	const { type, className: classFromPreview } = getMergedAttributes();
 	const className = classnames( classFromPreview, props.className );
 
+	console.log( url );
+
 	return (
 		<>
 			<EmbedControls

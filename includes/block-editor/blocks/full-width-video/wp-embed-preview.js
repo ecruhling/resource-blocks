@@ -1,8 +1,8 @@
 /**
  * WordPress dependencies
  */
-import { useMergeRefs, useFocusableIframe } from '@wordpress/compose'
-import { useRef, useEffect, useMemo } from '@wordpress/element'
+import { useMergeRefs, useFocusableIframe } from '@wordpress/compose';
+import { useRef, useEffect, useMemo } from '@wordpress/element';
 
 /** @typedef {import('@wordpress/element').WPSyntheticEvent} WPSyntheticEvent */
 
@@ -11,28 +11,28 @@ const attributeMap = {
 	frameborder: 'frameBorder',
 	marginheight: 'marginHeight',
 	marginwidth: 'marginWidth',
-}
+};
 
-export default function WpEmbedPreview ({ html }) {
-	const ref = useRef()
-	const props = useMemo(() => {
-		const doc = new window.DOMParser().parseFromString(html, 'text/html')
-		const iframe = doc.querySelector('iframe')
-		const iframeProps = {}
+export default function WpEmbedPreview( { html } ) {
+	const ref = useRef();
+	const props = useMemo( () => {
+		const doc = new window.DOMParser().parseFromString( html, 'text/html' );
+		const iframe = doc.querySelector( 'iframe' );
+		const iframeProps = {};
 
-		if (!iframe) return iframeProps
+		if ( ! iframe ) return iframeProps;
 
-		Array.from(iframe.attributes).forEach(({ name, value }) => {
-			if (name === 'style') return
-			iframeProps[attributeMap[name] || name] = value
-		})
+		Array.from( iframe.attributes ).forEach( ( { name, value } ) => {
+			if ( name === 'style' ) return;
+			iframeProps[ attributeMap[ name ] || name ] = value;
+		} );
 
-		return iframeProps
-	}, [html])
+		return iframeProps;
+	}, [ html ] );
 
-	useEffect(() => {
-		const { ownerDocument } = ref.current
-		const { defaultView } = ownerDocument
+	useEffect( () => {
+		const { ownerDocument } = ref.current;
+		const { defaultView } = ownerDocument;
 
 		/**
 		 * Checks for WordPress embed events signaling the height change when
@@ -49,27 +49,27 @@ export default function WpEmbedPreview ({ html }) {
 		 *
 		 * @param {MessageEvent} event Message event.
 		 */
-		function resizeWPembeds ({ data: { secret, message, value } = {} }) {
-			if (message !== 'height' || secret !== props['data-secret']) {
-				return
+		function resizeWPembeds( { data: { secret, message, value } = {} } ) {
+			if ( message !== 'height' || secret !== props[ 'data-secret' ] ) {
+				return;
 			}
 
-			ref.current.height = value
+			ref.current.height = value;
 		}
 
-		defaultView.addEventListener('message', resizeWPembeds)
+		defaultView.addEventListener( 'message', resizeWPembeds );
 		return () => {
-			defaultView.removeEventListener('message', resizeWPembeds)
-		}
-	}, [])
+			defaultView.removeEventListener( 'message', resizeWPembeds );
+		};
+	}, [] );
 
 	return (
 		<div className="wp-block-embed__wrapper">
 			<iframe
-				ref={useMergeRefs([ref, useFocusableIframe()])}
-				title={props.title}
-				{...props}
+				ref={ useMergeRefs( [ ref, useFocusableIframe() ] ) }
+				title={ props.title }
+				{ ...props }
 			/>
 		</div>
-	)
+	);
 }
