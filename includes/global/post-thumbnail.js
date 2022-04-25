@@ -86,11 +86,13 @@ function PostThumbnail( { featuredImageId, onRemoveImage, noticeUI, media } ) {
 					>
 						{ media.alt_text &&
 							sprintf(
+								// translators: %s: Current image
 								__( 'Current image: %s' ),
 								media.alt_text
 							) }
 						{ ! media.alt_text &&
 							sprintf(
+								// translators: %s: File name
 								__(
 									'The current image has no alternative text. The file name is: %s'
 								),
