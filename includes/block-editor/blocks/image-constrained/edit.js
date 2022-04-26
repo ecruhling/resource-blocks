@@ -423,18 +423,18 @@ export function Edit( {
 							</>
 						) }
 						<PanelRow className={ 'image-attributes-heading' }>
-							Required image size
+							Required image size (in pixels)
 						</PanelRow>
 						<PanelRow>
 							<TextControl
-								label={ __( 'Width' ) }
+								label={ __( 'Width (px)' ) }
 								value={ designWidth || '' }
 								onChange={ onSetDesignWidth }
 								type={ 'number' }
 								className={ 'image-attributes-text-control' }
 							/>
 							<TextControl
-								label={ __( 'Height' ) }
+								label={ __( 'Height (px)' ) }
 								value={ designHeight || '' }
 								onChange={ onSetDesignHeight }
 								type={ 'number' }

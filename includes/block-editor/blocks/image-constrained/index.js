@@ -34,32 +34,49 @@ const _AttachmentLibrary = wp.media.view.Attachment.Library;
 
 wp.media.view.Attachment.Library = _AttachmentLibrary.extend( {
 	render() {
-		const designWidth = wp.data
+		// get the currently selected block
+		const selectedBlock = wp.data
 			.select( 'core/block-editor' )
-			.getSelectedBlock().attributes.designWidth;
+			.getSelectedBlock();
 
-		const designHeight = wp.data
-			.select( 'core/block-editor' )
-			.getSelectedBlock().attributes.designHeight;
+		// no block selected (selectedBlock === null); return early with default.
+		if ( ! selectedBlock ) {
+			return _AttachmentLibrary.prototype.render.apply( this, arguments );
+		}
 
-		if ( '' !== designWidth ) {
-			if (
-				parseInt( designWidth ) !==
-				parseInt( this.model.attributes.width )
-			) {
-				this.$el.addClass( 'resource-disabled' );
+		// if the block that is selected is 'resource-blocks/image-constrained'
+		if (
+			selectedBlock &&
+			selectedBlock.name === 'resource-blocks/image-constrained'
+		) {
+			const designWidth = wp.data
+				.select( 'core/block-editor' )
+				.getSelectedBlock().attributes.designWidth;
+
+			const designHeight = wp.data
+				.select( 'core/block-editor' )
+				.getSelectedBlock().attributes.designHeight;
+
+			if ( '' !== designWidth ) {
+				if (
+					parseInt( designWidth ) !==
+					parseInt( this.model.attributes.width )
+				) {
+					this.$el.addClass( 'resource-disabled' );
+				}
+			}
+
+			if ( '' !== designHeight ) {
+				if (
+					parseInt( designHeight ) !==
+					parseInt( this.model.attributes.height )
+				) {
+					this.$el.addClass( 'resource-disabled' );
+				}
 			}
 		}
 
-		if ( '' !== designHeight ) {
-			if (
-				parseInt( designHeight ) !==
-				parseInt( this.model.attributes.height )
-			) {
-				this.$el.addClass( 'resource-disabled' );
-			}
-		}
-
+		// outside if statement, in case other selected block
 		return _AttachmentLibrary.prototype.render.apply( this, arguments );
 	},
 } );

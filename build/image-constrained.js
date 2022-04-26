@@ -469,14 +469,14 @@ function Edit(_ref) {
     }
   }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelRow, {
     className: 'image-attributes-heading'
-  }, "Required image size"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Width'),
+  }, "Required image size (in pixels)"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Width (px)'),
     value: designWidth || '',
     onChange: onSetDesignWidth,
     type: 'number',
     className: 'image-attributes-text-control'
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Height'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Height (px)'),
     value: designHeight || '',
     onChange: onSetDesignHeight,
     type: 'number',
@@ -876,20 +876,31 @@ const {
 const _AttachmentLibrary = wp.media.view.Attachment.Library;
 wp.media.view.Attachment.Library = _AttachmentLibrary.extend({
   render() {
-    const designWidth = wp.data.select('core/block-editor').getSelectedBlock().attributes.designWidth;
-    const designHeight = wp.data.select('core/block-editor').getSelectedBlock().attributes.designHeight;
+    // get the currently selected block
+    const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock(); // no block selected (selectedBlock === null); return early with default.
 
-    if ('' !== designWidth) {
-      if (parseInt(designWidth) !== parseInt(this.model.attributes.width)) {
-        this.$el.addClass('resource-disabled');
-      }
-    }
+    if (!selectedBlock) {
+      return _AttachmentLibrary.prototype.render.apply(this, arguments);
+    } // if the block that is selected is 'resource-blocks/image-constrained'
 
-    if ('' !== designHeight) {
-      if (parseInt(designHeight) !== parseInt(this.model.attributes.height)) {
-        this.$el.addClass('resource-disabled');
+
+    if (selectedBlock && selectedBlock.name === 'resource-blocks/image-constrained') {
+      const designWidth = wp.data.select('core/block-editor').getSelectedBlock().attributes.designWidth;
+      const designHeight = wp.data.select('core/block-editor').getSelectedBlock().attributes.designHeight;
+
+      if ('' !== designWidth) {
+        if (parseInt(designWidth) !== parseInt(this.model.attributes.width)) {
+          this.$el.addClass('resource-disabled');
+        }
       }
-    }
+
+      if ('' !== designHeight) {
+        if (parseInt(designHeight) !== parseInt(this.model.attributes.height)) {
+          this.$el.addClass('resource-disabled');
+        }
+      }
+    } // outside if statement, in case other selected block
+
 
     return _AttachmentLibrary.prototype.render.apply(this, arguments);
   }
