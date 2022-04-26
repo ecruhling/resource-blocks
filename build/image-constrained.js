@@ -273,7 +273,23 @@ function Edit(_ref) {
     ref,
     className: classes
   });
-  const [modalIsOpen, setIsOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+  const [modalIsOpen, setIsOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false); // create nice image height / width instructions.
+
+  let heightWidthInstructions = '';
+
+  if (designHeight || designWidth) {
+    if (designHeight) {
+      heightWidthInstructions = 'Required image size is ' + designHeight + 'px tall.';
+    }
+
+    if (designWidth) {
+      heightWidthInstructions = 'Required image size is ' + designWidth + 'px wide.';
+    }
+
+    if (designHeight && designWidth) {
+      heightWidthInstructions = 'Required image size is ' + designWidth + 'px wide by ' + designHeight + 'px tall.';
+    }
+  }
 
   function onUploadError(message) {
     noticeOperations.removeAllNotices();
@@ -440,7 +456,7 @@ function Edit(_ref) {
       title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Image [Size Constrained]'),
       instructions: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.sprintf)(
       /* translators: %1$s: designWidth %2$s: designHeight */
-      (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Upload an image file, or pick one from the media library. Required image size is %1$spx x %2$spx.'), designWidth, designHeight)
+      (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Upload an image file, or pick one from the media library. %1$s'), heightWidthInstructions)
     },
     disableDropZone: true,
     onSelect: onSelectImage,

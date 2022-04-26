@@ -197,6 +197,28 @@ export function Edit( {
 
 	const [ modalIsOpen, setIsOpen ] = useState( false );
 
+	// create nice image height / width instructions.
+	let heightWidthInstructions = '';
+
+	if ( designHeight || designWidth ) {
+		if ( designHeight ) {
+			heightWidthInstructions =
+				'Required image size is ' + designHeight + 'px tall.';
+		}
+		if ( designWidth ) {
+			heightWidthInstructions =
+				'Required image size is ' + designWidth + 'px wide.';
+		}
+		if ( designHeight && designWidth ) {
+			heightWidthInstructions =
+				'Required image size is ' +
+				designWidth +
+				'px wide by ' +
+				designHeight +
+				'px tall.';
+		}
+	}
+
 	function onUploadError( message ) {
 		noticeOperations.removeAllNotices();
 		noticeOperations.createErrorNotice( message );
@@ -378,10 +400,9 @@ export function Edit( {
 						instructions: sprintf(
 							/* translators: %1$s: designWidth %2$s: designHeight */
 							__(
-								'Upload an image file, or pick one from the media library. Required image size is %1$spx x %2$spx.'
+								'Upload an image file, or pick one from the media library. %1$s'
 							),
-							designWidth,
-							designHeight
+							heightWidthInstructions
 						),
 					} }
 					disableDropZone={ true }
