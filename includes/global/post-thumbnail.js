@@ -9,13 +9,6 @@ import {
 } from '@wordpress/components';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
-
-// Used when labels from post type were not yet loaded or when they are not present.
-const DEFAULT_FEATURE_IMAGE_LABEL = __( 'Post thumbnail' );
-const DEFAULT_SET_FEATURE_IMAGE_LABEL = __( 'Set post thumbnail' );
-const DEFAULT_REMOVE_FEATURE_IMAGE_LABEL = __( 'Remove post thumbnail' );
-
 function PostThumbnail( { featuredImageId, onRemoveImage, noticeUI, media } ) {
 	const instructions = (
 		<p>
@@ -115,9 +108,9 @@ function PostThumbnail( { featuredImageId, onRemoveImage, noticeUI, media } ) {
 				) }
 				<MediaUploadCheck fallback={ instructions }>
 					<MediaUpload
-						title={ DEFAULT_FEATURE_IMAGE_LABEL }
+						title={ __( 'Post thumbnail' ) }
 						onSelect={ onUpdateImage }
-						allowedTypes={ ALLOWED_MEDIA_TYPES }
+						allowedTypes={ [ 'image' ] }
 						modalClass="editor-post-featured-image__media-modal"
 						value={ featuredImageId }
 						render={ ( { open } ) => (
@@ -156,7 +149,7 @@ function PostThumbnail( { featuredImageId, onRemoveImage, noticeUI, media } ) {
 										<Spinner />
 									) }
 									{ ! featuredImageId &&
-										DEFAULT_SET_FEATURE_IMAGE_LABEL }
+										__( 'Set post thumbnail' ) }
 								</Button>
 							</div>
 						) }
@@ -165,10 +158,10 @@ function PostThumbnail( { featuredImageId, onRemoveImage, noticeUI, media } ) {
 				{ !! featuredImageId && media && ! media.isLoading && (
 					<MediaUploadCheck>
 						<MediaUpload
-							title={ DEFAULT_FEATURE_IMAGE_LABEL }
+							title={ __( 'Post thumbnail' ) }
 							onSelect={ onUpdateImage }
 							unstableFeaturedImageFlow
-							allowedTypes={ ALLOWED_MEDIA_TYPES }
+							allowedTypes={ [ 'image' ] }
 							modalClass="editor-post-featured-image__media-modal"
 							render={ ( { open } ) => (
 								<Button onClick={ open } variant="secondary">
@@ -185,7 +178,7 @@ function PostThumbnail( { featuredImageId, onRemoveImage, noticeUI, media } ) {
 							variant="link"
 							isDestructive
 						>
-							{ DEFAULT_REMOVE_FEATURE_IMAGE_LABEL }
+							{ __( 'Remove post thumbnail' ) }
 						</Button>
 					</MediaUploadCheck>
 				) }

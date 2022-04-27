@@ -186,13 +186,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const ALLOWED_MEDIA_TYPES = ['image']; // Used when labels from post type were not yet loaded or when they are not present.
-
-const DEFAULT_FEATURE_IMAGE_LABEL = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post thumbnail');
-
-const DEFAULT_SET_FEATURE_IMAGE_LABEL = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Set post thumbnail');
-
-const DEFAULT_REMOVE_FEATURE_IMAGE_LABEL = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Remove post thumbnail');
 
 function PostThumbnail(_ref) {
   var _media$media_details$, _media$media_details$2;
@@ -275,9 +268,9 @@ function PostThumbnail(_ref) {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Image must be 995px x 410px! Choose another image.")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.MediaUploadCheck, {
     fallback: instructions
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.MediaUpload, {
-    title: DEFAULT_FEATURE_IMAGE_LABEL,
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post thumbnail'),
     onSelect: onUpdateImage,
-    allowedTypes: ALLOWED_MEDIA_TYPES,
+    allowedTypes: ['image'],
     modalClass: "editor-post-featured-image__media-modal",
     value: featuredImageId,
     render: _ref2 => {
@@ -298,13 +291,13 @@ function PostThumbnail(_ref) {
       }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
         src: mediaSourceUrl,
         alt: ""
-      })), !!featuredImageId && !media && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Spinner, null), !featuredImageId && DEFAULT_SET_FEATURE_IMAGE_LABEL));
+      })), !!featuredImageId && !media && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Spinner, null), !featuredImageId && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Set post thumbnail')));
     }
   })), !!featuredImageId && media && !media.isLoading && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.MediaUploadCheck, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.MediaUpload, {
-    title: DEFAULT_FEATURE_IMAGE_LABEL,
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post thumbnail'),
     onSelect: onUpdateImage,
     unstableFeaturedImageFlow: true,
-    allowedTypes: ALLOWED_MEDIA_TYPES,
+    allowedTypes: ['image'],
     modalClass: "editor-post-featured-image__media-modal",
     render: _ref3 => {
       let {
@@ -319,7 +312,7 @@ function PostThumbnail(_ref) {
     onClick: onRemoveImage,
     variant: "link",
     isDestructive: true
-  }, DEFAULT_REMOVE_FEATURE_IMAGE_LABEL))));
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Remove post thumbnail')))));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (PostThumbnail);
