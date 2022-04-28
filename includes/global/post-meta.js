@@ -13,16 +13,22 @@ import icons from '../icons/icons';
 import PostThumbnail from './post-thumbnail';
 
 const PostMeta = () => {
+	// meta information for this post.
+	// includes fields: 'post_thumbnail' and 'optional_description'.
 	const meta = useSelect(
 		( select ) => select( 'core/editor' ).getEditedPostAttribute( 'meta' ),
 		[]
 	);
 
-	const media = useSelect(
-		( select ) => select( 'core' ).getMedia( meta.post_thumbnail ),
-		[]
-	);
+	const id = meta.post_thumbnail;
 
+	// media object from meta.post_thumbnail (ID).
+	// use 'id' as a dependency (final argument), in order to update on the fly.
+	const media = useSelect( ( select ) => select( 'core' ).getMedia( id ), [
+		id,
+	] );
+
+	// image ID
 	const featuredImageId = meta.post_thumbnail ?? null;
 
 	const { editPost } = useDispatch( 'core/editor' );

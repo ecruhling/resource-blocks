@@ -13,7 +13,7 @@ import './style.scss';
 import './editor.scss';
 
 /**
- * Check what kind of post
+ * Function to check what kind of post this is.
  */
 const getPostType = () => wp.data.select( 'core/editor' ).getCurrentPostType();
 
@@ -31,7 +31,7 @@ domReady( () => {
 
 		// once the post type changes from null to an actual value, the post type is valid
 		if ( postType !== newPostType ) {
-			// this is a post
+			// this is a regular 'Recently' post type.
 			if ( newPostType === 'post' ) {
 				// remove panels
 				removeEditorPanel( 'featured-image' );
@@ -53,6 +53,7 @@ domReady( () => {
 					} );
 				}
 			}
+			// this is a Projects post type.
 			if ( newPostType === 'projects' ) {
 				// get registered plugins
 				const registeredPlugins = getPlugins();

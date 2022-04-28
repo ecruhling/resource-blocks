@@ -58,9 +58,11 @@ function PostThumbnail( { featuredImageId, onRemoveImage, noticeUI, media } ) {
 
 	function onUpdateImage( image ) {
 		editPost( {
-			meta: { post_thumbnail: image },
+			meta: { post_thumbnail: image.id },
 		} );
 	}
+
+	console.log( featuredImageId, media );
 
 	return (
 		<>

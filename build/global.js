@@ -35,7 +35,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- * Check what kind of post
+ * Function to check what kind of post this is.
  */
 
 const getPostType = () => wp.data.select('core/editor').getCurrentPostType(); // set the initial postType
@@ -53,7 +53,7 @@ _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2___default()(() => {
     const newPostType = getPostType(); // once the post type changes from null to an actual value, the post type is valid
 
     if (postType !== newPostType) {
-      // this is a post
+      // this is a regular 'Recently' post type.
       if (newPostType === 'post') {
         // remove panels
         removeEditorPanel('featured-image');
@@ -70,7 +70,8 @@ _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2___default()(() => {
 
           });
         }
-      }
+      } // this is a Projects post type.
+
 
       if (newPostType === 'projects') {
         // get registered plugins
@@ -132,8 +133,14 @@ __webpack_require__.r(__webpack_exports__);
 const PostMeta = () => {
   var _meta$post_thumbnail;
 
+  // meta information for this post.
+  // includes fields: 'post_thumbnail' and 'optional_description'.
   const meta = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core/editor').getEditedPostAttribute('meta'), []);
-  const media = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core').getMedia(meta.post_thumbnail), []);
+  const id = meta.post_thumbnail; // media object from meta.post_thumbnail (ID).
+  // use 'id' as a dependency (final argument), in order to update on the fly.
+
+  const media = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core').getMedia(id), [id]); // image ID
+
   const featuredImageId = (_meta$post_thumbnail = meta.post_thumbnail) !== null && _meta$post_thumbnail !== void 0 ? _meta$post_thumbnail : null;
   const {
     editPost
@@ -240,11 +247,12 @@ function PostThumbnail(_ref) {
   function onUpdateImage(image) {
     editPost({
       meta: {
-        post_thumbnail: image
+        post_thumbnail: image.id
       }
     });
   }
 
+  console.log(featuredImageId, media);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, noticeUI, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "editor-post-featured-image",
     style: {
