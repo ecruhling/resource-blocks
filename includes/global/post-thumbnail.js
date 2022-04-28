@@ -9,7 +9,7 @@ import {
 } from '@wordpress/components';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 
-function PostThumbnail( { featuredImageId, onRemoveImage, noticeUI, media } ) {
+function PostThumbnail( { featuredImageId, noticeUI, media } ) {
 	const instructions = (
 		<p>
 			{ __(
@@ -62,7 +62,11 @@ function PostThumbnail( { featuredImageId, onRemoveImage, noticeUI, media } ) {
 		} );
 	}
 
-	console.log( featuredImageId, media );
+	function onRemoveImage() {
+		editPost( {
+			meta: { post_thumbnail: null },
+		} );
+	}
 
 	return (
 		<>

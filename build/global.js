@@ -199,7 +199,6 @@ function PostThumbnail(_ref) {
 
   let {
     featuredImageId,
-    onRemoveImage,
     noticeUI,
     media
   } = _ref;
@@ -252,7 +251,14 @@ function PostThumbnail(_ref) {
     });
   }
 
-  console.log(featuredImageId, media);
+  function onRemoveImage() {
+    editPost({
+      meta: {
+        post_thumbnail: null
+      }
+    });
+  }
+
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, noticeUI, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "editor-post-featured-image",
     style: {
