@@ -13,34 +13,34 @@ import './style.scss';
 import './editor.scss';
 
 /**
- * Function to check what kind of post this is.
+ * Method to retrieve the type of the post.
  */
 const getPostType = () => wp.data.select( 'core/editor' ).getCurrentPostType();
 
-// set the initial postType
+// set the initial postType.
 let postType = getPostType();
 
-// DOM ready
+// DOM ready.
 domReady( () => {
 	const { removeEditorPanel } = wp.data.dispatch( 'core/edit-post' );
 
-	// subscribe, since this runs multiple times
+	// subscribe, since this runs multiple times.
 	wp.data.subscribe( () => {
-		// get the current postType
+		// get the current postType.
 		const newPostType = getPostType();
 
-		// once the post type changes from null to an actual value, the post type is valid
+		// once the post type changes from null to an actual value, the post type is valid.
 		if ( postType !== newPostType ) {
 			// this is a regular 'Recently' post type.
 			if ( newPostType === 'post' ) {
-				// remove panels
+				// remove panels.
 				removeEditorPanel( 'featured-image' );
 				removeEditorPanel( 'post-excerpt' );
 				removeEditorPanel( 'discussion-panel' );
-				// get registered plugins
+				// get registered plugins.
 				const registeredPlugins = getPlugins();
 
-				// register panel (verify that plugin is registered only once)
+				// register panel (verify that plugin is registered only once).
 				if (
 					! registeredPlugins.some(
 						( plugin ) => plugin.name === 'post-meta'

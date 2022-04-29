@@ -1,6 +1,5 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { useDispatch } from '@wordpress/data';
 import {
 	Button,
 	Modal,
@@ -9,7 +8,7 @@ import {
 } from '@wordpress/components';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 
-function PostThumbnail( { featuredImageId, noticeUI, media } ) {
+function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 	const instructions = (
 		<p>
 			{ __(
@@ -18,12 +17,11 @@ function PostThumbnail( { featuredImageId, noticeUI, media } ) {
 		</p>
 	);
 
-	let mediaWidth, mediaHeight, mediaSourceUrl;
+	let mediaWidth, mediaHeight;
 
 	if ( media ) {
 		mediaWidth = media.media_details.width;
 		mediaHeight = media.media_details.height;
-		mediaSourceUrl = media.source_url;
 	}
 
 	/**
@@ -54,23 +52,18 @@ function PostThumbnail( { featuredImageId, noticeUI, media } ) {
 		setIsOpen( false );
 	}
 
-	const { editPost } = useDispatch( 'core/editor' );
-
+	// Image selected and updated.
 	function onUpdateImage( image ) {
-		editPost( {
-			meta: { post_thumbnail: image.id },
-		} );
+		setMeta( { ...meta, post_thumbnail: image.id } );
 	}
 
+	// Image removed.
 	function onRemoveImage() {
-		editPost( {
-			meta: { post_thumbnail: null },
-		} );
+		setMeta( { ...meta, post_thumbnail: null } );
 	}
 
 	return (
 		<>
-			{ noticeUI }
 			<div
 				className="editor-post-featured-image"
 				style={ { width: '100%' } }
@@ -146,7 +139,7 @@ function PostThumbnail( { featuredImageId, noticeUI, media } ) {
 											isInline
 										>
 											<img
-												src={ mediaSourceUrl }
+												src={ media.source_url }
 												alt=""
 											/>
 										</ResponsiveWrapper>

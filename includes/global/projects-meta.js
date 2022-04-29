@@ -3,7 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { PanelRow, TextControl } from '@wordpress/components';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useEntityProp } from '@wordpress/core-data';
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 
 /**
@@ -12,11 +12,7 @@ import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 import icons from '../icons/icons';
 
 const ProjectsMeta = () => {
-	const meta = useSelect(
-		( select ) => select( 'core/editor' ).getEditedPostAttribute( 'meta' ),
-		[]
-	);
-	const { editPost } = useDispatch( 'core/editor' );
+	const [ meta, setMeta ] = useEntityProp( 'postType', 'projects', 'meta' );
 
 	return (
 		<PluginDocumentSettingPanel
@@ -33,11 +29,9 @@ const ProjectsMeta = () => {
 						'resource-blocks'
 					) }
 					value={ meta.second_line }
-					onChange={ ( value ) =>
-						editPost( {
-							meta: { second_line: value },
-						} )
-					}
+					onChange={ ( value ) => {
+						setMeta( { ...meta, second_line: value } );
+					} }
 				/>
 			</PanelRow>
 		</PluginDocumentSettingPanel>

@@ -4,7 +4,7 @@
 /**
 Global Editor CSS for Resource Blocks
 
-CSS code that gets applied to the editor.
+CSS code that gets applied to the editor only.
 
 Build file is named: global.css
  */
@@ -55,6 +55,10 @@ body.post-type-team .edit-post-visual-editor__post-title-wrapper {
 .resource-disabled {
   opacity: 0.3 !important;
   pointer-events: none !important;
+}
+
+.media-frame-title h1 {
+  color: inherit;
 }
 
 /*# sourceMappingURL=global.css.map*/

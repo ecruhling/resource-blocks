@@ -3,7 +3,8 @@
  */
 import { __ } from '@wordpress/i18n';
 import { PanelRow, TextareaControl } from '@wordpress/components';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
+import { useEntityProp } from '@wordpress/core-data';
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 
 /**
@@ -15,23 +16,17 @@ import PostThumbnail from './post-thumbnail';
 const PostMeta = () => {
 	// meta information for this post.
 	// includes fields: 'post_thumbnail' and 'optional_description'.
-	const meta = useSelect(
-		( select ) => select( 'core/editor' ).getEditedPostAttribute( 'meta' ),
-		[]
-	);
+	const [ meta, setMeta ] = useEntityProp( 'postType', 'post', 'meta' );
 
-	const id = meta.post_thumbnail;
+	// post thumbnail image ID
+	const featuredImageId = meta.post_thumbnail;
 
 	// media object from meta.post_thumbnail (ID).
 	// use 'id' as a dependency (final argument), in order to update on the fly.
-	const media = useSelect( ( select ) => select( 'core' ).getMedia( id ), [
-		id,
-	] );
-
-	// image ID
-	const featuredImageId = meta.post_thumbnail ?? null;
-
-	const { editPost } = useDispatch( 'core/editor' );
+	const media = useSelect(
+		( select ) => select( 'core' ).getMedia( featuredImageId ),
+		[ featuredImageId ]
+	);
 
 	return (
 		<PluginDocumentSettingPanel
@@ -44,6 +39,7 @@ const PostMeta = () => {
 			<PanelRow>
 				<PostThumbnail
 					meta={ meta }
+					setMeta={ setMeta }
 					media={ media }
 					featuredImageId={ featuredImageId }
 				/>
@@ -55,11 +51,9 @@ const PostMeta = () => {
 						'resource-blocks'
 					) }
 					value={ meta.optional_description }
-					onChange={ ( value ) =>
-						editPost( {
-							meta: { optional_description: value },
-						} )
-					}
+					onChange={ ( value ) => {
+						setMeta( { ...meta, optional_description: value } );
+					} }
 				/>
 			</PanelRow>
 		</PluginDocumentSettingPanel>

@@ -1,7 +1,7 @@
 /**
 Global Editor CSS for Resource Blocks
 
-CSS code that gets applied to the editor.
+CSS code that gets applied to the editor only.
 
 Build file is named: global.css
  */
@@ -22,13 +22,13 @@ html :where(.editor-styles-wrapper) {
 }
 
 .is-root-container.block-editor-block-list__layout {
-  // make it a container
+  // make it a container.
   width: 100%;
   margin-right: auto;
   margin-left: auto;
 }
 
-// Post Editor
+// Post Editor.
 .edit-post-visual-editor__post-title-wrapper {
   margin-bottom: 1rem;
 
@@ -51,7 +51,7 @@ html :where(.editor-styles-wrapper) {
 }
 
 .editor-styles-wrapper .wp-block.resource-blocks-column {
-  // override margin-left-right: auto
+  // override margin-left-right: auto.
   margin-left: initial;
   margin-right: initial;
 }
@@ -59,4 +59,9 @@ html :where(.editor-styles-wrapper) {
 .resource-disabled {
   opacity: 0.3 !important;
   pointer-events: none !important;
+}
+
+// Media select/upload frame.
+.media-frame-title h1 {
+  color: inherit;
 }
