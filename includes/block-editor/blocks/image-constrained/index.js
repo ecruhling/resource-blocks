@@ -31,18 +31,32 @@ const { name, ...settings } = json;
  * @private
  */
 const _AttachmentLibrary = wp.media.view.Attachment.Library;
+const _AttachmentsBrowser = wp.media.view.AttachmentsBrowser;
+const _Frame = wp.media.view.Frame;
+
+wp.media.view.AttachmentsBrowser = _AttachmentsBrowser.extend( {
+	createToolbar() {
+		_AttachmentsBrowser.prototype.createToolbar.apply( this, arguments );
+
+		this.attachmentsHeading = new wp.media.view.Heading( {
+			text: 'WHATEVER',
+			level: 'h2',
+			className: 'media-views-heading',
+		} );
+		this.views.add( this.attachmentsHeading );
+	},
+} );
+
+wp.media.view.Frame = _Frame.extend( {} );
 
 wp.media.view.Attachment.Library = _AttachmentLibrary.extend( {
 	render() {
+		_AttachmentLibrary.prototype.render.apply( this, arguments );
+
 		// get the currently selected block
 		const selectedBlock = wp.data
 			.select( 'core/block-editor' )
 			.getSelectedBlock();
-
-		// no block selected (selectedBlock === null); return early with default.
-		if ( ! selectedBlock ) {
-			return _AttachmentLibrary.prototype.render.apply( this, arguments );
-		}
 
 		// if the block that is selected is 'resource-blocks/image-constrained'
 		if (
@@ -75,9 +89,6 @@ wp.media.view.Attachment.Library = _AttachmentLibrary.extend( {
 				}
 			}
 		}
-
-		// outside if statement, in case other selected block
-		return _AttachmentLibrary.prototype.render.apply( this, arguments );
 	},
 } );
 
