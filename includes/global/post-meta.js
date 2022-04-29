@@ -11,7 +11,7 @@ import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
  * Internal dependencies
  */
 import icons from '../icons/icons';
-import PostThumbnail from './post-thumbnail';
+import PostThumbnail from './components/post-thumbnail';
 
 const PostMeta = () => {
 	// meta information for this post.

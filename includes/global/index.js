@@ -55,10 +55,10 @@ domReady( () => {
 			}
 			// this is a Projects post type.
 			if ( newPostType === 'projects' ) {
-				// get registered plugins
+				// get registered plugins.
 				const registeredPlugins = getPlugins();
 
-				// register panel (verify that plugin is registered only once)
+				// register panel (verify that plugin is registered only once).
 				if (
 					! registeredPlugins.some(
 						( plugin ) => plugin.name === 'projects-meta'

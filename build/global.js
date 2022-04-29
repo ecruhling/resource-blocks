@@ -2,176 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./includes/global/index.js":
-/*!**********************************!*\
-  !*** ./includes/global/index.js ***!
-  \**********************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
-/* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/dom-ready */ "@wordpress/dom-ready");
-/* harmony import */ var _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _post_meta__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./post-meta */ "./includes/global/post-meta.js");
-/* harmony import */ var _projects_meta__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./projects-meta */ "./includes/global/projects-meta.js");
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style.scss */ "./includes/global/style.scss");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./includes/global/editor.scss");
-
-
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-/**
- * Method to retrieve the type of the post.
- */
-
-const getPostType = () => wp.data.select('core/editor').getCurrentPostType(); // set the initial postType.
-
-
-let postType = getPostType(); // DOM ready.
-
-_wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2___default()(() => {
-  const {
-    removeEditorPanel
-  } = wp.data.dispatch('core/edit-post'); // subscribe, since this runs multiple times.
-
-  wp.data.subscribe(() => {
-    // get the current postType.
-    const newPostType = getPostType(); // once the post type changes from null to an actual value, the post type is valid.
-
-    if (postType !== newPostType) {
-      // this is a regular 'Recently' post type.
-      if (newPostType === 'post') {
-        // remove panels.
-        removeEditorPanel('featured-image');
-        removeEditorPanel('post-excerpt');
-        removeEditorPanel('discussion-panel'); // get registered plugins.
-
-        const registeredPlugins = (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.getPlugins)(); // register panel (verify that plugin is registered only once).
-
-        if (!registeredPlugins.some(plugin => plugin.name === 'post-meta')) {
-          (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.registerPlugin)('post-meta', {
-            render() {
-              return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_post_meta__WEBPACK_IMPORTED_MODULE_3__["default"], null);
-            }
-
-          });
-        }
-      } // this is a Projects post type.
-
-
-      if (newPostType === 'projects') {
-        // get registered plugins
-        const registeredPlugins = (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.getPlugins)(); // register panel (verify that plugin is registered only once)
-
-        if (!registeredPlugins.some(plugin => plugin.name === 'projects-meta')) {
-          (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.registerPlugin)('projects-meta', {
-            render() {
-              return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_projects_meta__WEBPACK_IMPORTED_MODULE_4__["default"], null);
-            }
-
-          });
-        }
-      }
-    } // update the postType variable, so the above runs only once.
-
-
-    postType = newPostType;
-  });
-});
-
-/***/ }),
-
-/***/ "./includes/global/post-meta.js":
-/*!**************************************!*\
-  !*** ./includes/global/post-meta.js ***!
-  \**************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
-/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
-/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../icons/icons */ "./includes/icons/icons.js");
-/* harmony import */ var _post_thumbnail__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./post-thumbnail */ "./includes/global/post-thumbnail.js");
-
-
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-const PostMeta = () => {
-  // meta information for this post.
-  // includes fields: 'post_thumbnail' and 'optional_description'.
-  const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__.useEntityProp)('postType', 'post', 'meta'); // post thumbnail image ID
-
-  const featuredImageId = meta.post_thumbnail; // media object from meta.post_thumbnail (ID).
-  // use 'id' as a dependency (final argument), in order to update on the fly.
-
-  const media = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core').getMedia(featuredImageId), [featuredImageId]);
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_5__.PluginDocumentSettingPanel, {
-    name: "resource-blocks-meta",
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post Meta', 'resource-blocks'),
-    initialOpen: "true",
-    opened: "true",
-    icon: _icons_icons__WEBPACK_IMPORTED_MODULE_6__["default"].resource
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_post_thumbnail__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    meta: meta,
-    setMeta: setMeta,
-    media: media,
-    featuredImageId: featuredImageId
-  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Optional Description (displayed after title)', 'resource-blocks'),
-    value: meta.optional_description,
-    onChange: value => {
-      setMeta({ ...meta,
-        optional_description: value
-      });
-    }
-  })));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (PostMeta);
-
-/***/ }),
-
-/***/ "./includes/global/post-thumbnail.js":
-/*!*******************************************!*\
-  !*** ./includes/global/post-thumbnail.js ***!
-  \*******************************************/
+/***/ "./includes/global/components/post-thumbnail.js":
+/*!******************************************************!*\
+  !*** ./includes/global/components/post-thumbnail.js ***!
+  \******************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -319,6 +153,172 @@ function PostThumbnail(_ref) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (PostThumbnail);
+
+/***/ }),
+
+/***/ "./includes/global/index.js":
+/*!**********************************!*\
+  !*** ./includes/global/index.js ***!
+  \**********************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
+/* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/dom-ready */ "@wordpress/dom-ready");
+/* harmony import */ var _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _post_meta__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./post-meta */ "./includes/global/post-meta.js");
+/* harmony import */ var _projects_meta__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./projects-meta */ "./includes/global/projects-meta.js");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style.scss */ "./includes/global/style.scss");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./includes/global/editor.scss");
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+/**
+ * Method to retrieve the type of the post.
+ */
+
+const getPostType = () => wp.data.select('core/editor').getCurrentPostType(); // set the initial postType.
+
+
+let postType = getPostType(); // DOM ready.
+
+_wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2___default()(() => {
+  const {
+    removeEditorPanel
+  } = wp.data.dispatch('core/edit-post'); // subscribe, since this runs multiple times.
+
+  wp.data.subscribe(() => {
+    // get the current postType.
+    const newPostType = getPostType(); // once the post type changes from null to an actual value, the post type is valid.
+
+    if (postType !== newPostType) {
+      // this is a regular 'Recently' post type.
+      if (newPostType === 'post') {
+        // remove panels.
+        removeEditorPanel('featured-image');
+        removeEditorPanel('post-excerpt');
+        removeEditorPanel('discussion-panel'); // get registered plugins.
+
+        const registeredPlugins = (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.getPlugins)(); // register panel (verify that plugin is registered only once).
+
+        if (!registeredPlugins.some(plugin => plugin.name === 'post-meta')) {
+          (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.registerPlugin)('post-meta', {
+            render() {
+              return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_post_meta__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+            }
+
+          });
+        }
+      } // this is a Projects post type.
+
+
+      if (newPostType === 'projects') {
+        // get registered plugins.
+        const registeredPlugins = (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.getPlugins)(); // register panel (verify that plugin is registered only once).
+
+        if (!registeredPlugins.some(plugin => plugin.name === 'projects-meta')) {
+          (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.registerPlugin)('projects-meta', {
+            render() {
+              return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_projects_meta__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+            }
+
+          });
+        }
+      }
+    } // update the postType variable, so the above runs only once.
+
+
+    postType = newPostType;
+  });
+});
+
+/***/ }),
+
+/***/ "./includes/global/post-meta.js":
+/*!**************************************!*\
+  !*** ./includes/global/post-meta.js ***!
+  \**************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
+/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../icons/icons */ "./includes/icons/icons.js");
+/* harmony import */ var _components_post_thumbnail__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/post-thumbnail */ "./includes/global/components/post-thumbnail.js");
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+const PostMeta = () => {
+  // meta information for this post.
+  // includes fields: 'post_thumbnail' and 'optional_description'.
+  const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__.useEntityProp)('postType', 'post', 'meta'); // post thumbnail image ID
+
+  const featuredImageId = meta.post_thumbnail; // media object from meta.post_thumbnail (ID).
+  // use 'id' as a dependency (final argument), in order to update on the fly.
+
+  const media = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core').getMedia(featuredImageId), [featuredImageId]);
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_5__.PluginDocumentSettingPanel, {
+    name: "resource-blocks-meta",
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post Meta', 'resource-blocks'),
+    initialOpen: "true",
+    opened: "true",
+    icon: _icons_icons__WEBPACK_IMPORTED_MODULE_6__["default"].resource
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_post_thumbnail__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    meta: meta,
+    setMeta: setMeta,
+    media: media,
+    featuredImageId: featuredImageId
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Optional Description (displayed after title)', 'resource-blocks'),
+    value: meta.optional_description,
+    onChange: value => {
+      setMeta({ ...meta,
+        optional_description: value
+      });
+    }
+  })));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (PostMeta);
 
 /***/ }),
 
