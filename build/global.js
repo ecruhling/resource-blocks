@@ -42,21 +42,25 @@ function PostThumbnail(_ref) {
   /**
    * Image selected.
    *
-   * @param  image
+   * @param {Object} image
    */
-  // function imageSizeCheck( image ) {
-  // 	// Check for minimum width.
-  // 	// Selecting a new image from the Media Library uses media.width,
-  // 	// Uploading a new image uses media.media_details.width
-  // 	console.log( image );
-  // 	const widthCheck = image.width ?? image.media_details.width;
-  // 	const heightCheck = image.height ?? image.media_details.height;
-  //
-  // 	if ( widthCheck !== 995 || heightCheck !== 410 ) {
-  // 		openModal();
-  // 	}
-  // }
 
+
+  function imageSizeCheck(image) {
+    var _image$width, _image$height;
+
+    // Check for minimum width.
+    // Selecting a new image from the Media Library uses media.width,
+    // Uploading a new image uses media.media_details.width
+    const widthCheck = (_image$width = image.width) !== null && _image$width !== void 0 ? _image$width : image.media_details.width;
+    const heightCheck = (_image$height = image.height) !== null && _image$height !== void 0 ? _image$height : image.media_details.height;
+
+    if (widthCheck !== 995 || heightCheck !== 410) {
+      openModal();
+    } else {
+      onUpdateImage(image);
+    }
+  }
 
   const [modalIsOpen, setIsOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
 
@@ -106,7 +110,7 @@ function PostThumbnail(_ref) {
     fallback: instructions
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.MediaUpload, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post thumbnail'),
-    onSelect: onUpdateImage,
+    onSelect: imageSizeCheck,
     allowedTypes: ['image'],
     modalClass: "editor-post-featured-image__media-modal",
     value: featuredImageId,
@@ -132,7 +136,7 @@ function PostThumbnail(_ref) {
     }
   })), !!featuredImageId && media && !media.isLoading && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.MediaUploadCheck, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.MediaUpload, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post thumbnail'),
-    onSelect: onUpdateImage,
+    onSelect: imageSizeCheck,
     unstableFeaturedImageFlow: true,
     allowedTypes: ['image'],
     modalClass: "editor-post-featured-image__media-modal",

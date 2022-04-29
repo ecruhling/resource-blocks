@@ -27,20 +27,21 @@ function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 	/**
 	 * Image selected.
 	 *
-	 * @param  image
+	 * @param {Object} image
 	 */
-	// function imageSizeCheck( image ) {
-	// 	// Check for minimum width.
-	// 	// Selecting a new image from the Media Library uses media.width,
-	// 	// Uploading a new image uses media.media_details.width
-	// 	console.log( image );
-	// 	const widthCheck = image.width ?? image.media_details.width;
-	// 	const heightCheck = image.height ?? image.media_details.height;
-	//
-	// 	if ( widthCheck !== 995 || heightCheck !== 410 ) {
-	// 		openModal();
-	// 	}
-	// }
+	function imageSizeCheck( image ) {
+		// Check for minimum width.
+		// Selecting a new image from the Media Library uses media.width,
+		// Uploading a new image uses media.media_details.width
+		const widthCheck = image.width ?? image.media_details.width;
+		const heightCheck = image.height ?? image.media_details.height;
+
+		if ( widthCheck !== 995 || heightCheck !== 410 ) {
+			openModal();
+		} else {
+			onUpdateImage( image );
+		}
+	}
 
 	const [ modalIsOpen, setIsOpen ] = useState( false );
 
@@ -108,7 +109,7 @@ function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 				<MediaUploadCheck fallback={ instructions }>
 					<MediaUpload
 						title={ __( 'Post thumbnail' ) }
-						onSelect={ onUpdateImage }
+						onSelect={ imageSizeCheck }
 						allowedTypes={ [ 'image' ] }
 						modalClass="editor-post-featured-image__media-modal"
 						value={ featuredImageId }
@@ -158,7 +159,7 @@ function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 					<MediaUploadCheck>
 						<MediaUpload
 							title={ __( 'Post thumbnail' ) }
-							onSelect={ onUpdateImage }
+							onSelect={ imageSizeCheck }
 							unstableFeaturedImageFlow
 							allowedTypes={ [ 'image' ] }
 							modalClass="editor-post-featured-image__media-modal"
