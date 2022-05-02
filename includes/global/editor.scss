@@ -65,3 +65,21 @@ html :where(.editor-styles-wrapper) {
 .media-frame-title h1 {
   color: inherit;
 }
+
+h2.media-views-heading-constraints {
+  color: #37535b;
+  position: relative;
+  z-index: 1999;
+  display: block;
+  font-size: 13px;
+  line-height: 1;
+  margin-left: 1rem;
+  margin-top: 4.5rem;
+}
+
+.attachments-browser:not(.has-load-more) .attachments,
+.attachments-browser.has-load-more .attachments-wrapper,
+.attachments-browser .uploader-inline {
+  // adds additional space at top of attachments browser so that the required image dimensions can display.
+  top: 95px;
+}

@@ -61,4 +61,21 @@ body.post-type-team .edit-post-visual-editor__post-title-wrapper {
   color: inherit;
 }
 
+h2.media-views-heading-constraints {
+  color: #37535b;
+  position: relative;
+  z-index: 1999;
+  display: block;
+  font-size: 13px;
+  line-height: 1;
+  margin-left: 1rem;
+  margin-top: 4.5rem;
+}
+
+.attachments-browser:not(.has-load-more) .attachments,
+.attachments-browser.has-load-more .attachments-wrapper,
+.attachments-browser .uploader-inline {
+  top: 95px;
+}
+
 /*# sourceMappingURL=global.css.map*/

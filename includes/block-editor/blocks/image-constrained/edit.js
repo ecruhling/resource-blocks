@@ -452,7 +452,7 @@ export function Edit( {
 								value={ designWidth || '' }
 								onChange={ onSetDesignWidth }
 								type={ 'number' }
-								className={ 'image-attributes-text-control' }
+								className={ 'image-sizing-text-control' }
 							/>
 							<TextControl
 								label={ __( 'Height (px)' ) }

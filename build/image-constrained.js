@@ -490,7 +490,7 @@ function Edit(_ref) {
     value: designWidth || '',
     onChange: onSetDesignWidth,
     type: 'number',
-    className: 'image-attributes-text-control'
+    className: 'image-sizing-text-control'
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Height (px)'),
     value: designHeight || '',
@@ -890,22 +890,6 @@ const {
  */
 
 const _AttachmentLibrary = wp.media.view.Attachment.Library;
-const _AttachmentsBrowser = wp.media.view.AttachmentsBrowser;
-const _Frame = wp.media.view.Frame;
-wp.media.view.AttachmentsBrowser = _AttachmentsBrowser.extend({
-  createToolbar() {
-    _AttachmentsBrowser.prototype.createToolbar.apply(this, arguments);
-
-    this.attachmentsHeading = new wp.media.view.Heading({
-      text: 'WHATEVER',
-      level: 'h2',
-      className: 'media-views-heading'
-    });
-    this.views.add(this.attachmentsHeading);
-  }
-
-});
-wp.media.view.Frame = _Frame.extend({});
 wp.media.view.Attachment.Library = _AttachmentLibrary.extend({
   render() {
     _AttachmentLibrary.prototype.render.apply(this, arguments); // get the currently selected block
