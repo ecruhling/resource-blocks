@@ -887,35 +887,95 @@ const {
  * Any images that don't equal the attribute values are disabled from being
  * selected by the user.
  *
+ * @param  width
+ * @param  height
  * @private
  */
+// const _AttachmentLibrary = wp.media.view.Attachment.Library;
+//
+// wp.media.view.Attachment.Library = _AttachmentLibrary.extend( {
+// 	render() {
+// 		_AttachmentLibrary.prototype.render.apply( this, arguments );
+//
+// 		// get the currently selected block
+// 		const selectedBlock = wp.data
+// 			.select( 'core/block-editor' )
+// 			.getSelectedBlock();
+//
+// 		// if the block that is selected is 'resource-blocks/image-constrained'
+// 		if (
+// 			selectedBlock &&
+// 			selectedBlock.name === 'resource-blocks/image-constrained'
+// 		) {
+// 			const designWidth = wp.data
+// 				.select( 'core/block-editor' )
+// 				.getSelectedBlock().attributes.designWidth;
+//
+// 			const designHeight = wp.data
+// 				.select( 'core/block-editor' )
+// 				.getSelectedBlock().attributes.designHeight;
+//
+// 			if ( '' !== designWidth ) {
+// 				if (
+// 					parseInt( designWidth ) !==
+// 					parseInt( this.model.attributes.width )
+// 				) {
+// 					this.$el.addClass( 'resource-disabled' );
+// 				}
+// 			}
+//
+// 			if ( '' !== designHeight ) {
+// 				if (
+// 					parseInt( designHeight ) !==
+// 					parseInt( this.model.attributes.height )
+// 				) {
+// 					this.$el.addClass( 'resource-disabled' );
+// 				}
+// 			}
+// 		}
+// 	},
+// } );
 
-const _AttachmentLibrary = wp.media.view.Attachment.Library;
-wp.media.view.Attachment.Library = _AttachmentLibrary.extend({
-  render() {
-    _AttachmentLibrary.prototype.render.apply(this, arguments); // get the currently selected block
+function checkDimensions(width, height) {
+  const designWidth = wp.data.select('core/block-editor').getSelectedBlock().attributes.designWidth;
+  const designHeight = wp.data.select('core/block-editor').getSelectedBlock().attributes.designHeight;
 
-
-    const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock(); // if the block that is selected is 'resource-blocks/image-constrained'
-
-    if (selectedBlock && selectedBlock.name === 'resource-blocks/image-constrained') {
-      const designWidth = wp.data.select('core/block-editor').getSelectedBlock().attributes.designWidth;
-      const designHeight = wp.data.select('core/block-editor').getSelectedBlock().attributes.designHeight;
-
-      if ('' !== designWidth) {
-        if (parseInt(designWidth) !== parseInt(this.model.attributes.width)) {
-          this.$el.addClass('resource-disabled');
-        }
-      }
-
-      if ('' !== designHeight) {
-        if (parseInt(designHeight) !== parseInt(this.model.attributes.height)) {
-          this.$el.addClass('resource-disabled');
-        }
-      }
+  if ('' !== designWidth) {
+    if (parseInt(designWidth) !== parseInt(width)) {
+      return true;
     }
   }
 
+  if ('' !== designHeight) {
+    if (parseInt(designHeight) !== parseInt(height)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+wp.media.view.Attachment.Library = wp.media.view.Attachment.Library.extend({
+  // className: 'attachment resource-disabled', // default
+  className() {
+    return checkDimensions(this.model.attributes.width, this.model.attributes.height) ? 'attachment resource-disabled' : 'attachment'; // console.log( this.model );
+  } // className() {
+  // 	return $.inArray( this.model.get( 'id' ).toString(), ids ) !== -1
+  // 		? 'attachment testing'
+  // 		: 'attachment';
+  // },
+
+
+}); // wp.media.view.Modal.prototype.on( 'ready', function () {
+// 	console.log( this, 'media modal ready' );
+// } );
+//
+// wp.media.view.Modal.prototype.on( 'open', function () {
+// 	console.log( this, 'media modal open' );
+// } );
+
+wp.media.view.Attachment.Library.prototype.on('ready', function () {
+  console.log(this._events, 'library ready'); // this.model.addClass( 'resource-disabled' );
 });
 /**
  * Register block.
