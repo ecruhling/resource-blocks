@@ -355,12 +355,13 @@ export function Edit( {
 		}
 	}, [] );
 
+	const styles = imageWidthInsideContainer
+		? { style: { width: imageWidthInsideContainer } }
+		: {};
+
 	return (
 		<>
-			<figure
-				{ ...blockProps }
-				style={ { width: imageWidthInsideContainer } }
-			>
+			<figure { ...blockProps } { ...styles }>
 				{ ( temporaryURL || url ) && (
 					<Image
 						temporaryURL={ temporaryURL }
