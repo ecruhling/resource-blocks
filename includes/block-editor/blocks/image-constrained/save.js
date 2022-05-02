@@ -73,7 +73,11 @@ export default function save( { attributes } ) {
 
 	return (
 		<figure
-			style={ { width: imageWidthInsideContainer } }
+			style={
+				imageWidthInsideContainer
+					? { width: imageWidthInsideContainer }
+					: {}
+			}
 			{ ...useBlockProps.save( {
 				className: classes,
 			} ) }

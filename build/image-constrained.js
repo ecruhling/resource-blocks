@@ -1018,9 +1018,9 @@ function save(_ref) {
     value: caption
   }));
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("figure", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
-    style: {
+    style: imageWidthInsideContainer ? {
       width: imageWidthInsideContainer
-    }
+    } : {}
   }, _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.useBlockProps.save({
     className: classes
   })), figure);
