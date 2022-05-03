@@ -878,108 +878,81 @@ const {
   ...settings
 } = _block_json__WEBPACK_IMPORTED_MODULE_2__;
 /**
- * Extend wp.media.view.Attachment.Library.
+ * checkDimensions function.
  *
- * This extends the render method of the media library. It gets the current
- * attribute values designHeight & designWidth from the currently selected
- * block and compares the values against the images in the media library.
- *
- * Any images that don't equal the attribute values are disabled from being
- * selected by the user.
- *
- * @param  width
- * @param  height
+ * @param {string} width
+ * @param {string} height
  * @private
  */
-// const _AttachmentLibrary = wp.media.view.Attachment.Library;
-//
-// wp.media.view.Attachment.Library = _AttachmentLibrary.extend( {
-// 	render() {
-// 		_AttachmentLibrary.prototype.render.apply( this, arguments );
-//
-// 		// get the currently selected block
-// 		const selectedBlock = wp.data
-// 			.select( 'core/block-editor' )
-// 			.getSelectedBlock();
-//
-// 		// if the block that is selected is 'resource-blocks/image-constrained'
-// 		if (
-// 			selectedBlock &&
-// 			selectedBlock.name === 'resource-blocks/image-constrained'
-// 		) {
-// 			const designWidth = wp.data
-// 				.select( 'core/block-editor' )
-// 				.getSelectedBlock().attributes.designWidth;
-//
-// 			const designHeight = wp.data
-// 				.select( 'core/block-editor' )
-// 				.getSelectedBlock().attributes.designHeight;
-//
-// 			if ( '' !== designWidth ) {
-// 				if (
-// 					parseInt( designWidth ) !==
-// 					parseInt( this.model.attributes.width )
-// 				) {
-// 					this.$el.addClass( 'resource-disabled' );
-// 				}
-// 			}
-//
-// 			if ( '' !== designHeight ) {
-// 				if (
-// 					parseInt( designHeight ) !==
-// 					parseInt( this.model.attributes.height )
-// 				) {
-// 					this.$el.addClass( 'resource-disabled' );
-// 				}
-// 			}
-// 		}
-// 	},
-// } );
 
 function checkDimensions(width, height) {
-  const designWidth = wp.data.select('core/block-editor').getSelectedBlock().attributes.designWidth;
-  const designHeight = wp.data.select('core/block-editor').getSelectedBlock().attributes.designHeight;
+  // init variables
+  let designWidth, designHeight; // get currently selected block (if any)
 
-  if ('' !== designWidth) {
-    if (parseInt(designWidth) !== parseInt(width)) {
-      return true;
+  const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock(); // if this is coming from a block, there will
+  // be a designWidth or designHeight attribute(s)
+
+  if (selectedBlock) {
+    designWidth = selectedBlock.attributes.designWidth;
+    designHeight = selectedBlock.attributes.designHeight;
+  } // if designWidth exists
+
+
+  if (designWidth) {
+    // and is not blank
+    if ('' !== designWidth) {
+      if (parseInt(designWidth) !== parseInt(width)) {
+        return false;
+      }
+    }
+  } // if designHeight exists
+
+
+  if (designHeight) {
+    // and is not blank
+    if ('' !== designHeight) {
+      if (parseInt(designHeight) !== parseInt(height)) {
+        return false;
+      }
     }
   }
 
-  if ('' !== designHeight) {
-    if (parseInt(designHeight) !== parseInt(height)) {
-      return true;
+  return true;
+} // Extend Attachment Library approach.
+// wp.media.view.Attachment.Library = wp.media.view.Attachment.Library.extend( {
+// 	className() {
+// 		return checkDimensions(
+// 			this.model.attributes.width,
+// 			this.model.attributes.height
+// 		)
+// 			? 'attachment resource-disabled'
+// 			: 'attachment';
+// 	},
+// } );
+// Event Listener approach.
+// const originalAttachmentTrigger = wp.media.view.Attachment.prototype.trigger;
+
+
+wp.media.view.Attachment.prototype.trigger = function () {
+  // triggers all events, compares against 'ready'
+  // first argument contains the event name
+  if (arguments[0] === 'ready') {
+    if (!checkDimensions(this.model.attributes.width, this.model.attributes.height)) {
+      // if checkDimensions returns false
+      // add disabled class to element
+      this.$el.addClass('resource-disabled');
     }
-  }
+  } // unsure if below is needed
+  // originalAttachmentTrigger.apply(
+  // 	this,
+  // 	Array.prototype.slice.call( arguments )
+  // );
 
-  return false;
-}
-
-wp.media.view.Attachment.Library = wp.media.view.Attachment.Library.extend({
-  // className: 'attachment resource-disabled', // default
-  className() {
-    return checkDimensions(this.model.attributes.width, this.model.attributes.height) ? 'attachment resource-disabled' : 'attachment'; // console.log( this.model );
-  } // className() {
-  // 	return $.inArray( this.model.get( 'id' ).toString(), ids ) !== -1
-  // 		? 'attachment testing'
-  // 		: 'attachment';
-  // },
-
-
-}); // wp.media.view.Modal.prototype.on( 'ready', function () {
-// 	console.log( this, 'media modal ready' );
-// } );
-//
-// wp.media.view.Modal.prototype.on( 'open', function () {
-// 	console.log( this, 'media modal open' );
-// } );
-
-wp.media.view.Attachment.Library.prototype.on('ready', function () {
-  console.log(this._events, 'library ready'); // this.model.addClass( 'resource-disabled' );
-});
+};
 /**
  * Register block.
  */
+
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(name, { ...settings,
   icon: _icons_icons__WEBPACK_IMPORTED_MODULE_5__["default"].single_image,
