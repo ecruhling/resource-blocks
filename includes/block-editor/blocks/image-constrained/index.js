@@ -15,54 +15,9 @@ import json from './block.json';
 import edit from './edit';
 import save from './save';
 import icons from '../../../icons/icons';
+import checkDimensions from '../lib/check-dimensions';
 
 const { name, ...settings } = json;
-
-/**
- * checkDimensions function.
- *
- * @param {string} width
- * @param {string} height
- * @private
- */
-function checkDimensions( width, height ) {
-	// init variables
-	let designWidth, designHeight;
-
-	// get currently selected block (if any)
-	const selectedBlock = wp.data
-		.select( 'core/block-editor' )
-		.getSelectedBlock();
-
-	// if this is coming from a block, there will
-	// be a designWidth or designHeight attribute(s)
-	if ( selectedBlock ) {
-		designWidth = selectedBlock.attributes.designWidth;
-		designHeight = selectedBlock.attributes.designHeight;
-	}
-
-	// if designWidth exists
-	if ( designWidth ) {
-		// and is not blank
-		if ( '' !== designWidth ) {
-			if ( parseInt( designWidth ) !== parseInt( width ) ) {
-				return false;
-			}
-		}
-	}
-
-	// if designHeight exists
-	if ( designHeight ) {
-		// and is not blank
-		if ( '' !== designHeight ) {
-			if ( parseInt( designHeight ) !== parseInt( height ) ) {
-				return false;
-			}
-		}
-	}
-
-	return true;
-}
 
 // Extend Attachment Library approach.
 // wp.media.view.Attachment.Library = wp.media.view.Attachment.Library.extend( {
