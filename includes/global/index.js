@@ -51,35 +51,6 @@ domReady( () => {
 							return <PostMeta />;
 						},
 					} );
-
-					// TODO: figure out how to extend the library on the fly, instead of
-					// having multiple extends overwriting one another. see another
-					// approach to this in image-constrained/index.js line 21
-					/*
-					const _AttachmentLibrary = wp.media.view.Attachment.Library;
-
-					wp.media.view.Attachment.Library = _AttachmentLibrary.extend(
-						{
-							render() {
-								if (
-									995 !==
-										parseInt(
-											this.model.attributes.width
-										) ||
-									410 !==
-										parseInt( this.model.attributes.height )
-								) {
-									this.$el.addClass( 'resource-disabled' );
-								}
-
-								return _AttachmentLibrary.prototype.render.apply(
-									this,
-									arguments
-								);
-							},
-						}
-					);
-*/
 				}
 			}
 			// this is a Projects post type.

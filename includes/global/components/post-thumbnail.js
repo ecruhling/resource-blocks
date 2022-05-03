@@ -1,3 +1,6 @@
+/**
+ * WordPress dependencies.
+ */
 import { __, sprintf } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import {
@@ -8,6 +11,53 @@ import {
 } from '@wordpress/components';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 
+/**
+ * Internal dependencies.
+ */
+import { WIDTH, HEIGHT } from './constants';
+import checkDimensions from '../../block-editor/blocks/lib/check-dimensions';
+
+// Event Listener approach.
+// const originalAttachmentTrigger = wp.media.view.Attachment.prototype.trigger;
+wp.media.view.Attachment.prototype.trigger = function () {
+	// triggers all events, compares against 'ready'
+	// first argument contains the event name
+	if ( arguments[ 0 ] === 'ready' ) {
+		if (
+			! checkDimensions(
+				this.model.attributes.width,
+				this.model.attributes.height,
+				WIDTH,
+				HEIGHT
+			)
+		) {
+			// if checkDimensions returns false
+			// add disabled class to element
+			this.$el.addClass( 'resource-disabled' );
+		}
+	}
+	// unsure if below is needed
+
+	// originalAttachmentTrigger.apply(
+	// 	this,
+	// 	Array.prototype.slice.call( arguments )
+	// );
+};
+
+/**
+ * React component PostThumbnail.
+ *
+ * @param {number}   featuredImageId.featuredImageId
+ * @param {number}   featuredImageId
+ * @param {Object}   media
+ * @param {Object}   meta
+ * @param {Function} setMeta
+ * @param {Object}   featuredImageId.media
+ * @param {Object}   featuredImageId.meta
+ * @param {Function} featuredImageId.setMeta
+ * @return {Object} {JSX.Element}
+ * @function Object() { [native code] }
+ */
 function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 	const instructions = (
 		<p>
@@ -36,7 +86,10 @@ function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 		const widthCheck = image.width ?? image.media_details.width;
 		const heightCheck = image.height ?? image.media_details.height;
 
-		if ( widthCheck !== 995 || heightCheck !== 410 ) {
+		if (
+			widthCheck !== parseInt( WIDTH ) ||
+			heightCheck !== parseInt( HEIGHT )
+		) {
 			openModal();
 		} else {
 			onUpdateImage( image );
@@ -70,7 +123,7 @@ function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 				style={ { width: '100%' } }
 			>
 				<h2 style={ { marginBottom: '0.6em', display: 'block' } }>
-					Post thumbnail (995px x 410px)
+					Post thumbnail ({ WIDTH }px x { HEIGHT }px)
 				</h2>
 				{ media && (
 					<div
@@ -102,7 +155,8 @@ function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 						title="Error"
 					>
 						<p>
-							Image must be 995px x 410px! Choose another image.
+							Image must be { WIDTH }px x { HEIGHT }px! Choose
+							another image.
 						</p>
 					</Modal>
 				) }

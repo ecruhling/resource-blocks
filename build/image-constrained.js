@@ -1035,42 +1035,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * checkDimensions function.
+ *
  * returns false if either designWidth or
  * designHeight are not equal to width or height.
  *
- * @param {string} width
- * @param {string} height
+ * @param {string} width        the width of the current object in the media attachment (wp.media.view.Attachment).
+ * @param {string} height       the height of the current object in the media attachment (wp.media.view.Attachment).
+ * @param {string} designWidth  a hardcoded target width, can be overridden in the function by a block attribute.
+ * @param {string} designHeight a hardcoded target height, can be overridden in the function by a block attribute.
  * @private
  */
 function checkDimensions(width, height) {
-  // init variables
-  let designWidth, designHeight; // get currently selected block (if any)
-
+  let designWidth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+  let designHeight = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
+  // get currently selected block (if any)
   const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock(); // if this is coming from a block, there will
   // be a designWidth or designHeight attribute(s)
+  // get these values in order to override the default null.
 
   if (selectedBlock) {
     designWidth = selectedBlock.attributes.designWidth;
     designHeight = selectedBlock.attributes.designHeight;
-  } // if designWidth exists
+  } // default is '', if it is still default, continue
 
 
-  if (designWidth) {
-    // and is not blank
-    if ('' !== designWidth) {
-      if (parseInt(designWidth) !== parseInt(width)) {
-        return false;
-      }
+  if ('' !== designWidth) {
+    if (parseInt(designWidth) !== parseInt(width)) {
+      return false;
     }
-  } // if designHeight exists
+  } // default is '', if it is still default, continue
 
 
-  if (designHeight) {
-    // and is not blank
-    if ('' !== designHeight) {
-      if (parseInt(designHeight) !== parseInt(height)) {
-        return false;
-      }
+  if ('' !== designHeight) {
+    if (parseInt(designHeight) !== parseInt(height)) {
+      return false;
     }
   }
 
