@@ -856,6 +856,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit */ "./includes/block-editor/blocks/image-constrained/edit.js");
 /* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./save */ "./includes/block-editor/blocks/image-constrained/save.js");
 /* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../icons/icons */ "./includes/icons/icons.js");
+/* harmony import */ var _lib_check_dimensions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../lib/check-dimensions */ "./includes/block-editor/blocks/lib/check-dimensions.js");
 /**
  * WordPress dependencies.
  */
@@ -873,52 +874,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const {
   name,
   ...settings
-} = _block_json__WEBPACK_IMPORTED_MODULE_2__;
-/**
- * checkDimensions function.
- *
- * @param {string} width
- * @param {string} height
- * @private
- */
-
-function checkDimensions(width, height) {
-  // init variables
-  let designWidth, designHeight; // get currently selected block (if any)
-
-  const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock(); // if this is coming from a block, there will
-  // be a designWidth or designHeight attribute(s)
-
-  if (selectedBlock) {
-    designWidth = selectedBlock.attributes.designWidth;
-    designHeight = selectedBlock.attributes.designHeight;
-  } // if designWidth exists
-
-
-  if (designWidth) {
-    // and is not blank
-    if ('' !== designWidth) {
-      if (parseInt(designWidth) !== parseInt(width)) {
-        return false;
-      }
-    }
-  } // if designHeight exists
-
-
-  if (designHeight) {
-    // and is not blank
-    if ('' !== designHeight) {
-      if (parseInt(designHeight) !== parseInt(height)) {
-        return false;
-      }
-    }
-  }
-
-  return true;
-} // Extend Attachment Library approach.
+} = _block_json__WEBPACK_IMPORTED_MODULE_2__; // Extend Attachment Library approach.
 // wp.media.view.Attachment.Library = wp.media.view.Attachment.Library.extend( {
 // 	className() {
 // 		return checkDimensions(
@@ -932,12 +892,11 @@ function checkDimensions(width, height) {
 // Event Listener approach.
 // const originalAttachmentTrigger = wp.media.view.Attachment.prototype.trigger;
 
-
 wp.media.view.Attachment.prototype.trigger = function () {
   // triggers all events, compares against 'ready'
   // first argument contains the event name
   if (arguments[0] === 'ready') {
-    if (!checkDimensions(this.model.attributes.width, this.model.attributes.height)) {
+    if (!(0,_lib_check_dimensions__WEBPACK_IMPORTED_MODULE_6__["default"])(this.model.attributes.width, this.model.attributes.height)) {
       // if checkDimensions returns false
       // add disabled class to element
       this.$el.addClass('resource-disabled');
@@ -1059,6 +1018,63 @@ function save(_ref) {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("figure", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.useBlockProps.save({
     className: classes
   }), styles), figure);
+}
+
+/***/ }),
+
+/***/ "./includes/block-editor/blocks/lib/check-dimensions.js":
+/*!**************************************************************!*\
+  !*** ./includes/block-editor/blocks/lib/check-dimensions.js ***!
+  \**************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ checkDimensions; }
+/* harmony export */ });
+/**
+ * checkDimensions function.
+ * returns false if either designWidth or
+ * designHeight are not equal to width or height.
+ *
+ * @param {string} width
+ * @param {string} height
+ * @private
+ */
+function checkDimensions(width, height) {
+  // init variables
+  let designWidth, designHeight; // get currently selected block (if any)
+
+  const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock(); // if this is coming from a block, there will
+  // be a designWidth or designHeight attribute(s)
+
+  if (selectedBlock) {
+    designWidth = selectedBlock.attributes.designWidth;
+    designHeight = selectedBlock.attributes.designHeight;
+  } // if designWidth exists
+
+
+  if (designWidth) {
+    // and is not blank
+    if ('' !== designWidth) {
+      if (parseInt(designWidth) !== parseInt(width)) {
+        return false;
+      }
+    }
+  } // if designHeight exists
+
+
+  if (designHeight) {
+    // and is not blank
+    if ('' !== designHeight) {
+      if (parseInt(designHeight) !== parseInt(height)) {
+        return false;
+      }
+    }
+  }
+
+  return true;
 }
 
 /***/ }),
