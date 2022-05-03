@@ -17,33 +17,6 @@ import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { WIDTH, HEIGHT } from './constants';
 import checkDimensions from '../../block-editor/blocks/lib/check-dimensions';
 
-// Event Listener approach.
-// const originalAttachmentTrigger = wp.media.view.Attachment.prototype.trigger;
-wp.media.view.Attachment.prototype.trigger = function () {
-	// triggers all events, compares against 'ready'
-	// first argument contains the event name
-	if ( arguments[ 0 ] === 'ready' ) {
-		if (
-			! checkDimensions(
-				this.model.attributes.width,
-				this.model.attributes.height,
-				WIDTH,
-				HEIGHT
-			)
-		) {
-			// if checkDimensions returns false
-			// add disabled class to element
-			this.$el.addClass( 'resource-disabled' );
-		}
-	}
-	// unsure if below is needed
-
-	// originalAttachmentTrigger.apply(
-	// 	this,
-	// 	Array.prototype.slice.call( arguments )
-	// );
-};
-
 /**
  * React component PostThumbnail.
  *
@@ -75,7 +48,9 @@ function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 	}
 
 	/**
-	 * Image selected.
+	 * Image sizeCheck.
+	 *
+	 * Runs onSelect, checks dimensions, opens modal if incorrect.
 	 *
 	 * @param {Object} image
 	 */
@@ -96,6 +71,7 @@ function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 		}
 	}
 
+	// set up modal.
 	const [ modalIsOpen, setIsOpen ] = useState( false );
 
 	function openModal() {
@@ -115,6 +91,39 @@ function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 	function onRemoveImage() {
 		setMeta( { ...meta, post_thumbnail: null } );
 	}
+
+	// onClickButton function contains open
+	// and logic for checkDimensions
+	const onClickButton = ( open ) => {
+		// Event Listener approach.
+		// const originalAttachmentTrigger = wp.media.view.Attachment.prototype.trigger;
+		wp.media.view.Attachment.prototype.trigger = function () {
+			// triggers all events, compares against 'ready'
+			// first argument contains the event name
+			if ( arguments[ 0 ] === 'ready' ) {
+				if (
+					! checkDimensions(
+						this.model.attributes.width,
+						this.model.attributes.height,
+						WIDTH,
+						HEIGHT
+					)
+				) {
+					// if checkDimensions returns false
+					// add disabled class to element
+					this.$el.addClass( 'resource-disabled' );
+				}
+			}
+			// unsure if below is needed
+
+			// originalAttachmentTrigger.apply(
+			// 	this,
+			// 	Array.prototype.slice.call( arguments )
+			// );
+		};
+
+		return open;
+	};
 
 	return (
 		<>
@@ -175,7 +184,7 @@ function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 											? 'editor-post-featured-image__toggle'
 											: 'editor-post-featured-image__preview'
 									}
-									onClick={ open }
+									onClick={ onClickButton( open ) }
 									aria-label={
 										! featuredImageId
 											? null
