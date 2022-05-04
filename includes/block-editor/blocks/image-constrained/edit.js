@@ -23,7 +23,7 @@ import {
 	withNotices,
 	Modal,
 } from '@wordpress/components';
-import { useEffect, useRef, useState } from '@wordpress/element';
+import { useEffect, useRef, useState, Component } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { __, sprintf } from '@wordpress/i18n';
 import icons from '../../../icons/icons';
@@ -394,28 +394,35 @@ export function Edit( {
 					</Modal>
 				) }
 				<MediaPlaceholder
+					accept="image/*"
+					allowedTypes={ [ 'image' ] }
+					className={
+						'resource-blocks-image-constrained-media-placeholder'
+					}
+					disableDropZone={ true }
+					disableMediaButtons={ temporaryURL || url }
 					icon={ <BlockIcon icon={ icons.single_image } /> }
-					multiple={ false }
 					labels={ {
 						title: __( 'Image [Size Constrained]' ),
 						instructions: sprintf(
-							/* translators: %1$s: designWidth %2$s: designHeight */
+							/* translators: %1$s: heightWidthInstructions */
 							__(
 								'Upload an image file, or pick one from the media library. %1$s'
 							),
 							heightWidthInstructions
 						),
 					} }
-					disableDropZone={ true }
-					onSelect={ onSelectImage }
+					multiple={ false }
+					mediaPreview={ mediaPreview }
 					notices={ noticeUI }
 					onError={ onUploadError }
-					onClose={ onCloseModal }
-					accept="image/*"
-					allowedTypes={ [ 'image' ] }
+					onFilesPreUpload={ () => {
+						// called right before image actually gets uploaded
+						// hook into here to stop upload of image
+						console.log( 'onFilesPreUpload' );
+					} }
+					onSelect={ onSelectImage }
 					value={ { id } }
-					mediaPreview={ mediaPreview }
-					disableMediaButtons={ temporaryURL || url }
 				/>
 				<InspectorControls>
 					<PanelBody title={ __( 'Image attributes' ) }>

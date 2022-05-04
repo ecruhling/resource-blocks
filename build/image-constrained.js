@@ -391,28 +391,33 @@ function Edit(_ref) {
     contentLabel: "Error",
     title: "Error"
   }, "Image must be ", designWidth, "px wide.", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("br", null), "Image must be ", designHeight, "px tall.", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("br", null), "Choose another image."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.MediaPlaceholder, {
+    accept: "image/*",
+    allowedTypes: ['image'],
+    className: 'resource-blocks-image-constrained-media-placeholder',
+    disableDropZone: true,
+    disableMediaButtons: temporaryURL || url,
     icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.BlockIcon, {
       icon: _icons_icons__WEBPACK_IMPORTED_MODULE_9__["default"].single_image
     }),
-    multiple: false,
     labels: {
       title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Image [Size Constrained]'),
       instructions: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.sprintf)(
-      /* translators: %1$s: designWidth %2$s: designHeight */
+      /* translators: %1$s: heightWidthInstructions */
       (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Upload an image file, or pick one from the media library. %1$s'), heightWidthInstructions)
     },
-    disableDropZone: true,
-    onSelect: onSelectImage,
+    multiple: false,
+    mediaPreview: mediaPreview,
     notices: noticeUI,
     onError: onUploadError,
-    onClose: onCloseModal,
-    accept: "image/*",
-    allowedTypes: ['image'],
+    onFilesPreUpload: () => {
+      // called right before image actually gets uploaded
+      // hook into here to stop upload of image
+      console.log('onFilesPreUpload');
+    },
+    onSelect: onSelectImage,
     value: {
       id
-    },
-    mediaPreview: mediaPreview,
-    disableMediaButtons: temporaryURL || url
+    }
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Image attributes')
   }, (temporaryURL || url) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelRow, {
