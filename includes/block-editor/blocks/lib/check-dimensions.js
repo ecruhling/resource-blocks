@@ -9,6 +9,7 @@
  * @param {string} targetWidth  a hardcoded target width, can be overridden in the function by a block attribute.
  * @param {string} targetHeight a hardcoded target height, can be overridden in the function by a block attribute.
  * @private
+ * // TODO: something to take into account > < values
  */
 export default function checkDimensions(
 	width,
