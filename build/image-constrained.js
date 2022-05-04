@@ -740,29 +740,49 @@ __webpack_require__.r(__webpack_exports__);
 const {
   name,
   ...settings
-} = _block_json__WEBPACK_IMPORTED_MODULE_2__; // Event Listener approach.
+} = _block_json__WEBPACK_IMPORTED_MODULE_2__;
+wp.media.view.Modal.prototype.on('open', function () {
+  // get currently selected block (if any)
+  const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock();
+
+  if (selectedBlock && selectedBlock.name === 'resource-blocks/image-constrained') {
+    const designWidth = selectedBlock.attributes.designWidth;
+    const designHeight = selectedBlock.attributes.designHeight;
+
+    wp.media.view.Attachment.prototype.trigger = function () {
+      // triggers all events, compares against 'ready'
+      // first argument contains the event name
+      if (arguments[0] === 'ready') {
+        if (!(0,_lib_check_dimensions__WEBPACK_IMPORTED_MODULE_6__["default"])(this.model.attributes.width, this.model.attributes.height, designWidth, designHeight)) {
+          // if checkDimensions returns false
+          // add disabled class to element
+          this.$el.addClass('resource-disabled');
+        }
+      }
+    };
+  }
+}); // Event Listener approach.
 // const originalAttachmentTrigger = wp.media.view.Attachment.prototype.trigger;
+// wp.media.view.Attachment.prototype.trigger = function () {
+// 	// triggers all events, compares against 'ready'
+// 	// first argument contains the event name
+// 	if ( arguments[ 0 ] === 'ready' ) {
+// 		if (
+// 			! checkDimensions(
+// 				this.model.attributes.width,
+// 				this.model.attributes.height
+// 			)
+// 		) {
+// 			// if checkDimensions returns false
+// 			// add disabled class to element
+// 			this.$el.addClass( 'resource-disabled' );
+// 		}
+// 	}
+// };
 
-wp.media.view.Attachment.prototype.trigger = function () {
-  // triggers all events, compares against 'ready'
-  // first argument contains the event name
-  if (arguments[0] === 'ready') {
-    if (!(0,_lib_check_dimensions__WEBPACK_IMPORTED_MODULE_6__["default"])(this.model.attributes.width, this.model.attributes.height)) {
-      // if checkDimensions returns false
-      // add disabled class to element
-      this.$el.addClass('resource-disabled');
-    }
-  } // unsure if below is needed
-  // originalAttachmentTrigger.apply(
-  // 	this,
-  // 	Array.prototype.slice.call( arguments )
-  // );
-
-};
 /**
  * Register block.
  */
-
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(name, { ...settings,
   icon: _icons_icons__WEBPACK_IMPORTED_MODULE_5__["default"].single_image,
@@ -888,37 +908,28 @@ __webpack_require__.r(__webpack_exports__);
  * checkDimensions function.
  *
  * returns false if either designWidth or
- * designHeight are not equal to width or height.
+ * targetHeight are not equal to width or height.
  *
  * @param {string} width        the width of the current object in the media attachment (wp.media.view.Attachment).
  * @param {string} height       the height of the current object in the media attachment (wp.media.view.Attachment).
- * @param {string} designWidth  a hardcoded target width, can be overridden in the function by a block attribute.
- * @param {string} designHeight a hardcoded target height, can be overridden in the function by a block attribute.
+ * @param {string} targetWidth  a hardcoded target width, can be overridden in the function by a block attribute.
+ * @param {string} targetHeight a hardcoded target height, can be overridden in the function by a block attribute.
  * @private
  */
 function checkDimensions(width, height) {
-  let designWidth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-  let designHeight = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-  // get currently selected block (if any)
-  const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock(); // if this is coming from a block, there will
-  // be a designWidth or designHeight attribute(s)
-  // get these values in order to override the default null.
+  let targetWidth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+  let targetHeight = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
 
-  if (selectedBlock) {
-    designWidth = selectedBlock.attributes.designWidth;
-    designHeight = selectedBlock.attributes.designHeight;
-  } // default is '', if it is still default, continue
-
-
-  if ('' !== designWidth) {
-    if (parseInt(designWidth) !== parseInt(width)) {
+  // default is '', if it is still default, continue
+  if ('' !== targetWidth) {
+    if (parseInt(targetWidth) !== parseInt(width)) {
       return false;
     }
   } // default is '', if it is still default, continue
 
 
-  if ('' !== designHeight) {
-    if (parseInt(designHeight) !== parseInt(height)) {
+  if ('' !== targetHeight) {
+    if (parseInt(targetHeight) !== parseInt(height)) {
       return false;
     }
   }

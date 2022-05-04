@@ -114,12 +114,6 @@ function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 					this.$el.addClass( 'resource-disabled' );
 				}
 			}
-			// unsure if below is needed
-
-			// originalAttachmentTrigger.apply(
-			// 	this,
-			// 	Array.prototype.slice.call( arguments )
-			// );
 		};
 
 		return open;

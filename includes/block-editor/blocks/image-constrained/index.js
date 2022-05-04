@@ -19,30 +19,58 @@ import checkDimensions from '../lib/check-dimensions';
 
 const { name, ...settings } = json;
 
+wp.media.view.Modal.prototype.on( 'open', function () {
+	// get currently selected block (if any)
+	const selectedBlock = wp.data
+		.select( 'core/block-editor' )
+		.getSelectedBlock();
+
+	if (
+		selectedBlock &&
+		selectedBlock.name === 'resource-blocks/image-constrained'
+	) {
+		const designWidth = selectedBlock.attributes.designWidth;
+		const designHeight = selectedBlock.attributes.designHeight;
+
+		wp.media.view.Attachment.prototype.trigger = function () {
+			// triggers all events, compares against 'ready'
+			// first argument contains the event name
+			if ( arguments[ 0 ] === 'ready' ) {
+				if (
+					! checkDimensions(
+						this.model.attributes.width,
+						this.model.attributes.height,
+						designWidth,
+						designHeight
+					)
+				) {
+					// if checkDimensions returns false
+					// add disabled class to element
+					this.$el.addClass( 'resource-disabled' );
+				}
+			}
+		};
+	}
+} );
+
 // Event Listener approach.
 // const originalAttachmentTrigger = wp.media.view.Attachment.prototype.trigger;
-wp.media.view.Attachment.prototype.trigger = function () {
-	// triggers all events, compares against 'ready'
-	// first argument contains the event name
-	if ( arguments[ 0 ] === 'ready' ) {
-		if (
-			! checkDimensions(
-				this.model.attributes.width,
-				this.model.attributes.height
-			)
-		) {
-			// if checkDimensions returns false
-			// add disabled class to element
-			this.$el.addClass( 'resource-disabled' );
-		}
-	}
-	// unsure if below is needed
-
-	// originalAttachmentTrigger.apply(
-	// 	this,
-	// 	Array.prototype.slice.call( arguments )
-	// );
-};
+// wp.media.view.Attachment.prototype.trigger = function () {
+// 	// triggers all events, compares against 'ready'
+// 	// first argument contains the event name
+// 	if ( arguments[ 0 ] === 'ready' ) {
+// 		if (
+// 			! checkDimensions(
+// 				this.model.attributes.width,
+// 				this.model.attributes.height
+// 			)
+// 		) {
+// 			// if checkDimensions returns false
+// 			// add disabled class to element
+// 			this.$el.addClass( 'resource-disabled' );
+// 		}
+// 	}
+// };
 
 /**
  * Register block.
