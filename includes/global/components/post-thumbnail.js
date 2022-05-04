@@ -227,7 +227,10 @@ function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 							allowedTypes={ [ 'image' ] }
 							modalClass="editor-post-featured-image__media-modal"
 							render={ ( { open } ) => (
-								<Button onClick={ open } variant="secondary">
+								<Button
+									onClick={ onClickButton( open ) }
+									variant="secondary"
+								>
 									{ __( 'Replace Image' ) }
 								</Button>
 							) }

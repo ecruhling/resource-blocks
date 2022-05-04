@@ -1,12 +1,6 @@
 /**
- * External dependencies.
- */
-import { pick } from 'lodash';
-
-/**
  * WordPress dependencies.
  */
-import { isBlobURL } from '@wordpress/blob';
 import {
 	Fill,
 	ExternalLink,
@@ -14,10 +8,9 @@ import {
 	Spinner,
 	TextareaControl,
 	TextControl,
-	ToolbarButton,
 } from '@wordpress/components';
 import { usePrevious } from '@wordpress/compose';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import {
 	BlockControls,
 	InspectorControls,
@@ -25,16 +18,13 @@ import {
 	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalImageURLInputUI as ImageURLInputUI,
 	MediaReplaceFlow,
-	store as blockEditorStore,
 	BlockAlignmentControl,
 	AlignmentToolbar,
 } from '@wordpress/block-editor';
 import { useEffect, useState, useRef } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import { getFilename } from '@wordpress/url';
-import { createBlock, switchToBlockType } from '@wordpress/blocks';
-import { overlayText, upload } from '@wordpress/icons';
-import { store as noticesStore } from '@wordpress/notices';
+import { createBlock } from '@wordpress/blocks';
 import { store as coreStore } from '@wordpress/core-data';
 
 /**
@@ -69,13 +59,11 @@ export default function Image( {
 	onSelectImage,
 	onSelectURL,
 	onUploadError,
-	clientId,
 	onImageLoadError,
 } ) {
 	const imageRef = useRef();
 	const captionRef = useRef();
 	const prevUrl = usePrevious( url );
-	const { getBlock } = useSelect( blockEditorStore, [] );
 
 	const { image } = useSelect(
 		( select ) => {
@@ -90,40 +78,7 @@ export default function Image( {
 		[ id, isSelected ]
 	);
 
-	const { canInsertCover, mediaUpload } = useSelect(
-		( select ) => {
-			const {
-				getBlockRootClientId,
-				getSettings,
-				canInsertBlockType,
-			} = select( blockEditorStore );
-
-			const rootClientId = getBlockRootClientId( clientId );
-			const settings = pick( getSettings(), [
-				'imageSizes',
-				'mediaUpload',
-			] );
-
-			return {
-				...settings,
-				canInsertCover: canInsertBlockType(
-					'core/cover',
-					rootClientId
-				),
-			};
-		},
-		[ clientId ]
-	);
-
-	const { replaceBlocks } = useDispatch( blockEditorStore );
-
-	const { createErrorNotice, createSuccessNotice } = useDispatch(
-		noticesStore
-	);
-
 	const [ isEditingImage, setIsEditingImage ] = useState( false );
-
-	const [ externalBlob, setExternalBlob ] = useState();
 
 	// Focus the caption after inserting an image from the placeholder. This is
 	// done to preserve the behaviour of focussing the first tabbable element
@@ -149,28 +104,6 @@ export default function Image( {
 		setAttributes( { alt: newAlt } );
 	}
 
-	function uploadExternal() {
-		mediaUpload( {
-			filesList: [ externalBlob ],
-			onFileChange( [ img ] ) {
-				onSelectImage( img );
-
-				if ( isBlobURL( img.url ) ) {
-					return;
-				}
-
-				setExternalBlob();
-				createSuccessNotice( __( 'Image uploaded.' ), {
-					type: 'snackbar',
-				} );
-			},
-			allowedTypes: [ 'image' ],
-			onError( message ) {
-				createErrorNotice( message, { type: 'snackbar' } );
-			},
-		} );
-	}
-
 	function updateAlignment( nextAlign ) {
 		const extraUpdatedAttributes = [ 'wide', 'full' ].includes( nextAlign )
 			? { width: undefined, height: undefined }
@@ -193,13 +126,6 @@ export default function Image( {
 		}
 	}, [ isSelected ] );
 
-	function switchToCover() {
-		replaceBlocks(
-			clientId,
-			switchToBlockType( getBlock( clientId ), 'core/cover' )
-		);
-	}
-
 	const controls = (
 		<>
 			<BlockControls group="block">
@@ -217,20 +143,6 @@ export default function Image( {
 						linkTarget={ linkTarget }
 						linkClass={ linkClass }
 						rel={ rel }
-					/>
-				) }
-				{ externalBlob && (
-					<ToolbarButton
-						onClick={ uploadExternal }
-						icon={ upload }
-						label={ __( 'Upload external image' ) }
-					/>
-				) }
-				{ canInsertCover && (
-					<ToolbarButton
-						icon={ overlayText }
-						label={ __( 'Add text over image' ) }
-						onClick={ switchToCover }
 					/>
 				) }
 			</BlockControls>

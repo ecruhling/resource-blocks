@@ -19,18 +19,6 @@ import checkDimensions from '../lib/check-dimensions';
 
 const { name, ...settings } = json;
 
-// Extend Attachment Library approach.
-// wp.media.view.Attachment.Library = wp.media.view.Attachment.Library.extend( {
-// 	className() {
-// 		return checkDimensions(
-// 			this.model.attributes.width,
-// 			this.model.attributes.height
-// 		)
-// 			? 'attachment resource-disabled'
-// 			: 'attachment';
-// 	},
-// } );
-
 // Event Listener approach.
 // const originalAttachmentTrigger = wp.media.view.Attachment.prototype.trigger;
 wp.media.view.Attachment.prototype.trigger = function () {
