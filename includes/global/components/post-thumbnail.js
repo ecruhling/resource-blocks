@@ -96,7 +96,8 @@ function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 	// and logic for checkDimensions
 	const onClickButton = ( open ) => {
 		// Event Listener approach.
-		// const originalAttachmentTrigger = wp.media.view.Attachment.prototype.trigger;
+		const originalAttachmentTrigger =
+			wp.media.view.Attachment.prototype.trigger;
 		wp.media.view.Attachment.prototype.trigger = function () {
 			// triggers all events, compares against 'ready'
 			// first argument contains the event name
@@ -114,6 +115,11 @@ function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
 					this.$el.addClass( 'resource-disabled' );
 				}
 			}
+
+			originalAttachmentTrigger.apply(
+				this,
+				Array.prototype.slice.call( arguments )
+			);
 		};
 
 		return open;
