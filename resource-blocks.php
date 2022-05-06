@@ -114,6 +114,14 @@ function resource_blocks_init()
 		)
 	);
 
+	// Team Member template:
+	$post_type_object = get_post_type_object( 'team' );
+	$post_type_object->template = array(
+		array( 'resource-blocks/triptych' ),
+		array( 'resource-blocks/secondary-title' ),
+		array( 'resource-blocks/questionnaire' ),
+	);
+
 }
 
 add_action('init', 'resource_blocks_init');
