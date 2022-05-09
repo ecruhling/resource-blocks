@@ -412,7 +412,10 @@ __webpack_require__.r(__webpack_exports__);
 const PostMeta = () => {
   // meta information for this post.
   // includes fields: 'post_thumbnail' and 'optional_description'.
-  const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__.useEntityProp)('postType', 'post', 'meta'); // post thumbnail image ID
+  const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__.useEntityProp)('postType', 'post', 'meta'); // set required width / height.
+
+  const WIDTH = '995';
+  const HEIGHT = '410'; // post thumbnail image ID
 
   const featuredImageId = meta.post_thumbnail; // media object from meta.post_thumbnail (ID).
   // use 'id' as a dependency (final argument), in order to update on the fly.
@@ -429,8 +432,8 @@ const PostMeta = () => {
     setMeta: setMeta,
     media: media,
     featuredImageId: featuredImageId,
-    WIDTH: '995',
-    HEIGHT: '410'
+    WIDTH: WIDTH,
+    HEIGHT: HEIGHT
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Optional Description (displayed after title)', 'resource-blocks'),
     value: meta.optional_description,
@@ -541,7 +544,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const TeamMeta = () => {
-  const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityProp)('postType', 'team', 'meta'); // post thumbnail image ID
+  const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityProp)('postType', 'team', 'meta'); // set required width / height.
+
+  const WIDTH = '750';
+  const HEIGHT = '750'; // post thumbnail image ID
 
   const featuredImageId = meta.post_thumbnail; // media object from meta.post_thumbnail (ID).
   // use 'id' as a dependency (final argument), in order to update on the fly.
@@ -558,8 +564,8 @@ const TeamMeta = () => {
     setMeta: setMeta,
     media: media,
     featuredImageId: featuredImageId,
-    WIDTH: '645',
-    HEIGHT: '645'
+    WIDTH: WIDTH,
+    HEIGHT: HEIGHT
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Official team member title (ex. President).', 'resource-blocks'),
     value: meta.team_member_title,

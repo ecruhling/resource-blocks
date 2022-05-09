@@ -18,6 +18,10 @@ const PostMeta = () => {
 	// includes fields: 'post_thumbnail' and 'optional_description'.
 	const [ meta, setMeta ] = useEntityProp( 'postType', 'post', 'meta' );
 
+	// set required width / height.
+	const WIDTH = '995';
+	const HEIGHT = '410';
+
 	// post thumbnail image ID
 	const featuredImageId = meta.post_thumbnail;
 
@@ -42,8 +46,8 @@ const PostMeta = () => {
 					setMeta={ setMeta }
 					media={ media }
 					featuredImageId={ featuredImageId }
-					WIDTH={ '995' }
-					HEIGHT={ '410' }
+					WIDTH={ WIDTH }
+					HEIGHT={ HEIGHT }
 				/>
 			</PanelRow>
 			<PanelRow>

@@ -15,6 +15,9 @@ import { useSelect } from '@wordpress/data';
 
 const TeamMeta = () => {
 	const [ meta, setMeta ] = useEntityProp( 'postType', 'team', 'meta' );
+	// set required width / height.
+	const WIDTH = '750';
+	const HEIGHT = '750';
 
 	// post thumbnail image ID
 	const featuredImageId = meta.post_thumbnail;
@@ -40,8 +43,8 @@ const TeamMeta = () => {
 					setMeta={ setMeta }
 					media={ media }
 					featuredImageId={ featuredImageId }
-					WIDTH={ '645' }
-					HEIGHT={ '645' }
+					WIDTH={ WIDTH }
+					HEIGHT={ HEIGHT }
 				/>
 			</PanelRow>
 			<PanelRow>
