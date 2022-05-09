@@ -47,22 +47,6 @@ function checkDimensions(width, height) {
 
 /***/ }),
 
-/***/ "./includes/global/components/constants.js":
-/*!*************************************************!*\
-  !*** ./includes/global/components/constants.js ***!
-  \*************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "WIDTH": function() { return /* binding */ WIDTH; },
-/* harmony export */   "HEIGHT": function() { return /* binding */ HEIGHT; }
-/* harmony export */ });
-const WIDTH = '995';
-const HEIGHT = '410';
-
-/***/ }),
-
 /***/ "./includes/global/components/post-thumbnail.js":
 /*!******************************************************!*\
   !*** ./includes/global/components/post-thumbnail.js ***!
@@ -78,8 +62,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./constants */ "./includes/global/components/constants.js");
-/* harmony import */ var _block_editor_blocks_lib_check_dimensions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../block-editor/blocks/lib/check-dimensions */ "./includes/block-editor/blocks/lib/check-dimensions.js");
+/* harmony import */ var _block_editor_blocks_lib_check_dimensions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../block-editor/blocks/lib/check-dimensions */ "./includes/block-editor/blocks/lib/check-dimensions.js");
 
 
 /**
@@ -94,7 +77,6 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 
-
 /**
  * React component PostThumbnail.
  *
@@ -103,6 +85,8 @@ __webpack_require__.r(__webpack_exports__);
  * @param {Object}   media
  * @param {Object}   meta
  * @param {Function} setMeta
+ * @param {string}   WIDTH
+ * @param {string}   HEIGHT
  * @param {Object}   featuredImageId.media
  * @param {Object}   featuredImageId.meta
  * @param {Function} featuredImageId.setMeta
@@ -117,7 +101,9 @@ function PostThumbnail(_ref) {
     featuredImageId,
     media,
     meta,
-    setMeta
+    setMeta,
+    WIDTH,
+    HEIGHT
   } = _ref;
   const instructions = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('To edit the post thumbnail, you need permission to upload media.'));
   let mediaWidth, mediaHeight;
@@ -144,7 +130,7 @@ function PostThumbnail(_ref) {
     const widthCheck = (_image$width = image.width) !== null && _image$width !== void 0 ? _image$width : image.media_details.width;
     const heightCheck = (_image$height = image.height) !== null && _image$height !== void 0 ? _image$height : image.media_details.height;
 
-    if (widthCheck !== parseInt(_constants__WEBPACK_IMPORTED_MODULE_4__.WIDTH) || heightCheck !== parseInt(_constants__WEBPACK_IMPORTED_MODULE_4__.HEIGHT)) {
+    if (widthCheck !== parseInt(WIDTH) || heightCheck !== parseInt(HEIGHT)) {
       openModal();
     } else {
       onUpdateImage(image);
@@ -186,7 +172,7 @@ function PostThumbnail(_ref) {
       // triggers all events, compares against 'ready'
       // first argument contains the event name
       if (arguments[0] === 'ready') {
-        if (!(0,_block_editor_blocks_lib_check_dimensions__WEBPACK_IMPORTED_MODULE_5__["default"])(this.model.attributes.width, this.model.attributes.height, _constants__WEBPACK_IMPORTED_MODULE_4__.WIDTH, _constants__WEBPACK_IMPORTED_MODULE_4__.HEIGHT)) {
+        if (!(0,_block_editor_blocks_lib_check_dimensions__WEBPACK_IMPORTED_MODULE_4__["default"])(this.model.attributes.width, this.model.attributes.height, WIDTH, HEIGHT)) {
           // if checkDimensions returns false
           // add disabled class to element
           this.$el.addClass('resource-disabled');
@@ -209,7 +195,7 @@ function PostThumbnail(_ref) {
       marginBottom: '0.6em',
       display: 'block'
     }
-  }, "Post thumbnail (", _constants__WEBPACK_IMPORTED_MODULE_4__.WIDTH, "px x ", _constants__WEBPACK_IMPORTED_MODULE_4__.HEIGHT, "px)"), media && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, "Post thumbnail (", WIDTH, "px x ", HEIGHT, "px)"), media && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     id: `editor-post-featured-image-${featuredImageId}-describedby`,
     className: "hidden"
   }, media.alt_text && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)( // translators: %s: Current image
@@ -219,7 +205,7 @@ function PostThumbnail(_ref) {
     onRequestClose: closeModal,
     contentLabel: "Error",
     title: "Error"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Image must be ", _constants__WEBPACK_IMPORTED_MODULE_4__.WIDTH, "px x ", _constants__WEBPACK_IMPORTED_MODULE_4__.HEIGHT, "px! Choose another image.")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.MediaUploadCheck, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Image must be ", WIDTH, "px x ", HEIGHT, "px! Choose another image.")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.MediaUploadCheck, {
     fallback: instructions
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.MediaUpload, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post thumbnail'),
@@ -442,7 +428,9 @@ const PostMeta = () => {
     meta: meta,
     setMeta: setMeta,
     media: media,
-    featuredImageId: featuredImageId
+    featuredImageId: featuredImageId,
+    WIDTH: '995',
+    HEIGHT: '410'
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Optional Description (displayed after title)', 'resource-blocks'),
     value: meta.optional_description,
@@ -569,7 +557,9 @@ const TeamMeta = () => {
     meta: meta,
     setMeta: setMeta,
     media: media,
-    featuredImageId: featuredImageId
+    featuredImageId: featuredImageId,
+    WIDTH: '645',
+    HEIGHT: '645'
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Official team member title (ex. President).', 'resource-blocks'),
     value: meta.team_member_title,

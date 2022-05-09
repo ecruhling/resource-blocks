@@ -14,7 +14,6 @@ import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 /**
  * Internal dependencies.
  */
-import { WIDTH, HEIGHT } from './constants';
 import checkDimensions from '../../block-editor/blocks/lib/check-dimensions';
 
 /**
@@ -25,13 +24,22 @@ import checkDimensions from '../../block-editor/blocks/lib/check-dimensions';
  * @param {Object}   media
  * @param {Object}   meta
  * @param {Function} setMeta
+ * @param {string}   WIDTH
+ * @param {string}   HEIGHT
  * @param {Object}   featuredImageId.media
  * @param {Object}   featuredImageId.meta
  * @param {Function} featuredImageId.setMeta
  * @return {Object} {JSX.Element}
  * @function Object() { [native code] }
  */
-function PostThumbnail( { featuredImageId, media, meta, setMeta } ) {
+function PostThumbnail( {
+	featuredImageId,
+	media,
+	meta,
+	setMeta,
+	WIDTH,
+	HEIGHT,
+} ) {
 	const instructions = (
 		<p>
 			{ __(

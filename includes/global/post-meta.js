@@ -42,6 +42,8 @@ const PostMeta = () => {
 					setMeta={ setMeta }
 					media={ media }
 					featuredImageId={ featuredImageId }
+					WIDTH={ '995' }
+					HEIGHT={ '410' }
 				/>
 			</PanelRow>
 			<PanelRow>

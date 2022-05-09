@@ -40,6 +40,8 @@ const TeamMeta = () => {
 					setMeta={ setMeta }
 					media={ media }
 					featuredImageId={ featuredImageId }
+					WIDTH={ '645' }
+					HEIGHT={ '645' }
 				/>
 			</PanelRow>
 			<PanelRow>
