@@ -10,9 +10,21 @@ import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
  * Internal dependencies
  */
 import icons from '../icons/icons';
+import PostThumbnail from './components/post-thumbnail';
+import { useSelect } from '@wordpress/data';
 
 const TeamMeta = () => {
 	const [ meta, setMeta ] = useEntityProp( 'postType', 'team', 'meta' );
+
+	// post thumbnail image ID
+	const featuredImageId = meta.post_thumbnail;
+
+	// media object from meta.post_thumbnail (ID).
+	// use 'id' as a dependency (final argument), in order to update on the fly.
+	const media = useSelect(
+		( select ) => select( 'core' ).getMedia( featuredImageId ),
+		[ featuredImageId ]
+	);
 
 	return (
 		<PluginDocumentSettingPanel
@@ -22,6 +34,14 @@ const TeamMeta = () => {
 			opened="true"
 			icon={ icons.resource }
 		>
+			<PanelRow>
+				<PostThumbnail
+					meta={ meta }
+					setMeta={ setMeta }
+					media={ media }
+					featuredImageId={ featuredImageId }
+				/>
+			</PanelRow>
 			<PanelRow>
 				<TextControl
 					label={ __(

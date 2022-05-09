@@ -60,6 +60,15 @@ function resource_blocks_init()
 	/**
 	 * Register post meta for the editor sidebar on the team edit screen.
 	 */
+	register_post_meta('team', 'post_thumbnail', [
+		'single' => true,
+		'type' => 'integer',
+		'show_in_rest' => true,
+		'auth_callback' => function () {
+			return current_user_can('edit_posts');
+		}
+	]);
+
 	register_post_meta('team', 'team_member_title', [
 		'single' => true,
 		'type' => 'string',
@@ -112,7 +121,6 @@ function resource_blocks_init()
 	 * secondary-title ('fun' title)
 	 * questionnaire
 	 */
-
 	$post_type_object = get_post_type_object('team');
 	$post_type_object->template = array(
 		array('resource-blocks/team-member-title'),

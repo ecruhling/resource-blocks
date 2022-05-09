@@ -6,5 +6,11 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
+.wp-block-resource-blocks-team-member-title {
+  font-family: Questrial, sans-serif;
+  letter-spacing: 1px;
+  color: #37535b !important;
+  font-size: 1.125rem;
+}
 
 /*# sourceMappingURL=team-member-title.css.map*/

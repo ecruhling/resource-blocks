@@ -75,6 +75,9 @@ domReady( () => {
 
 			// this is a Team post type.
 			if ( newPostType === 'team' ) {
+				// remove panels.
+				removeEditorPanel( 'featured-image' );
+
 				// get registered plugins.
 				const registeredPlugins = getPlugins();
 
