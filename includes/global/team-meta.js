@@ -13,7 +13,7 @@ import icons from '../icons/icons';
 
 const TeamMeta = () => {
 	const [ meta, setMeta ] = useEntityProp( 'postType', 'team', 'meta' );
-	console.log( meta );
+
 	return (
 		<PluginDocumentSettingPanel
 			name="resource-blocks-team-meta"

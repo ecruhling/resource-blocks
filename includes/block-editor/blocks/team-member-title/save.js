@@ -15,12 +15,6 @@ import { RichText, useBlockProps } from '@wordpress/block-editor';
  *
  * @return {WPElement} Element to render.
  */
-export default function save( { attributes } ) {
-	const { teamMemberTitle } = attributes;
-
-	return (
-		<em { ...useBlockProps.save() }>
-			<RichText.Content tagName="em" value={ teamMemberTitle } />
-		</em>
-	);
+export default function save() {
+	return false;
 }

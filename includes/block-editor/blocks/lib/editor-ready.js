@@ -15,3 +15,11 @@ export function whenEditorIsReady() {
 		} );
 	} );
 }
+
+/**
+ * Usage:
+ *
+  whenEditorIsReady().then(() => {
+  doSomething();
+  })
+ */

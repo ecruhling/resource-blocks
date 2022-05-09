@@ -547,7 +547,6 @@ __webpack_require__.r(__webpack_exports__);
 
 const TeamMeta = () => {
   const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityProp)('postType', 'team', 'meta');
-  console.log(meta);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__.PluginDocumentSettingPanel, {
     name: "resource-blocks-team-meta",
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Team Meta', 'resource-blocks'),

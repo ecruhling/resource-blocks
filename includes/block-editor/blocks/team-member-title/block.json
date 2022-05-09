@@ -5,25 +5,8 @@
   "version": "1.0.0",
   "title": "Team Member Title",
   "category": "resource-blocks",
-  "description": "Official title for the team member (President, etc.)",
+  "description": "Placeholder for the official title for the team member (President, etc.)",
   "textdomain": "resource-blocks",
-  "attributes": {
-	"teamMemberTitle": {
-	  "type": "string",
-	  "default": "",
-	  "source": "html",
-	  "selector": "em"
-	}
-  },
-  "example": {
-	"attributes": {
-	  "secondaryTitle": "President"
-	}
-  },
-  "keywords": [
-	"text",
-	"title"
-  ],
   "editorScript": "file:../../../../build/team-member-title.js",
   "editorStyle": "file:../../../../build/team-member-title.css",
   "style": "file:../../../../build/style-team-member-title.css"

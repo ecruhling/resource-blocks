@@ -48,6 +48,9 @@ html :where(.editor-styles-wrapper) {
   color: #37535b;
   text-transform: uppercase;
   font-weight: bolder;
+  display: inline-block;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .editor-styles-wrapper .wp-block.resource-blocks-column {
