@@ -60,17 +60,7 @@ function resource_blocks_init()
 	/**
 	 * Register post meta for the editor sidebar on the team edit screen.
 	 */
-	register_post_meta('team', 'title', [
-		'single' => true,
-		'type' => 'string',
-		'show_in_rest' => true,
-		'sanitize_callback' => 'sanitize_text_field',
-		'auth_callback' => function () {
-			return current_user_can('edit_posts');
-		}
-	]);
-
-	register_post_meta('team', 'secondary_title', [
+	register_post_meta('team', 'team_member_title', [
 		'single' => true,
 		'type' => 'string',
 		'show_in_rest' => true,
@@ -125,7 +115,6 @@ function resource_blocks_init()
 
 	$post_type_object = get_post_type_object('team');
 	$post_type_object->template = array(
-		array('resource-blocks/team-member-title'),
 		array('resource-blocks/triptych'),
 		array('resource-blocks/secondary-title'),
 		array('resource-blocks/questionnaire'),
@@ -138,9 +127,9 @@ add_action('init', 'resource_blocks_init');
 /**
  * Change 'ADD TITLE' placeholder text for 'team' CPT.
  * @param $title
- * @return mixed|string
+ * @return string
  */
-function change_default_title_for_team_member_cpt( $title ): mixed
+function change_default_title_for_team_member_cpt( $title ): string
 {
 
 	$screen = get_current_screen();

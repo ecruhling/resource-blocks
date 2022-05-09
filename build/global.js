@@ -288,8 +288,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _post_meta__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./post-meta */ "./includes/global/post-meta.js");
 /* harmony import */ var _projects_meta__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./projects-meta */ "./includes/global/projects-meta.js");
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style.scss */ "./includes/global/style.scss");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./includes/global/editor.scss");
+/* harmony import */ var _team_meta__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./team-meta */ "./includes/global/team-meta.js");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./style.scss */ "./includes/global/style.scss");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./editor.scss */ "./includes/global/editor.scss");
 
 
 /**
@@ -300,6 +301,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -352,6 +354,21 @@ _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2___default()(() => {
           (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.registerPlugin)('projects-meta', {
             render() {
               return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_projects_meta__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+            }
+
+          });
+        }
+      } // this is a Team post type.
+
+
+      if (newPostType === 'team') {
+        // get registered plugins.
+        const registeredPlugins = (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.getPlugins)(); // register panel (verify that plugin is registered only once).
+
+        if (!registeredPlugins.some(plugin => plugin.name === 'team-meta')) {
+          (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.registerPlugin)('team-meta', {
+            render() {
+              return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_team_meta__WEBPACK_IMPORTED_MODULE_5__["default"], null);
             }
 
           });
@@ -492,6 +509,63 @@ const ProjectsMeta = () => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ProjectsMeta);
+
+/***/ }),
+
+/***/ "./includes/global/team-meta.js":
+/*!**************************************!*\
+  !*** ./includes/global/team-meta.js ***!
+  \**************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
+/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../icons/icons */ "./includes/icons/icons.js");
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const TeamMeta = () => {
+  const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityProp)('postType', 'team', 'meta');
+  console.log(meta);
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__.PluginDocumentSettingPanel, {
+    name: "resource-blocks-team-meta",
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Team Meta', 'resource-blocks'),
+    initialOpen: "true",
+    opened: "true",
+    icon: _icons_icons__WEBPACK_IMPORTED_MODULE_5__["default"].resource
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Official team member title (ex. President).', 'resource-blocks'),
+    value: meta.team_member_title,
+    onChange: value => {
+      setMeta({ ...meta,
+        team_member_title: value
+      });
+    }
+  })));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (TeamMeta);
 
 /***/ }),
 

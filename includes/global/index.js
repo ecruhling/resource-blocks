@@ -9,6 +9,7 @@ import domReady from '@wordpress/dom-ready';
  */
 import PostMeta from './post-meta';
 import ProjectsMeta from './projects-meta';
+import TeamMeta from './team-meta';
 import './style.scss';
 import './editor.scss';
 
@@ -67,6 +68,25 @@ domReady( () => {
 					registerPlugin( 'projects-meta', {
 						render() {
 							return <ProjectsMeta />;
+						},
+					} );
+				}
+			}
+
+			// this is a Team post type.
+			if ( newPostType === 'team' ) {
+				// get registered plugins.
+				const registeredPlugins = getPlugins();
+
+				// register panel (verify that plugin is registered only once).
+				if (
+					! registeredPlugins.some(
+						( plugin ) => plugin.name === 'team-meta'
+					)
+				) {
+					registerPlugin( 'team-meta', {
+						render() {
+							return <TeamMeta />;
 						},
 					} );
 				}

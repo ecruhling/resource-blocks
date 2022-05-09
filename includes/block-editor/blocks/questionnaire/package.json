@@ -1,6 +1,5 @@
 {
-	"name": "questionnaire",
-	"version": "0.1.0",
-	"author": "The WordPress Contributors",
-	"license": "GPL-2.0-or-later"
+  "name": "questionnaire",
+  "version": "1.0.0",
+  "author": "Erik Ruhling"
 }

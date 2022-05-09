@@ -1,6 +1,5 @@
 {
-	"name": "intro-paragraph",
-	"version": "1.0.0",
-	"author": "Resource Branding",
-	"license": "GPL-2.0-or-later"
+  "name": "intro-paragraph",
+  "version": "1.0.0",
+  "author": "Erik Ruhling"
 }

@@ -1,8 +1,7 @@
 {
   "name": "image-constrained",
   "version": "1.0.0",
-  "author": "Resource Branding",
-  "license": "GPL-2.0-or-later",
+  "author": "Erik Ruhling",
   "dependencies": {
 	"@wordpress/icons": "^6.3.0",
 	"classnames": "^2.3.1",

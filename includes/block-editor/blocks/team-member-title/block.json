@@ -2,11 +2,28 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 2,
   "name": "resource-blocks/team-member-title",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "title": "Team Member Title",
   "category": "resource-blocks",
-  "description": "Title for the team member (President, etc.)",
-  "textdomain": "team-member-title",
+  "description": "Official title for the team member (President, etc.)",
+  "textdomain": "resource-blocks",
+  "attributes": {
+	"teamMemberTitle": {
+	  "type": "string",
+	  "default": "",
+	  "source": "html",
+	  "selector": "em"
+	}
+  },
+  "example": {
+	"attributes": {
+	  "secondaryTitle": "President"
+	}
+  },
+  "keywords": [
+	"text",
+	"title"
+  ],
   "editorScript": "file:../../../../build/team-member-title.js",
   "editorStyle": "file:../../../../build/team-member-title.css",
   "style": "file:../../../../build/style-team-member-title.css"

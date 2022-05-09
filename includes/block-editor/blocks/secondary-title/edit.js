@@ -42,7 +42,7 @@ export default function Edit( props ) {
 				<RichText
 					tagName="h2"
 					placeholder={ __(
-						"Secondary 'fun' Title (ex. Creative Junkie).",
+						"Secondary 'fun' Title (ex. Coffee-break Captain).",
 						'resource-blocks'
 					) }
 					value={ secondaryTitle }
