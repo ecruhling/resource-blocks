@@ -7,6 +7,11 @@
   "category": "resource-blocks",
   "description": "Placeholder for the official title for the team member (President, etc.)",
   "textdomain": "resource-blocks",
+  "supports": {
+	"multiple": false,
+	"reusable": false,
+	"lock": false
+  },
   "editorScript": "file:../../../../build/team-member-title.js",
   "editorStyle": "file:../../../../build/team-member-title.css",
   "style": "file:../../../../build/style-team-member-title.css"

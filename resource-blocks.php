@@ -107,7 +107,7 @@ function resource_blocks_init()
 
 	/**
 	 * 'team' CPT block template:
-	 *
+	 * team-member-title (visual placeholder for meta data)
 	 * triptych
 	 * secondary-title ('fun' title)
 	 * questionnaire
@@ -120,6 +120,7 @@ function resource_blocks_init()
 		array('resource-blocks/secondary-title'),
 		array('resource-blocks/questionnaire'),
 	);
+	$post_type_object->template_lock = 'all';
 
 }
 
