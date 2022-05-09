@@ -66,7 +66,7 @@ function Edit(props) {
     className: 'resource-blocks-column'
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
     tagName: "h2",
-    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Secondary 'fun' Title.", 'resource-blocks'),
+    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Secondary 'fun' Title (ex. Creative Junkie).", 'resource-blocks'),
     value: secondaryTitle,
     onChange: value => setAttributes({
       secondaryTitle: value

@@ -796,7 +796,7 @@ function ImageEdit(_ref) {
     },
     mediaPreview: mediaPreview,
     labels: {
-      title: 'Triptych',
+      title: 'Triptych Image',
       instructions: 'Upload an image, or pick one from the media library. Image must be ' + _constants__WEBPACK_IMPORTED_MODULE_11__.WIDTH + 'px x ' + _constants__WEBPACK_IMPORTED_MODULE_11__.HEIGHT + 'px.'
     },
     disableMediaButtons: temporaryURL || url

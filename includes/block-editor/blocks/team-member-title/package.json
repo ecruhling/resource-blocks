@@ -1,0 +1,7 @@
+{
+	"name": "team-member-title",
+	"version": "0.1.0",
+	"description": "Title for the team member (President, etc.)",
+	"author": "The WordPress Contributors",
+	"license": "GPL-2.0-or-later"
+}

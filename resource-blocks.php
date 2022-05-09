@@ -27,6 +27,7 @@ function resource_blocks_init()
 		'single-question/',
 		'triptych/',
 		'secondary-title/',
+		'team-member-title/',
 		'questionnaire/',
 	);
 
@@ -115,7 +116,7 @@ function resource_blocks_init()
 	);
 
 	/**
-	 * Team Member block template:
+	 * 'team' CPT block template:
 	 *
 	 * triptych
 	 * secondary-title ('fun' title)
@@ -124,6 +125,7 @@ function resource_blocks_init()
 
 	$post_type_object = get_post_type_object('team');
 	$post_type_object->template = array(
+		array('resource-blocks/team-member-title'),
 		array('resource-blocks/triptych'),
 		array('resource-blocks/secondary-title'),
 		array('resource-blocks/questionnaire'),
@@ -132,6 +134,25 @@ function resource_blocks_init()
 }
 
 add_action('init', 'resource_blocks_init');
+
+/**
+ * Change 'ADD TITLE' placeholder text for 'team' CPT.
+ * @param $title
+ * @return mixed|string
+ */
+function change_default_title_for_team_member_cpt( $title ): mixed
+{
+
+	$screen = get_current_screen();
+
+	if ( 'team' == $screen->post_type ){
+		$title = 'Team Member name';
+	}
+
+	return $title;
+}
+
+add_filter( 'enter_title_here', 'change_default_title_for_team_member_cpt' );
 
 /**
  * Enqueue global block CSS for the editor.

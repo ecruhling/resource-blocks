@@ -318,7 +318,7 @@ export function ImageEdit( {
 					value={ { id, src } }
 					mediaPreview={ mediaPreview }
 					labels={ {
-						title: 'Triptych',
+						title: 'Triptych Image',
 						instructions:
 							'Upload an image, or pick one from the media library. Image must be ' +
 							WIDTH +
