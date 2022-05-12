@@ -6,6 +6,8 @@
  */
 
 .wp-block-resource-blocks-secondary-title {
+  padding-top: 3rem;
+
   h2 {
 	color: #37535b;
 	margin-bottom: 3rem;
@@ -19,6 +21,5 @@
   @media (min-width: 768px) {
 	padding-left: 3rem;
 	padding-right: 3rem;
-	padding-top: 3rem;
   }
 }

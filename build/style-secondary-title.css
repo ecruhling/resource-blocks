@@ -7,6 +7,9 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
+.wp-block-resource-blocks-secondary-title {
+  padding-top: 3rem;
+}
 .wp-block-resource-blocks-secondary-title h2 {
   color: #37535b;
   margin-bottom: 3rem;
@@ -20,7 +23,6 @@
   .wp-block-resource-blocks-secondary-title {
     padding-left: 3rem;
     padding-right: 3rem;
-    padding-top: 3rem;
   }
 }
 
