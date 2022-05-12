@@ -55,7 +55,7 @@ body.post-type-team .edit-post-visual-editor__post-title-wrapper {
   margin-right: initial;
 }
 
-.resource-disabled {
+li.resource-disabled {
   opacity: 0.3 !important;
   pointer-events: none !important;
 }

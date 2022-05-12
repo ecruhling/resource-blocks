@@ -59,7 +59,9 @@ html :where(.editor-styles-wrapper) {
   margin-right: initial;
 }
 
-.resource-disabled {
+// Disabled class for media views. added to 'li' so it applies only to
+// media lists (thumbnails in media library)
+li.resource-disabled {
   opacity: 0.3 !important;
   pointer-events: none !important;
 }
