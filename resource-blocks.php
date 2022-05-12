@@ -115,6 +115,15 @@ function resource_blocks_init()
 	);
 
 	/**
+	 * 'post' (Recently) block template:
+	 * intro-paragraph
+	 */
+	$post_type_object = get_post_type_object('post');
+	$post_type_object->template = array(
+		array('resource-blocks/intro-paragraph'),
+	);
+
+	/**
 	 * 'team' CPT block template:
 	 * team-member-title (visual placeholder for meta data)
 	 * triptych

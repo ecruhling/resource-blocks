@@ -9,7 +9,7 @@
  */
 .editor-styles-wrapper div.wp-block-resource-blocks-intro-paragraph,
 article.post div.wp-block-resource-blocks-intro-paragraph {
-  padding-bottom: 3rem;
+  padding-bottom: 4rem;
 }
 @media (min-width: 768px) {
   .editor-styles-wrapper div.wp-block-resource-blocks-intro-paragraph .resource-blocks-column,
