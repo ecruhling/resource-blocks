@@ -1,16 +1,1 @@
-/*!***********************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./includes/block-editor/blocks/team-member-title/editor.scss ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************/
-/**
- * The following styles get applied inside the editor only.
- *
- * Replace them with your own styles or remove the file completely.
- */
-.wp-block-resource-blocks-team-member-title {
-  font-family: Questrial, sans-serif;
-  letter-spacing: 1px;
-  color: #37535b !important;
-  font-size: 1.125rem;
-}
-
-/*# sourceMappingURL=team-member-title.css.map*/
+.wp-block-resource-blocks-team-member-title{color:#37535b!important;font-family:Questrial,sans-serif;font-size:1.125rem;letter-spacing:1px}
