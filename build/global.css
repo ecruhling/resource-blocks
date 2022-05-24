@@ -1,1 +1,84 @@
-html :where(.wp-block){margin-bottom:0;margin-top:0;max-width:none}html :where(.editor-styles-wrapper){padding:35px}html :where(.editor-styles-wrapper) p{margin:inherit}.is-root-container.block-editor-block-list__layout{margin-left:auto;margin-right:auto;width:100%}.edit-post-visual-editor__post-title-wrapper{margin-bottom:1rem}body.post-type-team .edit-post-visual-editor__post-title-wrapper{margin-bottom:5rem}.block-editor-block-card__title{display:block!important}.wp-block.wp-block-post-title{color:#37535b;display:inline-block;font-family:Questrial,sans-serif;font-size:1.125rem;font-weight:bolder;letter-spacing:2.7px;margin-bottom:0;margin-top:0;text-transform:uppercase}.editor-styles-wrapper .wp-block.resource-blocks-column{margin-left:0;margin-right:0}li.resource-disabled{opacity:.3!important;pointer-events:none!important}.media-frame-title h1{color:inherit}h2.media-views-heading-constraints{color:#37535b;display:block;font-size:13px;line-height:1;margin-left:1rem;margin-top:4.5rem;position:relative;z-index:1999}.attachments-browser .uploader-inline,.attachments-browser.has-load-more .attachments-wrapper,.attachments-browser:not(.has-load-more) .attachments{top:95px}
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./includes/global/editor.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/**
+Global Editor CSS for Resource Blocks
+
+CSS code that gets applied to the editor only.
+
+Build file is named: global.css
+ */
+html :where(.wp-block) {
+  max-width: initial;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+html :where(.editor-styles-wrapper) {
+  padding: 35px;
+}
+html :where(.editor-styles-wrapper) p {
+  margin: inherit;
+}
+
+.is-root-container.block-editor-block-list__layout {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.edit-post-visual-editor__post-title-wrapper {
+  margin-bottom: 1rem;
+}
+body.post-type-team .edit-post-visual-editor__post-title-wrapper {
+  margin-bottom: 5rem;
+}
+
+.block-editor-block-card__title {
+  display: block !important;
+}
+
+.wp-block.wp-block-post-title {
+  font-family: Questrial, sans-serif;
+  letter-spacing: 2.7px;
+  font-size: 1.125rem;
+  color: #37535b;
+  text-transform: uppercase;
+  font-weight: bolder;
+  display: inline-block;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.editor-styles-wrapper .wp-block.resource-blocks-column {
+  margin-left: initial;
+  margin-right: initial;
+}
+
+li.resource-disabled {
+  opacity: 0.3 !important;
+  pointer-events: none !important;
+}
+
+.media-frame-title h1 {
+  color: inherit;
+}
+
+h2.media-views-heading-constraints {
+  color: #37535b;
+  position: relative;
+  z-index: 1999;
+  display: block;
+  font-size: 13px;
+  line-height: 1;
+  margin-left: 1rem;
+  margin-top: 4.5rem;
+}
+
+.attachments-browser:not(.has-load-more) .attachments,
+.attachments-browser.has-load-more .attachments-wrapper,
+.attachments-browser .uploader-inline {
+  top: 95px;
+}
+
+/*# sourceMappingURL=global.css.map*/

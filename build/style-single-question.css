@@ -1,1 +1,30 @@
-div.wp-block-resource-blocks-single-question{padding-bottom:1rem;padding-top:1rem}div.wp-block-resource-blocks-single-question h3{color:#37535b!important;font-family:Questrial,sans-serif;font-size:1.125rem!important;letter-spacing:2.7px;text-transform:uppercase}@media(min-width:768px){div.wp-block-resource-blocks-single-question{flex:0 0 50%;max-width:50%;padding-left:20px;padding-right:20px}}
+/*!********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./includes/block-editor/blocks/single-question/style.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************/
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+div.wp-block-resource-blocks-single-question {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+div.wp-block-resource-blocks-single-question h3 {
+  font-family: Questrial, sans-serif;
+  letter-spacing: 2.7px;
+  font-size: 1.125rem !important;
+  color: #37535b !important;
+  text-transform: uppercase;
+}
+@media (min-width: 768px) {
+  div.wp-block-resource-blocks-single-question {
+    padding-left: 20px;
+    padding-right: 20px;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+/*# sourceMappingURL=style-single-question.css.map*/

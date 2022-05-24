@@ -1,1 +1,73 @@
-div.resource-blocks-row[class*=" wp-block-"],div.resource-blocks-row[class^=wp-block]{display:flex;flex-wrap:wrap;margin-left:-35px;margin-right:-35px}div.resource-blocks-column{padding-left:35px;padding-right:35px;width:100%}div.resource-blocks-column figure{-webkit-margin-before:0;-webkit-margin-after:0;-webkit-margin-start:0;-webkit-margin-end:0;margin-block-end:0;margin-block-start:0;margin-bottom:0;margin-inline-end:0;margin-inline-start:0}div.resource-blocks-column img{display:block;height:auto;max-width:100%;width:100%}.wp-has-aspect-ratio .wp-block-embed__wrapper{position:relative}.wp-has-aspect-ratio .wp-block-embed__wrapper:before{content:"";display:block;padding-top:50%}.wp-embed-aspect-18-9 .wp-block-embed__wrapper:before{padding-top:47.9%!important}.wp-embed-aspect-16-9 .wp-block-embed__wrapper:before{padding-top:56.25%!important}.has-text-align-left{text-align:left}.has-text-align-center{text-align:center}.has-text-align-right{text-align:right}
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./includes/global/style.scss ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+/**
+Global CSS for Resource Blocks
+
+CSS gets applied BOTH to the front of the site and to the editor.
+
+For the most part, uses Bootstrap's row and column layouts, renamed as 'resource-blocks-row' and 'resource-blocks-column'
+
+Build file is named: style-global.css
+ */
+div.resource-blocks-row[class^=wp-block],
+div.resource-blocks-row[class*=" wp-block-"] {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -35px;
+  margin-left: -35px;
+}
+
+div.resource-blocks-column {
+  width: 100%;
+  padding-right: 35px;
+  padding-left: 35px;
+}
+div.resource-blocks-column figure {
+  -webkit-margin-before: 0;
+          margin-block-start: 0;
+  -webkit-margin-after: 0;
+          margin-block-end: 0;
+  -webkit-margin-start: 0;
+          margin-inline-start: 0;
+  -webkit-margin-end: 0;
+          margin-inline-end: 0;
+  margin-bottom: 0;
+}
+div.resource-blocks-column img {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.wp-has-aspect-ratio .wp-block-embed__wrapper {
+  position: relative;
+}
+.wp-has-aspect-ratio .wp-block-embed__wrapper::before {
+  content: "";
+  display: block;
+  padding-top: 50%;
+}
+
+.wp-embed-aspect-18-9 .wp-block-embed__wrapper::before {
+  padding-top: 47.9% !important;
+}
+
+.wp-embed-aspect-16-9 .wp-block-embed__wrapper::before {
+  padding-top: 56.25% !important;
+}
+
+.has-text-align-left {
+  text-align: left;
+}
+
+.has-text-align-center {
+  text-align: center;
+}
+
+.has-text-align-right {
+  text-align: right;
+}
+
+/*# sourceMappingURL=style-global.css.map*/

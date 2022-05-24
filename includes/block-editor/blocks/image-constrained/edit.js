@@ -23,7 +23,7 @@ import {
 	withNotices,
 	Modal,
 } from '@wordpress/components';
-import { useEffect, useRef, useState, Component } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { __, sprintf } from '@wordpress/i18n';
 import icons from '../../../icons/icons';
