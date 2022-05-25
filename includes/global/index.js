@@ -12,6 +12,58 @@ import ProjectsMeta from './projects-meta';
 import TeamMeta from './team-meta';
 import './style.scss';
 import './editor.scss';
+import checkDimensions from '../block-editor/blocks/lib/check-dimensions';
+
+// Create and set a global object to contain some global variables
+window.resourceBlocks = {
+	definedWidth: null,
+	definedHeight: null,
+};
+
+// Log all media modal events
+// wp.media.view.Modal.prototype.on( 'all', function ( e ) {
+// 	// prepare, ready, attach, open, close, escape
+// 	console.log( e );
+// } );
+
+// set global variables to null when media library modal is closed.
+wp.media.view.Modal.prototype.on( 'close', function () {
+	window.resourceBlocks = {
+		definedWidth: null,
+		definedHeight: null,
+	};
+
+	console.log( window.resourceBlocks );
+} );
+
+const AttachmentLibrary = wp.media.view.Attachment.Library; // extend
+
+wp.media.view.Attachment.Library = AttachmentLibrary.extend( {
+	render() {
+		if ( typeof window.resourceBlocks !== 'undefined' ) {
+			console.log(
+				this.model.attributes.width,
+				this.model.attributes.height,
+				window.resourceBlocks
+			);
+
+			if (
+				! checkDimensions(
+					this.model.attributes.width,
+					this.model.attributes.height,
+					window.resourceBlocks.definedWidth,
+					window.resourceBlocks.definedHeight
+				)
+			) {
+				// if checkDimensions returns false
+				// add disabled class to element
+				this.$el.addClass( 'resource-disabled' );
+			}
+		}
+
+		return AttachmentLibrary.prototype.render.apply( this, arguments );
+	},
+} );
 
 /**
  * Method to retrieve the type of the post.

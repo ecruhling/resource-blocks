@@ -162,28 +162,46 @@ function PostThumbnail(_ref) {
     });
   } // onClickButton function contains open
   // and logic for checkDimensions
+  // const onClickButton = ( open ) => {
+  // 	// Event Listener approach.
+  // 	const originalAttachmentTrigger =
+  // 		wp.media.view.Attachment.prototype.trigger;
+  // 	wp.media.view.Attachment.prototype.trigger = function () {
+  // 		// triggers all events, compares against 'ready'
+  // 		// first argument contains the event name
+  // 		if ( arguments[ 0 ] === 'ready' ) {
+  // 			if (
+  // 				! checkDimensions(
+  // 					this.model.attributes.width,
+  // 					this.model.attributes.height,
+  // 					WIDTH,
+  // 					HEIGHT
+  // 				)
+  // 			) {
+  // 				// if checkDimensions returns false
+  // 				// add disabled class to element
+  // 				this.$el.addClass( 'resource-disabled' );
+  // 			}
+  // 		}
+  //
+  // 		originalAttachmentTrigger.apply(
+  // 			this,
+  // 			Array.prototype.slice.call( arguments )
+  // 		);
+  // 	};
+  //
+  // 	return open;
+  // };
 
 
-  const onClickButton = open => {
-    // Event Listener approach.
-    const originalAttachmentTrigger = wp.media.view.Attachment.prototype.trigger;
-
-    wp.media.view.Attachment.prototype.trigger = function () {
-      // triggers all events, compares against 'ready'
-      // first argument contains the event name
-      if (arguments[0] === 'ready') {
-        if (!(0,_block_editor_blocks_lib_check_dimensions__WEBPACK_IMPORTED_MODULE_4__["default"])(this.model.attributes.width, this.model.attributes.height, WIDTH, HEIGHT)) {
-          // if checkDimensions returns false
-          // add disabled class to element
-          this.$el.addClass('resource-disabled');
-        }
-      }
-
-      originalAttachmentTrigger.apply(this, Array.prototype.slice.call(arguments));
-    };
-
-    return open;
-  };
+  function setDefinedValues() {
+    if (typeof window.resourceBlocks !== 'undefined') {
+      window.resourceBlocks = {
+        definedWidth: WIDTH,
+        definedHeight: HEIGHT
+      };
+    }
+  }
 
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "editor-post-featured-image",
@@ -221,7 +239,10 @@ function PostThumbnail(_ref) {
         className: "editor-post-featured-image__container"
       }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
         className: !featuredImageId ? 'editor-post-featured-image__toggle' : 'editor-post-featured-image__preview',
-        onClick: onClickButton(open),
+        onClick: () => {
+          setDefinedValues();
+          open();
+        },
         "aria-label": !featuredImageId ? null : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Edit or update the image'),
         "aria-describedby": !featuredImageId ? null : `editor-post-featured-image-${featuredImageId}-describedby`
       }, !!featuredImageId && media && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ResponsiveWrapper, {
@@ -244,7 +265,10 @@ function PostThumbnail(_ref) {
         open
       } = _ref3;
       return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-        onClick: onClickButton(open),
+        onClick: () => {
+          setDefinedValues();
+          open();
+        },
         variant: "secondary"
       }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Replace Image'));
     }
@@ -277,6 +301,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _team_meta__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./team-meta */ "./includes/global/team-meta.js");
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./style.scss */ "./includes/global/style.scss");
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./editor.scss */ "./includes/global/editor.scss");
+/* harmony import */ var _block_editor_blocks_lib_check_dimensions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../block-editor/blocks/lib/check-dimensions */ "./includes/block-editor/blocks/lib/check-dimensions.js");
 
 
 /**
@@ -293,6 +318,43 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ // Create and set a global object to contain some global variables
+
+window.resourceBlocks = {
+  definedWidth: null,
+  definedHeight: null
+}; // Log all media modal events
+// wp.media.view.Modal.prototype.on( 'all', function ( e ) {
+// 	// prepare, ready, attach, open, close, escape
+// 	console.log( e );
+// } );
+// set global variables to null when media library modal is closed.
+
+wp.media.view.Modal.prototype.on('close', function () {
+  window.resourceBlocks = {
+    definedWidth: null,
+    definedHeight: null
+  };
+  console.log(window.resourceBlocks);
+});
+const AttachmentLibrary = wp.media.view.Attachment.Library; // extend
+
+wp.media.view.Attachment.Library = AttachmentLibrary.extend({
+  render() {
+    if (typeof window.resourceBlocks !== 'undefined') {
+      console.log(this.model.attributes.width, this.model.attributes.height, window.resourceBlocks);
+
+      if (!(0,_block_editor_blocks_lib_check_dimensions__WEBPACK_IMPORTED_MODULE_8__["default"])(this.model.attributes.width, this.model.attributes.height, window.resourceBlocks.definedWidth, window.resourceBlocks.definedHeight)) {
+        // if checkDimensions returns false
+        // add disabled class to element
+        this.$el.addClass('resource-disabled');
+      }
+    }
+
+    return AttachmentLibrary.prototype.render.apply(this, arguments);
+  }
+
+});
 /**
  * Method to retrieve the type of the post.
  */

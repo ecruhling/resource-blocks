@@ -102,36 +102,45 @@ function PostThumbnail( {
 
 	// onClickButton function contains open
 	// and logic for checkDimensions
-	const onClickButton = ( open ) => {
-		// Event Listener approach.
-		const originalAttachmentTrigger =
-			wp.media.view.Attachment.prototype.trigger;
-		wp.media.view.Attachment.prototype.trigger = function () {
-			// triggers all events, compares against 'ready'
-			// first argument contains the event name
-			if ( arguments[ 0 ] === 'ready' ) {
-				if (
-					! checkDimensions(
-						this.model.attributes.width,
-						this.model.attributes.height,
-						WIDTH,
-						HEIGHT
-					)
-				) {
-					// if checkDimensions returns false
-					// add disabled class to element
-					this.$el.addClass( 'resource-disabled' );
-				}
-			}
+	// const onClickButton = ( open ) => {
+	// 	// Event Listener approach.
+	// 	const originalAttachmentTrigger =
+	// 		wp.media.view.Attachment.prototype.trigger;
+	// 	wp.media.view.Attachment.prototype.trigger = function () {
+	// 		// triggers all events, compares against 'ready'
+	// 		// first argument contains the event name
+	// 		if ( arguments[ 0 ] === 'ready' ) {
+	// 			if (
+	// 				! checkDimensions(
+	// 					this.model.attributes.width,
+	// 					this.model.attributes.height,
+	// 					WIDTH,
+	// 					HEIGHT
+	// 				)
+	// 			) {
+	// 				// if checkDimensions returns false
+	// 				// add disabled class to element
+	// 				this.$el.addClass( 'resource-disabled' );
+	// 			}
+	// 		}
+	//
+	// 		originalAttachmentTrigger.apply(
+	// 			this,
+	// 			Array.prototype.slice.call( arguments )
+	// 		);
+	// 	};
+	//
+	// 	return open;
+	// };
 
-			originalAttachmentTrigger.apply(
-				this,
-				Array.prototype.slice.call( arguments )
-			);
-		};
-
-		return open;
-	};
+	function setDefinedValues() {
+		if ( typeof window.resourceBlocks !== 'undefined' ) {
+			window.resourceBlocks = {
+				definedWidth: WIDTH,
+				definedHeight: HEIGHT,
+			};
+		}
+	}
 
 	return (
 		<>
@@ -192,7 +201,10 @@ function PostThumbnail( {
 											? 'editor-post-featured-image__toggle'
 											: 'editor-post-featured-image__preview'
 									}
-									onClick={ onClickButton( open ) }
+									onClick={ () => {
+										setDefinedValues();
+										open();
+									} }
 									aria-label={
 										! featuredImageId
 											? null
@@ -236,7 +248,10 @@ function PostThumbnail( {
 							modalClass="editor-post-featured-image__media-modal"
 							render={ ( { open } ) => (
 								<Button
-									onClick={ onClickButton( open ) }
+									onClick={ () => {
+										setDefinedValues();
+										open();
+									} }
 									variant="secondary"
 								>
 									{ __( 'Replace Image' ) }
