@@ -16,8 +16,8 @@ import checkDimensions from '../block-editor/blocks/lib/check-dimensions';
 
 // Create and set a global object to contain some global variables
 window.resourceBlocks = {
-	definedWidth: null,
-	definedHeight: null,
+	targetWidth: '',
+	targetHeight: '',
 };
 
 // Log all media modal events
@@ -29,8 +29,8 @@ window.resourceBlocks = {
 // set global variables to null when media library modal is closed.
 wp.media.view.Modal.prototype.on( 'close', function () {
 	window.resourceBlocks = {
-		definedWidth: null,
-		definedHeight: null,
+		targetWidth: '',
+		targetHeight: '',
 	};
 
 	console.log( window.resourceBlocks );
@@ -51,8 +51,8 @@ wp.media.view.Attachment.Library = AttachmentLibrary.extend( {
 				! checkDimensions(
 					this.model.attributes.width,
 					this.model.attributes.height,
-					window.resourceBlocks.definedWidth,
-					window.resourceBlocks.definedHeight
+					window.resourceBlocks.targetWidth,
+					window.resourceBlocks.targetHeight
 				)
 			) {
 				// if checkDimensions returns false

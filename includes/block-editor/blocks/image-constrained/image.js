@@ -148,16 +148,18 @@ export default function Image( {
 			</BlockControls>
 			{ ! isEditingImage && (
 				<BlockControls group="other">
-					<MediaReplaceFlow
-						mediaId={ id }
-						mediaURL={ url }
-						allowedTypes={ [ 'image' ] }
-						accept="image/*"
-						onSelect={ onSelectImage }
-						onSelectURL={ onSelectURL }
-						onError={ onUploadError }
-						onCloseModal={ onCloseModal }
-					/>
+					<div className={ 'components-toolbar-image-constrained' }>
+						<MediaReplaceFlow
+							mediaId={ id }
+							mediaURL={ url }
+							allowedTypes={ [ 'image' ] }
+							accept="image/*"
+							onSelect={ onSelectImage }
+							onSelectURL={ onSelectURL }
+							onError={ onUploadError }
+							onCloseModal={ onCloseModal }
+						/>
+					</div>
 				</BlockControls>
 			) }
 			<InspectorControls>

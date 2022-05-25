@@ -12,11 +12,6 @@ import {
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 
 /**
- * Internal dependencies.
- */
-import checkDimensions from '../../block-editor/blocks/lib/check-dimensions';
-
-/**
  * React component PostThumbnail.
  *
  * @param {number}   featuredImageId.featuredImageId
@@ -100,44 +95,11 @@ function PostThumbnail( {
 		setMeta( { ...meta, post_thumbnail: null } );
 	}
 
-	// onClickButton function contains open
-	// and logic for checkDimensions
-	// const onClickButton = ( open ) => {
-	// 	// Event Listener approach.
-	// 	const originalAttachmentTrigger =
-	// 		wp.media.view.Attachment.prototype.trigger;
-	// 	wp.media.view.Attachment.prototype.trigger = function () {
-	// 		// triggers all events, compares against 'ready'
-	// 		// first argument contains the event name
-	// 		if ( arguments[ 0 ] === 'ready' ) {
-	// 			if (
-	// 				! checkDimensions(
-	// 					this.model.attributes.width,
-	// 					this.model.attributes.height,
-	// 					WIDTH,
-	// 					HEIGHT
-	// 				)
-	// 			) {
-	// 				// if checkDimensions returns false
-	// 				// add disabled class to element
-	// 				this.$el.addClass( 'resource-disabled' );
-	// 			}
-	// 		}
-	//
-	// 		originalAttachmentTrigger.apply(
-	// 			this,
-	// 			Array.prototype.slice.call( arguments )
-	// 		);
-	// 	};
-	//
-	// 	return open;
-	// };
-
 	function setDefinedValues() {
 		if ( typeof window.resourceBlocks !== 'undefined' ) {
 			window.resourceBlocks = {
-				definedWidth: WIDTH,
-				definedHeight: HEIGHT,
+				targetWidth: WIDTH,
+				targetHeight: HEIGHT,
 			};
 		}
 	}

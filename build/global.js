@@ -62,7 +62,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _block_editor_blocks_lib_check_dimensions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../block-editor/blocks/lib/check-dimensions */ "./includes/block-editor/blocks/lib/check-dimensions.js");
 
 
 /**
@@ -70,11 +69,6 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 
-
-
-/**
- * Internal dependencies.
- */
 
 
 /**
@@ -160,45 +154,13 @@ function PostThumbnail(_ref) {
     setMeta({ ...meta,
       post_thumbnail: null
     });
-  } // onClickButton function contains open
-  // and logic for checkDimensions
-  // const onClickButton = ( open ) => {
-  // 	// Event Listener approach.
-  // 	const originalAttachmentTrigger =
-  // 		wp.media.view.Attachment.prototype.trigger;
-  // 	wp.media.view.Attachment.prototype.trigger = function () {
-  // 		// triggers all events, compares against 'ready'
-  // 		// first argument contains the event name
-  // 		if ( arguments[ 0 ] === 'ready' ) {
-  // 			if (
-  // 				! checkDimensions(
-  // 					this.model.attributes.width,
-  // 					this.model.attributes.height,
-  // 					WIDTH,
-  // 					HEIGHT
-  // 				)
-  // 			) {
-  // 				// if checkDimensions returns false
-  // 				// add disabled class to element
-  // 				this.$el.addClass( 'resource-disabled' );
-  // 			}
-  // 		}
-  //
-  // 		originalAttachmentTrigger.apply(
-  // 			this,
-  // 			Array.prototype.slice.call( arguments )
-  // 		);
-  // 	};
-  //
-  // 	return open;
-  // };
-
+  }
 
   function setDefinedValues() {
     if (typeof window.resourceBlocks !== 'undefined') {
       window.resourceBlocks = {
-        definedWidth: WIDTH,
-        definedHeight: HEIGHT
+        targetWidth: WIDTH,
+        targetHeight: HEIGHT
       };
     }
   }
@@ -321,8 +283,8 @@ __webpack_require__.r(__webpack_exports__);
  // Create and set a global object to contain some global variables
 
 window.resourceBlocks = {
-  definedWidth: null,
-  definedHeight: null
+  targetWidth: '',
+  targetHeight: ''
 }; // Log all media modal events
 // wp.media.view.Modal.prototype.on( 'all', function ( e ) {
 // 	// prepare, ready, attach, open, close, escape
@@ -332,8 +294,8 @@ window.resourceBlocks = {
 
 wp.media.view.Modal.prototype.on('close', function () {
   window.resourceBlocks = {
-    definedWidth: null,
-    definedHeight: null
+    targetWidth: '',
+    targetHeight: ''
   };
   console.log(window.resourceBlocks);
 });
@@ -344,7 +306,7 @@ wp.media.view.Attachment.Library = AttachmentLibrary.extend({
     if (typeof window.resourceBlocks !== 'undefined') {
       console.log(this.model.attributes.width, this.model.attributes.height, window.resourceBlocks);
 
-      if (!(0,_block_editor_blocks_lib_check_dimensions__WEBPACK_IMPORTED_MODULE_8__["default"])(this.model.attributes.width, this.model.attributes.height, window.resourceBlocks.definedWidth, window.resourceBlocks.definedHeight)) {
+      if (!(0,_block_editor_blocks_lib_check_dimensions__WEBPACK_IMPORTED_MODULE_8__["default"])(this.model.attributes.width, this.model.attributes.height, window.resourceBlocks.targetWidth, window.resourceBlocks.targetHeight)) {
         // if checkDimensions returns false
         // add disabled class to element
         this.$el.addClass('resource-disabled');

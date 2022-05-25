@@ -621,6 +621,8 @@ function Image(_ref) {
     rel: rel
   })), !isEditingImage && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.BlockControls, {
     group: "other"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: 'components-toolbar-image-constrained'
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.MediaReplaceFlow, {
     mediaId: id,
     mediaURL: url,
@@ -630,7 +632,7 @@ function Image(_ref) {
     onSelectURL: onSelectURL,
     onError: onUploadError,
     onCloseModal: onCloseModal
-  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Image settings')
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextareaControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Alt text (alternative text)'),
@@ -718,7 +720,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit */ "./includes/block-editor/blocks/image-constrained/edit.js");
 /* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./save */ "./includes/block-editor/blocks/image-constrained/save.js");
 /* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../icons/icons */ "./includes/icons/icons.js");
-/* harmony import */ var _lib_check_dimensions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../lib/check-dimensions */ "./includes/block-editor/blocks/lib/check-dimensions.js");
+/*global jQuery */
+
 /**
  * WordPress dependencies.
  */
@@ -736,54 +739,34 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const {
   name,
   ...settings
-} = _block_json__WEBPACK_IMPORTED_MODULE_2__; // wp.media.view.Modal.prototype.on( 'open', function () {
-// 	// get currently selected block (if any)
-// 	const selectedBlock = wp.data
-// 		.select( 'core/block-editor' )
-// 		.getSelectedBlock();
-//
-// 	if (
-// 		selectedBlock &&
-// 		selectedBlock.name === 'resource-blocks/image-constrained'
-// 	) {
-// 		const designWidth = selectedBlock.attributes.designWidth;
-// 		const designHeight = selectedBlock.attributes.designHeight;
-//
-// 		const originalAttachmentTrigger =
-// 			wp.media.view.Attachment.prototype.trigger;
-// 		wp.media.view.Attachment.prototype.trigger = function () {
-// 			// triggers all events, compares against 'ready'
-// 			// first argument contains the event name
-// 			if ( arguments[ 0 ] === 'ready' ) {
-// 				if (
-// 					! checkDimensions(
-// 						this.model.attributes.width,
-// 						this.model.attributes.height,
-// 						designWidth,
-// 						designHeight
-// 					)
-// 				) {
-// 					// if checkDimensions returns false
-// 					// add disabled class to element
-// 					this.$el.addClass( 'resource-disabled' );
-// 				}
-// 			}
-//
-// 			originalAttachmentTrigger.apply(
-// 				this,
-// 				Array.prototype.slice.call( arguments )
-// 			);
-// 		};
-// 	}
-// } );
+} = _block_json__WEBPACK_IMPORTED_MODULE_2__;
 
+(function ($) {
+  // buttons in the Media Placeholder component
+  $(document).on('click', '.wp-block-resource-blocks-image-constrained button', function () {
+    console.log('clicked');
+  }); // buttons in the BlockControls (toolbar) component
+
+  $(document).on('click', '.block-editor-media-replace-flow__media-upload-menu .components-button', function () {
+    const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock();
+
+    if (selectedBlock.attributes.designHeight && selectedBlock.attributes.designWidth) {
+      if (typeof window.resourceBlocks !== 'undefined') {
+        window.resourceBlocks = {
+          targetWidth: selectedBlock.attributes.designWidth,
+          targetHeight: selectedBlock.attributes.designHeight
+        };
+      }
+    }
+  });
+})(jQuery);
 /**
  * Register block.
  */
+
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(name, { ...settings,
   icon: _icons_icons__WEBPACK_IMPORTED_MODULE_5__["default"].single_image,
@@ -890,52 +873,6 @@ function save(_ref) {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("figure", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.useBlockProps.save({
     className: classes
   }), styles), figure);
-}
-
-/***/ }),
-
-/***/ "./includes/block-editor/blocks/lib/check-dimensions.js":
-/*!**************************************************************!*\
-  !*** ./includes/block-editor/blocks/lib/check-dimensions.js ***!
-  \**************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ checkDimensions; }
-/* harmony export */ });
-/**
- * checkDimensions function.
- *
- * returns false if either designWidth or
- * targetHeight are not equal to width or height.
- *
- * @param {string} width        the width of the current object in the media attachment (wp.media.view.Attachment).
- * @param {string} height       the height of the current object in the media attachment (wp.media.view.Attachment).
- * @param {string} targetWidth  a hardcoded target width, can be overridden in the function by a block attribute.
- * @param {string} targetHeight a hardcoded target height, can be overridden in the function by a block attribute.
- * @private
- */
-function checkDimensions(width, height) {
-  let targetWidth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-  let targetHeight = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
-  // default is '', if it is still default, continue
-  if ('' !== targetWidth) {
-    if (parseInt(targetWidth) !== parseInt(width)) {
-      return false;
-    }
-  } // default is '', if it is still default, continue
-
-
-  if ('' !== targetHeight) {
-    if (parseInt(targetHeight) !== parseInt(height)) {
-      return false;
-    }
-  }
-
-  return true;
 }
 
 /***/ }),
