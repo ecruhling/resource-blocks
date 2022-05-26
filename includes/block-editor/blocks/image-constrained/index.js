@@ -26,7 +26,7 @@ const { name, ...settings } = json;
 		'click',
 		'.wp-block-resource-blocks-image-constrained button',
 		function () {
-			console.log( 'clicked' );
+			setTargets();
 		}
 	);
 
@@ -35,22 +35,28 @@ const { name, ...settings } = json;
 		'click',
 		'.block-editor-media-replace-flow__media-upload-menu .components-button',
 		function () {
-			const selectedBlock = wp.data
-				.select( 'core/block-editor' )
-				.getSelectedBlock();
-			if (
-				selectedBlock.attributes.designHeight &&
-				selectedBlock.attributes.designWidth
-			) {
-				if ( typeof window.resourceBlocks !== 'undefined' ) {
-					window.resourceBlocks = {
-						targetWidth: selectedBlock.attributes.designWidth,
-						targetHeight: selectedBlock.attributes.designHeight,
-					};
-				}
-			}
+			setTargets();
 		}
 	);
+
+	// setTargets function; gets the selected block, checks the attributes,
+	// and sets the targetWidth and targetHeight
+	function setTargets() {
+		const selectedBlock = wp.data
+			.select( 'core/block-editor' )
+			.getSelectedBlock();
+		if (
+			selectedBlock.attributes.designHeight &&
+			selectedBlock.attributes.designWidth
+		) {
+			if ( typeof window.resourceBlocks !== 'undefined' ) {
+				window.resourceBlocks = {
+					targetWidth: selectedBlock.attributes.designWidth,
+					targetHeight: selectedBlock.attributes.designHeight,
+				};
+			}
+		}
+	}
 } )( jQuery );
 
 /**

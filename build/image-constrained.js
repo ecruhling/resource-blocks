@@ -747,10 +747,15 @@ const {
 (function ($) {
   // buttons in the Media Placeholder component
   $(document).on('click', '.wp-block-resource-blocks-image-constrained button', function () {
-    console.log('clicked');
+    setTargets();
   }); // buttons in the BlockControls (toolbar) component
 
   $(document).on('click', '.block-editor-media-replace-flow__media-upload-menu .components-button', function () {
+    setTargets();
+  }); // setTargets function; gets the selected block, checks the attributes,
+  // and sets the targetWidth and targetHeight
+
+  function setTargets() {
     const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock();
 
     if (selectedBlock.attributes.designHeight && selectedBlock.attributes.designWidth) {
@@ -761,7 +766,7 @@ const {
         };
       }
     }
-  });
+  }
 })(jQuery);
 /**
  * Register block.
