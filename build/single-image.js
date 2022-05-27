@@ -441,8 +441,12 @@ function useClientWidth(ref, dependencies) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ALLOWED_MEDIA_TYPES": function() { return /* binding */ ALLOWED_MEDIA_TYPES; }
+/* harmony export */   "ALLOWED_MEDIA_TYPES": function() { return /* binding */ ALLOWED_MEDIA_TYPES; },
+/* harmony export */   "HEIGHT": function() { return /* binding */ HEIGHT; },
+/* harmony export */   "WIDTH": function() { return /* binding */ WIDTH; }
 /* harmony export */ });
+const WIDTH = 990;
+const HEIGHT = 990;
 const ALLOWED_MEDIA_TYPES = ['image'];
 
 /***/ }),
@@ -515,14 +519,6 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 
-/**
- * pickRelevantMediaFiles.
- *
- * @param  image
- * @param  size
- * @return {Pick<*, keyof *>}
- */
-
 const pickRelevantMediaFiles = (image, size) => {
   const imageProps = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.pick)(image, ['alt', 'id']);
   imageProps.url = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.get)(image, ['sizes', size, 'url']) || (0,lodash__WEBPACK_IMPORTED_MODULE_2__.get)(image, ['media_details', 'sizes', size, 'source_url']) || image.url;
@@ -540,34 +536,20 @@ const pickRelevantMediaFiles = (image, size) => {
 
 const isTemporaryImage = (id, url) => !id && (0,_wordpress_blob__WEBPACK_IMPORTED_MODULE_3__.isBlobURL)(url);
 /**
- * Checks if WP generated default image size. Size generation is skipped
- * when the image is smaller than the said size.
- *
- * @param {Object} image
- * @param {string} defaultSize
- *
- * @return {boolean} Whether or not it has default image size.
- */
-
-
-function hasDefaultSize(image, defaultSize) {
-  return (0,lodash__WEBPACK_IMPORTED_MODULE_2__.has)(image, ['sizes', defaultSize, 'url']) || (0,lodash__WEBPACK_IMPORTED_MODULE_2__.has)(image, ['media_details', 'sizes', defaultSize, 'source_url']);
-}
-/**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
- * @param  root0
- * @param  root0.attributes
- * @param  root0.setAttributes
- * @param  root0.isSelected
- * @param  root0.className
- * @param  root0.noticeUI
- * @param  root0.insertBlocksAfter
- * @param  root0.noticeOperations
- * @param  root0.onReplace
- * @param  root0.context
- * @param  root0.clientId
+ * @param {Object}  root0
+ * @param {Object}  root0.attributes
+ * @param {Object}  root0.setAttributes
+ * @param {boolean} root0.isSelected
+ * @param {string}  root0.className
+ * @param {Object}  root0.noticeUI
+ * @param {Object}  root0.insertBlocksAfter
+ * @param {Object}  root0.noticeOperations
+ * @param {Object}  root0.onReplace
+ * @param {Object}  root0.context
+ * @param {string}  root0.clientId
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
@@ -587,8 +569,6 @@ function ImageEdit(_ref) {
     clientId
   } = _ref;
   const {
-    required_width,
-    required_height,
     instructions,
     url = '',
     alt,
@@ -648,12 +628,12 @@ function ImageEdit(_ref) {
   /**
    * Image selected.
    *
-   * @param  media
+   * @param {Object} media
    */
 
 
   function onSelectImage(media) {
-    var _media$width;
+    var _media$width, _media$height;
 
     if (!media || !media.url) {
       setAttributes({
@@ -671,7 +651,6 @@ function ImageEdit(_ref) {
     }
 
     setTemporaryURL();
-    const mediaAttributes = pickRelevantMediaFiles(media, imageDefaultSize);
     let additionalAttributes; // Reset the dimension attributes if changing to a different image.
 
     if (!media.id || media.id !== id) {
@@ -692,12 +671,19 @@ function ImageEdit(_ref) {
 
 
     const widthCheck = (_media$width = media.width) !== null && _media$width !== void 0 ? _media$width : media.media_details.width;
+    const heightCheck = (_media$height = media.height) !== null && _media$height !== void 0 ? _media$height : media.media_details.height;
 
-    if (widthCheck !== required_width) {
+    if (widthCheck !== _constants__WEBPACK_IMPORTED_MODULE_11__.WIDTH) {
       openModal();
       return;
     }
 
+    if (heightCheck !== _constants__WEBPACK_IMPORTED_MODULE_11__.HEIGHT) {
+      openModal();
+      return;
+    }
+
+    const mediaAttributes = pickRelevantMediaFiles(media, imageDefaultSize);
     setAttributes({ ...mediaAttributes,
       ...additionalAttributes
     });
@@ -705,7 +691,7 @@ function ImageEdit(_ref) {
   /**
    * onSelectURL.
    *
-   * @param  newURL
+   * @param {string} newURL
    */
 
 
@@ -815,7 +801,7 @@ function ImageEdit(_ref) {
     onRequestClose: closeModal,
     contentLabel: "Error",
     title: "Error"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Image must be ", required_width, "px wide! Choose another image.")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.MediaPlaceholder, {
+  }, "Image must be ", _constants__WEBPACK_IMPORTED_MODULE_11__.WIDTH, "px wide.", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), "Image must be ", _constants__WEBPACK_IMPORTED_MODULE_11__.HEIGHT, "px tall.", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), "Choose another image."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.MediaPlaceholder, {
     icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.BlockIcon, {
       icon: _icons_icons__WEBPACK_IMPORTED_MODULE_8__["default"].single_image
     }),
@@ -856,6 +842,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit */ "./includes/block-editor/blocks/single-image/edit.js");
 /* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./save */ "./includes/block-editor/blocks/single-image/save.js");
 /* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../icons/icons */ "./includes/icons/icons.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./constants */ "./includes/block-editor/blocks/single-image/constants.js");
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
@@ -879,15 +866,48 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/**
+ * Module constants
+ */
+
+
 const {
   name,
   ...settings
-} = _block_json__WEBPACK_IMPORTED_MODULE_2__;
+} = _block_json__WEBPACK_IMPORTED_MODULE_2__; // jQuery function
+
+(function ($) {
+  // buttons in the Media Placeholder component
+  $(document).on('click', '.wp-block-resource-blocks-single-image', function () {
+    setTargets();
+  }); // buttons in the BlockControls (toolbar) component
+
+  $(document).on('click', '.block-editor-media-replace-flow__media-upload-menu .components-button', function () {
+    setTargets();
+  }); // setTargets function; gets the selected block, checks the attributes,
+  // and sets the targetWidth and targetHeight
+
+  function setTargets() {
+    const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock();
+
+    if (selectedBlock.name === 'resource-blocks/single-image') {
+      if (_constants__WEBPACK_IMPORTED_MODULE_6__.WIDTH && _constants__WEBPACK_IMPORTED_MODULE_6__.HEIGHT) {
+        if (typeof window.resourceBlocks !== 'undefined') {
+          window.resourceBlocks = {
+            targetWidth: _constants__WEBPACK_IMPORTED_MODULE_6__.WIDTH,
+            targetHeight: _constants__WEBPACK_IMPORTED_MODULE_6__.HEIGHT
+          };
+        }
+      }
+    }
+  }
+})(jQuery);
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
+
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(name, { ...settings,
   icon: _icons_icons__WEBPACK_IMPORTED_MODULE_5__["default"].single_image,

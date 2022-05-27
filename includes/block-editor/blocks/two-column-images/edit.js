@@ -8,6 +8,7 @@ import classnames from 'classnames';
  */
 import { withNotices } from '@wordpress/components';
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -33,22 +34,25 @@ export function ColumnsEdit( { className } ) {
 		className: classes,
 	} );
 
+	const instructions = __(
+		'Upload an image, or pick one from the media library. Image must be 990px wide x 990px tall.',
+		'resource-blocks'
+	);
+
 	// use just the single-image blocks as a template
 	const template = [
 		[
 			'resource-blocks/single-image',
 			{
 				required_width: 990,
-				instructions:
-					'Upload an image, or pick one from the media library. Image must be 990px wide. 990px is an appropriate height, but it is not enforced.',
+				instructions,
 			},
 		],
 		[
 			'resource-blocks/single-image',
 			{
 				required_width: 990,
-				instructions:
-					'Upload an image, or pick one from the media library. Image must be 990px wide. 990px is an appropriate height, but it is not enforced.',
+				instructions,
 			},
 		],
 	];

@@ -22,7 +22,51 @@ import edit from './edit';
 import save from './save';
 import icons from '../../../icons/icons';
 
+/**
+ * Module constants
+ */
+import { WIDTH, HEIGHT } from './constants';
+
 const { name, ...settings } = json;
+
+// jQuery function
+( function ( $ ) {
+	// buttons in the Media Placeholder component
+	$( document ).on(
+		'click',
+		'.wp-block-resource-blocks-single-image',
+		function () {
+			setTargets();
+		}
+	);
+
+	// buttons in the BlockControls (toolbar) component
+	$( document ).on(
+		'click',
+		'.block-editor-media-replace-flow__media-upload-menu .components-button',
+		function () {
+			setTargets();
+		}
+	);
+
+	// setTargets function; gets the selected block, checks the attributes,
+	// and sets the targetWidth and targetHeight
+	function setTargets() {
+		const selectedBlock = wp.data
+			.select( 'core/block-editor' )
+			.getSelectedBlock();
+		if ( selectedBlock.name === 'resource-blocks/single-image' ) {
+			if ( WIDTH && HEIGHT ) {
+				if ( typeof window.resourceBlocks !== 'undefined' ) {
+					window.resourceBlocks = {
+						targetWidth: WIDTH,
+						targetHeight: HEIGHT,
+					};
+				}
+			}
+		}
+	}
+} )( jQuery );
 
 /**
  * Every block starts by registering a new block type definition.
