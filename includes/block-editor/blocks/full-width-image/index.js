@@ -1,3 +1,5 @@
+/*global jQuery */
+
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
@@ -29,7 +31,50 @@ import json from './block.json';
 import edit from './edit';
 import save from './save';
 
+/**
+ * Module constants
+ */
+import { WIDTH } from './constants';
+
 const { name, ...settings } = json;
+
+// jQuery function
+( function ( $ ) {
+	// buttons in the Media Placeholder component
+	$( document ).on(
+		'click',
+		'.wp-block-resource-blocks-full-width-image button',
+		function () {
+			setTargets();
+		}
+	);
+
+	// buttons in the BlockControls (toolbar) component
+	$( document ).on(
+		'click',
+		'.block-editor-media-replace-flow__media-upload-menu .components-button',
+		function () {
+			setTargets();
+		}
+	);
+
+	// setTargets function; gets the selected block, checks the attributes,
+	// and sets the targetWidth and targetHeight
+	function setTargets() {
+		const selectedBlock = wp.data
+			.select( 'core/block-editor' )
+			.getSelectedBlock();
+		if ( selectedBlock.name === 'resource-blocks/full-width-image' ) {
+			if ( WIDTH ) {
+				if ( typeof window.resourceBlocks !== 'undefined' ) {
+					window.resourceBlocks = {
+						targetWidth: WIDTH,
+					};
+				}
+			}
+		}
+	}
+} )( jQuery );
 
 /**
  * Every block starts by registering a new block type definition.

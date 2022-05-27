@@ -132,34 +132,20 @@ const pickRelevantMediaFiles = (image, size) => {
 
 const isTemporaryImage = (id, url) => !id && (0,_wordpress_blob__WEBPACK_IMPORTED_MODULE_3__.isBlobURL)(url);
 /**
- * Checks if WP generated default image size. Size generation is skipped
- * when the image is smaller than the said size.
- *
- * @param {Object} image
- * @param {string} defaultSize
- *
- * @return {boolean} Whether or not it has default image size.
- */
-
-
-function hasDefaultSize(image, defaultSize) {
-  return (0,lodash__WEBPACK_IMPORTED_MODULE_2__.has)(image, ['sizes', defaultSize, 'url']) || (0,lodash__WEBPACK_IMPORTED_MODULE_2__.has)(image, ['media_details', 'sizes', defaultSize, 'source_url']);
-}
-/**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
- * @param  root0
- * @param  root0.attributes
- * @param  root0.setAttributes
- * @param  root0.isSelected
- * @param  root0.className
- * @param  root0.noticeUI
- * @param  root0.insertBlocksAfter
- * @param  root0.noticeOperations
- * @param  root0.onReplace
- * @param  root0.context
- * @param  root0.clientId
+ * @param {Object}  root0
+ * @param {Object}  root0.attributes
+ * @param {Object}  root0.setAttributes
+ * @param {boolean} root0.isSelected
+ * @param {string}  root0.className
+ * @param {Object}  root0.noticeUI
+ * @param {Object}  root0.insertBlocksAfter
+ * @param {Object}  root0.noticeOperations
+ * @param {Object}  root0.onReplace
+ * @param {Object}  root0.context
+ * @param {string}  root0.clientId
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
@@ -236,7 +222,7 @@ function ImageEdit(_ref) {
   /**
    * Image selected.
    *
-   * @param  media
+   * @param {Object} media
    */
 
 
@@ -259,7 +245,6 @@ function ImageEdit(_ref) {
     }
 
     setTemporaryURL();
-    const mediaAttributes = pickRelevantMediaFiles(media, 'full');
     let additionalAttributes; // Reset the dimension attributes if changing to a different image.
 
     if (!media.id || media.id !== id) {
@@ -286,6 +271,7 @@ function ImageEdit(_ref) {
       return;
     }
 
+    const mediaAttributes = pickRelevantMediaFiles(media, 'full');
     setAttributes({ ...mediaAttributes,
       ...additionalAttributes
     });
@@ -430,6 +416,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./includes/block-editor/blocks/full-width-image/block.json");
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./edit */ "./includes/block-editor/blocks/full-width-image/edit.js");
 /* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./save */ "./includes/block-editor/blocks/full-width-image/save.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./constants */ "./includes/block-editor/blocks/full-width-image/constants.js");
+/*global jQuery */
+
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
@@ -461,15 +450,47 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/**
+ * Module constants
+ */
+
+
 const {
   name,
   ...settings
-} = _block_json__WEBPACK_IMPORTED_MODULE_3__;
+} = _block_json__WEBPACK_IMPORTED_MODULE_3__; // jQuery function
+
+(function ($) {
+  // buttons in the Media Placeholder component
+  $(document).on('click', '.wp-block-resource-blocks-full-width-image button', function () {
+    setTargets();
+  }); // buttons in the BlockControls (toolbar) component
+
+  $(document).on('click', '.block-editor-media-replace-flow__media-upload-menu .components-button', function () {
+    setTargets();
+  }); // setTargets function; gets the selected block, checks the attributes,
+  // and sets the targetWidth and targetHeight
+
+  function setTargets() {
+    const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock();
+
+    if (selectedBlock.name === 'resource-blocks/full-width-image') {
+      if (_constants__WEBPACK_IMPORTED_MODULE_6__.WIDTH) {
+        if (typeof window.resourceBlocks !== 'undefined') {
+          window.resourceBlocks = {
+            targetWidth: _constants__WEBPACK_IMPORTED_MODULE_6__.WIDTH
+          };
+        }
+      }
+    }
+  }
+})(jQuery);
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
+
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(name, { ...settings,
   icon: _icons_icons__WEBPACK_IMPORTED_MODULE_1__["default"].image_full_width,

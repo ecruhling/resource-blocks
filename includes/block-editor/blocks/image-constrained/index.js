@@ -20,6 +20,7 @@ import icons from '../../../icons/icons';
 
 const { name, ...settings } = json;
 
+// jQuery function
 ( function ( $ ) {
 	// buttons in the Media Placeholder component
 	$( document ).on(

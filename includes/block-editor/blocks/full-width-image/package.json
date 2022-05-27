@@ -1,5 +1,9 @@
 {
   "name": "full-width-image",
   "version": "1.0.0",
-  "author": "Erik Ruhling"
+  "author": "Erik Ruhling",
+  "dependencies": {
+	"classnames": "^2.3.1",
+	"lodash": "^4.17.21"
+  }
 }

@@ -8,18 +8,18 @@
  * Replace them with your own styles or remove the file completely.
  */
 .editor-styles-wrapper div.wp-block-resource-blocks-intro-paragraph,
-article.post div.wp-block-resource-blocks-intro-paragraph {
+article div.wp-block-resource-blocks-intro-paragraph {
   padding-bottom: 4rem;
 }
 @media (min-width: 768px) {
   .editor-styles-wrapper div.wp-block-resource-blocks-intro-paragraph .resource-blocks-column,
-article.post div.wp-block-resource-blocks-intro-paragraph .resource-blocks-column {
+article div.wp-block-resource-blocks-intro-paragraph .resource-blocks-column {
     flex: 0 0 66.6666666667%;
     max-width: 66.6666666667%;
   }
 }
 .editor-styles-wrapper div.wp-block-resource-blocks-intro-paragraph p,
-article.post div.wp-block-resource-blocks-intro-paragraph p {
+article div.wp-block-resource-blocks-intro-paragraph p {
   font-family: RomainHeadline-Regular-WebS, sans-serif;
   font-size: 1.425rem;
   color: #37535b;
@@ -27,7 +27,7 @@ article.post div.wp-block-resource-blocks-intro-paragraph p {
 }
 @media (min-width: 768px) {
   .editor-styles-wrapper div.wp-block-resource-blocks-intro-paragraph p,
-article.post div.wp-block-resource-blocks-intro-paragraph p {
+article div.wp-block-resource-blocks-intro-paragraph p {
     font-size: 1.625rem;
   }
 }

@@ -2,7 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { get, has, pick } from 'lodash';
+import { get, pick } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -59,36 +59,20 @@ export const pickRelevantMediaFiles = ( image, size ) => {
 const isTemporaryImage = ( id, url ) => ! id && isBlobURL( url );
 
 /**
- * Checks if WP generated default image size. Size generation is skipped
- * when the image is smaller than the said size.
- *
- * @param {Object} image
- * @param {string} defaultSize
- *
- * @return {boolean} Whether or not it has default image size.
- */
-function hasDefaultSize( image, defaultSize ) {
-	return (
-		has( image, [ 'sizes', defaultSize, 'url' ] ) ||
-		has( image, [ 'media_details', 'sizes', defaultSize, 'source_url' ] )
-	);
-}
-
-/**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
- * @param  root0
- * @param  root0.attributes
- * @param  root0.setAttributes
- * @param  root0.isSelected
- * @param  root0.className
- * @param  root0.noticeUI
- * @param  root0.insertBlocksAfter
- * @param  root0.noticeOperations
- * @param  root0.onReplace
- * @param  root0.context
- * @param  root0.clientId
+ * @param {Object}  root0
+ * @param {Object}  root0.attributes
+ * @param {Object}  root0.setAttributes
+ * @param {boolean} root0.isSelected
+ * @param {string}  root0.className
+ * @param {Object}  root0.noticeUI
+ * @param {Object}  root0.insertBlocksAfter
+ * @param {Object}  root0.noticeOperations
+ * @param {Object}  root0.onReplace
+ * @param {Object}  root0.context
+ * @param {string}  root0.clientId
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
@@ -153,7 +137,7 @@ export function ImageEdit( {
 	/**
 	 * Image selected.
 	 *
-	 * @param  media
+	 * @param {Object} media
 	 */
 	function onSelectImage( media ) {
 		if ( ! media || ! media.url ) {
@@ -173,8 +157,6 @@ export function ImageEdit( {
 		}
 
 		setTemporaryURL();
-
-		const mediaAttributes = pickRelevantMediaFiles( media, 'full' );
 
 		let additionalAttributes;
 		// Reset the dimension attributes if changing to a different image.
@@ -199,6 +181,8 @@ export function ImageEdit( {
 
 			return;
 		}
+
+		const mediaAttributes = pickRelevantMediaFiles( media, 'full' );
 
 		setAttributes( {
 			...mediaAttributes,
