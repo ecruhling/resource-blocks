@@ -82,6 +82,15 @@ function resource_blocks_init()
 	/**
 	 * Register post meta for the editor sidebar on the project edit screen.
 	 */
+	register_post_meta('projects', 'post_thumbnail', [
+		'single' => true,
+		'type' => 'integer',
+		'show_in_rest' => true,
+		'auth_callback' => function () {
+			return current_user_can('edit_posts');
+		}
+	]);
+
 	register_post_meta('projects', 'second_line', [
 		'single' => true,
 		'type' => 'string',

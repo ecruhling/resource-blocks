@@ -10,9 +10,27 @@ import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
  * Internal dependencies
  */
 import icons from '../icons/icons';
+import PostThumbnail from './components/post-thumbnail';
+import { useSelect } from '@wordpress/data';
 
 const ProjectsMeta = () => {
+	// meta information for this post.
+	// includes fields: 'post_thumbnail' and 'second_line'.
 	const [ meta, setMeta ] = useEntityProp( 'postType', 'projects', 'meta' );
+
+	// set required width / height.
+	const WIDTH = '645';
+	const HEIGHT = '645';
+
+	// post thumbnail image ID
+	const featuredImageId = meta.post_thumbnail;
+
+	// media object from meta.post_thumbnail (ID).
+	// use 'id' as a dependency (final argument), in order to update on the fly.
+	const media = useSelect(
+		( select ) => select( 'core' ).getMedia( featuredImageId ),
+		[ featuredImageId ]
+	);
 
 	return (
 		<PluginDocumentSettingPanel
@@ -22,6 +40,16 @@ const ProjectsMeta = () => {
 			opened="true"
 			icon={ icons.resource }
 		>
+			<PanelRow>
+				<PostThumbnail
+					meta={ meta }
+					setMeta={ setMeta }
+					media={ media }
+					featuredImageId={ featuredImageId }
+					WIDTH={ WIDTH }
+					HEIGHT={ HEIGHT }
+				/>
+			</PanelRow>
 			<PanelRow>
 				<TextControl
 					label={ __(

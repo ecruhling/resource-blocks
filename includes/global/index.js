@@ -32,8 +32,6 @@ wp.media.view.Modal.prototype.on( 'close', function () {
 		targetWidth: '',
 		targetHeight: '',
 	};
-
-	console.log( window.resourceBlocks );
 } );
 
 const AttachmentLibrary = wp.media.view.Attachment.Library; // extend
@@ -41,12 +39,6 @@ const AttachmentLibrary = wp.media.view.Attachment.Library; // extend
 wp.media.view.Attachment.Library = AttachmentLibrary.extend( {
 	render() {
 		if ( typeof window.resourceBlocks !== 'undefined' ) {
-			console.log(
-				this.model.attributes.width,
-				this.model.attributes.height,
-				window.resourceBlocks
-			);
-
 			if (
 				! checkDimensions(
 					this.model.attributes.width,
@@ -66,7 +58,7 @@ wp.media.view.Attachment.Library = AttachmentLibrary.extend( {
 } );
 
 /**
- * Method to retrieve the type of the post.
+ * Retrieve the type of the post.
  */
 const getPostType = () => wp.data.select( 'core/editor' ).getCurrentPostType();
 
@@ -108,6 +100,10 @@ domReady( () => {
 			}
 			// this is a Projects post type.
 			if ( newPostType === 'projects' ) {
+				// remove panels.
+				removeEditorPanel( 'featured-image' );
+				removeEditorPanel( 'post-excerpt' );
+				removeEditorPanel( 'discussion-panel' );
 				// get registered plugins.
 				const registeredPlugins = getPlugins();
 

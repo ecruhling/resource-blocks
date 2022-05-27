@@ -297,15 +297,12 @@ wp.media.view.Modal.prototype.on('close', function () {
     targetWidth: '',
     targetHeight: ''
   };
-  console.log(window.resourceBlocks);
 });
 const AttachmentLibrary = wp.media.view.Attachment.Library; // extend
 
 wp.media.view.Attachment.Library = AttachmentLibrary.extend({
   render() {
     if (typeof window.resourceBlocks !== 'undefined') {
-      console.log(this.model.attributes.width, this.model.attributes.height, window.resourceBlocks);
-
       if (!(0,_block_editor_blocks_lib_check_dimensions__WEBPACK_IMPORTED_MODULE_8__["default"])(this.model.attributes.width, this.model.attributes.height, window.resourceBlocks.targetWidth, window.resourceBlocks.targetHeight)) {
         // if checkDimensions returns false
         // add disabled class to element
@@ -318,7 +315,7 @@ wp.media.view.Attachment.Library = AttachmentLibrary.extend({
 
 });
 /**
- * Method to retrieve the type of the post.
+ * Retrieve the type of the post.
  */
 
 const getPostType = () => wp.data.select('core/editor').getCurrentPostType(); // set the initial postType.
@@ -357,7 +354,11 @@ _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2___default()(() => {
 
 
       if (newPostType === 'projects') {
-        // get registered plugins.
+        // remove panels.
+        removeEditorPanel('featured-image');
+        removeEditorPanel('post-excerpt');
+        removeEditorPanel('discussion-panel'); // get registered plugins.
+
         const registeredPlugins = (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.getPlugins)(); // register panel (verify that plugin is registered only once).
 
         if (!registeredPlugins.some(plugin => plugin.name === 'projects-meta')) {
@@ -491,6 +492,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
 /* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../icons/icons */ "./includes/icons/icons.js");
+/* harmony import */ var _components_post_thumbnail__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/post-thumbnail */ "./includes/global/components/post-thumbnail.js");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_7__);
 
 
 /**
@@ -506,15 +510,34 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 const ProjectsMeta = () => {
-  const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityProp)('postType', 'projects', 'meta');
+  // meta information for this post.
+  // includes fields: 'post_thumbnail' and 'second_line'.
+  const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityProp)('postType', 'projects', 'meta'); // set required width / height.
+
+  const WIDTH = '645';
+  const HEIGHT = '645'; // post thumbnail image ID
+
+  const featuredImageId = meta.post_thumbnail; // media object from meta.post_thumbnail (ID).
+  // use 'id' as a dependency (final argument), in order to update on the fly.
+
+  const media = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_7__.useSelect)(select => select('core').getMedia(featuredImageId), [featuredImageId]);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__.PluginDocumentSettingPanel, {
     name: "resource-blocks-projects-meta",
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Projects Meta', 'resource-blocks'),
     initialOpen: "true",
     opened: "true",
     icon: _icons_icons__WEBPACK_IMPORTED_MODULE_5__["default"].resource
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_post_thumbnail__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    meta: meta,
+    setMeta: setMeta,
+    media: media,
+    featuredImageId: featuredImageId,
+    WIDTH: WIDTH,
+    HEIGHT: HEIGHT
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Second Line (displayed after title). Usually City, ST', 'resource-blocks'),
     value: meta.second_line,
     onChange: value => {
