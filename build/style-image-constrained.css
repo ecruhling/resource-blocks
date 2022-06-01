@@ -15,10 +15,10 @@
 }
 .wp-block-resource-blocks-image-constrained figcaption {
   padding: 0.5rem;
-  display: none;
+  display: none !important;
 }
 .wp-block-resource-blocks-image-constrained.has-caption figcaption {
-  display: block;
+  display: table-caption !important;
 }
 .wp-block-resource-blocks-image-constrained.aligncenter {
   text-align: center;

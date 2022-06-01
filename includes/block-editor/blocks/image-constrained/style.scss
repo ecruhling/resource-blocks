@@ -14,12 +14,12 @@
 
   figcaption {
 	padding: 0.5rem;
-	display: none;
+	display: none !important;
   }
 
   &.has-caption {
 	figcaption {
-	  display: block;
+	  display: table-caption !important;
 	}
   }
 
