@@ -12,6 +12,9 @@ div.resource-blocks-row.wp-block.wp-block-resource-blocks-questionnaire {
   padding-left: 15px;
   padding-right: 15px;
 }
+div.resource-blocks-row.wp-block.wp-block-resource-blocks-questionnaire p {
+  color: #37535b;
+}
 div.resource-blocks-row.wp-block.wp-block-resource-blocks-questionnaire .block-editor-block-list__layout {
   display: flex;
   flex-wrap: wrap;
