@@ -821,6 +821,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./includes/block-editor/blocks/triptych/block.json");
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./edit */ "./includes/block-editor/blocks/triptych/edit.js");
 /* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./save */ "./includes/block-editor/blocks/triptych/save.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./constants */ "./includes/block-editor/blocks/triptych/constants.js");
+/*global jQuery */
+
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
@@ -845,15 +848,48 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/**
+ * Module constants
+ */
+
+
 const {
   name,
   ...settings
-} = _block_json__WEBPACK_IMPORTED_MODULE_3__;
+} = _block_json__WEBPACK_IMPORTED_MODULE_3__; // jQuery function
+
+(function ($) {
+  // buttons in the Media Placeholder component
+  $(document).on('click', '.wp-block-resource-blocks-triptych', function () {
+    setTargets();
+  }); // buttons in the BlockControls (toolbar) component
+
+  $(document).on('click', '.block-editor-media-replace-flow__media-upload-menu .components-button', function () {
+    setTargets();
+  }); // setTargets function; gets the selected block, checks the attributes,
+  // and sets the targetWidth and targetHeight
+
+  function setTargets() {
+    const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock();
+
+    if (selectedBlock.name === 'resource-blocks/triptych') {
+      if (_constants__WEBPACK_IMPORTED_MODULE_6__.WIDTH && _constants__WEBPACK_IMPORTED_MODULE_6__.HEIGHT) {
+        if (typeof window.resourceBlocks !== 'undefined') {
+          window.resourceBlocks = {
+            targetWidth: _constants__WEBPACK_IMPORTED_MODULE_6__.WIDTH,
+            targetHeight: _constants__WEBPACK_IMPORTED_MODULE_6__.HEIGHT
+          };
+        }
+      }
+    }
+  }
+})(jQuery);
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
+
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(name, { ...settings,
   icon: _icons_icons__WEBPACK_IMPORTED_MODULE_1__["default"].triptych,

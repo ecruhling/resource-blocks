@@ -843,6 +843,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./save */ "./includes/block-editor/blocks/single-image/save.js");
 /* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../icons/icons */ "./includes/icons/icons.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./constants */ "./includes/block-editor/blocks/single-image/constants.js");
+/*global jQuery */
+
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
