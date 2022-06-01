@@ -107,7 +107,10 @@ function Edit(props, _ref) {
     onClick: () => {
       addBlock(singleQuestion);
     }
-  }));
+  })); // This is a hack which forces the template to appear valid.
+  // See https://github.com/WordPress/gutenberg/issues/11681
+
+  window.wp.data.dispatch('core/block-editor').setTemplateValidity(true);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.BlockControls, {
     group: "block"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ToolbarGroup, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ToolbarDropdownMenu, {

@@ -84,6 +84,10 @@ export default function Edit( props, { className } ) {
 		},
 	} ) );
 
+	// This is a hack which forces the template to appear valid.
+	// See https://github.com/WordPress/gutenberg/issues/11681
+	window.wp.data.dispatch( 'core/block-editor' ).setTemplateValidity( true );
+
 	return (
 		<div { ...blockProps }>
 			<BlockControls group="block">

@@ -1,5 +1,9 @@
 {
-	"name": "single-question",
-	"version": "1.0.0",
-	"author": "Erik Ruhling"
+  "name": "single-question",
+  "version": "1.0.0",
+  "author": "Erik Ruhling",
+  "dependencies": {
+	"classnames": "^2.3.1",
+	"lodash": "^4.17.21"
+  }
 }
