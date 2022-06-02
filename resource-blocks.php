@@ -166,8 +166,10 @@ function resource_blocks_init()
 	$post_type_object->template = array(
 		array('resource-blocks/image-constrained', array(
 			'imageWidthInsideContainer' => '100%',
+			'align' => 'center'
 		) ),
 	);
+	$post_type_object->template_lock = 'all';
 
 }
 
