@@ -136,11 +136,13 @@ function resource_blocks_init()
 	 * 'projects' CPT block template:
 	 * intro-paragraph
 	 */
-	$post_type_object = get_post_type_object('post');
-	$post_type_object->template = array(
-		array('resource-blocks/intro-paragraph'),
-		array('resource-blocks/full-width-image'),
-	);
+	if (post_type_exists('projects')) {
+		$projects_type_object = get_post_type_object('projects');
+		$projects_type_object->template = array(
+			array('resource-blocks/intro-paragraph'),
+			array('resource-blocks/full-width-image'),
+		);
+	}
 
 	/**
 	 * 'team' CPT block template:
@@ -149,27 +151,31 @@ function resource_blocks_init()
 	 * secondary-title ('fun' title)
 	 * questionnaire
 	 */
-	$post_type_object = get_post_type_object('team');
-	$post_type_object->template = array(
-		array('resource-blocks/team-member-title'),
-		array('resource-blocks/triptych'),
-		array('resource-blocks/secondary-title'),
-		array('resource-blocks/questionnaire'),
-	);
-	$post_type_object->template_lock = 'all';
+	if (post_type_exists('team')) {
+		$post_type_object = get_post_type_object('team');
+		$post_type_object->template = array(
+			array('resource-blocks/team-member-title'),
+			array('resource-blocks/triptych'),
+			array('resource-blocks/secondary-title'),
+			array('resource-blocks/questionnaire'),
+		);
+		$post_type_object->template_lock = 'all';
+	}
 
 	/**
 	 * 'logo' block template:
 	 * image-constrained
 	 */
-	$post_type_object = get_post_type_object('logos');
-	$post_type_object->template = array(
-		array('resource-blocks/image-constrained', array(
-			'imageWidthInsideContainer' => '100%',
-			'align' => 'center'
-		) ),
-	);
-	$post_type_object->template_lock = 'all';
+	if (post_type_exists('logos')) {
+		$post_type_object = get_post_type_object('logos');
+		$post_type_object->template = array(
+			array('resource-blocks/image-constrained', array(
+				'imageWidthInsideContainer' => '100%',
+				'align' => 'center'
+			)),
+		);
+		$post_type_object->template_lock = 'all';
+	}
 
 }
 
@@ -180,19 +186,19 @@ add_action('init', 'resource_blocks_init');
  * @param $title
  * @return string
  */
-function change_default_title_for_team_member_cpt( $title ): string
+function change_default_title_for_team_member_cpt($title): string
 {
 
 	$screen = get_current_screen();
 
-	if ( 'team' == $screen->post_type ){
+	if ('team' == $screen->post_type) {
 		$title = 'Team Member name';
 	}
 
 	return $title;
 }
 
-add_filter( 'enter_title_here', 'change_default_title_for_team_member_cpt' );
+add_filter('enter_title_here', 'change_default_title_for_team_member_cpt');
 
 /**
  * Enqueue global block CSS for the editor.
