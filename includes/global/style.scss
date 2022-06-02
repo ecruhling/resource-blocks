@@ -80,3 +80,14 @@ div.resource-blocks-column {
 .has-text-align-right {
   text-align: right;
 }
+
+// 'logos' custom post type
+article.type-logos {
+  .wp-block-resource-blocks-image-constrained {
+	img {
+	  max-width: 500px;
+	  max-height: 500px;
+	  margin: 0 auto;
+	}
+  }
+}

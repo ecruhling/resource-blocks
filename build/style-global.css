@@ -70,4 +70,10 @@ div.resource-blocks-column img {
   text-align: right;
 }
 
+article.type-logos .wp-block-resource-blocks-image-constrained img {
+  max-width: 500px;
+  max-height: 500px;
+  margin: 0 auto;
+}
+
 /*# sourceMappingURL=style-global.css.map*/

@@ -88,3 +88,16 @@ h2.media-views-heading-constraints {
   // adds additional space at top of attachments browser so that the required image dimensions can display.
   top: 95px;
 }
+
+// 'logos' custom post type editor
+body.wp-admin.post-type-logos.block-editor-page {
+  #editor {
+	.wp-block-resource-blocks-image-constrained {
+	  img {
+		max-width: 500px;
+		max-height: 500px;
+		margin: 0 auto;
+	  }
+	}
+  }
+}

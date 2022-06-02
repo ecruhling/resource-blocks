@@ -81,4 +81,10 @@ h2.media-views-heading-constraints {
   top: 95px;
 }
 
+body.wp-admin.post-type-logos.block-editor-page #editor .wp-block-resource-blocks-image-constrained img {
+  max-width: 500px;
+  max-height: 500px;
+  margin: 0 auto;
+}
+
 /*# sourceMappingURL=global.css.map*/

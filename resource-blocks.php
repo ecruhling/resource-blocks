@@ -158,6 +158,17 @@ function resource_blocks_init()
 	);
 	$post_type_object->template_lock = 'all';
 
+	/**
+	 * 'logo' block template:
+	 * image-constrained
+	 */
+	$post_type_object = get_post_type_object('logos');
+	$post_type_object->template = array(
+		array('resource-blocks/image-constrained', array(
+			'imageWidthInsideContainer' => '100%',
+		) ),
+	);
+
 }
 
 add_action('init', 'resource_blocks_init');
